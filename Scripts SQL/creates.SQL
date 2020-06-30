@@ -38,4 +38,45 @@ CREATE TABLE RDJ_asociaciones (
     CONSTRAINT pais_asoc_unique UNIQUE(id_pais)
 );
 
+CREATE TABLE RDJ_productores (
+    id NUMERIC(2,0) NOT NULL,
+    nombre VARCHAR(80) NOT NULL,
+    correo VARCHAR(255) NOT NULL,
+    telefono VARCHAR(15) NOT NULL,
+    url_web VARCHAR(255),
+    id_asoc NUMERIC(2,0),
+    CONSTRAINT productores_pk PRIMARY KEY (id),
+    CONSTRAINT correo_productor_unique UNIQUE(correo),
+    CONSTRAINT telefono_productor_unique UNIQUE(telefono),
+    CONSTRAINT url_productor_unique UNIQUE(url_web)
+);
+
+CREATE TABLE RDJ_proveedores (
+    id NUMERIC(2,0) NOT NULL,
+    nombre VARCHAR(80) NOT NULL,
+    correo VARCHAR(255) NOT NULL,
+    telefono VARCHAR(15) NOT NULL,
+    url_web VARCHAR(255),
+    id_asoc NUMERIC(2,0),
+    CONSTRAINT proveedores_pk PRIMARY KEY (id),
+    CONSTRAINT correo_proveedor_unique UNIQUE(correo),
+    CONSTRAINT telefono_proveedor_unique UNIQUE(telefono),
+    CONSTRAINT url_proveedor_unique UNIQUE(url_web)
+);
+
+CREATE TABLE RDJ_miembros_IFRA (
+    id NUMERIC(4,0) NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    tipo CHAR(1) NOT NULL,
+    id_prov NUMERIC(2,0),
+    id_prod NUMERIC(2,0),
+    fecha_fin DATE,
+    CONSTRAINT miembros_IFRA_pk PRIMARY KEY (id),
+    CONSTRAINT check_tipo_miembro CHECK (tipo in ('P','S','A'))
+);
+
 ALTER TABLE RDJ_asociaciones ADD CONSTRAINT pais_asoc_fk FOREIGN KEY (id_pais) REFERENCES RDJ_paises (id);
+ALTER TABLE RDJ_productores ADD CONSTRAINT asoc_productor_fk FOREIGN KEY (id_asoc) REFERENCES RDJ_asociaciones (id);
+ALTER TABLE RDJ_proveedores ADD CONSTRAINT asoc_proveedor_fk FOREIGN KEY (id_asoc) REFERENCES RDJ_asociaciones (id);
+ALTER TABLE RDJ_miembros_IFRA ADD CONSTRAINT prod_membresia_fk FOREIGN KEY (id_prod) REFERENCES RDJ_productores (id);
+ALTER TABLE RDJ_miembros_IFRA ADD CONSTRAINT prov_membresia_fk FOREIGN KEY (id_prov) REFERENCES RDJ_proveedores (id);
