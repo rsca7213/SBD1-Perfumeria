@@ -3,6 +3,9 @@
     psql -U username -d nombreBD -f nombreArchivo
     
     Ej.: psql -U postgres -d test -f creates.SQL
+
+    Tambien se puede abrir psql y ejecutarlo con \i nombreArchivo pero es obligatorio que abras
+    psql en la carpeta de los scripts
 */
 
 CREATE TABLE RDJ_familias_olfativas (
@@ -24,7 +27,7 @@ CREATE TABLE RDJ_paises (
     nombre VARCHAR(50) NOT NULL,
     nacionalidad VARCHAR(50) NOT NULL,
     CONSTRAINT nombrepais_unique UNIQUE(nombre),
-    CONSTRAINT nac_unique UNIQUE(nacionalidad),
+    CONSTRAINT nac_pais_unique UNIQUE(nacionalidad),
     CONSTRAINT paises_pk PRIMARY KEY (id)
 );
 
