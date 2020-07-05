@@ -348,10 +348,10 @@ CREATE TABLE rdj_metodos_contratos (
 CREATE TABLE rdj_pedidos (
     num_pedido NUMERIC(8,0) NOT NULL,
     fecha_pedido DATE NOT NULL,
-    estatus CHAR(4) NOT NULL,
+    estatus CHAR(5) NOT NULL,
     id_proveedor NUMERIC(2,0) NOT NULL,
     id_productor NUMERIC(2,0) NOT NULL,
-    fecha_envio DATE NOT NULL,
+    fecha_envio DATE,
     factura NUMERIC(8,0),
     monto NUMERIC(20,2),
     id_envio NUMERIC(8,0),
