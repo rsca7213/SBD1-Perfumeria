@@ -20,7 +20,7 @@ CREATE TABLE rdj_paises (
     id NUMERIC(3,0) NOT NULL,
     nombre VARCHAR(300) NOT NULL UNIQUE,
     nacionalidad VARCHAR(100) NOT NULL UNIQUE,
-    id_asociacion NUMERIC(2,0) NOT NULL,
+    id_asociacion NUMERIC(2,0),
     CONSTRAINT paises_pk PRIMARY KEY (id)
 );
 
