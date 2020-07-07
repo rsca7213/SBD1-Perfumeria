@@ -28,29 +28,29 @@ INSERT INTO rdj_paises (id,nombre,nacionalidad,id_asociacion) VALUES
 (nextval('id_pais_sec'),'Rusia','Ruso',NULL);/* NOTA: Faltan paises por agregar */
 
 INSERT INTO rdj_proveedores (id,nombre,correo,telefono,url_web,id_asociacion) VALUES
-(nextval('id_proveedores_sec'),'Firmenich','https://www.firmenich.com/en_INT/contact.html','+62 213863977','www.firmenich.com',NULL),
+(nextval('id_proveedores_sec'),'Firmenich','contact@firmenich.com','+62 213863977','www.firmenich.com',NULL),
 (nextval('id_proveedores_sec'),'Kelhar & Ko (Keva)','sprabhu.aromatics@keva.co.in','+91 22221649163','www.keva.co.in',NULL),
 (nextval('id_proveedores_sec'),'Privi Organics Ltd','info@privi.co.in','+91 2233043500','www.privi.com',NULL),
-(nextval('id_proveedores_sec'),'Indesso','https://www.indesso.com/?page_id=13','+62 213863975','www.indesso.com',1),
-(nextval('id_proveedores_sec'),'Emerald Perfomance Materials','kalama@emeraldmaterials.com','+1 3609547100','emeraldmaterials.com',2),
+(nextval('id_proveedores_sec'),'Indesso','contactus@indesso.com','+62 213863975','www.indesso.com',1),
+(nextval('id_proveedores_sec'),'Emerald Perfomance Materials','kalama@emeraldmaterials.com','+1 3609547100','www.emeraldmaterials.com',2),
 (nextval('id_proveedores_sec'),'Prinova','info@prinovausa.com','+1 6308680300','www.prinovausa.com',3);
 
 
 INSERT INTO rdj_productores (id,nombre,correo,telefono,url_web,id_asociacion) VALUES
-(nextval('id_productores_sec'),'Givaudan','https://www.givaudan.com/contact-us','+1 630-773-8484','https://www.givaudan.com/',NULL),
-(nextval('id_productores_sec'),'Memphis','sac@memphisbr.com','+51 3535-3500','https://www.memphisbr.com/',4),
-(nextval('id_productores_sec'),'Chanel','https://www.chanel.com/es_ES/relojeria-joyeria/contactar-con-nosotros#contact','+1 800-550-0005','https://www.chanel.com/us/',3);
+(nextval('id_productores_sec'),'Givaudan','sales@givaudan.com','+1 630-773-8484','www.givaudan.com',NULL),
+(nextval('id_productores_sec'),'Memphis','sac@memphisbr.com','+51 3535-3500','www.memphisbr.com',4),
+(nextval('id_productores_sec'),'Chanel','chanel_info@chanel.com','+1 800-550-0005','www.chanel.com/us',3);
 
-/*INSERT INTO rdj_miembros_ifra (id,fecha_inicio,tipo,fecha_fin,id_proveedor,id_productor) VALUES
-(nextval('id_miembro_ifra_sec'),'','p',NULL,1,NULL),
-(nextval('id_miembro_ifra_sec'),'','p',NULL,NULL,1),
-(nextval('id_miembro_ifra_sec'),'','s',NULL,2,NULL),
-(nextval('id_miembro_ifra_sec'),'','s',NULL,3,NULL),
-(nextval('id_miembro_ifra_sec'),'','a',NULL,4,NULL),
-(nextval('id_miembro_ifra_sec'),'','a',NULL,5,NULL),
-(nextval('id_miembro_ifra_sec'),'','a',NULL,6,NULL),
-(nextval('id_miembro_ifra_sec'),'','a',NULL,NULL,2),
-(nextval('id_miembro_ifra_sec'),'','a',NULL,NULL,3);*/
+INSERT INTO rdj_miembros_ifra (id,fecha_inicio,tipo,fecha_fin,id_proveedor,id_productor) VALUES
+(nextval('id_miembro_ifra_sec'),'2017-11-01','p',NULL,1,NULL),
+(nextval('id_miembro_ifra_sec'),'2014-07-19','p',NULL,NULL,1),
+(nextval('id_miembro_ifra_sec'),'2019-12-29','s',NULL,2,NULL),
+(nextval('id_miembro_ifra_sec'),'2016-09-09','s',NULL,3,NULL),
+(nextval('id_miembro_ifra_sec'),'2017-01-25','a',NULL,4,NULL),
+(nextval('id_miembro_ifra_sec'),'2020-06-16','a',NULL,5,NULL),
+(nextval('id_miembro_ifra_sec'),'2020-01-15','a',NULL,6,NULL),
+(nextval('id_miembro_ifra_sec'),'2017-10-18','a',NULL,NULL,2),
+(nextval('id_miembro_ifra_sec'),'2017-02-20','a',NULL,NULL,3);
 
 INSERT INTO rdj_perfumistas (id,pri_nombre,pri_apellido,seg_apellido,id_pais,seg_nombre) VALUES
 (nextval('id_perfumista_sec'),'Xavier','Renard','',7,NULL),
