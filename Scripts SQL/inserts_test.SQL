@@ -229,7 +229,7 @@ INSERT INTO rdj_perfumes_familias (id_perfume,id_familia)VALUES
 (6,4), (7,3), (8,2), (8,5), (9,3), (9,6);
 
 INSERT INTO rdj_ingredientes_esencias (cas_ing_esencia,nombre,naturaleza,id_proveedor,nombre_quim,pto_inf,solubilidad,proc_creac,parte_proc,vida_util,num_einecs,rendimiento)VALUES
-(,'Ambranum','n',1,NULL,84,NULL,'Asociación equilibrada de ingredientes (extractos naturales y moléculas sintéticas), se mezclan para crear una Especialidad inspiradora.',NULL,NULL,NULL,NULL),
+(1005171,'Ambranum','n',1,NULL,84,NULL,'Asociación equilibrada de ingredientes (extractos naturales y moléculas sintéticas), se mezclan para crear una Especialidad inspiradora.',NULL,NULL,NULL,NULL),
 (68650464,'Buchu Eo Aged','s',1,NULL,67,NULL,'Obtenido por destilación de la biomasa con agua, o vapor. El aceite esencial está físicamente separado de la fase acuosa por decantación.',NULL,NULL,NULL,NULL),
 (71735790,'Cedroxyde','s',1,'4,8,12-Trimethyl-13-oxabicyclo[10.1.0]trideca-4,8-diene',100,NULL,NULL,NULL,NULL,2759677,NULL),
 (52424609,'Ozaflor','s',2,NULL,100,95,NULL,NULL,180,NULL,NULL),
@@ -245,4 +245,72 @@ INSERT INTO rdj_ingredientes_esencias (cas_ing_esencia,nombre,naturaleza,id_prov
 (41890920,'Osyrol','s',5,'7-Dimethyl-7-Methoxyoctan-2-ol',110,NULL,NULL,NULL,NULL,2555747,NULL),
 (21112378,'Vetimoss','s',5,'2-tert-butyl-1,4-dimethoxybenzene',93,NULL,NULL,NULL,NULL,2442165,NULL),
 (106729,'Melonal','s',6,'2,6-dimethylhept-5-enal',60,75,NULL,NULL,365,2034272 ,NULL),
-(52424609,'Citral','n',6,NULL,100,95,NULL,NULL,180,NULL,NULL);
+(1,'Citral','n',6,NULL,100,95,NULL,NULL,180,NULL,NULL);
+
+INSERT INTO rdj_esencias_perfumes (num_cas,nombre,tipo,descripcion) VALUES
+(90082874,'Aceite de núcleo de ciruela','n','Aceite natural con un fuerte aroma a ciruela.'),
+(9028880,'Aldehyde','n','Aldehyde con potasio activado proveniente de levadura.'),
+(8008524,'Aceite de hierba de cilantro','n','Aceite líquido transparente, móvil, incoloro a amarillo claro con olor a cilantro.'),
+(8021430,'Clavel absoluto','n','Aceite de aroma floral, picante y vivido.'),
+(4736452,'Iriswood','n','Aceite con olor amaderado y terroso.'),
+(8024053,'Aceite de nardo','s','Aceite naranja con tonalidad roja y marrón que genera un fuerte olor a nardo.'),
+(8006879,'Esencia de sándalo','n','Aceite con un aroma clásico amaderado, lactoso y suave.'),
+(89883,'Vetiverol','n','Aceite proveniente de la grama Vetiveria Zizanoides.'),
+(8022568,'Aceite de sabia','n','Aroma culinario aromático con aspectos nebulosos, suaves y ligeramente picantes.'),
+(8008455,'Nuez moscada','n','Aroma dulce picante con notas base terrosas y picantes,'),
+(8024086,'Hoja de violeta','n','Aroma fresco y aromático, similar a pepino.'),
+(8007758,'Aceite de bergamota','n','Aroma cítrico, amargo y agrio, elegante, ligera nota con suave tono picante.'),
+(8007010,'Rosa','n','Aroma femenino, limpio e intensamente romantico.'),
+(8024064,'Vainilla natural','n','Aroma dulce, acogedor, reconfortante, con una agradable sensación de hornear galletas.'),
+(8014093,'Pachouli','n','Aroma amaderado musgoso.'),
+(8000280,'Aceite de lavanda','n','Aroma floral aromático limpio, con facetas verdes, frescas, picantes, regaliz.'),
+(84929793,'Resina de benjui','s','Una cálida nota balsámica que recuerda a la vainilla.'),
+(977059156,'Musgo de roble','n','Un suelo de bosque amargo y muy oloroso.'),
+(8022966,'Aceite de jazmin','n','Flor blanca aromatica con olor a jazmin.'),
+(91770444,'Aceite de orquidea','n','Aceite de color rosa con un fuerte olor a orquidea.'),
+(8023981,'Aceite de núcleo de durazno','n','Aroma frutal dulce y con olor a nuez.'),
+(8002673,'Ambar','s','Aroma animal con olor a almizcle.'),
+(8008579,'Naranja','n','Aroma citrico frutal dulce.');
+
+INSERT INTO rdj_notas (id_perfume,cas_esencia,tipo) VALUES
+(1,90082874,'s'), (1,9028880,'s'), (1,8008524,'s'), (1,8021430,'c'), 
+(1,4736452,'c'), (1,8024053,'c'), (1,8006879,'f'), (1,89883,'f'),
+(2,8022568,'s'), (2,8008455,'s'), (2,8024086,'c'), (2,8024053,'f'),
+(2,89883,'f'), (2,4736452,'f'), 
+(3,8024086,'s'), (3,8007758,'s'),
+(3,8007010,'c'), (3,4736452,'c'), (3,8024064,'f'), (3,8014093,'f'),
+(4,8000280,'s'), (4,8007758,'s'), (4,8021430,'c'), (4,8024064,'f'),
+(4,84929793,'f'), (4,977059156,'f'),
+(6,8000280,'s'), (6,90082874,'s'), (6,8023981,'s'), (6,8022966,'c'),
+(6,4736452,'c'), (6,8024064,'f'), (6,8014093,'f'), (6,8002673,'f'),
+(8,9028880,'s'), (8,8007010,'c'), (8,8024086,'c'), (8,8002673,'f'); 
+
+INSERT INTO rdj_monoliticos (id_perfume,cas_esencia) VALUES
+(5,8022966), (5,91770444),
+(7,8008579), (7,9028880), (7,8024064), (7,8002673),
+(9,8008524), (9,8007758), (9,8022966), (9,8007010), (9,8014093), (9,977059156);
+
+INSERT INTO rdj_esencias_perfumes_familias (cas_esencia,id_familia) VALUES
+(90082874,4), 
+(9028880,2), (9028880,10),
+(8008524,3), (8008524,1),
+(8021430,3), 
+(4736452,8), (4736452,3), 
+(8024053,3), 
+(8006879,8), 
+(89883,1),
+(8022568,1), (8022568,6), 
+(8008455,9), 
+(8024086,3), (8024086,5),
+(8007758,2), 
+(8007010,3), 
+(8024064,9), (8024064,4), 
+(8014093,8), (8014093,7),
+(8000280,5), (8000280,3), 
+(84929793,9), 
+(977059156,7), (977059156,6),
+(8022966,3), (8022966,1), 
+(91770444,3),
+(8002673,4),
+(8023981,4),
+(8008579,2), (8008579,4);

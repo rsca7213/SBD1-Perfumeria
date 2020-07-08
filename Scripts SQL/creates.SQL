@@ -269,7 +269,7 @@ CREATE TABLE rdj_ingredientes_esencias (
     proc_creac VARCHAR(1000),
     parte_proc VARCHAR(300),
     vida_util NUMERIC(3,0),
-    num_einecs NUMERIC(7,0) UNIQUE,
+    num_einecs NUMERIC(12,0) UNIQUE,
     rendimiento NUMERIC(2,0),
     CONSTRAINT ingredientes_esencias_pk PRIMARY KEY (cas_ing_esencia),
     CONSTRAINT nat_ing_esencia_check CHECK (naturaleza in ('n','s'))

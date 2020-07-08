@@ -25,3 +25,19 @@ det.mod_precio || ' $' AS precio, det.mod_duracion || ' dias' AS duracion
 FROM rdj_proveedores pr, rdj_paises pa, rdj_detalles_metodos_envios det, rdj_metodos_envios m
 WHERE pr.id=det.id_proveedor AND pa.id=det.id_pais AND m.id=det.id_envio
 ORDER BY pr.nombre,pa.nombre,m.tipo;
+
+/* para ver la tabla esencias_perfumes y familias que tiene */
+SELECT es.num_cas AS cas, es.nombre AS esencia, CASE WHEN es.tipo = 'n' THEN 'natural' ELSE 'sintetico' END AS tipo,
+fa.nombre AS familia FROM rdj_esencias_perfumes es, rdj_familias_olfativas fa, rdj_esencias_perfumes_familias ef 
+WHERE ef.id_familia=fa.id AND ef.cas_esencia=es.num_cas ORDER BY es.nombre;
+
+/* para ver todas las notas por fases de los perfumes */
+SELECT pe.nombre AS perfume, es.nombre AS esencia,
+CASE WHEN n.tipo = 's' THEN 'salida' WHEN n.tipo = 'c' THEN 'corazon' WHEN n.tipo = 'f' THEN 'fondo' END AS tipo
+FROM rdj_esencias_perfumes es, rdj_perfumes pe, rdj_notas n
+WHERE pe.id=n.id_perfume AND es.num_cas=n.cas_esencia ORDER BY pe.nombre,n.tipo;
+
+/* para ver todas las notas monoliticas de los perfumes */
+SELECT pe.nombre AS perfume, es.nombre AS esencia
+FROM rdj_esencias_perfumes es, rdj_perfumes pe, rdj_monoliticos m
+WHERE pe.id=m.id_perfume AND es.num_cas=m.cas_esencia ORDER BY pe.nombre;
