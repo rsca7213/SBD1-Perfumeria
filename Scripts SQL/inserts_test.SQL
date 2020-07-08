@@ -25,7 +25,10 @@ INSERT INTO rdj_paises (id,nombre,nacionalidad,id_asociacion) VALUES
 (nextval('id_pais_sec'),'Brasil','Brasileño',4),
 (nextval('id_pais_sec'),'Suiza','Suizo',NULL),
 (nextval('id_pais_sec'),'Francia','Frances',NULL),
-(nextval('id_pais_sec'),'Rusia','Ruso',NULL);/* NOTA: Faltan paises por agregar */
+(nextval('id_pais_sec'),'Rusia','Ruso',NULL),
+(nextval('id_pais_sec'),'España','Español',NULL),
+(nextval('id_pais_sec'),'Colombia','Colombiano',NULL),
+(nextval('id_pais_sec'),'Argentina','Argentino',NULL); /* NOTA: Faltan paises por agregar */
 
 INSERT INTO rdj_proveedores (id,nombre,correo,telefono,url_web,id_asociacion) VALUES
 (nextval('id_proveedores_sec'),'Firmenich','contact@firmenich.com','+62 213863977','www.firmenich.com',NULL),
@@ -35,11 +38,33 @@ INSERT INTO rdj_proveedores (id,nombre,correo,telefono,url_web,id_asociacion) VA
 (nextval('id_proveedores_sec'),'Emerald Perfomance Materials','kalama@emeraldmaterials.com','+1 3609547100','www.emeraldmaterials.com',2),
 (nextval('id_proveedores_sec'),'Prinova','info@prinovausa.com','+1 6308680300','www.prinovausa.com',3);
 
+INSERT INTO rdj_metodos_pagos (id,id_proveedor,tipo,num_cuotas,porcentaje,meses) VALUES
+(nextval('id_metodo_pago_sec'),1,'c',NULL,NULL,NULL),
+(nextval('id_metodo_pago_sec'),1,'p',2,50,2),
+(nextval('id_metodo_pago_sec'),1,'p',5,20,1),
+(nextval('id_metodo_pago_sec'),2,'c',NULL,NULL,NULL),
+(nextval('id_metodo_pago_sec'),2,'p',10,10,1),
+(nextval('id_metodo_pago_sec'),2,'p',8,12.5,2),
+(nextval('id_metodo_pago_sec'),3,'c',NULL,NULL,NULL),
+(nextval('id_metodo_pago_sec'),3,'p',3,33.33,3),
+(nextval('id_metodo_pago_sec'),3,'p',5,20,2),
+(nextval('id_metodo_pago_sec'),4,'c',NULL,NULL,NULL),
+(nextval('id_metodo_pago_sec'),4,'p',2,50,1),
+(nextval('id_metodo_pago_sec'),4,'p',4,25,1),
+(nextval('id_metodo_pago_sec'),5,'c',NULL,NULL,NULL),
+(nextval('id_metodo_pago_sec'),5,'p',5,20,2),
+(nextval('id_metodo_pago_sec'),5,'p',3,33.33,4),
+(nextval('id_metodo_pago_sec'),6,'c',NULL,NULL,NULL),
+(nextval('id_metodo_pago_sec'),6,'p',8,12.5,1),
+(nextval('id_metodo_pago_sec'),6,'p',2,50,6);
 
 INSERT INTO rdj_productores (id,nombre,correo,telefono,url_web,id_asociacion) VALUES
 (nextval('id_productores_sec'),'Givaudan','sales@givaudan.com','+1 630-773-8484','www.givaudan.com',NULL),
 (nextval('id_productores_sec'),'Memphis','sac@memphisbr.com','+51 3535-3500','www.memphisbr.com',4),
 (nextval('id_productores_sec'),'Chanel','chanel_info@chanel.com','+1 800-550-0005','www.chanel.com/us',3);
+
+INSERT INTO rdj_productores_paises (id_productor, id_pais) VALUES
+(1,7), (1,9), (1,2), (2,5), (2,10), (2,11), (3,3), (3,4), (3,6);
 
 INSERT INTO rdj_miembros_ifra (id,fecha_inicio,tipo,fecha_fin,id_proveedor,id_productor) VALUES
 (nextval('id_miembro_ifra_sec'),'2017-11-01','p',NULL,1,NULL),
