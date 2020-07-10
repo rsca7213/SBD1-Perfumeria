@@ -41,3 +41,8 @@ WHERE pe.id=n.id_perfume AND es.num_cas=n.cas_esencia ORDER BY pe.nombre,n.tipo;
 SELECT pe.nombre AS perfume, es.nombre AS esencia
 FROM rdj_esencias_perfumes es, rdj_perfumes pe, rdj_monoliticos m
 WHERE pe.id=m.id_perfume AND es.num_cas=m.cas_esencia ORDER BY pe.nombre;
+
+/* para ver todas las familias con sus palabras claves */
+SELECT fa.nombre AS familia, pa.palabra AS palabra
+FROM rdj_familias_olfativas fa, rdj_palabras_claves pa, rdj_familias_palabras fp
+WHERE fp.id_familia=fa.id AND fp.id_palabra=pa.id ORDER BY fa.id;
