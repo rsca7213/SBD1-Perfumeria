@@ -1,4 +1,3 @@
-
 /*
     INSERTS de la base de datos del proyecto de perfumes
     Grupo #2
@@ -28,7 +27,16 @@ INSERT INTO rdj_paises (id,nombre,nacionalidad,id_asociacion) VALUES
 (nextval('id_pais_sec'),'Rusia','Ruso',NULL),
 (nextval('id_pais_sec'),'España','Español',NULL),
 (nextval('id_pais_sec'),'Colombia','Colombiano',NULL),
-(nextval('id_pais_sec'),'Argentina','Argentino',NULL); /* NOTA: Faltan paises por agregar */
+(nextval('id_pais_sec'),'Argentina','Argentino',NULL), 
+(nextval('id_pais_sec'),'Sudafrica','Sudafricano',NULL),
+(nextval('id_pais_sec'),'India','Indio',NULL),
+(nextval('id_pais_sec'),'Holanda','Holandes',NULL),
+(nextval('id_pais_sec'),'China','Chino',NULL),
+(nextval('id_pais_sec'),'Polonia','Polaco',NULL),
+(nextval('id_pais_sec'),'Haiti','Haitiano',NULL),
+(nextval('id_pais_sec'),'Bulgaria','Bulgaro',NULL),
+(nextval('id_pais_sec'),'Turquia','Turco',NULL),
+(nextval('id_pais_sec'),'Australia','Australiano',NULL);/* NOTA: Faltan paises por agregar */
 
 INSERT INTO rdj_proveedores (id,nombre,correo,telefono,url_web,id_asociacion) VALUES
 (nextval('id_proveedores_sec'),'Firmenich','contact@firmenich.com','+62 213863977','www.firmenich.com',NULL),
@@ -153,217 +161,6 @@ INSERT INTO rdj_criterios(id,nombre,descripcion) VALUES
 (nextval('id_criterio_sec'),'Cumplimiento','Porcentaje de cumplimiento de pedidos'),
 (nextval('id_criterio_sec'),'Criterio de éxito','Cantidad de porcentaje necesario para aprobar la evaluación');
 
-INSERT INTO rdj_perfumistas (id,pri_nombre,pri_apellido,seg_apellido,id_pais,seg_nombre) VALUES
-(nextval('id_perfumista_sec'),'Xavier','Renard','',7,NULL),
-(nextval('id_perfumista_sec'),'Veronica','Kato','',5,NULL),
-(nextval('id_perfumista_sec'),'John','Gamba','',3,NULL),
-(nextval('id_perfumista_sec'),'Ellen','Molner','',3,NULL),
-(nextval('id_perfumista_sec'),'Carlos','Lütz','Pozzer',5,NULL),
-(nextval('id_perfumista_sec'),'Ilse','Kuhlmann','',5,NULL),
-(nextval('id_perfumista_sec'),'Geraldo','Caruccio','',5,NULL),
-(nextval('id_perfumista_sec'),'Rodolfo','Gros','',5,NULL),
-(nextval('id_perfumista_sec'),'Domingos','Caruccio','',5,NULL),
-(nextval('id_perfumista_sec'),'Jacques','Polge','',7,NULL),
-(nextval('id_perfumista_sec'),'Ernest','Beaux','',8,NULL);
-
-INSERT INTO rdj_perfumes (id,nombre,genero,edad,monolitico,id_productor) VALUES
-(nextval('id_perfume_sec'),'Nicole Miller','u','ad',FALSE,1),
-(nextval('id_perfume_sec'),'Homem Verum','m','ad',FALSE,1),
-(nextval('id_perfume_sec'),'Eternal Magic','f','ad',FALSE,1),
-(nextval('id_perfume_sec'),'Alma de Flores Clássico','f','ad',FALSE,2),
-(nextval('id_perfume_sec'),'Essencia de Jazmin','f','ad',TRUE,2),
-(nextval('id_perfume_sec'),'Essencia de Champagne','u','ad',FALSE,2),
-(nextval('id_perfume_sec'),'Allure Homme Sport','m','ad',TRUE,3),
-(nextval('id_perfume_sec'),'Le 1940 Rouge de Chanel','f','ad',FALSE,3),
-(nextval('id_perfume_sec'),'Antaeus','m','ad',TRUE,3);
-
-INSERT INTO rdj_perfumes_perfumistas (id_perfume,id_perfumista) VALUES
-(1,1), (2,2), (2,3), (3,4), (4,5), (4,6), (4,7), (4,8), (4,9), (5,5), (5,6),
-(5,7), (5,8), (5,9), (6,5), (6,6), (6,7), (6,8), (6,9), (7,10), (8,11), (9,10);
-
-INSERT INTO rdj_intensidades (id,id_perfume,tipo,porcentaje,descripcion)VALUES
-(nextval('id_intensidad_sec'),1,'EdP',15,NULL),
-(nextval('id_intensidad_sec'),1,'EdT',10,NULL),
-(nextval('id_intensidad_sec'),2,'EdP',15,NULL),
-(nextval('id_intensidad_sec'),3,'EdT',10,NULL),
-(nextval('id_intensidad_sec'),4,'EdC',5,NULL),
-(nextval('id_intensidad_sec'),5,'EdT',10,NULL),
-(nextval('id_intensidad_sec'),6,'EdT',10,NULL),
-(nextval('id_intensidad_sec'),7,'EdT',10,NULL),
-(nextval('id_intensidad_sec'),7,'EdP',15,NULL),
-(nextval('id_intensidad_sec'),8,'P',NULL,NULL),
-(nextval('id_intensidad_sec'),9,'EdT',10,NULL);
-
-INSERT INTO rdj_presentaciones_perfumes (id,id_intensidad,id_perfume,volumen)VALUES
-(nextval('id_present_perfume_sec'),1,1,100),
-(nextval('id_present_perfume_sec'),2,1,100),
-(nextval('id_present_perfume_sec'),2,1,125),
-(nextval('id_present_perfume_sec'),3,2,100),
-(nextval('id_present_perfume_sec'),4,3,50),
-(nextval('id_present_perfume_sec'),5,4,120),
-(nextval('id_present_perfume_sec'),6,5,160),
-(nextval('id_present_perfume_sec'),7,6,160),
-(nextval('id_present_perfume_sec'),8,7,50),
-(nextval('id_present_perfume_sec'),8,7,100),
-(nextval('id_present_perfume_sec'),8,7,150),
-(nextval('id_present_perfume_sec'),9,7,50),
-(nextval('id_present_perfume_sec'),9,7,100),
-(nextval('id_present_perfume_sec'),10,8,100),
-(nextval('id_present_perfume_sec'),11,9,50),
-(nextval('id_present_perfume_sec'),11,9,100);
-
-INSERT INTO rdj_familias_olfativas (id,nombre)VALUES
-(nextval('id_familia_sec'),'Verde'),
-(nextval('id_familia_sec'),'Cítrico'),
-(nextval('id_familia_sec'),'Floral'),
-(nextval('id_familia_sec'),'Frutal'),
-(nextval('id_familia_sec'),'Aromático'),
-(nextval('id_familia_sec'),'Helechos'),
-(nextval('id_familia_sec'),'Chipre'),
-(nextval('id_familia_sec'),'Amaderada'),
-(nextval('id_familia_sec'),'Oriental'),
-(nextval('id_familia_sec'),'Aldehídico');
-
-INSERT INTO rdj_perfumes_familias (id_perfume,id_familia)VALUES
-(1,1), (1,2), (2,3), (3,2), (4,2), (5,2),
-(6,4), (7,3), (8,2), (8,5), (9,3), (9,6);
-
-INSERT INTO rdj_ingredientes_esencias (cas_ing_esencia,nombre,naturaleza,id_proveedor,nombre_quim,pto_inf,solubilidad,proc_creac,parte_proc,vida_util,num_einecs,rendimiento)VALUES
-(1005171,'Ambranum','n',1,NULL,84,NULL,'Asociación equilibrada de ingredientes (extractos naturales y moléculas sintéticas), se mezclan para crear una Especialidad inspiradora.',NULL,NULL,NULL,NULL),
-(68650464,'Buchu Eo Aged','s',1,NULL,67,NULL,'Obtenido por destilación de la biomasa con agua, o vapor. El aceite esencial está físicamente separado de la fase acuosa por decantación.',NULL,NULL,NULL,NULL),
-(71735790,'Cedroxyde','s',1,'4,8,12-Trimethyl-13-oxabicyclo[10.1.0]trideca-4,8-diene',100,NULL,NULL,NULL,NULL,2759677,NULL),
-(52424609,'Ozaflor','s',2,NULL,100,95,NULL,NULL,180,NULL,NULL),
-(4736452,'Iriswood','n',2,NULL,100,95,NULL,NULL,180,28068919,NULL),
-(8050155,'Floralyn','n',2,NULL,100,95,NULL,NULL,365,2324762,NULL),
-(28219616,'Sandal Fleur','n',3,'2-Ethyl-4-(2,2,3-Trimethyl-3-Cyclopenten-1-yl)2-Buten-1-ol',100,70,NULL,NULL,730,2489088,NULL),
-(127424,'Methyl Ionone','s',3,'4-penten-3-one,5-(2, 6,6-Trimethyl-2-Cyclohexen-1-yl)',100,70,NULL,NULL,730,2048421,NULL),
-(586629,'Pine-Oil-70','s',3,'Mixture of terpene alcohols and Terpenes',77,NULL,NULL,NULL,NULL,2026806,NULL),
-(89883,'Vetiverol','n',4,'(5R,6R)-6,10-dimethyl-3-propan-2-ylidenespiro[4.5]dec-9-en-8-ol',100,70,NULL,NULL,NULL,2685789,NULL),
-(106241,'Geraniol','n',4,'(2E)-3,7-dimethylocta-2,6-dien-1-ol',108,95,NULL,NULL,NULL,2033771,NULL),
-(120116,'Benzyl Isoeugenol','s',4,'2-methoxy-1-phenylmethoxy-4-prop-1-enylbenzene',200,80,NULL,NULL,NULL,2043706,NULL),
-(66251,'C-6 Aldehyde','n',5,NULL,29,90,NULL,NULL,NULL,2006245,NULL),
-(41890920,'Osyrol','s',5,'7-Dimethyl-7-Methoxyoctan-2-ol',110,NULL,NULL,NULL,NULL,2555747,NULL),
-(21112378,'Vetimoss','s',5,'2-tert-butyl-1,4-dimethoxybenzene',93,NULL,NULL,NULL,NULL,2442165,NULL),
-(106729,'Melonal','s',6,'2,6-dimethylhept-5-enal',60,75,NULL,NULL,365,2034272 ,NULL),
-(1,'Citral','n',6,NULL,100,95,NULL,NULL,180,NULL,NULL);
-
-INSERT INTO rdj_esencias_perfumes (num_cas,nombre,tipo,descripcion) VALUES
-(90082874,'Ciruela','n','Aceite natural con un fuerte aroma a ciruela.'),
-(9028880,'Aldehido','n','Aldehyde con potasio activado proveniente de levadura.'),
-(8008524,'Aceite de hierba de cilantro','n','Aceite líquido transparente, móvil, incoloro a amarillo claro con olor a cilantro.'),
-(8021430,'Clavel absoluto','n','Aceite de aroma floral, picante y vivido.'),
-(4736452,'Iriswood','n','Aceite con olor amaderado y terroso.'),
-(8024053,'Aceite de nardo','s','Aceite naranja con tonalidad roja y marrón que genera un fuerte olor a nardo.'),
-(8006879,'Esencia de sándalo','n','Aceite con un aroma clásico amaderado, lactoso y suave.'),
-(89883,'Vetiverol','n','Aceite proveniente de la grama Vetiveria Zizanoides.'),
-(8022568,'Aceite de sabia','n','Aroma culinario aromático con aspectos nebulosos, suaves y ligeramente picantes.'),
-(8008455,'Nuez moscada','n','Aroma dulce picante con notas base terrosas y picantes,'),
-(8024086,'Hoja de violeta','n','Aroma fresco y aromático, similar a pepino.'),
-(8007758,'Aceite de bergamota','n','Aroma cítrico, amargo y agrio, elegante, ligera nota con suave tono picante.'),
-(8007010,'Rosa','n','Aroma femenino, limpio e intensamente romantico.'),
-(8024064,'Vainilla natural','n','Aroma dulce, acogedor, reconfortante, con una agradable sensación de hornear galletas.'),
-(8014093,'Pachouli','n','Aroma amaderado musgoso.'),
-(8000280,'Aceite de lavanda','n','Aroma floral aromático limpio, con facetas verdes, frescas, picantes, regaliz.'),
-(84929793,'Resina de benjui','s','Una cálida nota balsámica que recuerda a la vainilla.'),
-(977059156,'Musgo de roble','n','Un suelo de bosque amargo y muy oloroso.'),
-(8022966,'Aceite de jazmin','n','Flor blanca aromatica con olor a jazmin.'),
-(91770444,'Aceite de orquidea','n','Aceite de color rosa con un fuerte olor a orquidea.'),
-(8023981,'Aceite de núcleo de durazno','n','Aroma frutal dulce y con olor a nuez.'),
-(8002673,'Ambar','s','Aroma animal con olor a almizcle.'),
-(8008579,'Naranja','n','Aroma citrico frutal dulce.');
-
-INSERT INTO rdj_notas (id_perfume,cas_esencia,tipo) VALUES
-(1,90082874,'s'), (1,9028880,'s'), (1,8008524,'s'), (1,8021430,'c'), 
-(1,4736452,'c'), (1,8024053,'c'), (1,8006879,'f'), (1,89883,'f'),
-(2,8022568,'s'), (2,8008455,'s'), (2,8024086,'c'), (2,8024053,'f'),
-(2,89883,'f'), (2,4736452,'f'), 
-(3,8024086,'s'), (3,8007758,'s'),
-(3,8007010,'c'), (3,4736452,'c'), (3,8024064,'f'), (3,8014093,'f'),
-(4,8000280,'s'), (4,8007758,'s'), (4,8021430,'c'), (4,8024064,'f'),
-(4,84929793,'f'), (4,977059156,'f'),
-(6,8000280,'s'), (6,90082874,'s'), (6,8023981,'s'), (6,8022966,'c'),
-(6,4736452,'c'), (6,8024064,'f'), (6,8014093,'f'), (6,8002673,'f'),
-(8,9028880,'s'), (8,8007010,'c'), (8,8024086,'c'), (8,8002673,'f'); 
-
-INSERT INTO rdj_monoliticos (id_perfume,cas_esencia) VALUES
-(5,8022966), (5,91770444),
-(7,8008579), (7,9028880), (7,8024064), (7,8002673),
-(9,8008524), (9,8007758), (9,8022966), (9,8007010), (9,8014093), (9,977059156);
-
-INSERT INTO rdj_esencias_perfumes_familias (cas_esencia,id_familia) VALUES
-(90082874,4), 
-(9028880,2), (9028880,10),
-(8008524,3), (8008524,1),
-(8021430,3), 
-(4736452,8), (4736452,3), 
-(8024053,3), 
-(8006879,8), 
-(89883,1),
-(8022568,1), (8022568,6), 
-(8008455,9), 
-(8024086,3), (8024086,5),
-(8007758,2), 
-(8007010,3), 
-(8024064,9), (8024064,4), 
-(8014093,8), (8014093,7),
-(8000280,5), (8000280,3), 
-(84929793,9), 
-(977059156,7), (977059156,6),
-(8022966,3), (8022966,1), 
-(91770444,3),
-(8002673,4),
-(8023981,4),
-(8008579,2), (8008579,4);
-
-INSERT INTO rdj_palabras_claves (id, palabra) VALUES
-/* caracteres */
-(nextval('id_palabra_sec'),'informal'),
-(nextval('id_palabra_sec'),'natural'),
-(nextval('id_palabra_sec'),'clásico'),
-(nextval('id_palabra_sec'),'seductor'),
-(nextval('id_palabra_sec'),'moderno'),
-(nextval('id_palabra_sec'),'dulce'),
-(nextval('id_palabra_sec'),'cálido'),
-(nextval('id_palabra_sec'),'asertivo'),
-(nextval('id_palabra_sec'),'vital'),
-(nextval('id_palabra_sec'),'tenaz'),
-/* personalidades */
-(nextval('id_palabra_sec'),'libertad'),
-(nextval('id_palabra_sec'),'independencia'),
-(nextval('id_palabra_sec'),'creatividad'),
-(nextval('id_palabra_sec'),'diversión'),
-(nextval('id_palabra_sec'),'fantasia'),
-(nextval('id_palabra_sec'),'versatibilidad'),
-(nextval('id_palabra_sec'),'delicadeza'),
-(nextval('id_palabra_sec'),'sensualidad'),
-(nextval('id_palabra_sec'),'optimismo'),
-(nextval('id_palabra_sec'),'alegría'),
-(nextval('id_palabra_sec'),'lucidez'),
-(nextval('id_palabra_sec'),'familiaridad'),
-(nextval('id_palabra_sec'),'confianza'),
-(nextval('id_palabra_sec'),'energía'),
-/* aromas */
-(nextval('id_palabra_sec'),'Floral'),
-(nextval('id_palabra_sec'),'Frutal'),
-(nextval('id_palabra_sec'),'Verde'),
-(nextval('id_palabra_sec'),'Herbal'),
-(nextval('id_palabra_sec'),'Cítrico'),
-(nextval('id_palabra_sec'),'Herbal aromático'),
-(nextval('id_palabra_sec'),'Amaderado'),
-(nextval('id_palabra_sec'),'Otros');
-
-INSERT INTO rdj_familias_palabras (id_familia,id_palabra) VALUES
-(1,2), (1,1), (1,19), (1,11), (1,23), (1,25), (1,27), (1,29),
-(2,9), (2,2), (2,4), (2,10), (2,11), (2,14), (2,26), (2,29),
-(3,4), (3,6), (3,3), (3,15), (3,17), (3,18), (3,25), (3,30),
-(4,2), (4,6), (4,9), (4,14), (4,19), (4,20), (4,24), (4,26), (4,29),
-(5,8), (5,9), (5,10), (5,21), (5,22), (5,25), (5,27), (5,28), (5,30),
-(6,10), (6,8), (6,23), (6,24), (6,16), (6,13), (6,27), (6,30), (6,31),
-(7,7), (7,2), (7,16), (7,13), (7,12), (7,25), (7,30), (7,31), (7,32),
-(8,7), (8,10), (8,3), (8,5), (8,23), (8,22), (8,21), (8,12), (8,31), (8,32),
-(9,4), (9,5), (9,6), (9,7), (9,13), (9,15), (9,17), (9,18), (9,25), (9,32), (9,31),
-(10,2), (10,5), (10,14), (10,16), (10,21), (10,22), (10,25), (10,28), (10,27), (10,32);
-
 INSERT INTO rdj_sustancias_prohibidas (num_cas,nombre) VALUES
 (103640,'Bromostyrene'),
 (103797,'Phenyl acetone'),
@@ -478,3 +275,277 @@ INSERT INTO rdj_sustancias_prohibidas (num_cas,nombre) VALUES
 (90046041,'Savin oil'),
 (90131434,'Tagetes oil and absolute'),
 (8016840,'Tagetes oil and absolute');
+
+INSERT INTO rdj_perfumistas (id,pri_nombre,pri_apellido,seg_apellido,id_pais,seg_nombre) VALUES
+(nextval('id_perfumista_sec'),'Xavier','Renard','',7,NULL),
+(nextval('id_perfumista_sec'),'Veronica','Kato','',5,NULL),
+(nextval('id_perfumista_sec'),'John','Gamba','',3,NULL),
+(nextval('id_perfumista_sec'),'Ellen','Molner','',3,NULL),
+(nextval('id_perfumista_sec'),'Carlos','Lütz','Pozzer',5,NULL),
+(nextval('id_perfumista_sec'),'Ilse','Kuhlmann','',5,NULL),
+(nextval('id_perfumista_sec'),'Geraldo','Caruccio','',5,NULL),
+(nextval('id_perfumista_sec'),'Rodolfo','Gros','',5,NULL),
+(nextval('id_perfumista_sec'),'Domingos','Caruccio','',5,NULL),
+(nextval('id_perfumista_sec'),'Jacques','Polge','',7,NULL),
+(nextval('id_perfumista_sec'),'Ernest','Beaux','',8,NULL);
+
+INSERT INTO rdj_perfumes (id,nombre,genero,edad,monolitico,id_productor) VALUES
+(nextval('id_perfume_sec'),'Nicole Miller','u','ad',FALSE,1),
+(nextval('id_perfume_sec'),'Homem Verum','m','ad',FALSE,1),
+(nextval('id_perfume_sec'),'Eternal Magic','f','ad',FALSE,1),
+(nextval('id_perfume_sec'),'Alma de Flores Clássico','f','ad',FALSE,2),
+(nextval('id_perfume_sec'),'Essencia de Jazmin','f','ad',TRUE,2),
+(nextval('id_perfume_sec'),'Essencia de Champagne','u','ad',FALSE,2),
+(nextval('id_perfume_sec'),'Allure Homme Sport','m','ad',TRUE,3),
+(nextval('id_perfume_sec'),'Le 1940 Rouge de Chanel','f','ad',FALSE,3),
+(nextval('id_perfume_sec'),'Antaeus','m','ad',TRUE,3);
+
+INSERT INTO rdj_perfumes_perfumistas (id_perfume,id_perfumista) VALUES
+(1,1), (2,2), (2,3), (3,4), (4,5), (4,6), (4,7), (4,8), (4,9), (5,5), (5,6),
+(5,7), (5,8), (5,9), (6,5), (6,6), (6,7), (6,8), (6,9), (7,10), (8,11), (9,10);
+
+INSERT INTO rdj_intensidades (id,id_perfume,tipo,porcentaje,descripcion)VALUES
+(nextval('id_intensidad_sec'),1,'EdP',15,NULL),
+(nextval('id_intensidad_sec'),1,'EdT',10,NULL),
+(nextval('id_intensidad_sec'),2,'EdP',15,NULL),
+(nextval('id_intensidad_sec'),3,'EdT',10,NULL),
+(nextval('id_intensidad_sec'),4,'EdC',5,NULL),
+(nextval('id_intensidad_sec'),5,'EdT',10,NULL),
+(nextval('id_intensidad_sec'),6,'EdT',10,NULL),
+(nextval('id_intensidad_sec'),7,'EdT',10,NULL),
+(nextval('id_intensidad_sec'),7,'EdP',15,NULL),
+(nextval('id_intensidad_sec'),8,'P',NULL,NULL),
+(nextval('id_intensidad_sec'),9,'EdT',10,NULL);
+
+INSERT INTO rdj_presentaciones_perfumes (id,id_intensidad,id_perfume,volumen)VALUES
+(nextval('id_present_perfume_sec'),1,1,100),
+(nextval('id_present_perfume_sec'),2,1,100),
+(nextval('id_present_perfume_sec'),2,1,125),
+(nextval('id_present_perfume_sec'),3,2,100),
+(nextval('id_present_perfume_sec'),4,3,50),
+(nextval('id_present_perfume_sec'),5,4,120),
+(nextval('id_present_perfume_sec'),6,5,160),
+(nextval('id_present_perfume_sec'),7,6,160),
+(nextval('id_present_perfume_sec'),8,7,50),
+(nextval('id_present_perfume_sec'),8,7,100),
+(nextval('id_present_perfume_sec'),8,7,150),
+(nextval('id_present_perfume_sec'),9,7,50),
+(nextval('id_present_perfume_sec'),9,7,100),
+(nextval('id_present_perfume_sec'),10,8,100),
+(nextval('id_present_perfume_sec'),11,9,50),
+(nextval('id_present_perfume_sec'),11,9,100);
+
+INSERT INTO rdj_esencias_perfumes (num_cas,nombre,tipo,descripcion) VALUES
+(90082874,'Ciruela','n','Aceite natural con un fuerte aroma a ciruela.'),
+(9028880,'Aldehido','n','Aldehyde con potasio activado proveniente de levadura.'),
+(8008524,'Aceite de hierba de cilantro','n','Aceite líquido transparente, móvil, incoloro a amarillo claro con olor a cilantro.'),
+(8021430,'Clavel absoluto','n','Aceite de aroma floral, picante y vivido.'),
+(4736452,'Iriswood','n','Aceite con olor amaderado y terroso.'),
+(8024053,'Aceite de nardo','s','Aceite naranja con tonalidad roja y marrón que genera un fuerte olor a nardo.'),
+(8006879,'Esencia de sándalo','n','Aceite con un aroma clásico amaderado, lactoso y suave.'),
+(89883,'Vetiverol','n','Aceite proveniente de la grama Vetiveria Zizanoides.'),
+(8022568,'Aceite de sabia','n','Aroma culinario aromático con aspectos nebulosos, suaves y ligeramente picantes.'),
+(8008455,'Nuez moscada','n','Aroma dulce picante con notas base terrosas y picantes,'),
+(8024086,'Hoja de violeta','n','Aroma fresco y aromático, similar a pepino.'),
+(8007758,'Aceite de bergamota','n','Aroma cítrico, amargo y agrio, elegante, ligera nota con suave tono picante.'),
+(8007010,'Rosa','n','Aroma femenino, limpio e intensamente romantico.'),
+(8024064,'Vainilla natural','n','Aroma dulce, acogedor, reconfortante, con una agradable sensación de hornear galletas.'),
+(8014093,'Pachouli','n','Aroma amaderado musgoso.'),
+(8000280,'Aceite de lavanda','n','Aroma floral aromático limpio, con facetas verdes, frescas, picantes, regaliz.'),
+(84929793,'Resina de benjui','s','Una cálida nota balsámica que recuerda a la vainilla.'),
+(977059156,'Musgo de roble','n','Un suelo de bosque amargo y muy oloroso.'),
+(8022966,'Aceite de jazmin','n','Flor blanca aromatica con olor a jazmin.'),
+(91770444,'Aceite de orquidea','n','Aceite de color rosa con un fuerte olor a orquidea.'),
+(8023981,'Aceite de núcleo de durazno','n','Aroma frutal dulce y con olor a nuez.'),
+(8002673,'Ambar','s','Aroma animal con olor a almizcle.'),
+(8008579,'Naranja','n','Aroma citrico frutal dulce.');
+
+
+INSERT INTO rdj_monoliticos (id_perfume,cas_esencia) VALUES
+(5,8022966), (5,91770444),
+(7,8008579), (7,9028880), (7,8024064), (7,8002673),
+(9,8008524), (9,8007758), (9,8022966), (9,8007010), (9,8014093), (9,977059156);
+
+INSERT INTO rdj_notas (id_perfume,cas_esencia,tipo) VALUES
+(1,90082874,'s'), (1,9028880,'s'), (1,8008524,'s'), (1,8021430,'c'), 
+(1,4736452,'c'), (1,8024053,'c'), (1,8006879,'f'), (1,89883,'f'),
+(2,8022568,'s'), (2,8008455,'s'), (2,8024086,'c'), (2,8024053,'f'),
+(2,89883,'f'), (2,4736452,'f'), 
+(3,8024086,'s'), (3,8007758,'s'),
+(3,8007010,'c'), (3,4736452,'c'), (3,8024064,'f'), (3,8014093,'f'),
+(4,8000280,'s'), (4,8007758,'s'), (4,8021430,'c'), (4,8024064,'f'),
+(4,84929793,'f'), (4,977059156,'f'),
+(6,8000280,'s'), (6,90082874,'s'), (6,8023981,'s'), (6,8022966,'c'),
+(6,4736452,'c'), (6,8024064,'f'), (6,8014093,'f'), (6,8002673,'f'),
+(8,9028880,'s'), (8,8007010,'c'), (8,8024086,'c'), (8,8002673,'f'); 
+
+INSERT INTO rdj_familias_olfativas (id,nombre)VALUES
+(nextval('id_familia_sec'),'Verde'),
+(nextval('id_familia_sec'),'Cítrico'),
+(nextval('id_familia_sec'),'Floral'),
+(nextval('id_familia_sec'),'Frutal'),
+(nextval('id_familia_sec'),'Aromático'),
+(nextval('id_familia_sec'),'Helechos'),
+(nextval('id_familia_sec'),'Chipre'),
+(nextval('id_familia_sec'),'Amaderada'),
+(nextval('id_familia_sec'),'Oriental'),
+(nextval('id_familia_sec'),'Aldehídico');
+
+INSERT INTO rdj_esencias_perfumes_familias (cas_esencia,id_familia) VALUES
+(90082874,4), 
+(9028880,2), (9028880,10),
+(8008524,3), (8008524,1),
+(8021430,3), 
+(4736452,8), (4736452,3), 
+(8024053,3), 
+(8006879,8), 
+(89883,1),
+(8022568,1), (8022568,6), 
+(8008455,9), 
+(8024086,3), (8024086,5),
+(8007758,2), 
+(8007010,3), 
+(8024064,9), (8024064,4), 
+(8014093,8), (8014093,7),
+(8000280,5), (8000280,3), 
+(84929793,9), 
+(977059156,7), (977059156,6),
+(8022966,3), (8022966,1), 
+(91770444,3),
+(8002673,4),
+(8023981,4),
+(8008579,2), (8008579,4);
+
+INSERT INTO rdj_perfumes_familias (id_perfume,id_familia)VALUES
+(1,1), (1,2), (2,3), (3,2), (4,2), (5,2),
+(6,4), (7,3), (8,2), (8,5), (9,3), (9,6);
+
+INSERT INTO rdj_palabras_claves (id, palabra) VALUES
+/* caracteres */
+(nextval('id_palabra_sec'),'informal'),
+(nextval('id_palabra_sec'),'natural'),
+(nextval('id_palabra_sec'),'clásico'),
+(nextval('id_palabra_sec'),'seductor'),
+(nextval('id_palabra_sec'),'moderno'),
+(nextval('id_palabra_sec'),'dulce'),
+(nextval('id_palabra_sec'),'cálido'),
+(nextval('id_palabra_sec'),'asertivo'),
+(nextval('id_palabra_sec'),'vital'),
+(nextval('id_palabra_sec'),'tenaz'),
+/* personalidades */
+(nextval('id_palabra_sec'),'libertad'),
+(nextval('id_palabra_sec'),'independencia'),
+(nextval('id_palabra_sec'),'creatividad'),
+(nextval('id_palabra_sec'),'diversión'),
+(nextval('id_palabra_sec'),'fantasia'),
+(nextval('id_palabra_sec'),'versatibilidad'),
+(nextval('id_palabra_sec'),'delicadeza'),
+(nextval('id_palabra_sec'),'sensualidad'),
+(nextval('id_palabra_sec'),'optimismo'),
+(nextval('id_palabra_sec'),'alegría'),
+(nextval('id_palabra_sec'),'lucidez'),
+(nextval('id_palabra_sec'),'familiaridad'),
+(nextval('id_palabra_sec'),'confianza'),
+(nextval('id_palabra_sec'),'energía'),
+/* aromas */
+(nextval('id_palabra_sec'),'Floral'),
+(nextval('id_palabra_sec'),'Frutal'),
+(nextval('id_palabra_sec'),'Verde'),
+(nextval('id_palabra_sec'),'Herbal'),
+(nextval('id_palabra_sec'),'Cítrico'),
+(nextval('id_palabra_sec'),'Herbal aromático'),
+(nextval('id_palabra_sec'),'Amaderado'),
+(nextval('id_palabra_sec'),'Otros');
+
+INSERT INTO rdj_familias_palabras (id_familia,id_palabra) VALUES
+(1,2), (1,1), (1,19), (1,11), (1,23), (1,25), (1,27), (1,29),
+(2,9), (2,2), (2,4), (2,10), (2,11), (2,14), (2,26), (2,29),
+(3,4), (3,6), (3,3), (3,15), (3,17), (3,18), (3,25), (3,30),
+(4,2), (4,6), (4,9), (4,14), (4,19), (4,20), (4,24), (4,26), (4,29),
+(5,8), (5,9), (5,10), (5,21), (5,22), (5,25), (5,27), (5,28), (5,30),
+(6,10), (6,8), (6,23), (6,24), (6,16), (6,13), (6,27), (6,30), (6,31),
+(7,7), (7,2), (7,16), (7,13), (7,12), (7,25), (7,30), (7,31), (7,32),
+(8,7), (8,10), (8,3), (8,5), (8,23), (8,22), (8,21), (8,12), (8,31), (8,32),
+(9,4), (9,5), (9,6), (9,7), (9,13), (9,15), (9,17), (9,18), (9,25), (9,32), (9,31),
+(10,2), (10,5), (10,14), (10,16), (10,21), (10,22), (10,25), (10,28), (10,27), (10,32);
+
+INSERT INTO rdj_ingredientes_esencias (cas_ing_esencia,nombre,naturaleza,id_proveedor,nombre_quim,pto_inf,solubilidad,proc_creac,parte_proc,vida_util,num_einecs,rendimiento)VALUES
+(1005171,'Ambranum','n',1,NULL,84,NULL,'Asociación equilibrada de ingredientes (extractos naturales y moléculas sintéticas), se mezclan para crear una Especialidad inspiradora.',NULL,NULL,NULL,NULL),
+(68650464,'Buchu Eo Aged','s',1,NULL,67,NULL,'Obtenido por destilación de la biomasa con agua, o vapor. El aceite esencial está físicamente separado de la fase acuosa por decantación.',NULL,NULL,NULL,NULL),
+(71735790,'Cedroxyde','s',1,'4,8,12-Trimethyl-13-oxabicyclo[10.1.0]trideca-4,8-diene',100,NULL,NULL,NULL,NULL,2759677,NULL),
+(52424609,'Ozaflor','s',2,NULL,100,95,NULL,NULL,180,NULL,NULL),
+(4736452,'Iriswood','n',2,NULL,100,95,NULL,NULL,180,28068919,NULL),
+(8050155,'Floralyn','n',2,NULL,100,95,NULL,NULL,365,2324762,NULL),
+(28219616,'Sandal Fleur','n',3,'2-Ethyl-4-(2,2,3-Trimethyl-3-Cyclopenten-1-yl)2-Buten-1-ol',100,70,NULL,NULL,730,2489088,NULL),
+(127424,'Methyl Ionone','s',3,'4-penten-3-one,5-(2, 6,6-Trimethyl-2-Cyclohexen-1-yl)',100,70,NULL,NULL,730,2048421,NULL),
+(586629,'Pine-Oil-70','s',3,'Mixture of terpene alcohols and Terpenes',77,NULL,NULL,NULL,NULL,2026806,NULL),
+(89883,'Vetiverol','n',4,'(5R,6R)-6,10-dimethyl-3-propan-2-ylidenespiro[4.5]dec-9-en-8-ol',100,70,NULL,NULL,NULL,2685789,NULL),
+(106241,'Geraniol','n',4,'(2E)-3,7-dimethylocta-2,6-dien-1-ol',108,95,NULL,NULL,NULL,2033771,NULL),
+(120116,'Benzyl Isoeugenol','s',4,'2-methoxy-1-phenylmethoxy-4-prop-1-enylbenzene',200,80,NULL,NULL,NULL,2043706,NULL),
+(66251,'C-6 Aldehyde','n',5,NULL,29,90,NULL,NULL,NULL,2006245,NULL),
+(41890920,'Osyrol','s',5,'7-Dimethyl-7-Methoxyoctan-2-ol',110,NULL,NULL,NULL,NULL,2555747,NULL),
+(21112378,'Vetimoss','s',5,'2-tert-butyl-1,4-dimethoxybenzene',93,NULL,NULL,NULL,NULL,2442165,NULL),
+(106729,'Melonal','s',6,'2,6-dimethylhept-5-enal',60,75,NULL,NULL,365,2034272 ,NULL),
+(5392405,'Citral','n',6,'3,7-dimethylocta-2,6-dienal',195,70,NULL,NULL,NULL,2263946,NULL),
+(4180238,'Anethole','n',6,'1-methoxy-4-[(E)-prop-1-enyl]benzene',195,80,NULL,NULL,NULL,2240520,NULL);
+
+INSERT INTO rdj_ings_esencias_paises (id_pais,cas_ing_esencia)VALUES
+(9,1005171),
+(12,68650464),
+(13,71735790),
+(1,52424609),
+(14,4736452),
+(14,8050155),
+(13,28219616),
+(15,127424),
+(16,586629),
+(17,89883),
+(18,106241), (19,106241),
+(2,120116),
+(3,66251),
+(2,41890920),
+(2,21112378),
+(3,106729),
+(20,5392405),
+(7,4180238);
+
+INSERT INTO rdj_presents_ings_esencias (id,cas_ing_esencia,volumen,precio)VALUES
+(nextval('id_present_ing_esen_sec'),1005171,5,11), (nextval('id_present_ing_esen_sec'),1005171,25,36), (nextval('id_present_ing_esen_sec'),1005171,60,65), (nextval('id_present_ing_esen_sec'),1005171,200,205), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),68650464,5,21), (nextval('id_present_ing_esen_sec'),68650464,10,32), /*unidades: ml*/
+(nextval('id_present_ing_esen_sec'),71735790,30,16), (nextval('id_present_ing_esen_sec'),71735790,50,20), (nextval('id_present_ing_esen_sec'),71735790,100,38), (nextval('id_present_ing_esen_sec'),71735790,200,64), (nextval('id_present_ing_esen_sec'),71735790,500,141), (nextval('id_present_ing_esen_sec'),71735790,1000,251), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),52424609,30,16), (nextval('id_present_ing_esen_sec'),52424609,50,23), (nextval('id_present_ing_esen_sec'),52424609,100,40), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),4736452,5,29), (nextval('id_present_ing_esen_sec'),4736452,120,23), (nextval('id_present_ing_esen_sec'),4736452,60,265), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),8050155,100,18), (nextval('id_present_ing_esen_sec'),8050155,500,44), (nextval('id_present_ing_esen_sec'),8050155,1000,84), (nextval('id_present_ing_esen_sec'),8050155,2000,151), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),28219616,30,25), (nextval('id_present_ing_esen_sec'),28219616,50,37), (nextval('id_present_ing_esen_sec'),28219616,100,63), (nextval('id_present_ing_esen_sec'),8050155,200,107), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),127424,100,29), (nextval('id_present_ing_esen_sec'),127424,500,100), (nextval('id_present_ing_esen_sec'),127424,1000,190), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),586629,30,35), (nextval('id_present_ing_esen_sec'),586629,50,53), (nextval('id_present_ing_esen_sec'),586629,100,100), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),89883,100,281), (nextval('id_present_ing_esen_sec'),89883,200,480), (nextval('id_present_ing_esen_sec'),89883,500,1080), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),106241,100,20), (nextval('id_present_ing_esen_sec'),106241,500,70), (nextval('id_present_ing_esen_sec'),106241,1000,126), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),120116,100,20), (nextval('id_present_ing_esen_sec'),120116,500,70), (nextval('id_present_ing_esen_sec'),120116,1000,126), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),66251,100,38), (nextval('id_present_ing_esen_sec'),66251,200,48), (nextval('id_present_ing_esen_sec'),66251,500,87), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),41890920,1000,80), (nextval('id_present_ing_esen_sec'),41890920,5000,110), (nextval('id_present_ing_esen_sec'),41890920,10000,200), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),41890920,1000,80), (nextval('id_present_ing_esen_sec'),41890920,5000,110), (nextval('id_present_ing_esen_sec'),41890920,10000,200), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),21112378,190000,250), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),106729,250,40), (nextval('id_present_ing_esen_sec'),106729,500,70), (nextval('id_present_ing_esen_sec'),106729,1000,125), /*unidades: gr*/
+(nextval('id_present_ing_esen_sec'),5392405,5,25), (nextval('id_present_ing_esen_sec'),5392405,100,35), (nextval('id_present_ing_esen_sec'),5392405,500,135), /*unidades: ml*/
+(nextval('id_present_ing_esen_sec'),4180238,100,25), (nextval('id_present_ing_esen_sec'),4180238,200,43), (nextval('id_present_ing_esen_sec'),4180238,500,80); /*unidades: gr*/
+
+INSERT INTO rdj_ings_esencias_familias (id_familia,cas_ing_esencia)VALUES
+(5,1005171),
+(1,68650464), (4,68650464),
+(8,71735790), (5,71735790),
+(3,52424609), (2,52424609),
+(8,4736452), (3,4736452),  
+(3,8050155),
+(8,28219616), (3,28219616),
+(3,127424), (8,127424),
+(8,586629), (5,586629),
+(8,89883), (10,89883),
+(3,106241), (4,106241),
+(3,120116), (10,120116),
+(4,66251), (6,66251),
+(8,41890920),
+(6,21112378),
+(10,106729),
+(4,5392405), (6,5392405),
+(10,4180238);
