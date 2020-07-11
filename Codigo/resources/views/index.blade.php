@@ -35,7 +35,7 @@
                     <a href="{{ route('menuProveedor', ['id_prov' => 4]) }}"><img src=" {{ asset('img/empresas/privi.png') }}" width="220" alt="Privi Organics" ></a>
                 </div>
                 <div class="col-4 justify-content-center text-center">
-                    <a href="{{ route('menuProveedor', ['id_prov' => 5]) }}"><img src=" {{ asset('img/empresas/keva.png') }}" width="180" alt="Kelhar & Co"></a>
+                    <a href="{{ route('menuProveedor', ['id_prov' => 5]) }}"><img src=" {{ asset('img/empresas/keva.png') }}" width="150" alt="Kelhar & Co"></a>
                 </div>
                 <div class="col-4 justify-content-center text-center mt-4">
                     <a href="{{ route('menuProveedor', ['id_prov' => 6]) }}"><img src=" {{ asset('img/empresas/prinova.png') }}" width="245" alt="Prinova Group"></a>
