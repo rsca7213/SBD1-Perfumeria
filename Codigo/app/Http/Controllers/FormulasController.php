@@ -33,4 +33,30 @@ class FormulasController extends Controller
             'escala' => $escala
         ]);
     }
+
+    public function crearFormulaInicial ($id_prod) {
+        $formInicial = DB::select(DB::raw("SELECT c.nombre, c.descripcion AS desc, h.peso, MAX(h.fecha_inicio) AS fecha 
+        FROM rdj_criterios c, rdj_hist_formulas h, rdj_productores p 
+        WHERE c.id=h.id_criterio AND h.id_productor=? AND h.tipo='i' AND h.fecha_fin IS NULL
+        GROUP BY c.id, c.nombre, c.descripcion, h.peso, h.id_productor ORDER BY c.id"),[$id_prod]);
+
+        if(sizeof($formInicial) != 0)
+        return view('productores.formulas.ce-formula-i',[
+            'id_prod' => $id_prod
+        ]);
+        
+        else return redirect ('productor/'.$id_prod.'/formulas');
+    }
+
+    public function insertFormulaInicial (Request $request, $id_prod) {
+        
+        $data = $request->validate([
+            'ubicacion' => 'required|numeric|max:100|min:0',
+            'pagos' => 'required|numeric|max:100|min:0',
+            'envios' => 'required|numeric|max:100|min:0'
+        ]);
+
+        dd($data);
+
+    }
 }

@@ -19,7 +19,8 @@ Route::get('/proveedor/{id_prov}', 'MenuController@menuProveedor')->name('menuPr
 
 /* Rutas referentes a las formulas de evaluacion */
 Route::get('/productor/{id_prod}/formulas', 'FormulasController@verFormulas')->name('verFormulas');
-
+Route::get('/productor/{id_prod}/formulas/inicial', 'FormulasController@crearFormulaInicial')->name('crearFormulaInicial');
+Route::post('/productor/{id_prod}/formulas/inicial', 'FormulasController@insertFormulaInicial');
 
 /* Ruta de pagina de inicio */
 Route::get('/', function () {
