@@ -1932,6 +1932,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/crearEscala.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/crearEscala.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["id_prod", "csrf"],
+  data: function data() {
+    return {
+      riInp: null,
+      rfInp: null,
+      link: "/productor/" + this.id_prod + "/escala/crear"
+    };
+  },
+  computed: {
+    riInputErr: function riInputErr() {
+      if ((this.riInp > 999 || this.riInp < 0) && this.riInp != null) {
+        this.smallRi = "No debe ser mayor a 999 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallRi = "";
+        return "";
+      }
+    },
+    rfInputErr: function rfInputErr() {
+      if ((this.rfInp > 999 || this.rfInp < 0) && this.rfInp != null) {
+        this.smallRf = "No debe ser mayor a 999 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallRf = "";
+        return "";
+      }
+    },
+    submitErr: function submitErr() {
+      if (this.riInputErr === "is-invalid" || this.rfInputErr === "is-invalid") {
+        this.smallBtn = "";
+        this.submitErrDis = "disabled";
+        return "btn-danger";
+      } else if (this.riInp >= this.rfInp && this.riInp != null && this.rfInp != null) {
+        this.smallBtn = "El rango final debe ser mayor al rango inicial.";
+        this.submitErrDis = "disabled";
+        return "btn-danger";
+      } else {
+        this.submitErrDis = null;
+        this.smallBtn = "";
+        return "";
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=script&lang=js& ***!
@@ -2181,6 +2268,94 @@ __webpack_require__.r(__webpack_exports__);
         return "btn-danger";
       } else if (this.enviosInp + this.pagosInp + this.ubicInp != 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "") {
         this.smallBtn = "Los criterios deben sumar 100%";
+        this.submitErrDis = "disabled";
+        return "btn-danger";
+      } else {
+        this.submitErrDis = null;
+        this.smallBtn = "";
+        return "";
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/editarEscala.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/editarEscala.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["id_prod", "csrf", "ri", "rf"],
+  data: function data() {
+    return {
+      riInp: parseInt(this.ri),
+      rfInp: parseInt(this.rf),
+      link: "/productor/" + this.id_prod + "/escala/editar"
+    };
+  },
+  computed: {
+    riInputErr: function riInputErr() {
+      if ((this.riInp > 999 || this.riInp < 0) && this.riInp != null) {
+        this.smallRi = "No debe ser mayor a 999 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallRi = "";
+        return "";
+      }
+    },
+    rfInputErr: function rfInputErr() {
+      if ((this.rfInp > 999 || this.rfInp < 0) && this.rfInp != null) {
+        this.smallRf = "No debe ser mayor a 999 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallRf = "";
+        return "";
+      }
+    },
+    submitErr: function submitErr() {
+      if (this.riInputErr === "is-invalid" || this.rfInputErr === "is-invalid") {
+        this.smallBtn = "";
+        this.submitErrDis = "disabled";
+        return "btn-danger";
+      } else if (this.riInp >= this.rfInp) {
+        this.smallBtn = "El rango final debe ser mayor al rango inicial.";
         this.submitErrDis = "disabled";
         return "btn-danger";
       } else {
@@ -38082,6 +38257,171 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/crearEscala.vue?vue&type=template&id=bc0a5c1e&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/crearEscala.vue?vue&type=template&id=bc0a5c1e& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("span", [
+    _c("h5", [_vm._v(" Asignación de rangos de escala: ")]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass: "row justify-content-center",
+        attrs: { action: _vm.link, method: "POST" }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: this.csrf }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "ri" } }, [
+              _vm._v(" Rango inicial ")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.riInp,
+                  expression: "riInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.riInputErr,
+              attrs: {
+                type: "number",
+                id: "ri",
+                required: "",
+                placeholder: "Número de 0 a 3 digitos...",
+                name: "ri"
+              },
+              domProps: { value: _vm.riInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.riInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallRi) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "rf" } }, [
+              _vm._v(" Rango final ")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.rfInp,
+                  expression: "rfInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.rfInputErr,
+              attrs: {
+                type: "number",
+                id: "rf",
+                required: "",
+                placeholder: "Número de 0 a 3 digitos...",
+                name: "rf"
+              },
+              domProps: { value: _vm.rfInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.rfInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallRf) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group text-center col-12" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              class: _vm.submitErr,
+              attrs: { type: "submit", disabled: _vm.submitErrDis }
+            },
+            [
+              _c("img", {
+                staticClass: "mb-1",
+                attrs: {
+                  src: "/img/iconos/add_white.svg",
+                  alt: "crear",
+                  width: "24"
+                }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "ml-2" }, [_vm._v(" Crear Escala ")])
+            ]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("small", { staticClass: "text-danger" }, [
+            _c("b", { domProps: { textContent: _vm._s(_vm.smallBtn) } })
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=template&id=2c32643d&":
 /*!*****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=template&id=2c32643d& ***!
@@ -38646,6 +38986,175 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("span", { staticClass: "ml-2" }, [_vm._v(" Crear Formula ")])
+            ]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("small", { staticClass: "text-danger" }, [
+            _c("b", { domProps: { textContent: _vm._s(_vm.smallBtn) } })
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/editarEscala.vue?vue&type=template&id=59811e63&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/editarEscala.vue?vue&type=template&id=59811e63& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("span", [
+    _c("h5", [_vm._v(" Asignación de rangos de escala: ")]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass: "row justify-content-center",
+        attrs: { action: _vm.link, method: "POST" }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: this.csrf }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "hidden", name: "_method", value: "PATCH" }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "ri" } }, [
+              _vm._v(" Rango inicial ")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.riInp,
+                  expression: "riInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.riInputErr,
+              attrs: {
+                type: "number",
+                id: "ri",
+                required: "",
+                placeholder: "Número de 0 a 3 digitos...",
+                name: "ri"
+              },
+              domProps: { value: _vm.riInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.riInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallRi) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "rf" } }, [
+              _vm._v(" Rango final ")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.rfInp,
+                  expression: "rfInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.rfInputErr,
+              attrs: {
+                type: "number",
+                id: "rf",
+                required: "",
+                placeholder: "Número de 0 a 3 digitos...",
+                name: "rf"
+              },
+              domProps: { value: _vm.rfInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.rfInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallRf) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group text-center col-12" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              class: _vm.submitErr,
+              attrs: { type: "submit", disabled: _vm.submitErrDis }
+            },
+            [
+              _c("img", {
+                staticClass: "mb-1",
+                attrs: {
+                  src: "/img/iconos/edit_white.svg",
+                  alt: "crear",
+                  width: "24"
+                }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "ml-2" }, [_vm._v(" Editar Escala ")])
             ]
           ),
           _vm._v(" "),
@@ -51450,6 +51959,8 @@ Vue.component('crear-formula-inicial', __webpack_require__(/*! ./components/form
 Vue.component('editar-formula-inicial', __webpack_require__(/*! ./components/formulas/editarFormulaInicial.vue */ "./resources/js/components/formulas/editarFormulaInicial.vue")["default"]);
 Vue.component('crear-formula-anual', __webpack_require__(/*! ./components/formulas/crearFormulaAnual.vue */ "./resources/js/components/formulas/crearFormulaAnual.vue")["default"]);
 Vue.component('editar-formula-anual', __webpack_require__(/*! ./components/formulas/editarFormulaAnual.vue */ "./resources/js/components/formulas/editarFormulaAnual.vue")["default"]);
+Vue.component('crear-escala', __webpack_require__(/*! ./components/formulas/crearEscala.vue */ "./resources/js/components/formulas/crearEscala.vue")["default"]);
+Vue.component('editar-escala', __webpack_require__(/*! ./components/formulas/editarEscala.vue */ "./resources/js/components/formulas/editarEscala.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -51571,6 +52082,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/crearEscala.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/formulas/crearEscala.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _crearEscala_vue_vue_type_template_id_bc0a5c1e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./crearEscala.vue?vue&type=template&id=bc0a5c1e& */ "./resources/js/components/formulas/crearEscala.vue?vue&type=template&id=bc0a5c1e&");
+/* harmony import */ var _crearEscala_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crearEscala.vue?vue&type=script&lang=js& */ "./resources/js/components/formulas/crearEscala.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _crearEscala_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _crearEscala_vue_vue_type_template_id_bc0a5c1e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _crearEscala_vue_vue_type_template_id_bc0a5c1e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/formulas/crearEscala.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/crearEscala.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/formulas/crearEscala.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_crearEscala_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./crearEscala.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/crearEscala.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_crearEscala_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/crearEscala.vue?vue&type=template&id=bc0a5c1e&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/formulas/crearEscala.vue?vue&type=template&id=bc0a5c1e& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_crearEscala_vue_vue_type_template_id_bc0a5c1e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./crearEscala.vue?vue&type=template&id=bc0a5c1e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/crearEscala.vue?vue&type=template&id=bc0a5c1e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_crearEscala_vue_vue_type_template_id_bc0a5c1e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_crearEscala_vue_vue_type_template_id_bc0a5c1e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -51709,6 +52289,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_crearFormulaInicial_vue_vue_type_template_id_2484979f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_crearFormulaInicial_vue_vue_type_template_id_2484979f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/editarEscala.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/formulas/editarEscala.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _editarEscala_vue_vue_type_template_id_59811e63___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editarEscala.vue?vue&type=template&id=59811e63& */ "./resources/js/components/formulas/editarEscala.vue?vue&type=template&id=59811e63&");
+/* harmony import */ var _editarEscala_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editarEscala.vue?vue&type=script&lang=js& */ "./resources/js/components/formulas/editarEscala.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _editarEscala_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _editarEscala_vue_vue_type_template_id_59811e63___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _editarEscala_vue_vue_type_template_id_59811e63___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/formulas/editarEscala.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/editarEscala.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/formulas/editarEscala.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editarEscala_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./editarEscala.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/editarEscala.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editarEscala_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/editarEscala.vue?vue&type=template&id=59811e63&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/formulas/editarEscala.vue?vue&type=template&id=59811e63& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editarEscala_vue_vue_type_template_id_59811e63___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./editarEscala.vue?vue&type=template&id=59811e63& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/editarEscala.vue?vue&type=template&id=59811e63&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editarEscala_vue_vue_type_template_id_59811e63___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editarEscala_vue_vue_type_template_id_59811e63___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

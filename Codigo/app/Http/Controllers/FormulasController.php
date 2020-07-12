@@ -238,4 +238,84 @@ class FormulasController extends Controller
             return redirect ('productor/'.$id_prod.'/formulas');
         }
     }
+
+    /* para devolver la interfaz de creacion de escala */
+    public function crearEscala ($id_prod) {
+        $escala = DB::select(DB::raw("SELECT MAX(e.fecha_inicio) AS fecha FROM rdj_escalas e, rdj_productores p
+        WHERE e.id_productor=? AND e.fecha_fin IS NULL;"),[$id_prod]);
+
+        /* valida que no exista una formula inicial activa usando el query de arriba */
+        if($escala[0]->fecha == null)
+        return view('productores.formulas.c-escala',[
+            'id_prod' => $id_prod
+        ]);
+        
+        else return redirect ('productor/'.$id_prod.'/formulas');
+    }
+
+    /* para insertar la escala nueva */
+    public function insertEscala (Request $request, $id_prod) {
+        /* validacion server-side */
+        $data = $request->validate([
+            'ri' => 'numeric|required|max:999|min:0',
+            'rf' => 'numeric|required|max:999|min:0' 
+        ]);
+        $time = Carbon::now()->toDateTimeString();
+        /* mas validacion server-side */
+        if($data['ri'] >= $data['rf']) return back();
+        else {
+            /* insert de la escala */
+            DB::insert(DB::raw("INSERT INTO rdj_escalas (fecha_inicio, id_productor, rango_inicio, rango_fin) 
+            VALUES (?,?,?,?)"),[$time,$id_prod,$data['ri'],$data['rf']]);
+
+            return redirect ('productor/'.$id_prod.'/formulas');
+        }
+    }
+
+    public function editarEscala ($id_prod) {
+        $escala = DB::select(DB::raw("SELECT MAX(e.fecha_inicio) AS fecha,
+        e.rango_inicio AS ri, e.rango_fin AS rf FROM rdj_escalas e, rdj_productores p
+        WHERE e.id_productor=? AND e.fecha_fin IS NULL
+        GROUP BY e.rango_inicio, e.rango_fin;"),[$id_prod]);
+
+        /* valida que exista una formula inicial activa usando el query de arriba */
+        if(sizeof($escala) != 0)
+        {
+            return view('productores.formulas.e-escala',[
+                'id_prod' => $id_prod,
+                'ri' => $escala[0]->ri,
+                'rf' => $escala[0]->rf
+            ]);
+        }
+        
+        else return redirect ('productor/'.$id_prod.'/formulas');
+    }
+
+    public function updateEscala (Request $request, $id_prod) {
+        /* validacion server side */
+        $data = $request->validate([
+            'ri' => 'numeric|required|max:999|min:0',
+            'rf' => 'numeric|required|max:999|min:0' 
+        ]);
+        $time = Carbon::now()->toDateTimeString();
+        /* mas validacion server-side */
+        if($data['ri'] >= $data['rf']) return back();
+        else {
+            /* busca la escala activa para poder agregarle su fecha_fin */
+            $escala = DB::select(DB::raw("SELECT MAX(e.fecha_inicio) AS fecha
+            FROM rdj_escalas e, rdj_productores p
+            WHERE e.id_productor=? AND e.fecha_fin IS NULL
+            GROUP BY e.rango_inicio, e.rango_fin;"),[$id_prod]);
+
+            /* desactiva la escala actual */
+            DB::update(DB::raw("UPDATE rdj_escalas SET fecha_fin=? 
+            WHERE id_productor=? AND fecha_inicio=?"),[$time,$id_prod,$escala[0]->fecha]);
+
+            /* crea la nueva escala */
+            DB::insert(DB::raw("INSERT INTO rdj_escalas (fecha_inicio,id_productor,rango_inicio,rango_fin)
+            VALUES (?,?,?,?)"),[$time,$id_prod,$data['ri'],$data['rf']]);
+
+            return redirect('productor/'.$id_prod.'/formulas');
+        }
+    }
 }

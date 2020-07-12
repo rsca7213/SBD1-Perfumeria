@@ -28,6 +28,11 @@ Route::post('/productor/{id_prod}/formulas/crear/anual', 'FormulasController@ins
 Route::get('/productor/{id_prod}/formulas/editar/anual', 'FormulasController@editarFormulaAnual')->name('editarFormulaAnual');
 Route::patch('/productor/{id_prod}/formulas/editar/anual', 'FormulasController@updateFormulaAnual');
 
+Route::get('/productor/{id_prod}/escala/crear', 'FormulasController@crearEscala')->name('crearEscala');
+Route::post('/productor/{id_prod}/escala/crear', 'FormulasController@insertEscala');
+Route::get('/productor/{id_prod}/escala/editar', 'FormulasController@editarEscala')->name('editarEscala');
+Route::patch('/productor/{id_prod}/escala/editar', 'FormulasController@updateEscala');
+
 /* Ruta de pagina de inicio */
 Route::get('/', function () {
     return view('index');

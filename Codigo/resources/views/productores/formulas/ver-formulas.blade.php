@@ -142,10 +142,10 @@
                                 Escala de Evaluación:
                                 @if ($escala != [])
                                     {{ $escala[0]->ri }} a {{ $escala[0]->rf }}
-                                    <img src="{{ asset('img/iconos/edit.svg') }}" alt="editar" width="24" class="mb-1 iconobtn">
+                                    <a href="{{ route('editarEscala', ['id_prod' => $id_prod]) }}"> <img src="{{ asset('img/iconos/edit.svg') }}" alt="editar" width="24" class="mb-1 iconobtn"> </a>
                                     <img src="{{ asset('img/iconos/trash.svg') }}" alt="borrar" width="24" class="mb-1 iconobtn">
                                 @else
-                                    <img src="{{ asset('img/iconos/add.svg') }}" alt="agregar" width="24" class="mb-1 iconobtn">
+                                    <a href="{{ route('crearEscala', ['id_prod' => $id_prod]) }}"> <img src="{{ asset('img/iconos/add.svg') }}" alt="agregar" width="24" class="mb-1 iconobtn"> </a>
                                 @endif 
                             </span>
                         </span>
