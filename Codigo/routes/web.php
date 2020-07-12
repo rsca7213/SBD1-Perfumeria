@@ -13,9 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/* Rutas para acceder a los menus principales de las empresas */
 Route::get('/productor/{id_prod}', 'MenuController@menuProductor')->name('menuProductor');
 Route::get('/proveedor/{id_prov}', 'MenuController@menuProveedor')->name('menuProveedor');
 
+/* Rutas referentes a las formulas de evaluacion */
+Route::get('/productor/{id_prod}/formulas', 'FormulasController@verFormulas')->name('verFormulas');
+
+
+/* Ruta de pagina de inicio */
 Route::get('/', function () {
     return view('index');
 });

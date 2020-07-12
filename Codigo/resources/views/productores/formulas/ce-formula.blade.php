@@ -1,12 +1,12 @@
 @extends('productores.layout-productor')
 
 @section('head')
-    <title> Perfumes | Menú Productor </title>
+    <title> Perfumes | Formulas </title>
 @endsection
 
 @section('nav')
     <li class="nav-item mx-2">
-       <a href="{{ route('menuProductor', ['id_prod' => $id_prod]) }}" class="nav-item-active"> Menú Principal </a>
+       <a href="{{ route('menuProductor', ['id_prod' => $id_prod]) }}" class="nav-item"> Menú Principal </a>
     </li>
     <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 
@@ -18,7 +18,7 @@
     </li>
     <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 
-        <a href="{{ route('verFormulas', ['id_prod' => $id_prod]) }}" class="nav-item"> Formulas </a> 
+        <a href="{{ route('verFormulas', ['id_prod' => $id_prod]) }}" class="nav-item-active"> Formulas </a> 
     </li>
     <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 
@@ -27,4 +27,5 @@
 @endsection
 
 @section('content')
+
 @endsection
