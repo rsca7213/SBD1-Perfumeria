@@ -469,6 +469,36 @@ INSERT INTO rdj_familias_palabras (id_familia,id_palabra) VALUES
 (9,4), (9,5), (9,6), (9,7), (9,13), (9,15), (9,17), (9,18), (9,25), (9,32), (9,31),
 (10,2), (10,5), (10,14), (10,16), (10,21), (10,22), (10,25), (10,28), (10,27), (10,32);
 
+INSERT INTO rdj_otros_ingredientes (cas_otro_ing,nombre,descripcion,id_proveedor) VALUES
+(91052925,'Extracto de Miel','Extracto hidrosoluble de grado cosmético que posee las propiedades y beneficios de la miel, para aplicar en la piel.',1),
+(8008319,'Aceite de Mandarina','El aceite de esencial de mandarina proviene de la cáscara externa de la fruta y tiene un aroma cálido, dulce y cítrico.',1),
+(84082791,'Aceite Salvia','La aromática salvia, empleada como planta medicinal desde la Antigüedad, destaca por la variedad de virtudes que atesora, desde potenciar la salud de la mujer a su empleo para tratar problemas bucales y digestivos.',1),
+(8006824,'Aceite Pimienta Negra','Este aceite esencial es rico en monoterpenos y sesquiterpenos, conocidos por su actividad antioxidante* y su capacidad para ayudar a alejar las amenazas ambientales y estacionales.',1),
+(949495685,'Aceite Pimienta Rosa','Procedente de las bayas del grano de pimienta rosa, puede parecer similar al grano de pimienta negro en tu molino de pimienta, sin embargo, la pimienta rosa está estrechamente relacionada con los anacardos.',1),
+(8024064,'Extracto de Vainilla','Obtenido de la vaina o chaucha de la vainilla que produce un fruto del cual se obtiene este saborizante, después de un sencillo proceso de maceración.',1),
+(8000462,'Aceite de Geranio','Un miembro del género Pelargonium de especies de flores, los geranios se cultivan por su belleza y como materia prima de la industria del perfume.',1),
+(84929260,'Aceite de Mirra','Se consigue a raíz de la resina de mirra, que es una planta típica de Egipto y muy popular en la antigüedad, sobre todo por sus ventajas para la salud y sus componentes aromáticos.',1);
+
+INSERT INTO rdj_present_otros_ings (id,cas_otro_ing,volumen,precio) VALUES
+(nextval('id_present_otro_ing_sec'),91052925,60,15), (nextval('id_present_otro_ing_sec'),91052925,250,51), (nextval('id_present_otro_ing_sec'),91052925,1000,123), /*unidades: ml*/
+(nextval('id_present_otro_ing_sec'),8008319,200,66), (nextval('id_present_otro_ing_sec'),8008319,500,113), (nextval('id_present_otro_ing_sec'),8008319,1000,242), /*unidades: gr*/
+(nextval('id_present_otro_ing_sec'),84082791,15,44), (nextval('id_present_otro_ing_sec'),84082791,50,147), (nextval('id_present_otro_ing_sec'),84082791,100,300), /*unidades: ml*/
+(nextval('id_present_otro_ing_sec'),8006824,30,180), (nextval('id_present_otro_ing_sec'),8006824,50,300), (nextval('id_present_otro_ing_sec'),8006824,100,600), /*unidades: ml*/
+(nextval('id_present_otro_ing_sec'),949495685,100,280), (nextval('id_present_otro_ing_sec'),949495685,200,560), (nextval('id_present_otro_ing_sec'),949495685,500,1400), /*unidades: ml*/
+(nextval('id_present_otro_ing_sec'),8024064,15,35), (nextval('id_present_otro_ing_sec'),8024064,30,70), (nextval('id_present_otro_ing_sec'),8024064,60,140), /*unidades: ml*/
+(nextval('id_present_otro_ing_sec'),8000462,15,41), (nextval('id_present_otro_ing_sec'),8000462,30,82), (nextval('id_present_otro_ing_sec'),8000462,60,164), /*unidades: ml*/
+(nextval('id_present_otro_ing_sec'),84929260,100,20), (nextval('id_present_otro_ing_sec'),84929260,500,1040), (nextval('id_present_otro_ing_sec'),84929260,1000,2108); /*unidades: gr*/
+
+INSERT INTO rdj_otros_componentes (id_perfume,cas_otro_ing) VALUES
+(1,91052925), (1,8008319),
+(2,84082791), (2,8006824),
+(3,949495685), (3,8024064), 
+(4,8024064), 
+(6,8024064),
+(7,8024064), (7,8008319), (7,8006824),
+(8,8000462), 
+(9,84929260), (9,84082791); 
+
 INSERT INTO rdj_ingredientes_esencias (cas_ing_esencia,nombre,naturaleza,id_proveedor,nombre_quim,pto_inf,solubilidad,proc_creac,parte_proc,vida_util,num_einecs,rendimiento)VALUES
 (1005171,'Ambranum','n',1,NULL,84,NULL,'Asociación equilibrada de ingredientes (extractos naturales y moléculas sintéticas), se mezclan para crear una Especialidad inspiradora.',NULL,NULL,NULL,NULL),
 (68650464,'Buchu Eo Aged','s',1,NULL,67,NULL,'Obtenido por destilación de la biomasa con agua, o vapor. El aceite esencial está físicamente separado de la fase acuosa por decantación.',NULL,NULL,NULL,NULL),
@@ -529,6 +559,8 @@ INSERT INTO rdj_presents_ings_esencias (id,cas_ing_esencia,volumen,precio)VALUES
 (nextval('id_present_ing_esen_sec'),106729,250,40), (nextval('id_present_ing_esen_sec'),106729,500,70), (nextval('id_present_ing_esen_sec'),106729,1000,125), /*unidades: gr*/
 (nextval('id_present_ing_esen_sec'),5392405,5,25), (nextval('id_present_ing_esen_sec'),5392405,100,35), (nextval('id_present_ing_esen_sec'),5392405,500,135), /*unidades: ml*/
 (nextval('id_present_ing_esen_sec'),4180238,100,25), (nextval('id_present_ing_esen_sec'),4180238,200,43), (nextval('id_present_ing_esen_sec'),4180238,500,80); /*unidades: gr*/
+
+/*INSERT INTO rdj_esencias_otros_ings (cas_otro_ing,cas_ing_esencia) VALUES*/
 
 INSERT INTO rdj_ings_esencias_familias (id_familia,cas_ing_esencia)VALUES
 (5,1005171),

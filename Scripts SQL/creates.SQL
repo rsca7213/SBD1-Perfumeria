@@ -99,7 +99,7 @@ CREATE TABLE rdj_escalas (
     id_productor NUMERIC(2,0) NOT NULL,
     rango_inicio NUMERIC(3,0) NOT NULL,
     rango_fin NUMERIC(3,0) NOT NULL,
-    fecha_fin TIMESTAMP,
+    fecha_fin DATE,
     CONSTRAINT escalas_pk PRIMARY KEY (fecha_inicio, id_productor)
 );
 
@@ -116,7 +116,7 @@ CREATE TABLE rdj_hist_formulas (
     id_productor NUMERIC(2,0) NOT NULL,
     peso NUMERIC(5,2) NOT NULL,
     tipo CHAR(1) NOT NULL,
-    fecha_fin TIMESTAMP,
+    fecha_fin DATE,
     CONSTRAINT hist_formulas_pk PRIMARY KEY (fecha_inicio, id_criterio, id_productor),
     CONSTRAINT tipo_formula_check CHECK (tipo in ('i','a'))
 );
