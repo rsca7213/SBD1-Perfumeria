@@ -20,7 +20,7 @@ class FormulasController extends Controller
         /* Devuelve la formula anual mas reciente del proveedor especifico que este activa */
         $formAnual = DB::select(DB::raw("SELECT c.nombre, c.descripcion AS desc, h.peso, MAX(h.fecha_inicio) AS fecha 
         FROM rdj_criterios c, rdj_hist_formulas h, rdj_productores p 
-        WHERE c.id=h.id_criterio AND p.id=? AND h.tipo='a' AND h.fecha_fin IS NULL
+        WHERE c.id=h.id_criterio AND h.id_productor=? AND h.tipo='a' AND h.fecha_fin IS NULL
         GROUP BY c.id, c.nombre, c.descripcion, h.peso, h.id_productor ORDER BY c.id;"),[$id_prod]);
 
         /* Devuelve la escala mas reciente del proveedor */
@@ -272,6 +272,7 @@ class FormulasController extends Controller
         }
     }
 
+    /* para devolver la interfaz de modificacion de escala */
     public function editarEscala ($id_prod) {
         $escala = DB::select(DB::raw("SELECT MAX(e.fecha_inicio) AS fecha,
         e.rango_inicio AS ri, e.rango_fin AS rf FROM rdj_escalas e, rdj_productores p
@@ -291,6 +292,7 @@ class FormulasController extends Controller
         else return redirect ('productor/'.$id_prod.'/formulas');
     }
 
+    /* para actualizar la escala y desactivar la vieja */
     public function updateEscala (Request $request, $id_prod) {
         /* validacion server side */
         $data = $request->validate([
@@ -317,5 +319,62 @@ class FormulasController extends Controller
 
             return redirect('productor/'.$id_prod.'/formulas');
         }
+    }
+
+    public function borrarFormulaInicial ($id_prod) {
+        $formInicial = DB::select(DB::raw("SELECT c.nombre, c.descripcion AS desc, h.peso, MAX(h.fecha_inicio) AS fecha 
+        FROM rdj_criterios c, rdj_hist_formulas h, rdj_productores p 
+        WHERE c.id=h.id_criterio AND h.id_productor=? AND h.tipo='i' AND h.fecha_fin IS NULL
+        GROUP BY c.id, c.nombre, c.descripcion, h.peso, h.id_productor ORDER BY c.id"),[$id_prod]);
+
+        $time = Carbon::now()->toDateTimeString();
+        /* valida que exista una formula inicial activa usando el query de arriba */
+        if(sizeof($formInicial) != 0) 
+        {
+            DB::update(DB::raw("UPDATE rdj_hist_formulas SET fecha_fin=?
+            WHERE tipo='i' AND fecha_fin IS NULL AND fecha_inicio=? AND id_productor=?"),
+            [$time,$formInicial[0]->fecha,$id_prod]);
+
+            return redirect('/productor/'.$id_prod.'/formulas');
+        }
+        else return redirect ('/productor/'.$id_prod.'/formulas');
+    }
+
+    public function borrarFormulaAnual ($id_prod) {
+        $formAnual = DB::select(DB::raw("SELECT c.nombre, c.descripcion AS desc, h.peso, MAX(h.fecha_inicio) AS fecha 
+        FROM rdj_criterios c, rdj_hist_formulas h, rdj_productores p 
+        WHERE c.id=h.id_criterio AND h.id_productor=? AND h.tipo='a' AND h.fecha_fin IS NULL
+        GROUP BY c.id, c.nombre, c.descripcion, h.peso, h.id_productor ORDER BY c.id"),[$id_prod]);
+
+        $time = Carbon::now()->toDateTimeString();
+        /* valida que exista una formula inicial activa usando el query de arriba */
+        if(sizeof($formAnual) != 0) 
+        {
+            DB::update(DB::raw("UPDATE rdj_hist_formulas SET fecha_fin=?
+            WHERE tipo='a' AND fecha_fin IS NULL AND fecha_inicio=? AND id_productor=?"),
+            [$time,$formAnual[0]->fecha,$id_prod]);
+
+            return redirect('/productor/'.$id_prod.'/formulas');
+        }
+        else return redirect ('/productor/'.$id_prod.'/formulas');
+    }
+
+    public function borrarEscala ($id_prod) {
+        $escala = DB::select(DB::raw("SELECT MAX(e.fecha_inicio) AS fecha, e.id_productor AS idp
+        FROM rdj_escalas e, rdj_productores p
+        WHERE e.id_productor=? AND e.fecha_fin IS NULL
+        GROUP BY e.rango_inicio, e.rango_fin, e.id_productor"),[$id_prod]);
+
+        $time = Carbon::now()->toDateTimeString();
+        /* valida que exista una escala activa usando el query de arriba */
+        if(sizeof($escala) != 0)
+        {
+            DB::update(DB::raw("UPDATE rdj_escalas SET fecha_fin=?
+            WHERE id_productor=? AND fecha_fin IS NULL AND fecha_inicio=?"),
+            [$time,$escala[0]->idp,$escala[0]->fecha]);
+            return redirect ('/productor/'.$id_prod.'/formulas');
+        }
+
+        else return redirect ('/productor/'.$id_prod.'/formulas');
     }
 }
