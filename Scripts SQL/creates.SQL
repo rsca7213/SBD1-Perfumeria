@@ -60,7 +60,7 @@ CREATE TABLE rdj_metodos_pagos (
     id_proveedor NUMERIC(2,0) NOT NULL,
     tipo CHAR(1) NOT NULL,
     num_cuotas NUMERIC(2,0),
-    porcentaje NUMERIC(3,0),
+    porcentaje NUMERIC(5,2),
     meses NUMERIC(2,0),
     CONSTRAINT metodos_pagos_pk PRIMARY KEY (id, id_proveedor),
     CONSTRAINT tipo_metodo_pago_check CHECK (tipo in ('c','p'))
@@ -95,7 +95,7 @@ CREATE TABLE rdj_productores_paises (
 );
 
 CREATE TABLE rdj_escalas (
-    fecha_inicio DATE NOT NULL,
+    fecha_inicio TIMESTAMP NOT NULL,
     id_productor NUMERIC(2,0) NOT NULL,
     rango_inicio NUMERIC(3,0) NOT NULL,
     rango_fin NUMERIC(3,0) NOT NULL,
@@ -111,10 +111,10 @@ CREATE TABLE rdj_criterios (
 );
 
 CREATE TABLE rdj_hist_formulas (
-    fecha_inicio DATE NOT NULL,
+    fecha_inicio TIMESTAMP NOT NULL,
     id_criterio NUMERIC(2,0) NOT NULL,
     id_productor NUMERIC(2,0) NOT NULL,
-    peso NUMERIC(3,0) NOT NULL,
+    peso NUMERIC(5,2) NOT NULL,
     tipo CHAR(1) NOT NULL,
     fecha_fin DATE,
     CONSTRAINT hist_formulas_pk PRIMARY KEY (fecha_inicio, id_criterio, id_productor),
@@ -125,7 +125,7 @@ CREATE TABLE rdj_resultados (
     fecha DATE NOT NULL,
     id_productor NUMERIC(2,0) NOT NULL,
     id_proveedor NUMERIC(2,0) NOT NULL,
-    resultado NUMERIC(3,0) NOT NULL,
+    resultado NUMERIC(5,2) NOT NULL,
     tipo CHAR(1) NOT NULL,
     CONSTRAINT resultados_pk PRIMARY KEY(fecha, id_productor, id_proveedor),
     CONSTRAINT tipo_resultado_check CHECK (tipo in ('i','a'))
@@ -169,7 +169,7 @@ CREATE TABLE rdj_intensidades (
     id NUMERIC(5,0) NOT NULL,
     id_perfume NUMERIC(4,0) NOT NULL,
     tipo CHAR(3) NOT NULL,
-    porcentaje NUMERIC(3,0),
+    porcentaje NUMERIC(5,2),
     descripcion VARCHAR(1000),
     CONSTRAINT intensidades_pk PRIMARY KEY (id, id_perfume),
     CONSTRAINT tipo_intensidad_check CHECK (tipo in ('P','EdP','EdC','EdT','EdS'))
@@ -179,7 +179,7 @@ CREATE TABLE rdj_presentaciones_perfumes (
     id NUMERIC(6,0) NOT NULL,
     id_perfume NUMERIC(4,0) NOT NULL,
     id_intensidad NUMERIC(5,0) NOT NULL,
-    volumen NUMERIC(4,0) NOT NULL,
+    volumen NUMERIC(6,0) NOT NULL,
     CONSTRAINT presentaciones_perfumes_pk PRIMARY KEY (id, id_perfume, id_intensidad)
 );
 
@@ -247,7 +247,7 @@ CREATE TABLE rdj_otros_ingredientes (
 CREATE TABLE rdj_present_otros_ings (
     id NUMERIC(5,0) NOT NULL,
     cas_otro_ing NUMERIC(10,0) NOT NULL,
-    volumen NUMERIC(4,0) NOT NULL,
+    volumen NUMERIC(6,0) NOT NULL,
     precio NUMERIC(20,2) NOT NULL,
     CONSTRAINT present_otros_ing_pk PRIMARY KEY (id, cas_otro_ing)
 );
@@ -265,7 +265,7 @@ CREATE TABLE rdj_ingredientes_esencias (
     id_proveedor NUMERIC(2,0) NOT NULL,
     nombre_quim VARCHAR(300),
     pto_inf NUMERIC(3,0),
-    solubilidad NUMERIC(3,0),
+    solubilidad NUMERIC(5,2),
     proc_creac VARCHAR(1000),
     parte_proc VARCHAR(300),
     vida_util NUMERIC(3,0),
@@ -284,7 +284,7 @@ CREATE TABLE rdj_ings_esencias_paises (
 CREATE TABLE rdj_presents_ings_esencias (
     id NUMERIC(5,0) NOT NULL,
     cas_ing_esencia NUMERIC(10,0) NOT NULL,
-    volumen NUMERIC(4,0) NOT NULL,
+    volumen NUMERIC(6,0) NOT NULL,
     precio NUMERIC(20,2) NOT NULL,
     CONSTRAINT presents_ings_esencias_pk PRIMARY KEY (id, cas_ing_esencia)
 );
@@ -326,7 +326,7 @@ CREATE TABLE rdj_detalles_contratos (
     id_proveedor NUMERIC(2,0) NOT NULL,
     id_productor NUMERIC(2,0) NOT NULL,
     precio NUMERIC(20,2),
-    descuento NUMERIC(3,0),
+    descuento NUMERIC(5,2),
     cas_otro_ing NUMERIC(10,0),
     cas_ing_esencia NUMERIC(10,0),
     CONSTRAINT detalles_contratos_pk PRIMARY KEY (id, fecha_apertura, id_proveedor, id_productor)

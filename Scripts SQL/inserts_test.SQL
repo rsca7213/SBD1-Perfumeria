@@ -155,11 +155,11 @@ INSERT INTO rdj_productores_paises (id_productor, id_pais) VALUES
 (1,7), (1,9), (1,2), (2,5), (2,10), (2,11), (3,3), (3,4), (3,6);
 
 INSERT INTO rdj_criterios(id,nombre,descripcion) VALUES
-(nextval('id_criterio_sec'),'Región','Ubicación geográfica del proveedor'),
-(nextval('id_criterio_sec'),'Pagos','Pagos que ofrece el proveedor'),
-(nextval('id_criterio_sec'),'Envíos','Envíos que ofrece el proveedor'),
-(nextval('id_criterio_sec'),'Cumplimiento','Porcentaje de cumplimiento de pedidos'),
-(nextval('id_criterio_sec'),'Criterio de éxito','Cantidad de porcentaje necesario para aprobar la evaluación');
+(nextval('id_criterio_sec'),'Ubicación','Ubicación geográfica del proveedor'),
+(nextval('id_criterio_sec'),'Metodos de Pago','Pagos que ofrece el proveedor'),
+(nextval('id_criterio_sec'),'Metodos de Envío','Envíos que ofrece el proveedor'),
+(nextval('id_criterio_sec'),'Cumplimiento de Pedidos','Porcentaje de cumplimiento de pedidos'),
+(nextval('id_criterio_sec'),'Éxito','Cantidad de porcentaje necesario para aprobar la evaluación');
 
 INSERT INTO rdj_sustancias_prohibidas (num_cas,nombre) VALUES
 (103640,'Bromostyrene'),
