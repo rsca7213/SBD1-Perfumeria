@@ -1977,6 +1977,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["id_prod", "csrf"],
   data: function data() {
@@ -1984,6 +1990,7 @@ __webpack_require__.r(__webpack_exports__);
       ubicInp: null,
       enviosInp: null,
       pagosInp: null,
+      exitoInp: null,
       link: "/productor/" + this.id_prod + "/formulas/inicial"
     };
   },
@@ -2015,8 +2022,17 @@ __webpack_require__.r(__webpack_exports__);
         return "";
       }
     },
+    exitoInputErr: function exitoInputErr() {
+      if ((this.exitoInp > 100 || this.exitoInp < 0) && this.exitoInp != null) {
+        this.smallEx = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallEx = "";
+        return "";
+      }
+    },
     submitErr: function submitErr() {
-      if (this.ubicInputErr === "is-invalid" || this.pagosInputErr === "is-invalid" || this.enviosInputErr === "is-invalid") {
+      if (this.ubicInputErr === "is-invalid" || this.pagosInputErr === "is-invalid" || this.enviosInputErr === "is-invalid" || this.exitoInputErr === "is-invalid") {
         this.smallBtn = "";
         this.submitErrDis = "disabled";
         return "btn-danger";
@@ -37749,7 +37765,7 @@ var render = function() {
           "div",
           { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
           [
-            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "pago" } }, [
+            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "pagos" } }, [
               _vm._v(" Metodos de pago ")
             ]),
             _vm._v(" "),
@@ -37768,10 +37784,10 @@ var render = function() {
               attrs: {
                 type: "number",
                 step: "0.01",
-                id: "pago",
+                id: "pagos",
                 required: "",
                 placeholder: "Porcentaje...",
-                name: "pago"
+                name: "pagos"
               },
               domProps: { value: _vm.pagosInp },
               on: {
@@ -37797,9 +37813,11 @@ var render = function() {
           "div",
           { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
           [
-            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "envio" } }, [
-              _vm._v(" Metodos de envío ")
-            ]),
+            _c(
+              "label",
+              { staticClass: "mt-2 px-4", attrs: { for: "envios" } },
+              [_vm._v(" Metodos de envío ")]
+            ),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -37816,10 +37834,10 @@ var render = function() {
               attrs: {
                 type: "number",
                 step: "0.01",
-                id: "envio",
+                id: "envios",
                 required: "",
                 placeholder: "Porcentaje...",
-                name: "envio"
+                name: "envios"
               },
               domProps: { value: _vm.enviosInp },
               on: {
@@ -37837,6 +37855,54 @@ var render = function() {
             _vm._v(" "),
             _c("small", { staticClass: "form-text text-danger" }, [
               _c("b", { domProps: { textContent: _vm._s(_vm.smallEnv) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "exito" } }, [
+              _vm._v(" Criterio de éxito ")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.exitoInp,
+                  expression: "exitoInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.exitoInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "exito",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "exito"
+              },
+              domProps: { value: _vm.exitoInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.exitoInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallEx) } })
             ])
           ]
         ),

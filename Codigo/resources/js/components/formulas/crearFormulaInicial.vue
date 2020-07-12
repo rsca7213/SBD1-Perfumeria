@@ -11,16 +11,22 @@
                 <small class="form-text text-danger"> <b v-text="smallUbic"> </b> </small>
             </div>
             <div class="form-group px-4 mx-4 justify-content-center col-7">
-                <label for="pago" class="mt-2 px-4"> Metodos de pago </label>
-                <input type="number" class="form-control" step="0.01" id="pago" required :class="pagosInputErr" 
-                v-model.number="pagosInp" placeholder="Porcentaje..." name="pago">
+                <label for="pagos" class="mt-2 px-4"> Metodos de pago </label>
+                <input type="number" class="form-control" step="0.01" id="pagos" required :class="pagosInputErr" 
+                v-model.number="pagosInp" placeholder="Porcentaje..." name="pagos">
                 <small class="form-text text-danger"> <b v-text="smallPago"> </b> </small>
             </div>
             <div class="form-group px-4 mx-4 justify-content-center col-7">
-                <label for="envio" class="mt-2 px-4"> Metodos de envío </label>
-                <input type="number" class="form-control" step="0.01" id="envio" required :class="enviosInputErr"
-                 v-model.number="enviosInp" placeholder="Porcentaje..." name="envio"> 
+                <label for="envios" class="mt-2 px-4"> Metodos de envío </label>
+                <input type="number" class="form-control" step="0.01" id="envios" required :class="enviosInputErr"
+                 v-model.number="enviosInp" placeholder="Porcentaje..." name="envios"> 
                 <small class="form-text text-danger"> <b v-text="smallEnv"> </b> </small>
+            </div>
+            <div class="form-group px-4 mx-4 justify-content-center col-7">
+                <label for="exito" class="mt-2 px-4"> Criterio de éxito </label>
+                <input type="number" class="form-control" step="0.01" id="exito" required :class="exitoInputErr"
+                 v-model.number="exitoInp" placeholder="Porcentaje..." name="exito"> 
+                <small class="form-text text-danger"> <b v-text="smallEx"> </b> </small>
             </div>
             <div class="form-group text-center col-12">
                 <button type="submit" class="btn btn-primary" :class="submitErr" :disabled="submitErrDis">
@@ -43,6 +49,7 @@
                 ubicInp: null,
                 enviosInp: null,
                 pagosInp: null,
+                exitoInp: null,
                 link: "/productor/" + this.id_prod + "/formulas/inicial"
             };
         },
@@ -82,8 +89,20 @@
                 }
             },
 
+            exitoInputErr() {
+                if((this.exitoInp > 100 || this.exitoInp < 0) && (this.exitoInp != null)) {
+                    this.smallEx = "No debe ser mayor a 100 o menor a 0.";
+                    return "is-invalid";
+                }
+                else {
+                    this.smallEx = "";
+                    return "";
+                }
+            },
+
             submitErr() {
-                if(this.ubicInputErr === "is-invalid" || this.pagosInputErr === "is-invalid" || this.enviosInputErr === "is-invalid")
+                if(this.ubicInputErr === "is-invalid" || this.pagosInputErr === "is-invalid" || 
+                this.enviosInputErr === "is-invalid" || this.exitoInputErr === "is-invalid")
                 {
                     this.smallBtn = "";
                     this.submitErrDis="disabled";
