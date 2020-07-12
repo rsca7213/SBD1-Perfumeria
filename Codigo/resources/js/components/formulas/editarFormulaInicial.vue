@@ -4,6 +4,7 @@
         <hr>
         <form :action="link" method="POST" class="row justify-content-center">
             <input type="hidden" name="_token" :value="this.csrf">
+            <input type="hidden" name="_method" value="PATCH">
             <div class="form-group px-4 mx-4 justify-content-center col-7">
                 <label for="ubicacion" class="mt-2 px-4"> Ubicación </label>
                 <input type="number" class="form-control" step="0.01" id="ubicacion" required :class="ubicInputErr" 
@@ -30,8 +31,8 @@
             </div>
             <div class="form-group text-center col-12">
                 <button type="submit" class="btn btn-primary" :class="submitErr" :disabled="submitErrDis">
-                    <img src="/img/iconos/add_white.svg" alt="crear" width="24" class="mb-1">
-                    <span class="ml-2"> Crear Formula </span>
+                    <img src="/img/iconos/edit_white.svg" alt="crear" width="24" class="mb-1">
+                    <span class="ml-2"> Editar Formula </span>
                 </button>
                 <br>
                 <small class="text-danger"> <b v-text="smallBtn"> </b> </small>
@@ -42,15 +43,15 @@
 
 <script>
     export default {
-        props: ["id_prod", "csrf"],
+        props: ["id_prod", "csrf", "ubic", "pagos", "envios", "exito"],
 
         data() {
             return {
-                ubicInp: null,
-                enviosInp: null,
-                pagosInp: null,
-                exitoInp: null,
-                link: "/productor/" + this.id_prod + "/formulas/crear/inicial"
+                ubicInp: parseInt(this.ubic),
+                enviosInp: parseInt(this.envios),
+                pagosInp: parseInt(this.pagos),
+                exitoInp: parseInt(this.exito),
+                link: "/productor/" + this.id_prod + "/formulas/editar/inicial"
             };
         },
 

@@ -28,7 +28,7 @@
 
 @section('content')
     <div class="row d-flex justify-content-center mt-4 rounded">
-        <div class="col-9">
+        <div class="col-10">
             <div class="card shadow-lg">
                 <div class="card-header bg-primary text-white text-center h4">
                     Ver Formulas de Evaluación
@@ -41,7 +41,7 @@
                             <span class="h5"> 
                                 <b class="mr-2"> Formula de Evaluación Inicial </b> 
                                 @if ($form_inicial != [])
-                                    <img src="{{ asset('img/iconos/edit.svg') }}" alt="editar" width="24" class="mb-1 iconobtn">
+                                    <a href="{{ route('editarFormulaInicial', ['id_prod' => $id_prod]) }}"> <img src="{{ asset('img/iconos/edit.svg') }}" alt="editar" width="24" class="mb-1 iconobtn"> </a>
                                     <img src="{{ asset('img/iconos/trash.svg') }}" alt="borrar" width="24" class="mb-1 iconobtn"> 
                                 @endif
                             </span>
@@ -77,10 +77,10 @@
                                 <hr>
                             @else 
                                 <h5> No tiene una formula de evaluación inicial activa. </h5>
-                                <button class="btn btn-primary mb-4"> 
+                                <a href="{{ route('crearFormulaInicial', ['id_prod' => $id_prod]) }}" class="btn btn-primary mb-4"> 
                                     <img src="{{ asset('img/iconos/add_white.svg') }}" alt="agregar" width="24">
                                     Crear Formula 
-                                </button>
+                                </a>
                             @endif
                         </div>
                         <!-- fin formula inicial -->
@@ -90,7 +90,7 @@
                             <span class="h5"> 
                                 <b class="mr-2"> Formula de Evaluación Anual </b> 
                                 @if ($form_anual != [])
-                                    <img src="{{ asset('img/iconos/edit.svg') }}" alt="editar" width="24" class="mb-1 iconobtn">
+                                    <a href="{{ route('editarFormulaAnual', ['id_prod' => $id_prod]) }}"> <img src="{{ asset('img/iconos/edit.svg') }}" alt="editar" width="24" class="mb-1 iconobtn"> </a>
                                     <img src="{{ asset('img/iconos/trash.svg') }}" alt="borrar" width="24" class="mb-1 iconobtn">
                                 @endif
                             </span>
@@ -121,15 +121,15 @@
                                 </table>
                                 <span class="h5"> 
                                     <img src="{{ asset('img/iconos/check_green.svg') }}" alt="exito" width="24" class="mb-1">
-                                    Criterio de Aprobación: <span> 50% </span> 
+                                    Criterio de Aprobación: <span> {{ $form_anual[4]->peso }} %  </span> 
                                 </span>
                             <hr>
                             @else
                             <h5> No tiene una formula de evaluación anual activa. </h5>
-                            <button class="btn btn-primary mb-4"> 
+                            <a href="{{ route('crearFormulaAnual', ['id_prod' => $id_prod]) }}" class="btn btn-primary mb-4"> 
                                 <img src="{{ asset('img/iconos/add_white.svg') }}" alt="agregar" width="22">
                                 <span class="ml-2"> Crear Formula </span> 
-                            </button>
+                            </a>
                             @endif
                         </div>
                         <!-- fin formulas anuales -->

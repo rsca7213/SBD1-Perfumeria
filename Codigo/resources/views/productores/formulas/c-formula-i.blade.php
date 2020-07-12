@@ -1,7 +1,7 @@
 @extends('productores.layout-productor')
 
 @section('head')
-    <title> Perfumes | Formulas </title>
+    <title> Perfumes | Formula Inicial </title>
 @endsection
 
 @section('nav')

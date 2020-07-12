@@ -19,8 +19,14 @@ Route::get('/proveedor/{id_prov}', 'MenuController@menuProveedor')->name('menuPr
 
 /* Rutas referentes a las formulas de evaluacion */
 Route::get('/productor/{id_prod}/formulas', 'FormulasController@verFormulas')->name('verFormulas');
-Route::get('/productor/{id_prod}/formulas/inicial', 'FormulasController@crearFormulaInicial')->name('crearFormulaInicial');
-Route::post('/productor/{id_prod}/formulas/inicial', 'FormulasController@insertFormulaInicial');
+Route::get('/productor/{id_prod}/formulas/crear/inicial', 'FormulasController@crearFormulaInicial')->name('crearFormulaInicial');
+Route::post('/productor/{id_prod}/formulas/crear/inicial', 'FormulasController@insertFormulaInicial');
+Route::get('/productor/{id_prod}/formulas/editar/inicial', 'FormulasController@editarFormulaInicial')->name('editarFormulaInicial');
+Route::patch('/productor/{id_prod}/formulas/editar/inicial', 'FormulasController@updateFormulaInicial');
+Route::get('/productor/{id_prod}/formulas/crear/anual', 'FormulasController@crearFormulaAnual')->name('crearFormulaAnual');
+Route::post('/productor/{id_prod}/formulas/crear/anual', 'FormulasController@insertFormulaAnual');
+Route::get('/productor/{id_prod}/formulas/editar/anual', 'FormulasController@editarFormulaAnual')->name('editarFormulaAnual');
+Route::patch('/productor/{id_prod}/formulas/editar/anual', 'FormulasController@updateFormulaAnual');
 
 /* Ruta de pagina de inicio */
 Route::get('/', function () {

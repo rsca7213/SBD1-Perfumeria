@@ -23,6 +23,12 @@
                 <small class="form-text text-danger"> <b v-text="smallEnv"> </b> </small>
             </div>
             <div class="form-group px-4 mx-4 justify-content-center col-7">
+                <label for="cumplim" class="mt-2 px-4"> Cumplimiento de pedidos </label>
+                <input type="number" class="form-control" step="0.01" id="cumplim" required :class="cumplimInputErr"
+                 v-model.number="cumplimInp" placeholder="Porcentaje..." name="cumplim"> 
+                <small class="form-text text-danger"> <b v-text="smallCum"> </b> </small>
+            </div>
+            <div class="form-group px-4 mx-4 justify-content-center col-7">
                 <label for="exito" class="mt-2 px-4"> Criterio de éxito </label>
                 <input type="number" class="form-control" step="0.01" id="exito" required :class="exitoInputErr"
                  v-model.number="exitoInp" placeholder="Porcentaje..." name="exito"> 
@@ -50,7 +56,8 @@
                 enviosInp: null,
                 pagosInp: null,
                 exitoInp: null,
-                link: "/productor/" + this.id_prod + "/formulas/crear/inicial"
+                cumplimInp: null,
+                link: "/productor/" + this.id_prod + "/formulas/crear/anual"
             };
         },
 
@@ -100,24 +107,35 @@
                 }
             },
 
+            cumplimInputErr() {
+                if((this.cumplimInp > 100 || this.cumplimInp < 0) && (this.cumplimInp != null)) {
+                    this.smallCum = "No debe ser mayor a 100 o menor a 0.";
+                    return "is-invalid";
+                }
+                else {
+                    this.smallCum = "";
+                    return "";
+                }
+            },
+
             submitErr() {
                 if(this.ubicInputErr === "is-invalid" || this.pagosInputErr === "is-invalid" || 
-                this.enviosInputErr === "is-invalid" || this.exitoInputErr === "is-invalid")
+                this.enviosInputErr === "is-invalid" || this.exitoInputErr === "is-invalid" || this.cumplimInputErr === "is-invalid")
                 {
                     this.smallBtn = "";
                     this.submitErrDis="disabled";
                     return "btn-danger";
                 }
-                else if(this.enviosInp + this.pagosInp + this.ubicInp > 100 && 
-                this.enviosInp != null && this.pagosInp != null && this.ubicInp != null
-                && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "") {
+                else if(this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp > 100 && 
+                this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null
+                && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
                     this.smallBtn = "Los criterios no deben sumar mas de 100%";
                     this.submitErrDis="disabled";
                     return "btn-danger";
                 }
-                else if(this.enviosInp + this.pagosInp + this.ubicInp != 100 
-                && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null
-                && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "") {
+                else if(this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp != 100 && 
+                this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null
+                && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
                     this.smallBtn = "Los criterios deben sumar 100%";
                     this.submitErrDis="disabled";
                     return "btn-danger";

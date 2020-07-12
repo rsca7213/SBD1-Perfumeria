@@ -4,6 +4,7 @@
         <hr>
         <form :action="link" method="POST" class="row justify-content-center">
             <input type="hidden" name="_token" :value="this.csrf">
+            <input type="hidden" name="_method" value="PATCH">
             <div class="form-group px-4 mx-4 justify-content-center col-7">
                 <label for="ubicacion" class="mt-2 px-4"> Ubicación </label>
                 <input type="number" class="form-control" step="0.01" id="ubicacion" required :class="ubicInputErr" 
@@ -23,6 +24,12 @@
                 <small class="form-text text-danger"> <b v-text="smallEnv"> </b> </small>
             </div>
             <div class="form-group px-4 mx-4 justify-content-center col-7">
+                <label for="cumplim" class="mt-2 px-4"> Cumplimiento de pedidos </label>
+                <input type="number" class="form-control" step="0.01" id="cumplim" required :class="cumplimInputErr"
+                 v-model.number="cumplimInp" placeholder="Porcentaje..." name="cumplim"> 
+                <small class="form-text text-danger"> <b v-text="smallCum"> </b> </small>
+            </div>
+            <div class="form-group px-4 mx-4 justify-content-center col-7">
                 <label for="exito" class="mt-2 px-4"> Criterio de éxito </label>
                 <input type="number" class="form-control" step="0.01" id="exito" required :class="exitoInputErr"
                  v-model.number="exitoInp" placeholder="Porcentaje..." name="exito"> 
@@ -30,8 +37,8 @@
             </div>
             <div class="form-group text-center col-12">
                 <button type="submit" class="btn btn-primary" :class="submitErr" :disabled="submitErrDis">
-                    <img src="/img/iconos/add_white.svg" alt="crear" width="24" class="mb-1">
-                    <span class="ml-2"> Crear Formula </span>
+                    <img src="/img/iconos/edit_white.svg" alt="crear" width="24" class="mb-1">
+                    <span class="ml-2"> Editar Formula </span>
                 </button>
                 <br>
                 <small class="text-danger"> <b v-text="smallBtn"> </b> </small>
@@ -42,15 +49,16 @@
 
 <script>
     export default {
-        props: ["id_prod", "csrf"],
+        props: ["id_prod", "csrf", "ubic", "pagos", "envios", "exito", "cumplim"],
 
         data() {
             return {
-                ubicInp: null,
-                enviosInp: null,
-                pagosInp: null,
-                exitoInp: null,
-                link: "/productor/" + this.id_prod + "/formulas/crear/inicial"
+                ubicInp: parseInt(this.ubic),
+                enviosInp: parseInt(this.envios),
+                pagosInp: parseInt(this.pagos),
+                exitoInp: parseInt(this.exito),
+                cumplimInp: parseInt(this.cumplim),
+                link: "/productor/" + this.id_prod + "/formulas/editar/anual"
             };
         },
 
@@ -100,24 +108,35 @@
                 }
             },
 
+            cumplimInputErr() {
+                if((this.cumplimInp > 100 || this.cumplimInp < 0) && (this.cumplimInp != null)) {
+                    this.smallCum = "No debe ser mayor a 100 o menor a 0.";
+                    return "is-invalid";
+                }
+                else {
+                    this.smallCum = "";
+                    return "";
+                }
+            },
+
             submitErr() {
                 if(this.ubicInputErr === "is-invalid" || this.pagosInputErr === "is-invalid" || 
-                this.enviosInputErr === "is-invalid" || this.exitoInputErr === "is-invalid")
+                this.enviosInputErr === "is-invalid" || this.exitoInputErr === "is-invalid" || this.cumplimInputErr === "is-invalid")
                 {
                     this.smallBtn = "";
                     this.submitErrDis="disabled";
                     return "btn-danger";
                 }
-                else if(this.enviosInp + this.pagosInp + this.ubicInp > 100 && 
-                this.enviosInp != null && this.pagosInp != null && this.ubicInp != null
-                && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "") {
+                else if(this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp > 100 && 
+                this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null
+                && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
                     this.smallBtn = "Los criterios no deben sumar mas de 100%";
                     this.submitErrDis="disabled";
                     return "btn-danger";
                 }
-                else if(this.enviosInp + this.pagosInp + this.ubicInp != 100 
-                && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null
-                && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "") {
+                else if(this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp != 100 && 
+                this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null
+                && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
                     this.smallBtn = "Los criterios deben sumar 100%";
                     this.submitErrDis="disabled";
                     return "btn-danger";
@@ -128,6 +147,7 @@
                     return "";
                 }
             }
+            
         }
     }
 </script>

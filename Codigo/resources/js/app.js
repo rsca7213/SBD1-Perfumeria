@@ -21,6 +21,9 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('crear-formula-inicial', require('./components/formulas/crearFormulaInicial.vue').default);
+Vue.component('editar-formula-inicial', require('./components/formulas/editarFormulaInicial.vue').default);
+Vue.component('crear-formula-anual', require('./components/formulas/crearFormulaAnual.vue').default);
+Vue.component('editar-formula-anual', require('./components/formulas/editarFormulaAnual.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

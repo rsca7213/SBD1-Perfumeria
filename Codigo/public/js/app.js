@@ -1932,6 +1932,145 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["id_prod", "csrf"],
+  data: function data() {
+    return {
+      ubicInp: null,
+      enviosInp: null,
+      pagosInp: null,
+      exitoInp: null,
+      cumplimInp: null,
+      link: "/productor/" + this.id_prod + "/formulas/crear/anual"
+    };
+  },
+  computed: {
+    ubicInputErr: function ubicInputErr() {
+      if ((this.ubicInp > 100 || this.ubicInp < 0) && this.ubicInp != null) {
+        this.smallUbic = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallUbic = "";
+        return "";
+      }
+    },
+    pagosInputErr: function pagosInputErr() {
+      if ((this.pagosInp > 100 || this.pagosInp < 0) && this.pagosInp != null) {
+        this.smallPago = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallPago = "";
+        return "";
+      }
+    },
+    enviosInputErr: function enviosInputErr() {
+      if ((this.enviosInp > 100 || this.enviosInp < 0) && this.enviosInp != null) {
+        this.smallEnv = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallEnv = "";
+        return "";
+      }
+    },
+    exitoInputErr: function exitoInputErr() {
+      if ((this.exitoInp > 100 || this.exitoInp < 0) && this.exitoInp != null) {
+        this.smallEx = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallEx = "";
+        return "";
+      }
+    },
+    cumplimInputErr: function cumplimInputErr() {
+      if ((this.cumplimInp > 100 || this.cumplimInp < 0) && this.cumplimInp != null) {
+        this.smallCum = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallCum = "";
+        return "";
+      }
+    },
+    submitErr: function submitErr() {
+      if (this.ubicInputErr === "is-invalid" || this.pagosInputErr === "is-invalid" || this.enviosInputErr === "is-invalid" || this.exitoInputErr === "is-invalid" || this.cumplimInputErr === "is-invalid") {
+        this.smallBtn = "";
+        this.submitErrDis = "disabled";
+        return "btn-danger";
+      } else if (this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp > 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
+        this.smallBtn = "Los criterios no deben sumar mas de 100%";
+        this.submitErrDis = "disabled";
+        return "btn-danger";
+      } else if (this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp != 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
+        this.smallBtn = "Los criterios deben sumar 100%";
+        this.submitErrDis = "disabled";
+        return "btn-danger";
+      } else {
+        this.submitErrDis = null;
+        this.smallBtn = "";
+        return "";
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/crearFormulaInicial.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/crearFormulaInicial.vue?vue&type=script&lang=js& ***!
@@ -1991,7 +2130,7 @@ __webpack_require__.r(__webpack_exports__);
       enviosInp: null,
       pagosInp: null,
       exitoInp: null,
-      link: "/productor/" + this.id_prod + "/formulas/inicial"
+      link: "/productor/" + this.id_prod + "/formulas/crear/inicial"
     };
   },
   computed: {
@@ -2036,11 +2175,275 @@ __webpack_require__.r(__webpack_exports__);
         this.smallBtn = "";
         this.submitErrDis = "disabled";
         return "btn-danger";
-      } else if (this.enviosInp + this.pagosInp + this.ubicInp > 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null) {
+      } else if (this.enviosInp + this.pagosInp + this.ubicInp > 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "") {
         this.smallBtn = "Los criterios no deben sumar mas de 100%";
         this.submitErrDis = "disabled";
         return "btn-danger";
-      } else if (this.enviosInp + this.pagosInp + this.ubicInp != 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null) {
+      } else if (this.enviosInp + this.pagosInp + this.ubicInp != 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "") {
+        this.smallBtn = "Los criterios deben sumar 100%";
+        this.submitErrDis = "disabled";
+        return "btn-danger";
+      } else {
+        this.submitErrDis = null;
+        this.smallBtn = "";
+        return "";
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/editarFormulaAnual.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/editarFormulaAnual.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["id_prod", "csrf", "ubic", "pagos", "envios", "exito", "cumplim"],
+  data: function data() {
+    return {
+      ubicInp: parseInt(this.ubic),
+      enviosInp: parseInt(this.envios),
+      pagosInp: parseInt(this.pagos),
+      exitoInp: parseInt(this.exito),
+      cumplimInp: parseInt(this.cumplim),
+      link: "/productor/" + this.id_prod + "/formulas/editar/anual"
+    };
+  },
+  computed: {
+    ubicInputErr: function ubicInputErr() {
+      if ((this.ubicInp > 100 || this.ubicInp < 0) && this.ubicInp != null) {
+        this.smallUbic = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallUbic = "";
+        return "";
+      }
+    },
+    pagosInputErr: function pagosInputErr() {
+      if ((this.pagosInp > 100 || this.pagosInp < 0) && this.pagosInp != null) {
+        this.smallPago = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallPago = "";
+        return "";
+      }
+    },
+    enviosInputErr: function enviosInputErr() {
+      if ((this.enviosInp > 100 || this.enviosInp < 0) && this.enviosInp != null) {
+        this.smallEnv = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallEnv = "";
+        return "";
+      }
+    },
+    exitoInputErr: function exitoInputErr() {
+      if ((this.exitoInp > 100 || this.exitoInp < 0) && this.exitoInp != null) {
+        this.smallEx = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallEx = "";
+        return "";
+      }
+    },
+    cumplimInputErr: function cumplimInputErr() {
+      if ((this.cumplimInp > 100 || this.cumplimInp < 0) && this.cumplimInp != null) {
+        this.smallCum = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallCum = "";
+        return "";
+      }
+    },
+    submitErr: function submitErr() {
+      if (this.ubicInputErr === "is-invalid" || this.pagosInputErr === "is-invalid" || this.enviosInputErr === "is-invalid" || this.exitoInputErr === "is-invalid" || this.cumplimInputErr === "is-invalid") {
+        this.smallBtn = "";
+        this.submitErrDis = "disabled";
+        return "btn-danger";
+      } else if (this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp > 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
+        this.smallBtn = "Los criterios no deben sumar mas de 100%";
+        this.submitErrDis = "disabled";
+        return "btn-danger";
+      } else if (this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp != 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
+        this.smallBtn = "Los criterios deben sumar 100%";
+        this.submitErrDis = "disabled";
+        return "btn-danger";
+      } else {
+        this.submitErrDis = null;
+        this.smallBtn = "";
+        return "";
+      }
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/editarFormulaInicial.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/editarFormulaInicial.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["id_prod", "csrf", "ubic", "pagos", "envios", "exito"],
+  data: function data() {
+    return {
+      ubicInp: parseInt(this.ubic),
+      enviosInp: parseInt(this.envios),
+      pagosInp: parseInt(this.pagos),
+      exitoInp: parseInt(this.exito),
+      link: "/productor/" + this.id_prod + "/formulas/editar/inicial"
+    };
+  },
+  computed: {
+    ubicInputErr: function ubicInputErr() {
+      if ((this.ubicInp > 100 || this.ubicInp < 0) && this.ubicInp != null) {
+        this.smallUbic = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallUbic = "";
+        return "";
+      }
+    },
+    pagosInputErr: function pagosInputErr() {
+      if ((this.pagosInp > 100 || this.pagosInp < 0) && this.pagosInp != null) {
+        this.smallPago = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallPago = "";
+        return "";
+      }
+    },
+    enviosInputErr: function enviosInputErr() {
+      if ((this.enviosInp > 100 || this.enviosInp < 0) && this.enviosInp != null) {
+        this.smallEnv = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallEnv = "";
+        return "";
+      }
+    },
+    exitoInputErr: function exitoInputErr() {
+      if ((this.exitoInp > 100 || this.exitoInp < 0) && this.exitoInp != null) {
+        this.smallEx = "No debe ser mayor a 100 o menor a 0.";
+        return "is-invalid";
+      } else {
+        this.smallEx = "";
+        return "";
+      }
+    },
+    submitErr: function submitErr() {
+      if (this.ubicInputErr === "is-invalid" || this.pagosInputErr === "is-invalid" || this.enviosInputErr === "is-invalid" || this.exitoInputErr === "is-invalid") {
+        this.smallBtn = "";
+        this.submitErrDis = "disabled";
+        return "btn-danger";
+      } else if (this.enviosInp + this.pagosInp + this.ubicInp > 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "") {
+        this.smallBtn = "Los criterios no deben sumar mas de 100%";
+        this.submitErrDis = "disabled";
+        return "btn-danger";
+      } else if (this.enviosInp + this.pagosInp + this.ubicInp != 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "") {
         this.smallBtn = "Los criterios deben sumar 100%";
         this.submitErrDis = "disabled";
         return "btn-danger";
@@ -37679,6 +38082,323 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=template&id=2c32643d&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=template&id=2c32643d& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("span", [
+    _c("h5", [_vm._v(" Asignación de porcentajes a cada criterio: ")]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass: "row justify-content-center",
+        attrs: { action: _vm.link, method: "POST" }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: this.csrf }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c(
+              "label",
+              { staticClass: "mt-2 px-4", attrs: { for: "ubicacion" } },
+              [_vm._v(" Ubicación ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.ubicInp,
+                  expression: "ubicInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.ubicInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "ubicacion",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "ubicacion"
+              },
+              domProps: { value: _vm.ubicInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.ubicInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallUbic) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "pagos" } }, [
+              _vm._v(" Metodos de pago ")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.pagosInp,
+                  expression: "pagosInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.pagosInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "pagos",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "pagos"
+              },
+              domProps: { value: _vm.pagosInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.pagosInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallPago) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c(
+              "label",
+              { staticClass: "mt-2 px-4", attrs: { for: "envios" } },
+              [_vm._v(" Metodos de envío ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.enviosInp,
+                  expression: "enviosInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.enviosInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "envios",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "envios"
+              },
+              domProps: { value: _vm.enviosInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.enviosInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallEnv) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c(
+              "label",
+              { staticClass: "mt-2 px-4", attrs: { for: "cumplim" } },
+              [_vm._v(" Cumplimiento de pedidos ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.cumplimInp,
+                  expression: "cumplimInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.cumplimInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "cumplim",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "cumplim"
+              },
+              domProps: { value: _vm.cumplimInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.cumplimInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallCum) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "exito" } }, [
+              _vm._v(" Criterio de éxito ")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.exitoInp,
+                  expression: "exitoInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.exitoInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "exito",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "exito"
+              },
+              domProps: { value: _vm.exitoInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.exitoInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallEx) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group text-center col-12" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              class: _vm.submitErr,
+              attrs: { type: "submit", disabled: _vm.submitErrDis }
+            },
+            [
+              _c("img", {
+                staticClass: "mb-1",
+                attrs: {
+                  src: "/img/iconos/add_white.svg",
+                  alt: "crear",
+                  width: "24"
+                }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "ml-2" }, [_vm._v(" Crear Formula ")])
+            ]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("small", { staticClass: "text-danger" }, [
+            _c("b", { domProps: { textContent: _vm._s(_vm.smallBtn) } })
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/crearFormulaInicial.vue?vue&type=template&id=2484979f&":
 /*!*******************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/crearFormulaInicial.vue?vue&type=template&id=2484979f& ***!
@@ -37926,6 +38646,598 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("span", { staticClass: "ml-2" }, [_vm._v(" Crear Formula ")])
+            ]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("small", { staticClass: "text-danger" }, [
+            _c("b", { domProps: { textContent: _vm._s(_vm.smallBtn) } })
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/editarFormulaAnual.vue?vue&type=template&id=e153d9a2&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/editarFormulaAnual.vue?vue&type=template&id=e153d9a2& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("span", [
+    _c("h5", [_vm._v(" Asignación de porcentajes a cada criterio: ")]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass: "row justify-content-center",
+        attrs: { action: _vm.link, method: "POST" }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: this.csrf }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "hidden", name: "_method", value: "PATCH" }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c(
+              "label",
+              { staticClass: "mt-2 px-4", attrs: { for: "ubicacion" } },
+              [_vm._v(" Ubicación ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.ubicInp,
+                  expression: "ubicInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.ubicInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "ubicacion",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "ubicacion"
+              },
+              domProps: { value: _vm.ubicInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.ubicInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallUbic) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "pagos" } }, [
+              _vm._v(" Metodos de pago ")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.pagosInp,
+                  expression: "pagosInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.pagosInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "pagos",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "pagos"
+              },
+              domProps: { value: _vm.pagosInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.pagosInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallPago) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c(
+              "label",
+              { staticClass: "mt-2 px-4", attrs: { for: "envios" } },
+              [_vm._v(" Metodos de envío ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.enviosInp,
+                  expression: "enviosInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.enviosInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "envios",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "envios"
+              },
+              domProps: { value: _vm.enviosInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.enviosInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallEnv) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c(
+              "label",
+              { staticClass: "mt-2 px-4", attrs: { for: "cumplim" } },
+              [_vm._v(" Cumplimiento de pedidos ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.cumplimInp,
+                  expression: "cumplimInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.cumplimInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "cumplim",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "cumplim"
+              },
+              domProps: { value: _vm.cumplimInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.cumplimInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallCum) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "exito" } }, [
+              _vm._v(" Criterio de éxito ")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.exitoInp,
+                  expression: "exitoInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.exitoInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "exito",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "exito"
+              },
+              domProps: { value: _vm.exitoInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.exitoInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallEx) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group text-center col-12" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              class: _vm.submitErr,
+              attrs: { type: "submit", disabled: _vm.submitErrDis }
+            },
+            [
+              _c("img", {
+                staticClass: "mb-1",
+                attrs: {
+                  src: "/img/iconos/edit_white.svg",
+                  alt: "crear",
+                  width: "24"
+                }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "ml-2" }, [_vm._v(" Editar Formula ")])
+            ]
+          ),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("small", { staticClass: "text-danger" }, [
+            _c("b", { domProps: { textContent: _vm._s(_vm.smallBtn) } })
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/editarFormulaInicial.vue?vue&type=template&id=4d785211&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/formulas/editarFormulaInicial.vue?vue&type=template&id=4d785211& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("span", [
+    _c("h5", [_vm._v(" Asignación de porcentajes a cada criterio: ")]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        staticClass: "row justify-content-center",
+        attrs: { action: _vm.link, method: "POST" }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: this.csrf }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          attrs: { type: "hidden", name: "_method", value: "PATCH" }
+        }),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c(
+              "label",
+              { staticClass: "mt-2 px-4", attrs: { for: "ubicacion" } },
+              [_vm._v(" Ubicación ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.ubicInp,
+                  expression: "ubicInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.ubicInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "ubicacion",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "ubicacion"
+              },
+              domProps: { value: _vm.ubicInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.ubicInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallUbic) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "pagos" } }, [
+              _vm._v(" Metodos de pago ")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.pagosInp,
+                  expression: "pagosInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.pagosInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "pagos",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "pagos"
+              },
+              domProps: { value: _vm.pagosInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.pagosInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallPago) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c(
+              "label",
+              { staticClass: "mt-2 px-4", attrs: { for: "envios" } },
+              [_vm._v(" Metodos de envío ")]
+            ),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.enviosInp,
+                  expression: "enviosInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.enviosInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "envios",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "envios"
+              },
+              domProps: { value: _vm.enviosInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.enviosInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallEnv) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
+          [
+            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "exito" } }, [
+              _vm._v(" Criterio de éxito ")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model.number",
+                  value: _vm.exitoInp,
+                  expression: "exitoInp",
+                  modifiers: { number: true }
+                }
+              ],
+              staticClass: "form-control",
+              class: _vm.exitoInputErr,
+              attrs: {
+                type: "number",
+                step: "0.01",
+                id: "exito",
+                required: "",
+                placeholder: "Porcentaje...",
+                name: "exito"
+              },
+              domProps: { value: _vm.exitoInp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.exitoInp = _vm._n($event.target.value)
+                },
+                blur: function($event) {
+                  return _vm.$forceUpdate()
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("small", { staticClass: "form-text text-danger" }, [
+              _c("b", { domProps: { textContent: _vm._s(_vm.smallEx) } })
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group text-center col-12" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary",
+              class: _vm.submitErr,
+              attrs: { type: "submit", disabled: _vm.submitErrDis }
+            },
+            [
+              _c("img", {
+                staticClass: "mb-1",
+                attrs: {
+                  src: "/img/iconos/edit_white.svg",
+                  alt: "crear",
+                  width: "24"
+                }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "ml-2" }, [_vm._v(" Editar Formula ")])
             ]
           ),
           _vm._v(" "),
@@ -50135,6 +51447,9 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('crear-formula-inicial', __webpack_require__(/*! ./components/formulas/crearFormulaInicial.vue */ "./resources/js/components/formulas/crearFormulaInicial.vue")["default"]);
+Vue.component('editar-formula-inicial', __webpack_require__(/*! ./components/formulas/editarFormulaInicial.vue */ "./resources/js/components/formulas/editarFormulaInicial.vue")["default"]);
+Vue.component('crear-formula-anual', __webpack_require__(/*! ./components/formulas/crearFormulaAnual.vue */ "./resources/js/components/formulas/crearFormulaAnual.vue")["default"]);
+Vue.component('editar-formula-anual', __webpack_require__(/*! ./components/formulas/editarFormulaAnual.vue */ "./resources/js/components/formulas/editarFormulaAnual.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -50261,6 +51576,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/formulas/crearFormulaAnual.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/formulas/crearFormulaAnual.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _crearFormulaAnual_vue_vue_type_template_id_2c32643d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./crearFormulaAnual.vue?vue&type=template&id=2c32643d& */ "./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=template&id=2c32643d&");
+/* harmony import */ var _crearFormulaAnual_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./crearFormulaAnual.vue?vue&type=script&lang=js& */ "./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _crearFormulaAnual_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _crearFormulaAnual_vue_vue_type_template_id_2c32643d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _crearFormulaAnual_vue_vue_type_template_id_2c32643d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/formulas/crearFormulaAnual.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_crearFormulaAnual_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./crearFormulaAnual.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_crearFormulaAnual_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=template&id=2c32643d&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=template&id=2c32643d& ***!
+  \***********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_crearFormulaAnual_vue_vue_type_template_id_2c32643d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./crearFormulaAnual.vue?vue&type=template&id=2c32643d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/crearFormulaAnual.vue?vue&type=template&id=2c32643d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_crearFormulaAnual_vue_vue_type_template_id_2c32643d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_crearFormulaAnual_vue_vue_type_template_id_2c32643d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/formulas/crearFormulaInicial.vue":
 /*!******************************************************************!*\
   !*** ./resources/js/components/formulas/crearFormulaInicial.vue ***!
@@ -50325,6 +51709,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_crearFormulaInicial_vue_vue_type_template_id_2484979f___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_crearFormulaInicial_vue_vue_type_template_id_2484979f___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/editarFormulaAnual.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/formulas/editarFormulaAnual.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _editarFormulaAnual_vue_vue_type_template_id_e153d9a2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editarFormulaAnual.vue?vue&type=template&id=e153d9a2& */ "./resources/js/components/formulas/editarFormulaAnual.vue?vue&type=template&id=e153d9a2&");
+/* harmony import */ var _editarFormulaAnual_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editarFormulaAnual.vue?vue&type=script&lang=js& */ "./resources/js/components/formulas/editarFormulaAnual.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _editarFormulaAnual_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _editarFormulaAnual_vue_vue_type_template_id_e153d9a2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _editarFormulaAnual_vue_vue_type_template_id_e153d9a2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/formulas/editarFormulaAnual.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/editarFormulaAnual.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/formulas/editarFormulaAnual.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editarFormulaAnual_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./editarFormulaAnual.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/editarFormulaAnual.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editarFormulaAnual_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/editarFormulaAnual.vue?vue&type=template&id=e153d9a2&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/formulas/editarFormulaAnual.vue?vue&type=template&id=e153d9a2& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editarFormulaAnual_vue_vue_type_template_id_e153d9a2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./editarFormulaAnual.vue?vue&type=template&id=e153d9a2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/editarFormulaAnual.vue?vue&type=template&id=e153d9a2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editarFormulaAnual_vue_vue_type_template_id_e153d9a2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editarFormulaAnual_vue_vue_type_template_id_e153d9a2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/editarFormulaInicial.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/formulas/editarFormulaInicial.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _editarFormulaInicial_vue_vue_type_template_id_4d785211___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./editarFormulaInicial.vue?vue&type=template&id=4d785211& */ "./resources/js/components/formulas/editarFormulaInicial.vue?vue&type=template&id=4d785211&");
+/* harmony import */ var _editarFormulaInicial_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./editarFormulaInicial.vue?vue&type=script&lang=js& */ "./resources/js/components/formulas/editarFormulaInicial.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _editarFormulaInicial_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _editarFormulaInicial_vue_vue_type_template_id_4d785211___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _editarFormulaInicial_vue_vue_type_template_id_4d785211___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/formulas/editarFormulaInicial.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/editarFormulaInicial.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/formulas/editarFormulaInicial.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editarFormulaInicial_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./editarFormulaInicial.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/editarFormulaInicial.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_editarFormulaInicial_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/formulas/editarFormulaInicial.vue?vue&type=template&id=4d785211&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/formulas/editarFormulaInicial.vue?vue&type=template&id=4d785211& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editarFormulaInicial_vue_vue_type_template_id_4d785211___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./editarFormulaInicial.vue?vue&type=template&id=4d785211& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/formulas/editarFormulaInicial.vue?vue&type=template&id=4d785211&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editarFormulaInicial_vue_vue_type_template_id_4d785211___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_editarFormulaInicial_vue_vue_type_template_id_4d785211___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
