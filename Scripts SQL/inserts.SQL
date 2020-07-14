@@ -477,7 +477,13 @@ INSERT INTO rdj_otros_ingredientes (cas_otro_ing,nombre,descripcion,id_proveedor
 (949495685,'Aceite Pimienta Rosa','Procedente de las bayas del grano de pimienta rosa, puede parecer similar al grano de pimienta negro en tu molino de pimienta, sin embargo, la pimienta rosa está estrechamente relacionada con los anacardos.',1),
 (8024064,'Extracto de Vainilla','Obtenido de la vaina o chaucha de la vainilla que produce un fruto del cual se obtiene este saborizante, después de un sencillo proceso de maceración.',1),
 (8000462,'Aceite de Geranio','Un miembro del género Pelargonium de especies de flores, los geranios se cultivan por su belleza y como materia prima de la industria del perfume.',1),
-(84929260,'Aceite de Mirra','Se consigue a raíz de la resina de mirra, que es una planta típica de Egipto y muy popular en la antigüedad, sobre todo por sus ventajas para la salud y sus componentes aromáticos.',1);
+(84929260,'Aceite de Mirra','Se consigue a raíz de la resina de mirra, que es una planta típica de Egipto y muy popular en la antigüedad, sobre todo por sus ventajas para la salud y sus componentes aromáticos.',1),
+(97676192,'Grosella Negra','Es una baya de pulpa translúcida con tonos rojos o verdes y de sabor agridulce.',1),
+(8000279,'Aceite de cedro','Los aceites de madera de cedro tienen característicos olores leñosos que pueden cambiar algo en el curso de la desecación.',3),
+(8002731,'Aceite de Iris','El aceite natural de Iris es una esencia que se obtiene mediante destilación por arrastre de vapor del polvo obtenido de los rizomas pelados y desecados.',5),
+(8002093,'Aceite de Pino','Es un aceite esencial obtenido por destilación por arrastre de vapor de agujas, ramitas y conos de distintas especies de pino, en especial Pinus sylvestris.',2),
+(8016964,'Vetiver','Es una planta perenne de la familia de las gramíneas, nativa de la India.',6),
+(100516,'Alcohol bencílico','Es un solvente útil a causa de su polaridad, baja toxicidad, y baja presión de vapor',4);
 
 INSERT INTO rdj_present_otros_ings (id,cas_otro_ing,volumen,precio) VALUES
 (nextval('id_present_otro_ing_sec'),91052925,60,15), (nextval('id_present_otro_ing_sec'),91052925,250,51), (nextval('id_present_otro_ing_sec'),91052925,1000,123), /*unidades: ml*/
@@ -487,7 +493,13 @@ INSERT INTO rdj_present_otros_ings (id,cas_otro_ing,volumen,precio) VALUES
 (nextval('id_present_otro_ing_sec'),949495685,100,280), (nextval('id_present_otro_ing_sec'),949495685,200,560), (nextval('id_present_otro_ing_sec'),949495685,500,1400), /*unidades: ml*/
 (nextval('id_present_otro_ing_sec'),8024064,15,35), (nextval('id_present_otro_ing_sec'),8024064,30,70), (nextval('id_present_otro_ing_sec'),8024064,60,140), /*unidades: ml*/
 (nextval('id_present_otro_ing_sec'),8000462,15,41), (nextval('id_present_otro_ing_sec'),8000462,30,82), (nextval('id_present_otro_ing_sec'),8000462,60,164), /*unidades: ml*/
-(nextval('id_present_otro_ing_sec'),84929260,100,20), (nextval('id_present_otro_ing_sec'),84929260,500,1040), (nextval('id_present_otro_ing_sec'),84929260,1000,2108); /*unidades: gr*/
+(nextval('id_present_otro_ing_sec'),84929260,100,20), (nextval('id_present_otro_ing_sec'),84929260,500,1040), (nextval('id_present_otro_ing_sec'),84929260,1000,2108), /*unidades: gr*/
+(nextval('id_present_otro_ing_sec'),97676192,1000,250), /*unidades: gr*/
+(nextval('id_present_otro_ing_sec'),8000279,1000,180), (nextval('id_present_otro_ing_sec'),8000279,2000,310), (nextval('id_present_otro_ing_sec'),8000279,5000,670), /*unidades: gr*/
+(nextval('id_present_otro_ing_sec'),8002731,50,40), (nextval('id_present_otro_ing_sec'),8002731,100,87), (nextval('id_present_otro_ing_sec'),8002731,500,450), /*unidades: ml*/
+(nextval('id_present_otro_ing_sec'),8002093,60,50), (nextval('id_present_otro_ing_sec'),8002093,200,175), (nextval('id_present_otro_ing_sec'),8002093,500,420), /*unidades: ml*/
+(nextval('id_present_otro_ing_sec'),8016964,30,42), (nextval('id_present_otro_ing_sec'),8016964,60,88), (nextval('id_present_otro_ing_sec'),8016964,120,180), /*unidades: gr*/
+(nextval('id_present_otro_ing_sec'),100516,100,57), (nextval('id_present_otro_ing_sec'),100516,200,110), (nextval('id_present_otro_ing_sec'),100516,500,286); /*unidades: ml*/
 
 INSERT INTO rdj_otros_componentes (id_perfume,cas_otro_ing) VALUES
 (1,91052925), (1,8008319),
@@ -560,7 +572,13 @@ INSERT INTO rdj_presents_ings_esencias (id,cas_ing_esencia,volumen,precio)VALUES
 (nextval('id_present_ing_esen_sec'),5392405,5,25), (nextval('id_present_ing_esen_sec'),5392405,100,35), (nextval('id_present_ing_esen_sec'),5392405,500,135), /*unidades: ml*/
 (nextval('id_present_ing_esen_sec'),4180238,100,25), (nextval('id_present_ing_esen_sec'),4180238,200,43), (nextval('id_present_ing_esen_sec'),4180238,500,80); /*unidades: gr*/
 
-/*INSERT INTO rdj_esencias_otros_ings (cas_otro_ing,cas_ing_esencia) VALUES*/
+INSERT INTO rdj_ings_esencias_otros_ings (cas_otro_ing,cas_ing_esencia) VALUES
+(97676192,68650464),
+(8002731,4736452),
+(8002093,586629),
+(8000279,71735790),
+(8016964,89883),
+(100516,120116);
 
 INSERT INTO rdj_ings_esencias_familias (id_familia,cas_ing_esencia)VALUES
 (5,1005171),
