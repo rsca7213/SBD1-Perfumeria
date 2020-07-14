@@ -22,7 +22,7 @@
     </li>
     <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 
-        <a href="#" class="nav-item"> Evaluaciones </a> 
+        <a href="{{ route('verEvaluaciones', ['id_prod' => $id_prod]) }}" class="nav-item"> Evaluaciones </a> 
     </li>
 @endsection
 

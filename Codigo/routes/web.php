@@ -36,6 +36,10 @@ Route::get('/productor/{id_prod}/escala/editar', 'FormulasController@editarEscal
 Route::patch('/productor/{id_prod}/escala/editar', 'FormulasController@updateEscala');
 Route::delete('/productor/{id_prod}/escala/borrar', 'FormulasController@borrarEscala');
 
+Route::get('/productor/{id_prod}/evaluaciones', 'EvaluacionesController@verEvaluaciones')->name('verEvaluaciones');
+Route::get('/productor/{id_prod}/evaluaciones/realizar', 'EvaluacionesController@realizarEvaluacion')->name('realizarEvaluacion');
+Route::get('/productor/{id_prod}/evaluaciones/inicial', 'EvaluacionesController@dataEvaluacionInicial');
+
 /* Ruta de pagina de inicio */
 Route::get('/', function () {
     return view('index');
