@@ -34,7 +34,7 @@
                 Realizar Evaluación
             </div>
 
-            <div class="card-body" style="background-color: #FDFDFD">
+            <div class="card-body" style="background-color: #F8F8F8">
                 <realizar-evaluacion> </realizar-evaluacion>
             </div>
             <div class="card-footer bg-primary text-white">

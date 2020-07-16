@@ -1984,34 +1984,296 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["id_prod"],
   data: function data() {
     return {
       tipoEv: "",
-      provs: null,
-      provsInic: []
+
+      /*encargada de determinar el tipo de evaluacion a realizar
+          "" = sin seleccion
+          inicial = seleccion de proveedores para ev inicial
+          inicialStart = proceso de evaluacion inicial
+          anual = seleccion de proveedores para ev anual
+          anualStart = proceso de evaluacion anual
+      */
+      provsInic: [],
+
+      /*data que devuelve laravel para seleccionar los proveedores
+        de la evaluacion inicial */
+      provsInicSelec: [],
+
+      /*arreglo que contiene las ids de los proveedores seleccionados
+       para una evaluacion inicial, se envian a laravel */
+      provsInicRes: [],
+
+      /*arreglo que contiene los resultados que se van asignando
+       a los proveedores en la evaluacion inicial */
+      provsInicData: [],
+      formInic: [],
+
+      /* Formula de evaluacion inicial del productor */
+      escala: [],
+
+      /* Escala de evaluacion del productor */
+      provActual: 0,
+
+      /* Variable auxiliar que determina el proveedor que se esta
+         evaluando actualmente */
+      indexDetEnvio: 0
+      /* Variable auxiliar que determina el metodo de envio que se
+         quiere detallar */
+
     };
   },
-  mounted: function mounted() {},
   methods: {
+    /* Funcion AXIOS que busca la data necesaria para realizar la seleccion
+       de proveedores para una evaluacion inicial y almacena que el tipo de
+       ev a realizar es de tipo inicial*/
     evInicial: function evInicial() {
       var _this = this;
 
-      console.log("%cAxios: Get!", "color: lightblue");
+      console.log("%cAxios: Get! Buscando proveedores para ev inicial", "color: lightblue");
       axios.get("inicial").then(function (response) {
         console.log("%cAxios: Success!", "color: lightgreen");
-        console.log(_this.provsInic = response.data[0]);
+        _this.provsInic = response.data[0];
+        _this.tipoEv = "inicial";
       })["catch"](function (errors) {
         console.log("%cAxios: Error!", "color: #FFCCCB");
       });
-      this.tipoEv = "inicial";
     },
+
+    /* Funcion AXIOS que busca la data necesaria para realizar la seleccion
+    de proveedores para una evaluacion anual y almacena que el tipo de
+    ev a realizar es de tipo anual*/
     evAnual: function evAnual() {
       this.tipoEv = "Anual";
+    },
+
+    /* Cuando se selecciona un proveedor en la seleccion de proveedores
+       para evaluaciones iniciales se llama a este metodo para registrar
+       la id del proveedor seleccionada */
+    seleccionarProvInicial: function seleccionarProvInicial(idp) {
+      for (var i = 0; i <= this.provsInicSelec.length; i++) {
+        if (this.provsInicSelec[i] === idp) {
+          this.provsInicSelec.splice(i, 1);
+          return;
+        }
+      }
+
+      this.provsInicSelec.push(idp);
+    },
+
+    /* Funcion AXIOS que le pide a laravel toda la data necesaria para
+       llevar a cabo una evaluacion inicial, envia las ids de los proveedores
+       de los cuales necesita data */
+    dataInicial: function dataInicial() {
+      var _this2 = this;
+
+      console.log("%cAxios: Get! Buscando data para evs iniciales", "color: lightblue");
+      axios.post("data/inicial", {
+        provs: this.provsInicSelec
+      }).then(function (response) {
+        console.log("%cAxios: Success!", "color: lightgreen");
+        _this2.provsInicData = response.data[0];
+        _this2.formInic = response.data[1];
+        _this2.escala = response.data[2];
+        _this2.tipoEv = "inicialStart";
+      })["catch"](function (errors) {
+        console.log("%cAxios: Error!", "color: #FFCCCB");
+        console.log(errors);
+      });
+    },
+
+    /* Determina que metodo de envio detallar en el modal */
+    rellenarModalDetEnvio: function rellenarModalDetEnvio(num) {
+      this.indexDetEnvio = num;
+    },
+
+    /* Cambia de proveedor al siguiente */
+    provSiguiente: function provSiguiente() {
+      this.provActual++;
+    },
+
+    /* Cambia de proveedor al anterior */
+    provAnterior: function provAnterior() {
+      this.provActual--;
     }
   },
-  computed: {}
+  computed: {
+    /* Validacion front end que no permite que se continue con la
+       evaluacion inicial hasta que se seleccione un proveedor al menos */
+    botonIniciarEvInicial: function botonIniciarEvInicial() {
+      if (this.provsInicSelec.length === 0) {
+        this.botonIniciarEvInicialDis = "disabled";
+        return "disabled";
+      } else {
+        this.botonIniciarEvInicialDis = null;
+        return "";
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -38341,10 +38603,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4&":
-/*!**********************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4& ***!
-  \**********************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -38451,12 +38713,581 @@ var render = function() {
                     2
                   ),
                   _vm._v(" "),
-                  _vm._m(3, true)
+                  _c("span", { staticClass: "col-12 text-center" }, [
+                    _c("input", {
+                      staticClass: "mr-1",
+                      attrs: { type: "checkbox" },
+                      on: {
+                        click: function($event) {
+                          return _vm.seleccionarProvInicial(prov["idp"])
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm._m(3, true)
+                  ])
                 ]
               )
-            })
+            }),
+            _vm._v(" "),
+            _vm.provsInic != []
+              ? _c(
+                  "div",
+                  { staticClass: "row d-flex justify-content-center mt-4" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        class: _vm.botonIniciarEvInicial,
+                        attrs: { disabled: _vm.botonIniciarEvInicialDis },
+                        on: { click: _vm.dataInicial }
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "mb-1",
+                          attrs: {
+                            src: "/img/iconos/check_white.svg",
+                            alt: "continuar",
+                            width: "24"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "ml-2" }, [
+                          _vm._v(" Continuar ")
+                        ])
+                      ]
+                    )
+                  ]
+                )
+              : _vm._e()
           ],
           2
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipoEv === "inicialStart"
+      ? _c(
+          "span",
+          _vm._l(_vm.provsInicData, function(prov, index) {
+            return _c("div", { key: prov.idp }, [
+              _vm.provActual === index
+                ? _c("span", [
+                    _c(
+                      "div",
+                      { staticClass: "row d-flex justify-content-center" },
+                      [
+                        _c("span", { staticClass: "h5 col-12 text-center" }, [
+                          _c("b", [_vm._v(" Proveedor: ")]),
+                          _vm._v(" " + _vm._s(prov["prov"]) + " ")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "h5 col-12 text-center" }, [
+                          _c("b", [_vm._v(" Criterio de Evaluación: ")]),
+                          _vm._v(" " + _vm._s(_vm.formInic[0]["nombre"]) + " "),
+                          _c("b", [
+                            _vm._v(
+                              " \n                        (" +
+                                _vm._s(_vm.formInic[0]["peso"]) +
+                                " %) "
+                            )
+                          ])
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("hr", { staticClass: "py-0 my-0 mb-2" }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "row d-flex justify-content-center mx-4" },
+                      [
+                        _c(
+                          "table",
+                          { staticClass: "table table-striped mx-4 col-8" },
+                          [
+                            _c("thead", { staticClass: "text-center" }, [
+                              _c(
+                                "th",
+                                {
+                                  staticClass:
+                                    "bg-primary text-white border border-info",
+                                  attrs: { scope: "col" }
+                                },
+                                [_vm._v(" Ubicación / Sede Principal ")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "th",
+                                {
+                                  staticClass: "border border-info",
+                                  staticStyle: {
+                                    "background-color": "#E4E4E4"
+                                  },
+                                  attrs: { scope: "col" }
+                                },
+                                [_vm._v(" " + _vm._s(prov["pais"]) + " ")]
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "flex-row d-flex justify-content-center mx-4 align-items-center"
+                      },
+                      [
+                        _vm._m(4, true),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control w-25",
+                          attrs: {
+                            type: "number",
+                            min: "0",
+                            max: "5",
+                            id: prov.idp + "ubic"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass: "ml-2",
+                            staticStyle: { "font-size": "16px" }
+                          },
+                          [
+                            _c("b", [
+                              _vm._v(
+                                " (de " +
+                                  _vm._s(_vm.escala.ri) +
+                                  " a " +
+                                  _vm._s(_vm.escala.rf) +
+                                  ") "
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("hr", { staticClass: "py-0 my-2" }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "flex-row d-flex justify-content-center mx-4"
+                      },
+                      [
+                        _c("span", { staticClass: "h5 col-12 text-center" }, [
+                          _c("b", [_vm._v(" Criterio de Evaluación: ")]),
+                          _vm._v(" " + _vm._s(_vm.formInic[1]["nombre"]) + " "),
+                          _c("b", [
+                            _vm._v(
+                              " \n                        (" +
+                                _vm._s(_vm.formInic[1]["peso"]) +
+                                " %) "
+                            )
+                          ])
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("hr", { staticClass: "py-0 my-2" }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "row d-flex justify-content-center mx-4" },
+                      [
+                        _c(
+                          "table",
+                          {
+                            staticClass:
+                              "table table-striped border border-info mx-4"
+                          },
+                          [
+                            _vm._m(5, true),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(prov["pagos"], function(pago) {
+                                return _c("tr", { key: pago.id }, [
+                                  _c("td", [
+                                    _vm._v(" " + _vm._s(pago["tipo"]) + " ")
+                                  ]),
+                                  _vm._v(" "),
+                                  pago["numc"] != null
+                                    ? _c("td", { staticClass: "text-center" }, [
+                                        pago["numc"] > 1
+                                          ? _c("span", [
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(pago["numc"]) +
+                                                  " cuotas "
+                                              )
+                                            ])
+                                          : _c("span", [_vm._v(" 1 cuota ")])
+                                      ])
+                                    : _c("td", { staticClass: "text-center" }, [
+                                        _vm._v(" N/A ")
+                                      ]),
+                                  _vm._v(" "),
+                                  pago["porc"] != null
+                                    ? _c("td", { staticClass: "text-center" }, [
+                                        _vm._v(
+                                          " " + _vm._s(pago["porc"]) + " % "
+                                        )
+                                      ])
+                                    : _c("td", { staticClass: "text-center" }, [
+                                        _vm._v(" N/A ")
+                                      ]),
+                                  _vm._v(" "),
+                                  pago["meses"] != null
+                                    ? _c("td", { staticClass: "text-center" }, [
+                                        pago["meses"] > 1
+                                          ? _c("span", [
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(pago["meses"]) +
+                                                  " meses "
+                                              )
+                                            ])
+                                          : _c("span", [_vm._v(" 1 mes ")])
+                                      ])
+                                    : _c("td", { staticClass: "text-center" }, [
+                                        _vm._v(" N/A ")
+                                      ])
+                                ])
+                              }),
+                              0
+                            )
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "flex-row d-flex justify-content-center mx-4 align-items-center"
+                      },
+                      [
+                        _vm._m(6, true),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control w-25",
+                          attrs: {
+                            type: "number",
+                            min: "0",
+                            max: "5",
+                            id: prov.idp + "pago"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass: "ml-2",
+                            staticStyle: { "font-size": "16px" }
+                          },
+                          [
+                            _c("b", [
+                              _vm._v(
+                                " (de " +
+                                  _vm._s(_vm.escala.ri) +
+                                  " a " +
+                                  _vm._s(_vm.escala.rf) +
+                                  ") "
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("hr", { staticClass: "py-0 my-2" }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "flex-row d-flex justify-content-center mx-4"
+                      },
+                      [
+                        _c("span", { staticClass: "h5 col-12 text-center" }, [
+                          _c("b", [_vm._v(" Criterio de Evaluación: ")]),
+                          _vm._v(" " + _vm._s(_vm.formInic[2]["nombre"]) + " "),
+                          _c("b", [
+                            _vm._v(
+                              " \n                        (" +
+                                _vm._s(_vm.formInic[2]["peso"]) +
+                                " %) "
+                            )
+                          ])
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("hr", { staticClass: "py-0 my-2" }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "row d-flex justify-content-center mx-4" },
+                      [
+                        _c(
+                          "table",
+                          {
+                            staticClass:
+                              "table table-striped border border-info mx-4"
+                          },
+                          [
+                            _vm._m(7, true),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(prov["envios"], function(envio, index) {
+                                return _c("tr", { key: envio.id_envio }, [
+                                  _c("td", [
+                                    _vm._v(" " + _vm._s(envio["pais"]) + " ")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(" " + _vm._s(envio["tipo"]) + " ")
+                                  ]),
+                                  _vm._v(" "),
+                                  envio["duracion"] > 1
+                                    ? _c("td", { staticClass: "text-right" }, [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(envio["duracion"]) +
+                                            " días "
+                                        )
+                                      ])
+                                    : _c("td", { staticClass: "text-right" }, [
+                                        _vm._v(" 1 día ")
+                                      ]),
+                                  _vm._v(" "),
+                                  _c("td", { staticClass: "text-right" }, [
+                                    _vm._v(
+                                      " " + _vm._s(envio["precio"]) + " $ "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("td", { staticClass: "text-center" }, [
+                                    _c("img", {
+                                      staticClass: "iconobtn",
+                                      attrs: {
+                                        src: "/img/iconos/list.svg",
+                                        alt: "expandir",
+                                        width: "24",
+                                        "data-toggle": "modal",
+                                        "data-target": "#modalInicDetEnvio"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.rellenarModalDetEnvio(
+                                            index
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ])
+                                ])
+                              }),
+                              0
+                            )
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "flex-row d-flex justify-content-center mx-4 align-items-center"
+                      },
+                      [
+                        _vm._m(8, true),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control w-25",
+                          attrs: {
+                            type: "number",
+                            min: "0",
+                            max: "5",
+                            id: prov.idp + "pago"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass: "ml-2",
+                            staticStyle: { "font-size": "16px" }
+                          },
+                          [
+                            _c("b", [
+                              _vm._v(
+                                " (de " +
+                                  _vm._s(_vm.escala.ri) +
+                                  " a " +
+                                  _vm._s(_vm.escala.rf) +
+                                  ") "
+                              )
+                            ])
+                          ]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("hr", { staticClass: "py-0 my-2" }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "row d-flex justify-content-center mt-2" },
+                      [
+                        index != 0
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-outline-primary mx-4",
+                                on: { click: _vm.provAnterior }
+                              },
+                              [_vm._v(" Proveedor Anterior ")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        index != _vm.provsInicData.length - 1
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-outline-primary mx-4",
+                                on: { click: _vm.provSiguiente }
+                              },
+                              [_vm._v(" Siguiente Proveedor ")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        index === _vm.provsInicData.length - 1
+                          ? _c(
+                              "button",
+                              { staticClass: "btn btn-primary mx-4" },
+                              [_vm._v(" Terminar Evaluación ")]
+                            )
+                          : _vm._e()
+                      ]
+                    )
+                  ])
+                : _vm._e()
+            ])
+          }),
+          0
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipoEv === "inicialStart"
+      ? _c(
+          "div",
+          {
+            staticClass: "modal fade",
+            attrs: {
+              id: "modalInicDetEnvio",
+              tabindex: "-1",
+              role: "dialog",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "modal-dialog modal-dialog-centered",
+                attrs: { role: "document" }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "modal-content",
+                    staticStyle: { "background-color": "#F5F5F5" }
+                  },
+                  [
+                    _vm._m(9),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body h5 text-center" }, [
+                      _c(
+                        "table",
+                        {
+                          staticClass: "table table-striped border border-info"
+                        },
+                        [
+                          _vm._m(10),
+                          _vm._v(" "),
+                          _vm.provsInicData[_vm.provActual]["envios"][
+                            _vm.indexDetEnvio
+                          ]["detalles"] != []
+                            ? _c(
+                                "tbody",
+                                _vm._l(
+                                  _vm.provsInicData[_vm.provActual]["envios"][
+                                    _vm.indexDetEnvio
+                                  ]["detalles"],
+                                  function(det) {
+                                    return _c("tr", { key: det.id }, [
+                                      _c("td", [
+                                        _vm._v(" " + _vm._s(det["det"]) + " ")
+                                      ]),
+                                      _vm._v(" "),
+                                      det["duracion"] != 1 &&
+                                      det["duracion"] != -1
+                                        ? _c(
+                                            "td",
+                                            { staticClass: "text-right" },
+                                            [
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(det["duracion"]) +
+                                                  " días "
+                                              )
+                                            ]
+                                          )
+                                        : _c(
+                                            "td",
+                                            { staticClass: "text-right" },
+                                            [
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(det["duracion"]) +
+                                                  " día "
+                                              )
+                                            ]
+                                          ),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-right" }, [
+                                        _vm._v(
+                                          " " + _vm._s(det["precio"]) + " $ "
+                                        )
+                                      ])
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e()
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              ]
+            )
+          ]
         )
       : _vm._e()
   ])
@@ -38492,10 +39323,119 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "col-12 text-center" }, [
-      _c("input", { staticClass: "mr-1", attrs: { type: "checkbox" } }),
+    return _c("label", [_c("b", [_vm._v(" Incluir en evaluación ")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
+      [_c("b", [_vm._v(" Puntaje: ")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-primary text-white" }, [
+      _c("th", { attrs: { scope: "col" } }, [_vm._v(" Tipo de pago ")]),
       _vm._v(" "),
-      _c("label", [_c("b", [_vm._v(" Incluir en evaluación ")])])
+      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v(" Número de cuotas ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v(" Porcentaje por cuota ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v(" Pago cada ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
+      [_c("b", [_vm._v(" Puntaje: ")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-primary text-white" }, [
+      _c("th", { attrs: { scope: "col" } }, [_vm._v(" País de envío ")]),
+      _vm._v(" "),
+      _c("th", { attrs: { scope: "col" } }, [_vm._v(" Tipo de envío ")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v(" Duración ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+        _vm._v(" Precio ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v(" Extra ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
+      [_c("b", [_vm._v(" Puntaje: ")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_c("b", [_vm._v(" Extra de Envío ")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-primary text-white" }, [
+      _c("th", { attrs: { scope: "col" } }, [_vm._v(" Nombre ")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+        _vm._v(" Duración ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+        _vm._v(" Precio ")
+      ])
     ])
   }
 ]
@@ -52345,7 +53285,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _realizarEvaluacion_vue_vue_type_template_id_df6249f4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./realizarEvaluacion.vue?vue&type=template&id=df6249f4& */ "./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4&");
+/* harmony import */ var _realizarEvaluacion_vue_vue_type_template_id_df6249f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./realizarEvaluacion.vue?vue&type=template&id=df6249f4&scoped=true& */ "./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4&scoped=true&");
 /* harmony import */ var _realizarEvaluacion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./realizarEvaluacion.vue?vue&type=script&lang=js& */ "./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
@@ -52357,11 +53297,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
   _realizarEvaluacion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _realizarEvaluacion_vue_vue_type_template_id_df6249f4___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _realizarEvaluacion_vue_vue_type_template_id_df6249f4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _realizarEvaluacion_vue_vue_type_template_id_df6249f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _realizarEvaluacion_vue_vue_type_template_id_df6249f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "df6249f4",
   null
   
 )
@@ -52387,19 +53327,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4&":
-/*!****************************************************************************************************!*\
-  !*** ./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4& ***!
-  \****************************************************************************************************/
+/***/ "./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4&scoped=true&":
+/*!****************************************************************************************************************!*\
+  !*** ./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4&scoped=true& ***!
+  \****************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarEvaluacion_vue_vue_type_template_id_df6249f4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./realizarEvaluacion.vue?vue&type=template&id=df6249f4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarEvaluacion_vue_vue_type_template_id_df6249f4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarEvaluacion_vue_vue_type_template_id_df6249f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./realizarEvaluacion.vue?vue&type=template&id=df6249f4&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarEvaluacion_vue_vue_type_template_id_df6249f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarEvaluacion_vue_vue_type_template_id_df6249f4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarEvaluacion_vue_vue_type_template_id_df6249f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

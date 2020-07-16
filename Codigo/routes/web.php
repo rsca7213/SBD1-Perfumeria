@@ -39,6 +39,7 @@ Route::delete('/productor/{id_prod}/escala/borrar', 'FormulasController@borrarEs
 Route::get('/productor/{id_prod}/evaluaciones', 'EvaluacionesController@verEvaluaciones')->name('verEvaluaciones');
 Route::get('/productor/{id_prod}/evaluaciones/realizar', 'EvaluacionesController@realizarEvaluacion')->name('realizarEvaluacion');
 Route::get('/productor/{id_prod}/evaluaciones/inicial', 'EvaluacionesController@dataEvaluacionInicial');
+Route::post('/productor/{id_prod}/evaluaciones/data/inicial', 'EvaluacionesController@dataProveedoresInicial');
 
 /* Ruta de pagina de inicio */
 Route::get('/', function () {
