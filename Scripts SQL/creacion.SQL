@@ -31,6 +31,7 @@ CREATE TABLE rdj_proveedores (
     nombre VARCHAR(300) NOT NULL,
     correo VARCHAR(300) NOT NULL UNIQUE,
     telefono VARCHAR(20) NOT NULL UNIQUE,
+    id_pais NUMERIC(3,0) NOT NULL,
     url_web VARCHAR(300) UNIQUE,
     id_asociacion NUMERIC(2,0),
     CONSTRAINT proveedores_pk PRIMARY KEY (id)
@@ -401,6 +402,10 @@ REFERENCES rdj_asociaciones (id);
 ALTER TABLE rdj_proveedores ADD CONSTRAINT proveedor_asociacion_fk 
 FOREIGN KEY (id_asociacion) 
 REFERENCES rdj_asociaciones (id);
+
+ALTER TABLE rdj_proveedores ADD CONSTRAINT proveedor_pais_fk
+FOREIGN KEY (id_pais)
+REFERENCES rdj_paises (id);
 
 /*ALTERS de la tabla rdj_productores*/
 

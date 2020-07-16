@@ -38,13 +38,13 @@ INSERT INTO rdj_paises (id,nombre,nacionalidad,id_asociacion) VALUES
 (nextval('id_pais_sec'),'Turquia','Turco',NULL),
 (nextval('id_pais_sec'),'Australia','Australiano',NULL);/* NOTA: Faltan paises por agregar */
 
-INSERT INTO rdj_proveedores (id,nombre,correo,telefono,url_web,id_asociacion) VALUES
-(nextval('id_proveedores_sec'),'Firmenich','contact@firmenich.com','+62 213863977','www.firmenich.com',NULL),
-(nextval('id_proveedores_sec'),'Kelhar & Ko (Keva)','sprabhu.aromatics@keva.co.in','+91 22221649163','www.keva.co.in',NULL),
-(nextval('id_proveedores_sec'),'Privi Organics Ltd','info@privi.co.in','+91 2233043500','www.privi.com',NULL),
-(nextval('id_proveedores_sec'),'Indesso','contactus@indesso.com','+62 213863975','www.indesso.com',1),
-(nextval('id_proveedores_sec'),'Emerald Perfomance Materials','kalama@emeraldmaterials.com','+1 3609547100','www.emeraldmaterials.com',2),
-(nextval('id_proveedores_sec'),'Prinova','info@prinovausa.com','+1 6308680300','www.prinovausa.com',3);
+INSERT INTO rdj_proveedores (id,nombre,correo,telefono,id_pais,url_web,id_asociacion) VALUES
+(nextval('id_proveedores_sec'),'Firmenich','contact@firmenich.com','+62 213863977',6,'www.firmenich.com',NULL),
+(nextval('id_proveedores_sec'),'Kelhar & Ko (Keva)','sprabhu.aromatics@keva.co.in','+91 22221649163',13,'www.keva.co.in',NULL),
+(nextval('id_proveedores_sec'),'Privi Organics Ltd','info@privi.co.in','+91 2233043500',13,'www.privi.com',NULL),
+(nextval('id_proveedores_sec'),'Indesso','contactus@indesso.com','+62 213863975',1,'www.indesso.com',1),
+(nextval('id_proveedores_sec'),'Emerald Perfomance Materials','kalama@emeraldmaterials.com','+1 3609547100',2,'www.emeraldmaterials.com',2),
+(nextval('id_proveedores_sec'),'Prinova','info@prinovausa.com','+1 6308680300',3,'www.prinovausa.com',3);
 
 INSERT INTO rdj_productores (id,nombre,correo,telefono,url_web,id_asociacion) VALUES
 (nextval('id_productores_sec'),'Givaudan','sales@givaudan.com','+1 630-773-8484','www.givaudan.com',NULL),
