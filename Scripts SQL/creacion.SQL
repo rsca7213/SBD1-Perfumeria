@@ -125,7 +125,7 @@ CREATE TABLE rdj_hist_formulas (
 );
 
 CREATE TABLE rdj_resultados (
-    fecha DATE NOT NULL,
+    fecha TIMESTAMP NOT NULL,
     id_productor NUMERIC(2,0) NOT NULL,
     id_proveedor NUMERIC(2,0) NOT NULL,
     resultado NUMERIC(5,2) NOT NULL,
