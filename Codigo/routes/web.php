@@ -30,16 +30,21 @@ Route::get('/productor/{id_prod}/formulas/editar/anual', 'FormulasController@edi
 Route::patch('/productor/{id_prod}/formulas/editar/anual', 'FormulasController@updateFormulaAnual');
 Route::delete('/productor/{id_prod}/formulas/borrar/anual', 'FormulasController@borrarFormulaAnual');
 
+/* Rutas referentes a la escala de evaluacion */
 Route::get('/productor/{id_prod}/escala/crear', 'FormulasController@crearEscala')->name('crearEscala');
 Route::post('/productor/{id_prod}/escala/crear', 'FormulasController@insertEscala');
 Route::get('/productor/{id_prod}/escala/editar', 'FormulasController@editarEscala')->name('editarEscala');
 Route::patch('/productor/{id_prod}/escala/editar', 'FormulasController@updateEscala');
 Route::delete('/productor/{id_prod}/escala/borrar', 'FormulasController@borrarEscala');
 
+/* Rutas referentes al proceso de evaluaciones */
 Route::get('/productor/{id_prod}/evaluaciones', 'EvaluacionesController@verEvaluaciones')->name('verEvaluaciones');
+Route::get('/productor/{id_prod}/evaluaciones/resultados', 'EvaluacionesController@verResultados');
 Route::get('/productor/{id_prod}/evaluaciones/realizar', 'EvaluacionesController@realizarEvaluacion')->name('realizarEvaluacion');
+Route::get('/productor/{id_prod}/evaluaciones/formulas', 'EvaluacionesController@buscarFormulasActuales');
 Route::get('/productor/{id_prod}/evaluaciones/inicial', 'EvaluacionesController@dataEvaluacionInicial');
-Route::post('/productor/{id_prod}/evaluaciones/data/inicial', 'EvaluacionesController@dataProveedoresInicial');
+Route::get('/productor/{id_prod}/evaluaciones/data/inicial/{id_prov}', 'EvaluacionesController@dataProveedoresInicial');
+Route::post('/productor/{id_prod}/evaluaciones/inicial', 'EvaluacionesController@guardarInicial');
 
 /* Ruta de pagina de inicio */
 Route::get('/', function () {

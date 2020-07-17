@@ -35,7 +35,7 @@
             </div>
 
             <div class="card-body" style="background-color: #F8F8F8">
-                <realizar-evaluacion> </realizar-evaluacion>
+                <realizar-evaluacion csrf="{{ csrf_token() }}"> </realizar-evaluacion>
             </div>
             <div class="card-footer bg-primary text-white">
                 <a href="{{ route('verEvaluaciones', ['id_prod' => $id_prod]) }}">

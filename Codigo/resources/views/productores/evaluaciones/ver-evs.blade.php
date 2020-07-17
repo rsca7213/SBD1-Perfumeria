@@ -34,36 +34,8 @@
                 Lista de Evaluaciones
             </div>
             <div class="card-body" style="background-color: #FDFDFD">
-                <div class="row d-flex justify-content-center">
-                    <span class="h5 mr-3"> Filtrar: </span>
-                    <input type="radio" id="todas" name="filtro" class="mt-1" value="Todas" checked>
-                    <label class="h5 ml-2 mr-4" for="todas"> Todas </label>
-                    <input type="radio" id="iniciales" name="filtro" class="mt-1" value="Iniciales">
-                    <label class="h5 ml-2 mr-4" for="iniciales"> Iniciales </label>
-                    <input type="radio" id="anuales" name="filtro" class="mt-1" value="Anuales">
-                    <label class="h5 ml-2 mr-4" for="anuales"> Anuales </label>
-                </div>
+                <ver-evaluaciones> </ver-evaluaciones>
                 <hr>
-                <table class="table table-striped border border-info">
-                    <thead class="bg-primary text-white"> 
-                        <th scope="col" class="text-center"> Fecha </th>
-                        <th scope="col"> Proveedor </th>
-                        <th scope="col" class="text-center"> Tipo</th>
-                        <th scope="col" class="text-center"> Puntaje </th>
-                        <th scope="col"> Resultado </th>
-                        <th scope="col" class="text-center"> Acción </th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center">25/05/2020 </td>
-                            <td>Firmenich</td>
-                            <td class="text-center">Inicial</td>
-                            <td class="text-center">5 de 100</td>
-                            <td>Reprobado</td>
-                            <td class="text-center"> N/A </td>
-                        </tr>
-                    </tbody>
-                </table>
                 <div class="row d-flex justify-content-center">
                     <a class="btn btn-primary mx-4" href="{{ route('realizarEvaluacion', ['id_prod' => $id_prod]) }}">
                         <img src="{{ asset('/img/iconos/evaluation.svg') }}" alt="inicial" width="24" class="pb-1">

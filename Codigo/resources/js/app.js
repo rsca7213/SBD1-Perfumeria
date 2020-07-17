@@ -27,6 +27,7 @@ Vue.component('editar-formula-anual', require('./components/formulas/editarFormu
 Vue.component('crear-escala', require('./components/formulas/crearEscala.vue').default);
 Vue.component('editar-escala', require('./components/formulas/editarEscala.vue').default);
 Vue.component('realizar-evaluacion', require('./components/evaluaciones/realizarEvaluacion.vue').default);
+Vue.component('ver-evaluaciones', require('./components/evaluaciones/verEvaluaciones.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
