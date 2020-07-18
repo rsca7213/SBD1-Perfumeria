@@ -305,7 +305,7 @@ CREATE TABLE rdj_ings_esencias_familias (
 );
 
 CREATE TABLE rdj_contratos (
-    fecha_apertura DATE NOT NULL,
+    fecha_apertura TIMESTAMP NOT NULL,
     id_proveedor NUMERIC(2,0) NOT NULL,
     id_productor NUMERIC(2,0) NOT NULL,
     exclusivo BOOLEAN NOT NULL,
@@ -316,16 +316,16 @@ CREATE TABLE rdj_contratos (
 
 CREATE TABLE rdj_renovaciones (
     id NUMERIC(5,0) NOT NULL,
-    fecha_apertura DATE NOT NULL,
+    fecha_apertura TIMESTAMP NOT NULL,
     id_proveedor NUMERIC(2,0) NOT NULL,
     id_productor NUMERIC(2,0) NOT NULL,
-    fecha_renovacion DATE NOT NULL,
+    fecha_renovacion TIMESTAMP NOT NULL,
     CONSTRAINT renovaciones_pk PRIMARY KEY (id, fecha_apertura, id_proveedor, id_productor)
 );
 
 CREATE TABLE rdj_detalles_contratos (
     id NUMERIC(8,0) NOT NULL,
-    fecha_apertura DATE NOT NULL,
+    fecha_apertura TIMESTAMP NOT NULL,
     id_proveedor NUMERIC(2,0) NOT NULL,
     id_productor NUMERIC(2,0) NOT NULL,
     precio NUMERIC(20,2),
@@ -337,7 +337,7 @@ CREATE TABLE rdj_detalles_contratos (
 
 CREATE TABLE rdj_metodos_contratos (
     id NUMERIC(6,0) NOT NULL,
-    fecha_cont DATE NOT NULL,
+    fecha_cont TIMESTAMP NOT NULL,
     id_proveedor NUMERIC(2,0) NOT NULL,
     id_productor NUMERIC(2,0) NOT NULL,
     id_pago NUMERIC(4,0),
