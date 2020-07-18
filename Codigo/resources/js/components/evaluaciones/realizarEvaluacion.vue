@@ -69,6 +69,46 @@
                     </button>
                 </div>
             </div>
+            <div class="mx-4 h5 text-center" v-if="provsInic.length === 0"> 
+                No tiene proveedores que envien a los paises requeridos o que sean miembros
+                activos IFRA actualmente.
+            </div>
+        </span>
+
+        <!-- Seleccion de proveedor a evaluar en una evaluacion anual -->
+        <span v-if="tipoEv === 'anual'"> 
+            <div class="row d-flex justify-content-center">
+                <span class="h5"> <b> Evaluación Anual </b> </span>
+            </div>
+            <hr>
+            <span class="h5"> <b> Seleccionar proveedor a evaluar: </b> </span>
+            <hr>
+            <div class="row mx-4 p-2 border border-info" v-for="(prov,index) in provsAnual" :key="index">
+                <span class="col-12 h5"> <b> Proveedor: </b> {{ prov["prov"] }} 
+                    <span v-if="parseInt(prov['exp']) === 1"> (expira en {{prov['exp']}} día)</span>
+                    <span v-else> (expira en {{prov['exp']}} días)</span>
+                </span>
+                <span class="col-6"> &#x2022; <b> Fecha de apertura del contrato: </b> 
+                    {{ prov["fecha"] }} 
+                </span>
+                <span class="col-6">
+                    &#x2022; <b> Exclusividad: </b>
+                    Contrato {{ prov["ex"] }}
+                </span>
+                <span class="col-12"> &#x2022; <b> Fecha de renovación más reciente: </b> 
+                    <span v-if="parseInt(prov['renov']) === 0"> N/A </span>
+                    <span v-else> {{ prov["fechaR"] }} (renovado {{ prov["renov"]}} veces)</span>
+                </span>
+                <div class="col-12 row d-flex justify-content-center mt-2">
+                    <button class="btn btn-primary" @click="dataAnual(prov['idp'])"> 
+                        <img src="/img/iconos/check_white.svg" alt="evaluar" width="24" class="mb-1">
+                        <span class="ml-2"> Evaluar </span>
+                    </button>
+                </div>
+            </div>
+            <div class="mx-4 h5 text-center" v-if="provsAnual.length === 0"> 
+                Aun no tiene proveedores cuyos contratos esten a 1 mes de expirar. 
+            </div>
         </span>
 
         <!-- Proceso de evaluacion inicial -->
@@ -354,6 +394,9 @@ export default {
             provsInic: [], /*data que devuelve laravel para seleccionar los proveedores
                              de la evaluacion inicial */
 
+            provsAnual: [], /* data que devuelve laravel para seleccionar los proveedores
+                               de la evaluacion anual */
+
             provInicRes: [0,0,0], /*arreglo que contiene los resultados que se van asignando
                                a los proveedores en la evaluacion inicial */
 
@@ -437,8 +480,16 @@ export default {
         de proveedores para una evaluacion anual y almacena que el tipo de
         ev a realizar es de tipo anual*/
         evAnual() {
-            // POR HACER
-            this.tipoEv = "Anual";
+            console.log("%cAxios: Get! Buscando proveedores para ev anual", "color: lightblue");
+            axios.get("anual")
+            .then(response => {
+                console.log("%cAxios: Success!", "color: lightgreen");
+                this.provsAnual = response.data[0];
+                this.tipoEv = "anual";
+            })
+            .catch(errors => {
+                console.log("%cAxios: Error!", "color: #FFCCCB");
+            });
         },
 
          /* Funcion AXIOS que le pide a laravel toda la data necesaria para
@@ -456,6 +507,13 @@ export default {
                 console.log("%cAxios: Error!", "color: #FFCCCB");
                 console.log(errors);
             });
+        },
+
+        /* Funcion AXIOS que le pide a laravel toda la data necesaria para
+           llevar a cabo una evaluacion anual, envia la id del proveedor
+           del cual necesita data */
+        dataAnual(idp) {
+            console.log('no implementado');
         },
 
         /* Determina que metodo de envio detallar en el modal */

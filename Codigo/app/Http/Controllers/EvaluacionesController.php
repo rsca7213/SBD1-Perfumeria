@@ -102,8 +102,8 @@ class EvaluacionesController extends Controller
         return response([$formInicial,$formAnual,$escala],200);
     }
 
-    /* Devuelve toda la data necesaria para que el productor escoga los 
-       proveedores a evaluar en una evaluacion inicial */
+    /* Devuelve toda la data necesaria para que el productor escoga al
+       proveedor a evaluar en una evaluacion inicial */
     public function dataEvaluacionInicial ($id_prod) {
         
         /* Buscamos proveedores que cumplan con los filtros para una evaluacion inicial
@@ -144,6 +144,83 @@ class EvaluacionesController extends Controller
            evaluacion inicial */
         return response([$proveedores], 200);
 
+    }
+
+    /* Devuelve toda la data necesaria para que el productor escoga al 
+       proveedor a evaluar en una evaluacion anual */
+    public function dataEvaluacionAnual ($id_prod) {
+        
+        $time = Carbon::now()->toDateTimeString();
+        /* Buscamos en la base de datos los contratos del productor 
+           que no esten cancelados para luego ir filtrando aun mas */
+        $contratos = DB::select(DB::raw("SELECT c.fecha_apertura AS fecha, c.id_proveedor AS idp,
+                                p.nombre AS prov, CASE WHEN c.exclusivo='t' THEN 'exclusivo'
+                                WHEN c.exclusivo='f' THEN 'no exclusivo' END AS ex FROM rdj_contratos c,
+                                rdj_proveedores p WHERE c.id_productor=? AND c.id_proveedor=p.id
+                                AND COALESCE(c.cancelacion,'f') != 't' ORDER BY c.fecha_apertura ASC"),[$id_prod]);
+
+        /* Realizamos una separacion del arreglo que nos devuelve postgres, aquellos contratos en los cuales
+           la fecha de apertura no sea mayor a 1 año se colocan en contratos activos, sino se colocan en contratos
+           con posible renovacion */
+
+        $contActivos = [];
+        $contPosibles = [];
+
+        foreach($contratos as $cont) {
+            
+            $fecha = Carbon::createFromDate($cont->fecha);
+            
+            if ($fecha->diffInDays($time) > 365) {
+                array_push($contPosibles,$cont);
+            }
+
+            else {
+                $cont->renov = 0;
+                $cont->fechaR = '';
+                $cont->exp = 366 - $fecha->diffInDays($time);
+                array_push($contActivos,$cont);
+            }
+
+        }
+
+        /* Para los posibles, buscamos su renovacion mas reciente, si no tiene renovacion skippeamos, si tiene
+           buscamos la cantidad de veces que se ha renovado con count y luego revisamos si la renovacion mas reciente
+           no ha expirado tambien, si no ha expirado la agregamos a contratos activos, sino skippeamos */
+
+        foreach($contPosibles as $cont) {
+
+            $renovs = DB::select(DB::raw("SELECT MAX(r.fecha_renovacion) AS fecha FROM rdj_renovaciones r
+            WHERE r.id_proveedor=? AND r.id_productor=? AND r.fecha_apertura=? GROUP BY r.id_proveedor,
+            r.id_productor, r.fecha_apertura"),[$cont->idp,$id_prod,$cont->fecha]);
+
+            if(sizeOf($renovs) == 0) continue;
+
+            $count = DB::select(DB::raw("SELECT COUNT(*) FROM rdj_renovaciones r WHERE r.id_proveedor=?
+            AND r.id_productor=? AND r.fecha_apertura=? GROUP BY r.id_proveedor, r.id_productor, 
+            r.fecha_apertura"),[$cont->idp,$id_prod,$cont->fecha])[0]->count;
+
+            $fecha = Carbon::createFromDate($renovs[0]->fecha);
+
+            if ($fecha->diffInDays($time) <= 365) {
+                $cont->fechaR = $renovs[0]->fecha;
+                $cont->renov = $count;
+                $cont->exp = 366 - $fecha->diffInDays($time);
+                array_push($contActivos,$cont);
+            }
+        }
+
+        /* Timestamp --> date y se eliminan aquellos contratos que no estan apunto de expirar (mas de 1 mes)*/
+
+        $data = [];
+        foreach($contActivos as $cont) {
+            $cont->fecha = date("d/m/Y", strtotime($cont->fecha));
+            $cont->fechaR = date("d/m/Y", strtotime($cont->fechaR));
+
+            if ($cont->exp <= 31) array_push($data, $cont); 
+
+        }
+
+        return response([$data],200);
     }
 
     // Funcion encargada de buscar toda la data necesaria para evaluaciones iniciales 

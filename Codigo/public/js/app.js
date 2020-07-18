@@ -2264,6 +2264,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["csrf"],
   data: function data() {
@@ -2290,6 +2330,10 @@ __webpack_require__.r(__webpack_exports__);
 
       /*data que devuelve laravel para seleccionar los proveedores
         de la evaluacion inicial */
+      provsAnual: [],
+
+      /* data que devuelve laravel para seleccionar los proveedores
+         de la evaluacion anual */
       provInicRes: [0, 0, 0],
 
       /*arreglo que contiene los resultados que se van asignando
@@ -2378,25 +2422,40 @@ __webpack_require__.r(__webpack_exports__);
     de proveedores para una evaluacion anual y almacena que el tipo de
     ev a realizar es de tipo anual*/
     evAnual: function evAnual() {
-      // POR HACER
-      this.tipoEv = "Anual";
+      var _this3 = this;
+
+      console.log("%cAxios: Get! Buscando proveedores para ev anual", "color: lightblue");
+      axios.get("anual").then(function (response) {
+        console.log("%cAxios: Success!", "color: lightgreen");
+        _this3.provsAnual = response.data[0];
+        _this3.tipoEv = "anual";
+      })["catch"](function (errors) {
+        console.log("%cAxios: Error!", "color: #FFCCCB");
+      });
     },
 
     /* Funcion AXIOS que le pide a laravel toda la data necesaria para
       llevar a cabo una evaluacion inicial, envia la id del proveedor
       del cual necesita data */
     dataInicial: function dataInicial(idp) {
-      var _this3 = this;
+      var _this4 = this;
 
       console.log("%cAxios: Get! Buscando data para ev inicial", "color: lightblue");
       axios.get("data/inicial/" + idp).then(function (response) {
         console.log("%cAxios: Success!", "color: lightgreen");
-        _this3.provInicData = response.data[0];
-        _this3.tipoEv = "inicialStart";
+        _this4.provInicData = response.data[0];
+        _this4.tipoEv = "inicialStart";
       })["catch"](function (errors) {
         console.log("%cAxios: Error!", "color: #FFCCCB");
         console.log(errors);
       });
+    },
+
+    /* Funcion AXIOS que le pide a laravel toda la data necesaria para
+       llevar a cabo una evaluacion anual, envia la id del proveedor
+       del cual necesita data */
+    dataAnual: function dataAnual(idp) {
+      console.log('no implementado');
     },
 
     /* Determina que metodo de envio detallar en el modal */
@@ -39143,7 +39202,133 @@ var render = function() {
                   )
                 ]
               )
-            })
+            }),
+            _vm._v(" "),
+            _vm.provsInic.length === 0
+              ? _c("div", { staticClass: "mx-4 h5 text-center" }, [
+                  _vm._v(
+                    " \n            No tiene proveedores que envien a los paises requeridos o que sean miembros\n            activos IFRA actualmente.\n        "
+                  )
+                ])
+              : _vm._e()
+          ],
+          2
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipoEv === "anual"
+      ? _c(
+          "span",
+          [
+            _vm._m(9),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _vm._m(10),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _vm._l(_vm.provsAnual, function(prov, index) {
+              return _c(
+                "div",
+                { key: index, staticClass: "row mx-4 p-2 border border-info" },
+                [
+                  _c("span", { staticClass: "col-12 h5" }, [
+                    _c("b", [_vm._v(" Proveedor: ")]),
+                    _vm._v(" " + _vm._s(prov["prov"]) + " \n                "),
+                    parseInt(prov["exp"]) === 1
+                      ? _c("span", [
+                          _vm._v(" (expira en " + _vm._s(prov["exp"]) + " día)")
+                        ])
+                      : _c("span", [
+                          _vm._v(
+                            " (expira en " + _vm._s(prov["exp"]) + " días)"
+                          )
+                        ])
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "col-6" }, [
+                    _vm._v(" • "),
+                    _c("b", [_vm._v(" Fecha de apertura del contrato: ")]),
+                    _vm._v(
+                      " \n                " +
+                        _vm._s(prov["fecha"]) +
+                        " \n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "col-6" }, [
+                    _vm._v("\n                • "),
+                    _c("b", [_vm._v(" Exclusividad: ")]),
+                    _vm._v(
+                      "\n                Contrato " +
+                        _vm._s(prov["ex"]) +
+                        "\n            "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "col-12" }, [
+                    _vm._v(" • "),
+                    _c("b", [_vm._v(" Fecha de renovación más reciente: ")]),
+                    _vm._v(" "),
+                    parseInt(prov["renov"]) === 0
+                      ? _c("span", [_vm._v(" N/A ")])
+                      : _c("span", [
+                          _vm._v(
+                            " " +
+                              _vm._s(prov["fechaR"]) +
+                              " (renovado " +
+                              _vm._s(prov["renov"]) +
+                              " veces)"
+                          )
+                        ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "col-12 row d-flex justify-content-center mt-2"
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: {
+                            click: function($event) {
+                              return _vm.dataAnual(prov["idp"])
+                            }
+                          }
+                        },
+                        [
+                          _c("img", {
+                            staticClass: "mb-1",
+                            attrs: {
+                              src: "/img/iconos/check_white.svg",
+                              alt: "evaluar",
+                              width: "24"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "ml-2" }, [
+                            _vm._v(" Evaluar ")
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                ]
+              )
+            }),
+            _vm._v(" "),
+            _vm.provsAnual.length === 0
+              ? _c("div", { staticClass: "mx-4 h5 text-center" }, [
+                  _vm._v(
+                    " \n            Aun no tiene proveedores cuyos contratos esten a 1 mes de expirar. \n        "
+                  )
+                ])
+              : _vm._e()
           ],
           2
         )
@@ -39158,14 +39343,14 @@ var render = function() {
                 _vm._v(" " + _vm._s(_vm.provInicData["prov"]) + " ")
               ]),
               _vm._v(" "),
-              _vm._m(9),
+              _vm._m(11),
               _vm._v(" "),
               _c("div", { staticClass: "col-12" }, [
                 _c(
                   "table",
                   { staticClass: "table table-striped border border-info" },
                   [
-                    _vm._m(10),
+                    _vm._m(12),
                     _vm._v(" "),
                     _c(
                       "tbody",
@@ -39315,7 +39500,7 @@ var render = function() {
                   "flex-row d-flex justify-content-center mx-4 align-items-center"
               },
               [
-                _vm._m(11),
+                _vm._m(13),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -39373,7 +39558,7 @@ var render = function() {
               { staticClass: "flex-row d-flex justify-content-center" },
               [
                 _vm.inicUbicErr === "is-invalid"
-                  ? _c("span", [_vm._m(12)])
+                  ? _c("span", [_vm._m(14)])
                   : _vm._e()
               ]
             ),
@@ -39410,7 +39595,7 @@ var render = function() {
                     staticClass: "table table-striped border border-info mx-4"
                   },
                   [
-                    _vm._m(13),
+                    _vm._m(15),
                     _vm._v(" "),
                     _c(
                       "tbody",
@@ -39469,7 +39654,7 @@ var render = function() {
                   "flex-row d-flex justify-content-center mx-4 align-items-center"
               },
               [
-                _vm._m(14),
+                _vm._m(16),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -39527,7 +39712,7 @@ var render = function() {
               { staticClass: "flex-row d-flex justify-content-center" },
               [
                 _vm.inicPagoErr === "is-invalid"
-                  ? _c("span", [_vm._m(15)])
+                  ? _c("span", [_vm._m(17)])
                   : _vm._e()
               ]
             ),
@@ -39564,7 +39749,7 @@ var render = function() {
                     staticClass: "table table-striped border border-info mx-4"
                   },
                   [
-                    _vm._m(16),
+                    _vm._m(18),
                     _vm._v(" "),
                     _c(
                       "tbody",
@@ -39624,7 +39809,7 @@ var render = function() {
                   "flex-row d-flex justify-content-center mx-4 align-items-center"
               },
               [
-                _vm._m(17),
+                _vm._m(19),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -39682,7 +39867,7 @@ var render = function() {
               { staticClass: "flex-row d-flex justify-content-center" },
               [
                 _vm.inicEnvioErr === "is-invalid"
-                  ? _c("span", [_vm._m(18)])
+                  ? _c("span", [_vm._m(20)])
                   : _vm._e()
               ]
             ),
@@ -39758,7 +39943,7 @@ var render = function() {
                     staticStyle: { "background-color": "#F5F5F5" }
                   },
                   [
-                    _vm._m(19),
+                    _vm._m(21),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-body h5 text-center" }, [
                       _c(
@@ -39767,7 +39952,7 @@ var render = function() {
                           staticClass: "table table-striped border border-info"
                         },
                         [
-                          _vm._m(20),
+                          _vm._m(22),
                           _vm._v(" "),
                           _vm.provInicData["envios"][_vm.indexDetEnvio][
                             "detalles"
@@ -39858,7 +40043,7 @@ var render = function() {
                     staticStyle: { "background-color": "#F5F5F5" }
                   },
                   [
-                    _vm._m(21),
+                    _vm._m(23),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-body h5 text-center" }, [
                       _vm.provInicData["esencias"] != [] &&
@@ -39905,7 +40090,7 @@ var render = function() {
                           staticClass: "table table-striped border border-info"
                         },
                         [
-                          _vm._m(22),
+                          _vm._m(24),
                           _vm._v(" "),
                           _vm.provInicData["esencias"] != [] &&
                           _vm.indexProducto[0] === "e"
@@ -40038,6 +40223,24 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row d-flex justify-content-center" }, [
       _c("span", { staticClass: "h5" }, [
         _c("b", [_vm._v(" Evaluación Inicial ")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "h5" }, [
+      _c("b", [_vm._v(" Seleccionar proveedor a evaluar: ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center" }, [
+      _c("span", { staticClass: "h5" }, [
+        _c("b", [_vm._v(" Evaluación Anual ")])
       ])
     ])
   },

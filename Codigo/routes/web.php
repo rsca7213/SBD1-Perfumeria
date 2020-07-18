@@ -42,9 +42,15 @@ Route::get('/productor/{id_prod}/evaluaciones', 'EvaluacionesController@verEvalu
 Route::get('/productor/{id_prod}/evaluaciones/resultados', 'EvaluacionesController@verResultados');
 Route::get('/productor/{id_prod}/evaluaciones/realizar', 'EvaluacionesController@realizarEvaluacion')->name('realizarEvaluacion');
 Route::get('/productor/{id_prod}/evaluaciones/formulas', 'EvaluacionesController@buscarFormulasActuales');
+
+/* Rutas referentes al proceso de evaluacion inicial */
 Route::get('/productor/{id_prod}/evaluaciones/inicial', 'EvaluacionesController@dataEvaluacionInicial');
 Route::get('/productor/{id_prod}/evaluaciones/data/inicial/{id_prov}', 'EvaluacionesController@dataProveedoresInicial');
 Route::post('/productor/{id_prod}/evaluaciones/inicial', 'EvaluacionesController@guardarInicial');
+
+/* Rutas referentes al proceso de evaluacion anual */
+Route::get('/productor/{id_prod}/evaluaciones/anual', 'EvaluacionesController@dataEvaluacionAnual');
+
 
 /* Ruta de pagina de inicio */
 Route::get('/', function () {
