@@ -11,160 +11,160 @@
 /* INSERT de las asociaciones utilizadas en la tabla rdj_asociaciones*/
 
 INSERT INTO rdj_asociaciones (id,nombre,region) VALUES
-(nextval('id_asoc_sec'),'AFFI - Asosiasi Flavor dan Fragran Indonesia','ap'),
-(nextval('id_asoc_sec'),'International Fragance Association UK','eu'),
-(nextval('id_asoc_sec'),'Fragrance Creators Association','an'),
-(nextval('id_asoc_sec'),'ABIFRA - Associaçao Brasileira das Industrias de Oleos','al');
+(nextval('rdj_asoc_sec'),'AFFI - Asosiasi Flavor dan Fragran Indonesia','ap'),
+(nextval('rdj_asoc_sec'),'International Fragance Association UK','eu'),
+(nextval('rdj_asoc_sec'),'Fragrance Creators Association','an'),
+(nextval('rdj_asoc_sec'),'ABIFRA - Associacao Brasileira das Industrias de Oleos','al');
 
 INSERT INTO rdj_paises (id,nombre,nacionalidad,id_asociacion) VALUES
-(nextval('id_pais_sec'),'Indonesia','Indones',1),
-(nextval('id_pais_sec'),'Reino Unido','Ingles',2),
-(nextval('id_pais_sec'),'Estados Unidos','Americano',3),
-(nextval('id_pais_sec'),'Canada','Canadiense',3),
-(nextval('id_pais_sec'),'Brasil','Brasileño',4),
-(nextval('id_pais_sec'),'Suiza','Suizo',NULL),
-(nextval('id_pais_sec'),'Francia','Frances',NULL),
-(nextval('id_pais_sec'),'Rusia','Ruso',NULL),
-(nextval('id_pais_sec'),'España','Español',NULL),
-(nextval('id_pais_sec'),'Colombia','Colombiano',NULL),
-(nextval('id_pais_sec'),'Argentina','Argentino',NULL), 
-(nextval('id_pais_sec'),'Sudafrica','Sudafricano',NULL),
-(nextval('id_pais_sec'),'India','Indio',NULL),
-(nextval('id_pais_sec'),'Holanda','Holandes',NULL),
-(nextval('id_pais_sec'),'China','Chino',NULL),
-(nextval('id_pais_sec'),'Polonia','Polaco',NULL),
-(nextval('id_pais_sec'),'Haiti','Haitiano',NULL),
-(nextval('id_pais_sec'),'Bulgaria','Bulgaro',NULL),
-(nextval('id_pais_sec'),'Turquia','Turco',NULL),
-(nextval('id_pais_sec'),'Australia','Australiano',NULL);/* NOTA: Faltan paises por agregar */
+(nextval('rdj_pais_sec'),'Indonesia','Indones',1),
+(nextval('rdj_pais_sec'),'Reino Unido','Ingles',2),
+(nextval('rdj_pais_sec'),'Estados Unidos','Americano',3),
+(nextval('rdj_pais_sec'),'Canada','Canadiense',3),
+(nextval('rdj_pais_sec'),'Brasil','Brasileño',4),
+(nextval('rdj_pais_sec'),'Suiza','Suizo',NULL),
+(nextval('rdj_pais_sec'),'Francia','Frances',NULL),
+(nextval('rdj_pais_sec'),'Rusia','Ruso',NULL),
+(nextval('rdj_pais_sec'),'España','Español',NULL),
+(nextval('rdj_pais_sec'),'Colombia','Colombiano',NULL),
+(nextval('rdj_pais_sec'),'Argentina','Argentino',NULL), 
+(nextval('rdj_pais_sec'),'Sudafrica','Sudafricano',NULL),
+(nextval('rdj_pais_sec'),'India','Indio',NULL),
+(nextval('rdj_pais_sec'),'Holanda','Holandes',NULL),
+(nextval('rdj_pais_sec'),'China','Chino',NULL),
+(nextval('rdj_pais_sec'),'Polonia','Polaco',NULL),
+(nextval('rdj_pais_sec'),'Haiti','Haitiano',NULL),
+(nextval('rdj_pais_sec'),'Bulgaria','Bulgaro',NULL),
+(nextval('rdj_pais_sec'),'Turquia','Turco',NULL),
+(nextval('rdj_pais_sec'),'Australia','Australiano',NULL);/* NOTA: Faltan paises por agregar */
 
 INSERT INTO rdj_proveedores (id,nombre,correo,telefono,id_pais,url_web,id_asociacion) VALUES
-(nextval('id_proveedores_sec'),'Firmenich','contact@firmenich.com','+62 213863977',6,'www.firmenich.com',NULL),
-(nextval('id_proveedores_sec'),'Kelhar & Ko (Keva)','sprabhu.aromatics@keva.co.in','+91 22221649163',13,'www.keva.co.in',NULL),
-(nextval('id_proveedores_sec'),'Privi Organics Ltd','info@privi.co.in','+91 2233043500',13,'www.privi.com',NULL),
-(nextval('id_proveedores_sec'),'Indesso','contactus@indesso.com','+62 213863975',1,'www.indesso.com',1),
-(nextval('id_proveedores_sec'),'Emerald Perfomance Materials','kalama@emeraldmaterials.com','+1 3609547100',2,'www.emeraldmaterials.com',2),
-(nextval('id_proveedores_sec'),'Prinova','info@prinovausa.com','+1 6308680300',3,'www.prinovausa.com',3);
+(nextval('rdj_proveedores_sec'),'Firmenich','contact@firmenich.com','+62 213863977',6,'www.firmenich.com',NULL),
+(nextval('rdj_proveedores_sec'),'Kelhar & Ko (Keva)','sprabhu.aromatics@keva.co.in','+91 22221649163',13,'www.keva.co.in',NULL),
+(nextval('rdj_proveedores_sec'),'Privi Organics Ltd','info@privi.co.in','+91 2233043500',13,'www.privi.com',NULL),
+(nextval('rdj_proveedores_sec'),'Indesso','contactus@indesso.com','+62 213863975',1,'www.indesso.com',1),
+(nextval('rdj_proveedores_sec'),'Emerald Perfomance Materials','kalama@emeraldmaterials.com','+1 3609547100',2,'www.emeraldmaterials.com',2),
+(nextval('rdj_proveedores_sec'),'Prinova','info@prinovausa.com','+1 6308680300',3,'www.prinovausa.com',3);
 
 INSERT INTO rdj_productores (id,nombre,correo,telefono,url_web,id_asociacion) VALUES
-(nextval('id_productores_sec'),'Givaudan','sales@givaudan.com','+1 630-773-8484','www.givaudan.com',NULL),
-(nextval('id_productores_sec'),'Memphis','sac@memphisbr.com','+51 3535-3500','www.memphisbr.com',4),
-(nextval('id_productores_sec'),'Chanel','chanel_info@chanel.com','+1 800-550-0005','www.chanel.com/us',3);
+(nextval('rdj_productores_sec'),'Givaudan','sales@givaudan.com','+1 630-773-8484','www.givaudan.com',NULL),
+(nextval('rdj_productores_sec'),'Memphis','sac@memphisbr.com','+51 3535-3500','www.memphisbr.com',4),
+(nextval('rdj_productores_sec'),'Chanel','chanel_info@chanel.com','+1 800-550-0005','www.chanel.com/us',3);
 
 INSERT INTO rdj_miembros_ifra (id,fecha_inicio,tipo,fecha_fin,id_proveedor,id_productor) VALUES
-(nextval('id_miembro_ifra_sec'),'2017-11-01','p',NULL,1,NULL),
-(nextval('id_miembro_ifra_sec'),'2014-07-19','p',NULL,NULL,1),
-(nextval('id_miembro_ifra_sec'),'2019-12-29','s',NULL,2,NULL),
-(nextval('id_miembro_ifra_sec'),'2016-09-09','s',NULL,3,NULL),
-(nextval('id_miembro_ifra_sec'),'2017-01-25','a',NULL,4,NULL),
-(nextval('id_miembro_ifra_sec'),'2020-06-16','a',NULL,5,NULL),
-(nextval('id_miembro_ifra_sec'),'2020-01-15','a',NULL,6,NULL),
-(nextval('id_miembro_ifra_sec'),'2017-10-18','a',NULL,NULL,2),
-(nextval('id_miembro_ifra_sec'),'2017-02-20','a',NULL,NULL,3);
+(nextval('rdj_miembro_ifra_sec'),'2017-11-01','p',NULL,1,NULL),
+(nextval('rdj_miembro_ifra_sec'),'2014-07-19','p',NULL,NULL,1),
+(nextval('rdj_miembro_ifra_sec'),'2019-12-29','s',NULL,2,NULL),
+(nextval('rdj_miembro_ifra_sec'),'2016-09-09','s',NULL,3,NULL),
+(nextval('rdj_miembro_ifra_sec'),'2017-01-25','a',NULL,4,NULL),
+(nextval('rdj_miembro_ifra_sec'),'2020-06-16','a',NULL,5,NULL),
+(nextval('rdj_miembro_ifra_sec'),'2020-01-15','a',NULL,6,NULL),
+(nextval('rdj_miembro_ifra_sec'),'2017-10-18','a',NULL,NULL,2),
+(nextval('rdj_miembro_ifra_sec'),'2017-02-20','a',NULL,NULL,3);
 
 INSERT INTO rdj_metodos_pagos (id,id_proveedor,tipo,num_cuotas,porcentaje,meses) VALUES
-(nextval('id_metodo_pago_sec'),1,'c',NULL,NULL,NULL),
-(nextval('id_metodo_pago_sec'),1,'p',2,50,2),
-(nextval('id_metodo_pago_sec'),1,'p',5,20,1),
-(nextval('id_metodo_pago_sec'),2,'c',NULL,NULL,NULL),
-(nextval('id_metodo_pago_sec'),2,'p',10,10,1),
-(nextval('id_metodo_pago_sec'),2,'p',8,12.5,2),
-(nextval('id_metodo_pago_sec'),3,'c',NULL,NULL,NULL),
-(nextval('id_metodo_pago_sec'),3,'p',3,33.33,3),
-(nextval('id_metodo_pago_sec'),3,'p',5,20,2),
-(nextval('id_metodo_pago_sec'),4,'c',NULL,NULL,NULL),
-(nextval('id_metodo_pago_sec'),4,'p',2,50,1),
-(nextval('id_metodo_pago_sec'),4,'p',4,25,1),
-(nextval('id_metodo_pago_sec'),5,'c',NULL,NULL,NULL),
-(nextval('id_metodo_pago_sec'),5,'p',5,20,2),
-(nextval('id_metodo_pago_sec'),5,'p',3,33.33,4),
-(nextval('id_metodo_pago_sec'),6,'c',NULL,NULL,NULL),
-(nextval('id_metodo_pago_sec'),6,'p',8,12.5,1),
-(nextval('id_metodo_pago_sec'),6,'p',2,50,6);
+(nextval('rdj_metodo_pago_sec'),1,'c',NULL,NULL,NULL),
+(nextval('rdj_metodo_pago_sec'),1,'p',2,50,2),
+(nextval('rdj_metodo_pago_sec'),1,'p',5,20,1),
+(nextval('rdj_metodo_pago_sec'),2,'c',NULL,NULL,NULL),
+(nextval('rdj_metodo_pago_sec'),2,'p',10,10,1),
+(nextval('rdj_metodo_pago_sec'),2,'p',8,12.5,2),
+(nextval('rdj_metodo_pago_sec'),3,'c',NULL,NULL,NULL),
+(nextval('rdj_metodo_pago_sec'),3,'p',3,33.33,3),
+(nextval('rdj_metodo_pago_sec'),3,'p',5,20,2),
+(nextval('rdj_metodo_pago_sec'),4,'c',NULL,NULL,NULL),
+(nextval('rdj_metodo_pago_sec'),4,'p',2,50,1),
+(nextval('rdj_metodo_pago_sec'),4,'p',4,25,1),
+(nextval('rdj_metodo_pago_sec'),5,'c',NULL,NULL,NULL),
+(nextval('rdj_metodo_pago_sec'),5,'p',5,20,2),
+(nextval('rdj_metodo_pago_sec'),5,'p',3,33.33,4),
+(nextval('rdj_metodo_pago_sec'),6,'c',NULL,NULL,NULL),
+(nextval('rdj_metodo_pago_sec'),6,'p',8,12.5,1),
+(nextval('rdj_metodo_pago_sec'),6,'p',2,50,6);
 
 INSERT INTO rdj_metodos_envios (id, id_proveedor, id_pais, duracion, precio, tipo) VALUES
-(nextval('id_metodo_envio_sec'),1,2,3,150.35,'t'),
-(nextval('id_metodo_envio_sec'),1,3,7,300.99,'m'),
-(nextval('id_metodo_envio_sec'),1,3,2,700.75,'a'),
-(nextval('id_metodo_envio_sec'),1,6,2,119.99,'t'),
-(nextval('id_metodo_envio_sec'),1,7,1,45.00,'t'),
-(nextval('id_metodo_envio_sec'),1,9,3,199.99,'t'),
-(nextval('id_metodo_envio_sec'),2,1,5,200.50,'m'),
-(nextval('id_metodo_envio_sec'),2,8,3,500.75,'a'),
-(nextval('id_metodo_envio_sec'),2,4,7,800.50,'a'),
-(nextval('id_metodo_envio_sec'),2,3,7,795.85,'a'),
-(nextval('id_metodo_envio_sec'),3,5,28,1050.75,'m'),
-(nextval('id_metodo_envio_sec'),3,10,24,900.00,'m'),
-(nextval('id_metodo_envio_sec'),3,11,18,695.20,'m'),
-(nextval('id_metodo_envio_sec'),3,1,7,95.10,'m'),
-(nextval('id_metodo_envio_sec'),3,8,20,375.00,'t'),
-(nextval('id_metodo_envio_sec'),4,1,1,25.40,'t'),
-(nextval('id_metodo_envio_sec'),4,2,6,400.75,'a'),
-(nextval('id_metodo_envio_sec'),4,6,5,340.15,'a'),
-(nextval('id_metodo_envio_sec'),4,7,5,395.80,'a'),
-(nextval('id_metodo_envio_sec'),4,9,6,415.60,'a'),
-(nextval('id_metodo_envio_sec'),5,2,1,60.99,'t'),
-(nextval('id_metodo_envio_sec'),5,6,3,130.70,'t'),
-(nextval('id_metodo_envio_sec'),5,7,2,110.19,'t'),
-(nextval('id_metodo_envio_sec'),5,9,2,190.85,'m'),
-(nextval('id_metodo_envio_sec'),6,3,2,100.00,'t'),
-(nextval('id_metodo_envio_sec'),6,3,1,215.99,'a'),
-(nextval('id_metodo_envio_sec'),6,4,2,115.00,'t'),
-(nextval('id_metodo_envio_sec'),6,5,7,250.79,'m'),
-(nextval('id_metodo_envio_sec'),6,10,6,225.99,'m'),
-(nextval('id_metodo_envio_sec'),6,11,10,299.99,'m');
+(nextval('rdj_metodo_envio_sec'),1,2,3,150.35,'t'),
+(nextval('rdj_metodo_envio_sec'),1,3,7,300.99,'m'),
+(nextval('rdj_metodo_envio_sec'),1,3,2,700.75,'a'),
+(nextval('rdj_metodo_envio_sec'),1,6,2,119.99,'t'),
+(nextval('rdj_metodo_envio_sec'),1,7,1,45.00,'t'),
+(nextval('rdj_metodo_envio_sec'),1,9,3,199.99,'t'),
+(nextval('rdj_metodo_envio_sec'),2,1,5,200.50,'m'),
+(nextval('rdj_metodo_envio_sec'),2,8,3,500.75,'a'),
+(nextval('rdj_metodo_envio_sec'),2,4,7,800.50,'a'),
+(nextval('rdj_metodo_envio_sec'),2,3,7,795.85,'a'),
+(nextval('rdj_metodo_envio_sec'),3,5,28,1050.75,'m'),
+(nextval('rdj_metodo_envio_sec'),3,10,24,900.00,'m'),
+(nextval('rdj_metodo_envio_sec'),3,11,18,695.20,'m'),
+(nextval('rdj_metodo_envio_sec'),3,1,7,95.10,'m'),
+(nextval('rdj_metodo_envio_sec'),3,8,20,375.00,'t'),
+(nextval('rdj_metodo_envio_sec'),4,1,1,25.40,'t'),
+(nextval('rdj_metodo_envio_sec'),4,2,6,400.75,'a'),
+(nextval('rdj_metodo_envio_sec'),4,6,5,340.15,'a'),
+(nextval('rdj_metodo_envio_sec'),4,7,5,395.80,'a'),
+(nextval('rdj_metodo_envio_sec'),4,9,6,415.60,'a'),
+(nextval('rdj_metodo_envio_sec'),5,2,1,60.99,'t'),
+(nextval('rdj_metodo_envio_sec'),5,6,3,130.70,'t'),
+(nextval('rdj_metodo_envio_sec'),5,7,2,110.19,'t'),
+(nextval('rdj_metodo_envio_sec'),5,9,2,190.85,'m'),
+(nextval('rdj_metodo_envio_sec'),6,3,2,100.00,'t'),
+(nextval('rdj_metodo_envio_sec'),6,3,1,215.99,'a'),
+(nextval('rdj_metodo_envio_sec'),6,4,2,115.00,'t'),
+(nextval('rdj_metodo_envio_sec'),6,5,7,250.79,'m'),
+(nextval('rdj_metodo_envio_sec'),6,10,6,225.99,'m'),
+(nextval('rdj_metodo_envio_sec'),6,11,10,299.99,'m');
 
 INSERT INTO rdj_detalles_metodos_envios (id,id_envio,id_proveedor,id_pais,nombre,mod_precio,mod_duracion) VALUES
-(nextval('id_det_metodoenvio_sec'),1,1,2,'Refrigeración',50,1),
-(nextval('id_det_metodoenvio_sec'),1,1,2,'Mejor empaquetamiento',35,0),
-(nextval('id_det_metodoenvio_sec'),2,1,3,'Seguro de envío',40,0),
-(nextval('id_det_metodoenvio_sec'),3,1,3,'Seguro de envío',60,0),
-(nextval('id_det_metodoenvio_sec'),4,1,6,'Refrigeración',40,1),
-(nextval('id_det_metodoenvio_sec'),5,1,7,'Rush',15,-1),
-(nextval('id_det_metodoenvio_sec'),6,1,9,'Rush',100,-2),
-(nextval('id_det_metodoenvio_sec'),7,2,1,'Seguro de envío',20,0),
-(nextval('id_det_metodoenvio_sec'),7,2,1,'Mejor empaquetamiento',10,0),
-(nextval('id_det_metodoenvio_sec'),8,2,8,'Seguro de envío',20,0),
-(nextval('id_det_metodoenvio_sec'),9,2,4,'Rush',200,-2),
-(nextval('id_det_metodoenvio_sec'),9,2,4,'Refrigeración',80,1),
-(nextval('id_det_metodoenvio_sec'),10,2,3,'Mejor empaquetamiento',15,0),
-(nextval('id_det_metodoenvio_sec'),11,3,5,'No rush',-40,2),
-(nextval('id_det_metodoenvio_sec'),12,3,10,'No rush',-45,3),
-(nextval('id_det_metodoenvio_sec'),13,3,11,'No rush',-40,3),
-(nextval('id_det_metodoenvio_sec'),14,3,1,'Refrigeración',125,1),
-(nextval('id_det_metodoenvio_sec'),14,3,1,'Mejor empaquetamiento',22.5,0),
-(nextval('id_det_metodoenvio_sec'),15,3,8,'Rush',150,-1),
-(nextval('id_det_metodoenvio_sec'),16,4,1,'Refrigeración',30,1),
-(nextval('id_det_metodoenvio_sec'),17,4,2,'Refrigeración',40,1),
-(nextval('id_det_metodoenvio_sec'),18,4,6,'Refrigeración',15,1),
-(nextval('id_det_metodoenvio_sec'),19,4,7,'Mejor empaquetamiento',5,0),
-(nextval('id_det_metodoenvio_sec'),20,4,9,'Mejor empaquetamiento',7.5,0),
-(nextval('id_det_metodoenvio_sec'),21,5,2,'No rush',-45,2),
-(nextval('id_det_metodoenvio_sec'),22,5,6,'Rush',70,-1),
-(nextval('id_det_metodoenvio_sec'),22,5,6,'No rush',-60,1),
-(nextval('id_det_metodoenvio_sec'),23,5,7,'Seguro de envío',25,0),
-(nextval('id_det_metodoenvio_sec'),24,5,9,'Seguro de envío',25,0),
-(nextval('id_det_metodoenvio_sec'),25,6,3,'Refrigeración',60,0),
-(nextval('id_det_metodoenvio_sec'),26,6,3,'Mejor empaquetamiento',35,0),
-(nextval('id_det_metodoenvio_sec'),27,6,4,'Mejor empaquetamiento',45,0),
-(nextval('id_det_metodoenvio_sec'),28,6,5,'Rush',30,-2),
-(nextval('id_det_metodoenvio_sec'),29,6,10,'Rush',30,-2),
-(nextval('id_det_metodoenvio_sec'),30,6,11,'Rush',35,-2);
+(nextval('rdj_det_metodoenvio_sec'),1,1,2,'Refrigeracion',50,1),
+(nextval('rdj_det_metodoenvio_sec'),1,1,2,'Mejor empaquetamiento',35,0),
+(nextval('rdj_det_metodoenvio_sec'),2,1,3,'Seguro de envio',40,0),
+(nextval('rdj_det_metodoenvio_sec'),3,1,3,'Seguro de envio',60,0),
+(nextval('rdj_det_metodoenvio_sec'),4,1,6,'Refrigeracion',40,1),
+(nextval('rdj_det_metodoenvio_sec'),5,1,7,'Rush',15,-1),
+(nextval('rdj_det_metodoenvio_sec'),6,1,9,'Rush',100,-2),
+(nextval('rdj_det_metodoenvio_sec'),7,2,1,'Seguro de envio',20,0),
+(nextval('rdj_det_metodoenvio_sec'),7,2,1,'Mejor empaquetamiento',10,0),
+(nextval('rdj_det_metodoenvio_sec'),8,2,8,'Seguro de envio',20,0),
+(nextval('rdj_det_metodoenvio_sec'),9,2,4,'Rush',200,-2),
+(nextval('rdj_det_metodoenvio_sec'),9,2,4,'Refrigeracion',80,1),
+(nextval('rdj_det_metodoenvio_sec'),10,2,3,'Mejor empaquetamiento',15,0),
+(nextval('rdj_det_metodoenvio_sec'),11,3,5,'No rush',-40,2),
+(nextval('rdj_det_metodoenvio_sec'),12,3,10,'No rush',-45,3),
+(nextval('rdj_det_metodoenvio_sec'),13,3,11,'No rush',-40,3),
+(nextval('rdj_det_metodoenvio_sec'),14,3,1,'Refrigeracion',125,1),
+(nextval('rdj_det_metodoenvio_sec'),14,3,1,'Mejor empaquetamiento',22.5,0),
+(nextval('rdj_det_metodoenvio_sec'),15,3,8,'Rush',150,-1),
+(nextval('rdj_det_metodoenvio_sec'),16,4,1,'Refrigeracion',30,1),
+(nextval('rdj_det_metodoenvio_sec'),17,4,2,'Refrigeracion',40,1),
+(nextval('rdj_det_metodoenvio_sec'),18,4,6,'Refrigeracion',15,1),
+(nextval('rdj_det_metodoenvio_sec'),19,4,7,'Mejor empaquetamiento',5,0),
+(nextval('rdj_det_metodoenvio_sec'),20,4,9,'Mejor empaquetamiento',7.5,0),
+(nextval('rdj_det_metodoenvio_sec'),21,5,2,'No rush',-45,2),
+(nextval('rdj_det_metodoenvio_sec'),22,5,6,'Rush',70,-1),
+(nextval('rdj_det_metodoenvio_sec'),22,5,6,'No rush',-60,1),
+(nextval('rdj_det_metodoenvio_sec'),23,5,7,'Seguro de envio',25,0),
+(nextval('rdj_det_metodoenvio_sec'),24,5,9,'Seguro de envio',25,0),
+(nextval('rdj_det_metodoenvio_sec'),25,6,3,'Refrigeracion',60,0),
+(nextval('rdj_det_metodoenvio_sec'),26,6,3,'Mejor empaquetamiento',35,0),
+(nextval('rdj_det_metodoenvio_sec'),27,6,4,'Mejor empaquetamiento',45,0),
+(nextval('rdj_det_metodoenvio_sec'),28,6,5,'Rush',30,-2),
+(nextval('rdj_det_metodoenvio_sec'),29,6,10,'Rush',30,-2),
+(nextval('rdj_det_metodoenvio_sec'),30,6,11,'Rush',35,-2);
 
 INSERT INTO rdj_productores_paises (id_productor, id_pais) VALUES
 (1,7), (1,9), (1,2), (2,5), (2,10), (2,11), (3,3), (3,4), (3,6);
 
 INSERT INTO rdj_criterios(id,nombre,descripcion) VALUES
-(nextval('id_criterio_sec'),'Ubicación','Ubicación geográfica del proveedor'),
-(nextval('id_criterio_sec'),'Metodos de Pago','Pagos que ofrece el proveedor'),
-(nextval('id_criterio_sec'),'Metodos de Envío','Envíos que ofrece el proveedor'),
-(nextval('id_criterio_sec'),'Cumplimiento de Pedidos','Porcentaje de cumplimiento de pedidos'),
-(nextval('id_criterio_sec'),'Éxito','Cantidad de porcentaje necesario para aprobar la evaluación');
+(nextval('rdj_criterio_sec'),'Ubicacion','Ubicacion geografica del proveedor'),
+(nextval('rdj_criterio_sec'),'Metodos de Pago','Pagos que ofrece el proveedor'),
+(nextval('rdj_criterio_sec'),'Metodos de Envio','Envios que ofrece el proveedor'),
+(nextval('rdj_criterio_sec'),'Cumplimiento de Pedidos','Porcentaje de cumplimiento de pedidos'),
+(nextval('rdj_criterio_sec'),'Exito','Cantidad de porcentaje necesario para aprobar la evaluacion');
 
 INSERT INTO rdj_sustancias_prohibidas (num_cas,nombre) VALUES
 (103640,'Bromostyrene'),
 (103797,'Phenyl acetone'),
-(104278,'α-Methyl anisylidene acetone'),
+(104278,'a-Methyl anisylidene acetone'),
 (108883,'Toluene'),
 (109864,'Ethylene glycol monomethyl ether'),
 (110496,'Ethylene glycol monomethyl acetate'),
@@ -218,7 +218,7 @@ INSERT INTO rdj_sustancias_prohibidas (num_cas,nombre) VALUES
 (623154,'Furfurylidene acetone'),
 (623438,'Methyl crotonate'),
 (6248200,'2,4-Dihydroxy-3-methylbenzaldehyde'),
-(63697530,'Musk α'),
+(63697530,'Musk a'),
 (67746309,'trans-2-Hexenal diethyl acetal'),
 (68916529,'Fig leaf absolute'),
 (90028743,'Fig leaf absolute'),
@@ -230,7 +230,7 @@ INSERT INTO rdj_sustancias_prohibidas (num_cas,nombre) VALUES
 (142836,'2,4-Dienals'),
 (80466348,'2,4-Dienals'),
 (78591,'Isophorone'),
-(80546,'p-tert-Butyl-α-methylhydrocinnamic aldehyde (p-BMHCA)'),
+(80546,'p-tert-Butyl-a-methylhydrocinnamic aldehyde (p-BMHCA)'),
 (80626,'Methyl methacrylate'),
 (8001885,'Birch wood pyrolysate'),
 (68917500,'Birch wood pyrolysate'),
@@ -258,7 +258,7 @@ INSERT INTO rdj_sustancias_prohibidas (num_cas,nombre) VALUES
 (84961580,'Santolina oil'),
 (85085263,'Massoia bark oil'),
 (87058,'4-Methyl-7-ethoxycoumarin'),
-(88299,'Acetyl ethyl tetramethyl tetralin (AETT)'),
+(88299,'Acetyl ethyl tetramethyl tetralin'),
 (91225,'Quinoline'),
 (92488,'6-Methylcoumarin'),
 (93992,'Phenyl benzoate'),
@@ -277,86 +277,86 @@ INSERT INTO rdj_sustancias_prohibidas (num_cas,nombre) VALUES
 (8016840,'Tagetes oil and absolute');
 
 INSERT INTO rdj_perfumistas (id,pri_nombre,pri_apellido,seg_apellido,id_pais,seg_nombre) VALUES
-(nextval('id_perfumista_sec'),'Xavier','Renard','',7,NULL),
-(nextval('id_perfumista_sec'),'Veronica','Kato','',5,NULL),
-(nextval('id_perfumista_sec'),'John','Gamba','',3,NULL),
-(nextval('id_perfumista_sec'),'Ellen','Molner','',3,NULL),
-(nextval('id_perfumista_sec'),'Carlos','Lütz','Pozzer',5,NULL),
-(nextval('id_perfumista_sec'),'Ilse','Kuhlmann','',5,NULL),
-(nextval('id_perfumista_sec'),'Geraldo','Caruccio','',5,NULL),
-(nextval('id_perfumista_sec'),'Rodolfo','Gros','',5,NULL),
-(nextval('id_perfumista_sec'),'Domingos','Caruccio','',5,NULL),
-(nextval('id_perfumista_sec'),'Jacques','Polge','',7,NULL),
-(nextval('id_perfumista_sec'),'Ernest','Beaux','',8,NULL);
+(nextval('rdj_perfumista_sec'),'Xavier','Renard','',7,NULL),
+(nextval('rdj_perfumista_sec'),'Veronica','Kato','',5,NULL),
+(nextval('rdj_perfumista_sec'),'John','Gamba','',3,NULL),
+(nextval('rdj_perfumista_sec'),'Ellen','Molner','',3,NULL),
+(nextval('rdj_perfumista_sec'),'Carlos','Lutz','Pozzer',5,NULL),
+(nextval('rdj_perfumista_sec'),'Ilse','Kuhlmann','',5,NULL),
+(nextval('rdj_perfumista_sec'),'Geraldo','Caruccio','',5,NULL),
+(nextval('rdj_perfumista_sec'),'Rodolfo','Gros','',5,NULL),
+(nextval('rdj_perfumista_sec'),'Domingos','Caruccio','',5,NULL),
+(nextval('rdj_perfumista_sec'),'Jacques','Polge','',7,NULL),
+(nextval('rdj_perfumista_sec'),'Ernest','Beaux','',8,NULL);
 
 INSERT INTO rdj_perfumes (id,nombre,genero,edad,monolitico,id_productor) VALUES
-(nextval('id_perfume_sec'),'Nicole Miller','u','ad',FALSE,1),
-(nextval('id_perfume_sec'),'Homem Verum','m','ad',FALSE,1),
-(nextval('id_perfume_sec'),'Eternal Magic','f','ad',FALSE,1),
-(nextval('id_perfume_sec'),'Alma de Flores Clássico','f','ad',FALSE,2),
-(nextval('id_perfume_sec'),'Essencia de Jazmin','f','ad',TRUE,2),
-(nextval('id_perfume_sec'),'Essencia de Champagne','u','ad',FALSE,2),
-(nextval('id_perfume_sec'),'Allure Homme Sport','m','ad',TRUE,3),
-(nextval('id_perfume_sec'),'Le 1940 Rouge de Chanel','f','ad',FALSE,3),
-(nextval('id_perfume_sec'),'Antaeus','m','ad',TRUE,3);
+(nextval('rdj_perfume_sec'),'Nicole Miller','u','ad',FALSE,1),
+(nextval('rdj_perfume_sec'),'Homem Verum','m','ad',FALSE,1),
+(nextval('rdj_perfume_sec'),'Eternal Magic','f','ad',FALSE,1),
+(nextval('rdj_perfume_sec'),'Alma de Flores Classico','f','ad',FALSE,2),
+(nextval('rdj_perfume_sec'),'Essencia de Jazmin','f','ad',TRUE,2),
+(nextval('rdj_perfume_sec'),'Essencia de Champagne','u','ad',FALSE,2),
+(nextval('rdj_perfume_sec'),'Allure Homme Sport','m','ad',TRUE,3),
+(nextval('rdj_perfume_sec'),'Le 1940 Rouge de Chanel','f','ad',FALSE,3),
+(nextval('rdj_perfume_sec'),'Antaeus','m','ad',TRUE,3);
 
 INSERT INTO rdj_perfumes_perfumistas (id_perfume,id_perfumista) VALUES
 (1,1), (2,2), (2,3), (3,4), (4,5), (4,6), (4,7), (4,8), (4,9), (5,5), (5,6),
 (5,7), (5,8), (5,9), (6,5), (6,6), (6,7), (6,8), (6,9), (7,10), (8,11), (9,10);
 
 INSERT INTO rdj_intensidades (id,id_perfume,tipo,porcentaje,descripcion)VALUES
-(nextval('id_intensidad_sec'),1,'EdP',15,NULL),
-(nextval('id_intensidad_sec'),1,'EdT',10,NULL),
-(nextval('id_intensidad_sec'),2,'EdP',15,NULL),
-(nextval('id_intensidad_sec'),3,'EdT',10,NULL),
-(nextval('id_intensidad_sec'),4,'EdC',5,NULL),
-(nextval('id_intensidad_sec'),5,'EdT',10,NULL),
-(nextval('id_intensidad_sec'),6,'EdT',10,NULL),
-(nextval('id_intensidad_sec'),7,'EdT',10,NULL),
-(nextval('id_intensidad_sec'),7,'EdP',15,NULL),
-(nextval('id_intensidad_sec'),8,'P',NULL,NULL),
-(nextval('id_intensidad_sec'),9,'EdT',10,NULL);
+(nextval('rdj_intensidad_sec'),1,'EdP',15,NULL),
+(nextval('rdj_intensidad_sec'),1,'EdT',10,NULL),
+(nextval('rdj_intensidad_sec'),2,'EdP',15,NULL),
+(nextval('rdj_intensidad_sec'),3,'EdT',10,NULL),
+(nextval('rdj_intensidad_sec'),4,'EdC',5,NULL),
+(nextval('rdj_intensidad_sec'),5,'EdT',10,NULL),
+(nextval('rdj_intensidad_sec'),6,'EdT',10,NULL),
+(nextval('rdj_intensidad_sec'),7,'EdT',10,NULL),
+(nextval('rdj_intensidad_sec'),7,'EdP',15,NULL),
+(nextval('rdj_intensidad_sec'),8,'P',NULL,NULL),
+(nextval('rdj_intensidad_sec'),9,'EdT',10,NULL);
 
 INSERT INTO rdj_presentaciones_perfumes (id,id_intensidad,id_perfume,volumen)VALUES
-(nextval('id_present_perfume_sec'),1,1,100),
-(nextval('id_present_perfume_sec'),2,1,100),
-(nextval('id_present_perfume_sec'),2,1,125),
-(nextval('id_present_perfume_sec'),3,2,100),
-(nextval('id_present_perfume_sec'),4,3,50),
-(nextval('id_present_perfume_sec'),5,4,120),
-(nextval('id_present_perfume_sec'),6,5,160),
-(nextval('id_present_perfume_sec'),7,6,160),
-(nextval('id_present_perfume_sec'),8,7,50),
-(nextval('id_present_perfume_sec'),8,7,100),
-(nextval('id_present_perfume_sec'),8,7,150),
-(nextval('id_present_perfume_sec'),9,7,50),
-(nextval('id_present_perfume_sec'),9,7,100),
-(nextval('id_present_perfume_sec'),10,8,100),
-(nextval('id_present_perfume_sec'),11,9,50),
-(nextval('id_present_perfume_sec'),11,9,100);
+(nextval('rdj_present_perfume_sec'),1,1,100),
+(nextval('rdj_present_perfume_sec'),2,1,100),
+(nextval('rdj_present_perfume_sec'),2,1,125),
+(nextval('rdj_present_perfume_sec'),3,2,100),
+(nextval('rdj_present_perfume_sec'),4,3,50),
+(nextval('rdj_present_perfume_sec'),5,4,120),
+(nextval('rdj_present_perfume_sec'),6,5,160),
+(nextval('rdj_present_perfume_sec'),7,6,160),
+(nextval('rdj_present_perfume_sec'),8,7,50),
+(nextval('rdj_present_perfume_sec'),8,7,100),
+(nextval('rdj_present_perfume_sec'),8,7,150),
+(nextval('rdj_present_perfume_sec'),9,7,50),
+(nextval('rdj_present_perfume_sec'),9,7,100),
+(nextval('rdj_present_perfume_sec'),10,8,100),
+(nextval('rdj_present_perfume_sec'),11,9,50),
+(nextval('rdj_present_perfume_sec'),11,9,100);
 
 INSERT INTO rdj_esencias_perfumes (num_cas,nombre,tipo,descripcion) VALUES
 (90082874,'Ciruela','n','Aceite natural con un fuerte aroma a ciruela.'),
 (9028880,'Aldehido','n','Aldehyde con potasio activado proveniente de levadura.'),
-(8008524,'Aceite de hierba de cilantro','n','Aceite líquido transparente, móvil, incoloro a amarillo claro con olor a cilantro.'),
+(8008524,'Aceite de hierba de cilantro','n','Aceite liquido transparente, movil, incoloro a amarillo claro con olor a cilantro.'),
 (8021430,'Clavel absoluto','n','Aceite de aroma floral, picante y vivido.'),
 (4736452,'Iriswood','n','Aceite con olor amaderado y terroso.'),
-(8024053,'Aceite de nardo','s','Aceite naranja con tonalidad roja y marrón que genera un fuerte olor a nardo.'),
-(8006879,'Esencia de sándalo','n','Aceite con un aroma clásico amaderado, lactoso y suave.'),
+(8024053,'Aceite de nardo','s','Aceite naranja con tonalidad roja y marron que genera un fuerte olor a nardo.'),
+(8006879,'Esencia de sandalo','n','Aceite con un aroma clasico amaderado, lactoso y suave.'),
 (89883,'Vetiverol','n','Aceite proveniente de la grama Vetiveria Zizanoides.'),
-(8022568,'Aceite de sabia','n','Aroma culinario aromático con aspectos nebulosos, suaves y ligeramente picantes.'),
-(8008455,'Nuez moscada','n','Aroma dulce picante con notas base terrosas y picantes,'),
-(8024086,'Hoja de violeta','n','Aroma fresco y aromático, similar a pepino.'),
-(8007758,'Aceite de bergamota','n','Aroma cítrico, amargo y agrio, elegante, ligera nota con suave tono picante.'),
+(8022568,'Aceite de sabia','n','Aroma culinario aromatico con aspectos nebulosos, suaves y ligeramente picantes.'),
+(8008455,'Nuez moscada','n','Aroma dulce picante con notas base terrosas y picantes.'),
+(8024086,'Hoja de violeta','n','Aroma fresco y aromatico, similar a pepino.'),
+(8007758,'Aceite de bergamota','n','Aroma citrico, amargo y agrio, elegante, ligera nota con suave tono picante.'),
 (8007010,'Rosa','n','Aroma femenino, limpio e intensamente romantico.'),
-(8024064,'Vainilla natural','n','Aroma dulce, acogedor, reconfortante, con una agradable sensación de hornear galletas.'),
+(8024064,'Vainilla natural','n','Aroma dulce, acogedor, reconfortante, con una agradable sensacion de hornear galletas.'),
 (8014093,'Pachouli','n','Aroma amaderado musgoso.'),
-(8000280,'Aceite de lavanda','n','Aroma floral aromático limpio, con facetas verdes, frescas, picantes, regaliz.'),
-(84929793,'Resina de benjui','s','Una cálida nota balsámica que recuerda a la vainilla.'),
+(8000280,'Aceite de lavanda','n','Aroma floral aromatico limpio, con facetas verdes, frescas, picantes, regaliz.'),
+(84929793,'Resina de benjui','s','Una calida nota balsamica que recuerda a la vainilla.'),
 (977059156,'Musgo de roble','n','Un suelo de bosque amargo y muy oloroso.'),
 (8022966,'Aceite de jazmin','n','Flor blanca aromatica con olor a jazmin.'),
 (91770444,'Aceite de orquidea','n','Aceite de color rosa con un fuerte olor a orquidea.'),
-(8023981,'Aceite de núcleo de durazno','n','Aroma frutal dulce y con olor a nuez.'),
+(8023981,'Aceite de nucleo de durazno','n','Aroma frutal dulce y con olor a nuez.'),
 (8002673,'Ambar','s','Aroma animal con olor a almizcle.'),
 (8008579,'Naranja','n','Aroma citrico frutal dulce.');
 
@@ -380,16 +380,16 @@ INSERT INTO rdj_notas (id_perfume,cas_esencia,tipo) VALUES
 (8,9028880,'s'), (8,8007010,'c'), (8,8024086,'c'), (8,8002673,'f'); 
 
 INSERT INTO rdj_familias_olfativas (id,nombre)VALUES
-(nextval('id_familia_sec'),'Verde'),
-(nextval('id_familia_sec'),'Cítrico'),
-(nextval('id_familia_sec'),'Floral'),
-(nextval('id_familia_sec'),'Frutal'),
-(nextval('id_familia_sec'),'Aromático'),
-(nextval('id_familia_sec'),'Helechos'),
-(nextval('id_familia_sec'),'Chipre'),
-(nextval('id_familia_sec'),'Amaderada'),
-(nextval('id_familia_sec'),'Oriental'),
-(nextval('id_familia_sec'),'Aldehídico');
+(nextval('rdj_familia_sec'),'Verde'),
+(nextval('rdj_familia_sec'),'Citrica'),
+(nextval('rdj_familia_sec'),'Floral'),
+(nextval('rdj_familia_sec'),'Frutal'),
+(nextval('rdj_familia_sec'),'Aromatica'),
+(nextval('rdj_familia_sec'),'Helechos'),
+(nextval('rdj_familia_sec'),'Chipre'),
+(nextval('rdj_familia_sec'),'Amaderada'),
+(nextval('rdj_familia_sec'),'Oriental'),
+(nextval('rdj_familia_sec'),'Aldehidica');
 
 INSERT INTO rdj_esencias_perfumes_familias (cas_esencia,id_familia) VALUES
 (90082874,4), 
@@ -422,40 +422,40 @@ INSERT INTO rdj_perfumes_familias (id_perfume,id_familia)VALUES
 
 INSERT INTO rdj_palabras_claves (id, palabra) VALUES
 /* caracteres */
-(nextval('id_palabra_sec'),'informal'),
-(nextval('id_palabra_sec'),'natural'),
-(nextval('id_palabra_sec'),'clásico'),
-(nextval('id_palabra_sec'),'seductor'),
-(nextval('id_palabra_sec'),'moderno'),
-(nextval('id_palabra_sec'),'dulce'),
-(nextval('id_palabra_sec'),'cálido'),
-(nextval('id_palabra_sec'),'asertivo'),
-(nextval('id_palabra_sec'),'vital'),
-(nextval('id_palabra_sec'),'tenaz'),
+(nextval('rdj_palabra_sec'),'Informal'),
+(nextval('rdj_palabra_sec'),'Natural'),
+(nextval('rdj_palabra_sec'),'Clasico'),
+(nextval('rdj_palabra_sec'),'Seductor'),
+(nextval('rdj_palabra_sec'),'Moderno'),
+(nextval('rdj_palabra_sec'),'Dulce'),
+(nextval('rdj_palabra_sec'),'Calido'),
+(nextval('rdj_palabra_sec'),'Asertivo'),
+(nextval('rdj_palabra_sec'),'Vital'),
+(nextval('rdj_palabra_sec'),'Tenaz'),
 /* personalidades */
-(nextval('id_palabra_sec'),'libertad'),
-(nextval('id_palabra_sec'),'independencia'),
-(nextval('id_palabra_sec'),'creatividad'),
-(nextval('id_palabra_sec'),'diversión'),
-(nextval('id_palabra_sec'),'fantasia'),
-(nextval('id_palabra_sec'),'versatibilidad'),
-(nextval('id_palabra_sec'),'delicadeza'),
-(nextval('id_palabra_sec'),'sensualidad'),
-(nextval('id_palabra_sec'),'optimismo'),
-(nextval('id_palabra_sec'),'alegría'),
-(nextval('id_palabra_sec'),'lucidez'),
-(nextval('id_palabra_sec'),'familiaridad'),
-(nextval('id_palabra_sec'),'confianza'),
-(nextval('id_palabra_sec'),'energía'),
+(nextval('rdj_palabra_sec'),'Libertad'),
+(nextval('rdj_palabra_sec'),'Independencia'),
+(nextval('rdj_palabra_sec'),'Creatividad'),
+(nextval('rdj_palabra_sec'),'Diversion'),
+(nextval('rdj_palabra_sec'),'Fantasia'),
+(nextval('rdj_palabra_sec'),'Versatibilidad'),
+(nextval('rdj_palabra_sec'),'Delicadeza'),
+(nextval('rdj_palabra_sec'),'Sensualidad'),
+(nextval('rdj_palabra_sec'),'Optimismo'),
+(nextval('rdj_palabra_sec'),'Alegria'),
+(nextval('rdj_palabra_sec'),'Lucidez'),
+(nextval('rdj_palabra_sec'),'Familiaridad'),
+(nextval('rdj_palabra_sec'),'Confianza'),
+(nextval('rdj_palabra_sec'),'Energia'),
 /* aromas */
-(nextval('id_palabra_sec'),'Floral'),
-(nextval('id_palabra_sec'),'Frutal'),
-(nextval('id_palabra_sec'),'Verde'),
-(nextval('id_palabra_sec'),'Herbal'),
-(nextval('id_palabra_sec'),'Cítrico'),
-(nextval('id_palabra_sec'),'Herbal aromático'),
-(nextval('id_palabra_sec'),'Amaderado'),
-(nextval('id_palabra_sec'),'Otros');
+(nextval('rdj_palabra_sec'),'Floral'),
+(nextval('rdj_palabra_sec'),'Frutal'),
+(nextval('rdj_palabra_sec'),'Verde'),
+(nextval('rdj_palabra_sec'),'Herbal'),
+(nextval('rdj_palabra_sec'),'Citrico'),
+(nextval('rdj_palabra_sec'),'Herbal aromatico'),
+(nextval('rdj_palabra_sec'),'Amaderado'),
+(nextval('rdj_palabra_sec'),'Otros');
 
 INSERT INTO rdj_familias_palabras (id_familia,id_palabra) VALUES
 (1,2), (1,1), (1,19), (1,11), (1,23), (1,25), (1,27), (1,29),
@@ -470,36 +470,36 @@ INSERT INTO rdj_familias_palabras (id_familia,id_palabra) VALUES
 (10,2), (10,5), (10,14), (10,16), (10,21), (10,22), (10,25), (10,28), (10,27), (10,32);
 
 INSERT INTO rdj_otros_ingredientes (cas_otro_ing,nombre,descripcion,id_proveedor) VALUES
-(91052925,'Extracto de Miel','Extracto hidrosoluble de grado cosmético que posee las propiedades y beneficios de la miel, para aplicar en la piel.',1),
-(8008319,'Aceite de Mandarina','El aceite de esencial de mandarina proviene de la cáscara externa de la fruta y tiene un aroma cálido, dulce y cítrico.',1),
-(84082791,'Aceite Salvia','La aromática salvia, empleada como planta medicinal desde la Antigüedad, destaca por la variedad de virtudes que atesora, desde potenciar la salud de la mujer a su empleo para tratar problemas bucales y digestivos.',1),
-(8006824,'Aceite Pimienta Negra','Este aceite esencial es rico en monoterpenos y sesquiterpenos, conocidos por su actividad antioxidante* y su capacidad para ayudar a alejar las amenazas ambientales y estacionales.',1),
-(949495685,'Aceite Pimienta Rosa','Procedente de las bayas del grano de pimienta rosa, puede parecer similar al grano de pimienta negro en tu molino de pimienta, sin embargo, la pimienta rosa está estrechamente relacionada con los anacardos.',1),
-(8024064,'Extracto de Vainilla','Obtenido de la vaina o chaucha de la vainilla que produce un fruto del cual se obtiene este saborizante, después de un sencillo proceso de maceración.',1),
-(8000462,'Aceite de Geranio','Un miembro del género Pelargonium de especies de flores, los geranios se cultivan por su belleza y como materia prima de la industria del perfume.',1),
-(84929260,'Aceite de Mirra','Se consigue a raíz de la resina de mirra, que es una planta típica de Egipto y muy popular en la antigüedad, sobre todo por sus ventajas para la salud y sus componentes aromáticos.',1),
-(97676192,'Grosella Negra','Es una baya de pulpa translúcida con tonos rojos o verdes y de sabor agridulce.',1),
-(8000279,'Aceite de cedro','Los aceites de madera de cedro tienen característicos olores leñosos que pueden cambiar algo en el curso de la desecación.',3),
-(8002731,'Aceite de Iris','El aceite natural de Iris es una esencia que se obtiene mediante destilación por arrastre de vapor del polvo obtenido de los rizomas pelados y desecados.',5),
-(8002093,'Aceite de Pino','Es un aceite esencial obtenido por destilación por arrastre de vapor de agujas, ramitas y conos de distintas especies de pino, en especial Pinus sylvestris.',2),
-(8016964,'Vetiver','Es una planta perenne de la familia de las gramíneas, nativa de la India.',6),
-(100516,'Alcohol bencílico','Es un solvente útil a causa de su polaridad, baja toxicidad, y baja presión de vapor',4);
+(91052925,'Extracto de Miel','Extracto hidrosoluble de grado cosmetico que posee las propiedades y beneficios de la miel, para aplicar en la piel.',1),
+(8008319,'Aceite de Mandarina','El aceite de esencia de mandarina proviene de la cascara externa de la fruta y tiene un aroma calido, dulce y citrico.',1),
+(84082791,'Aceite Salvia','La aromatica salvia, empleada como planta medicinal desde la Antiguedad, destaca por la variedad de virtudes que atesora, desde potenciar la salud de la mujer a su empleo para tratar problemas bucales y digestivos.',1),
+(8006824,'Aceite Pimienta Negra','Este aceite esencial es rico en monoterpenos y sesquiterpenos, conocidos por su actividad antioxidante y su capacidad para ayudar a alejar las amenazas ambientales y estacionales.',1),
+(949495685,'Aceite Pimienta Rosa','Procedente de las bayas del grano de pimienta rosa, puede parecer similar al grano de pimienta negro en tu molino de pimienta, sin embargo, la pimienta rosa esta estrechamente relacionada con los anacardos.',1),
+(8024064,'Extracto de Vainilla','Obtenido de la vaina o chaucha de la vainilla que produce un fruto del cual se obtiene este saborizante, despues de un sencillo proceso de maceracion.',1),
+(8000462,'Aceite de Geranio','Un miembro del genero Pelargonium de especies de flores, los geranios se cultivan por su belleza y como materia prima de la industria del perfume.',1),
+(84929260,'Aceite de Mirra','Se consigue a raiz de la resina de mirra, que es una planta tipica de Egipto y muy popular en la antiguedad, sobre todo por sus ventajas para la salud y sus componentes aromaticos.',1),
+(97676192,'Grosella Negra','Es una baya de pulpa translucida con tonos rojos o verdes y de sabor agridulce.',1),
+(8000279,'Aceite de cedro','Los aceites de madera de cedro tienen caracteristicos olores amaderados que pueden cambiar algo en el curso de la desecacion.',3),
+(8002731,'Aceite de Iris','El aceite natural de Iris es una esencia que se obtiene mediante destilacion por arrastre de vapor del polvo obtenido de los rizomas pelados y desecados.',5),
+(8002093,'Aceite de Pino','Es un aceite esencial obtenido por destilacion por arrastre de vapor de agujas, ramitas y conos de distintas especies de pino, en especial Pinus sylvestris.',2),
+(8016964,'Vetiver','Es una planta perenne de la familia de las gramineas, nativa de la India.',6),
+(100516,'Alcohol bencilico','Es un solvente util a causa de su polaridad, baja toxicidad, y baja presion de vapor',4);
 
 INSERT INTO rdj_present_otros_ings (id,cas_otro_ing,volumen,precio) VALUES
-(nextval('id_present_otro_ing_sec'),91052925,60,15), (nextval('id_present_otro_ing_sec'),91052925,250,51), (nextval('id_present_otro_ing_sec'),91052925,1000,123), /*unidades: ml*/
-(nextval('id_present_otro_ing_sec'),8008319,200,66), (nextval('id_present_otro_ing_sec'),8008319,500,113), (nextval('id_present_otro_ing_sec'),8008319,1000,242), /*unidades: gr*/
-(nextval('id_present_otro_ing_sec'),84082791,15,44), (nextval('id_present_otro_ing_sec'),84082791,50,147), (nextval('id_present_otro_ing_sec'),84082791,100,300), /*unidades: ml*/
-(nextval('id_present_otro_ing_sec'),8006824,30,180), (nextval('id_present_otro_ing_sec'),8006824,50,300), (nextval('id_present_otro_ing_sec'),8006824,100,600), /*unidades: ml*/
-(nextval('id_present_otro_ing_sec'),949495685,100,280), (nextval('id_present_otro_ing_sec'),949495685,200,560), (nextval('id_present_otro_ing_sec'),949495685,500,1400), /*unidades: ml*/
-(nextval('id_present_otro_ing_sec'),8024064,15,35), (nextval('id_present_otro_ing_sec'),8024064,30,70), (nextval('id_present_otro_ing_sec'),8024064,60,140), /*unidades: ml*/
-(nextval('id_present_otro_ing_sec'),8000462,15,41), (nextval('id_present_otro_ing_sec'),8000462,30,82), (nextval('id_present_otro_ing_sec'),8000462,60,164), /*unidades: ml*/
-(nextval('id_present_otro_ing_sec'),84929260,100,20), (nextval('id_present_otro_ing_sec'),84929260,500,1040), (nextval('id_present_otro_ing_sec'),84929260,1000,2108), /*unidades: gr*/
-(nextval('id_present_otro_ing_sec'),97676192,1000,250), /*unidades: gr*/
-(nextval('id_present_otro_ing_sec'),8000279,1000,180), (nextval('id_present_otro_ing_sec'),8000279,2000,310), (nextval('id_present_otro_ing_sec'),8000279,5000,670), /*unidades: gr*/
-(nextval('id_present_otro_ing_sec'),8002731,50,40), (nextval('id_present_otro_ing_sec'),8002731,100,87), (nextval('id_present_otro_ing_sec'),8002731,500,450), /*unidades: ml*/
-(nextval('id_present_otro_ing_sec'),8002093,60,50), (nextval('id_present_otro_ing_sec'),8002093,200,175), (nextval('id_present_otro_ing_sec'),8002093,500,420), /*unidades: ml*/
-(nextval('id_present_otro_ing_sec'),8016964,30,42), (nextval('id_present_otro_ing_sec'),8016964,60,88), (nextval('id_present_otro_ing_sec'),8016964,120,180), /*unidades: gr*/
-(nextval('id_present_otro_ing_sec'),100516,100,57), (nextval('id_present_otro_ing_sec'),100516,200,110), (nextval('id_present_otro_ing_sec'),100516,500,286); /*unidades: ml*/
+(nextval('rdj_present_otro_ing_sec'),91052925,60,15), (nextval('rdj_present_otro_ing_sec'),91052925,250,51), (nextval('rdj_present_otro_ing_sec'),91052925,1000,123), 
+(nextval('rdj_present_otro_ing_sec'),8008319,200,66), (nextval('rdj_present_otro_ing_sec'),8008319,500,113), (nextval('rdj_present_otro_ing_sec'),8008319,1000,242), 
+(nextval('rdj_present_otro_ing_sec'),84082791,15,44), (nextval('rdj_present_otro_ing_sec'),84082791,50,147), (nextval('rdj_present_otro_ing_sec'),84082791,100,300), 
+(nextval('rdj_present_otro_ing_sec'),8006824,30,180), (nextval('rdj_present_otro_ing_sec'),8006824,50,300), (nextval('rdj_present_otro_ing_sec'),8006824,100,600), 
+(nextval('rdj_present_otro_ing_sec'),949495685,100,280), (nextval('rdj_present_otro_ing_sec'),949495685,200,560), (nextval('rdj_present_otro_ing_sec'),949495685,500,1400), 
+(nextval('rdj_present_otro_ing_sec'),8024064,15,35), (nextval('rdj_present_otro_ing_sec'),8024064,30,70), (nextval('rdj_present_otro_ing_sec'),8024064,60,140), 
+(nextval('rdj_present_otro_ing_sec'),8000462,15,41), (nextval('rdj_present_otro_ing_sec'),8000462,30,82), (nextval('rdj_present_otro_ing_sec'),8000462,60,164), 
+(nextval('rdj_present_otro_ing_sec'),84929260,100,20), (nextval('rdj_present_otro_ing_sec'),84929260,500,1040), (nextval('rdj_present_otro_ing_sec'),84929260,1000,2108), 
+(nextval('rdj_present_otro_ing_sec'),97676192,1000,250), 
+(nextval('rdj_present_otro_ing_sec'),8000279,1000,180), (nextval('rdj_present_otro_ing_sec'),8000279,2000,310), (nextval('rdj_present_otro_ing_sec'),8000279,5000,670), 
+(nextval('rdj_present_otro_ing_sec'),8002731,50,40), (nextval('rdj_present_otro_ing_sec'),8002731,100,87), (nextval('rdj_present_otro_ing_sec'),8002731,500,450), 
+(nextval('rdj_present_otro_ing_sec'),8002093,60,50), (nextval('rdj_present_otro_ing_sec'),8002093,200,175), (nextval('rdj_present_otro_ing_sec'),8002093,500,420), 
+(nextval('rdj_present_otro_ing_sec'),8016964,30,42), (nextval('rdj_present_otro_ing_sec'),8016964,60,88), (nextval('rdj_present_otro_ing_sec'),8016964,120,180), 
+(nextval('rdj_present_otro_ing_sec'),100516,100,57), (nextval('rdj_present_otro_ing_sec'),100516,200,110), (nextval('rdj_present_otro_ing_sec'),100516,500,286); 
 
 INSERT INTO rdj_otros_componentes (id_perfume,cas_otro_ing) VALUES
 (1,91052925), (1,8008319),
@@ -512,15 +512,15 @@ INSERT INTO rdj_otros_componentes (id_perfume,cas_otro_ing) VALUES
 (9,84929260), (9,84082791); 
 
 INSERT INTO rdj_ingredientes_esencias (cas_ing_esencia,nombre,naturaleza,id_proveedor,nombre_quim,pto_inf,solubilidad,proc_creac,parte_proc,vida_util,num_einecs,rendimiento)VALUES
-(1005171,'Ambranum','n',1,NULL,84,NULL,'Asociación equilibrada de ingredientes (extractos naturales y moléculas sintéticas), se mezclan para crear una Especialidad inspiradora.',NULL,NULL,NULL,NULL),
-(68650464,'Buchu Eo Aged','s',1,NULL,67,NULL,'Obtenido por destilación de la biomasa con agua, o vapor. El aceite esencial está físicamente separado de la fase acuosa por decantación.',NULL,NULL,NULL,NULL),
+(1005171,'Ambranum','n',1,NULL,84,NULL,'Asociacion equilibrada de ingredientes (extractos naturales y moleculas sinteticas), se mezclan para crear una especialidad inspiradora.',NULL,NULL,NULL,NULL),
+(68650464,'Buchu Eo Aged','s',1,NULL,67,NULL,'Obtenido por destilacion de la biomasa con agua, o vapor. El aceite esencial esta fisicamente separado de la fase acuosa por decantacion.',NULL,NULL,NULL,NULL),
 (71735790,'Cedroxyde','s',1,'4,8,12-Trimethyl-13-oxabicyclo[10.1.0]trideca-4,8-diene',100,NULL,NULL,NULL,NULL,2759677,NULL),
 (52424609,'Ozaflor','s',2,NULL,100,95,NULL,NULL,180,NULL,NULL),
 (4736452,'Iriswood','n',2,NULL,100,95,NULL,NULL,180,28068919,NULL),
 (8050155,'Floralyn','n',2,NULL,100,95,NULL,NULL,365,2324762,NULL),
 (28219616,'Sandal Fleur','n',3,'2-Ethyl-4-(2,2,3-Trimethyl-3-Cyclopenten-1-yl)2-Buten-1-ol',100,70,NULL,NULL,730,2489088,NULL),
 (127424,'Methyl Ionone','s',3,'4-penten-3-one,5-(2, 6,6-Trimethyl-2-Cyclohexen-1-yl)',100,70,NULL,NULL,730,2048421,NULL),
-(586629,'Pine-Oil-70','s',3,'Mixture of terpene alcohols and Terpenes',77,NULL,NULL,NULL,NULL,2026806,NULL),
+(586629,'Pine-Oil-70','s',3,'terpene alcohols',77,NULL,NULL,NULL,NULL,2026806,NULL),
 (89883,'Vetiverol','n',4,'(5R,6R)-6,10-dimethyl-3-propan-2-ylidenespiro[4.5]dec-9-en-8-ol',100,70,NULL,NULL,NULL,2685789,NULL),
 (106241,'Geraniol','n',4,'(2E)-3,7-dimethylocta-2,6-dien-1-ol',108,95,NULL,NULL,NULL,2033771,NULL),
 (120116,'Benzyl Isoeugenol','s',4,'2-methoxy-1-phenylmethoxy-4-prop-1-enylbenzene',200,80,NULL,NULL,NULL,2043706,NULL),
@@ -552,25 +552,25 @@ INSERT INTO rdj_ings_esencias_paises (id_pais,cas_ing_esencia)VALUES
 (7,4180238);
 
 INSERT INTO rdj_presents_ings_esencias (id,cas_ing_esencia,volumen,precio)VALUES
-(nextval('id_present_ing_esen_sec'),1005171,5,11), (nextval('id_present_ing_esen_sec'),1005171,25,36), (nextval('id_present_ing_esen_sec'),1005171,60,65), (nextval('id_present_ing_esen_sec'),1005171,200,205), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),68650464,5,21), (nextval('id_present_ing_esen_sec'),68650464,10,32), /*unidades: ml*/
-(nextval('id_present_ing_esen_sec'),71735790,30,16), (nextval('id_present_ing_esen_sec'),71735790,50,20), (nextval('id_present_ing_esen_sec'),71735790,100,38), (nextval('id_present_ing_esen_sec'),71735790,200,64), (nextval('id_present_ing_esen_sec'),71735790,500,141), (nextval('id_present_ing_esen_sec'),71735790,1000,251), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),52424609,30,16), (nextval('id_present_ing_esen_sec'),52424609,50,23), (nextval('id_present_ing_esen_sec'),52424609,100,40), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),4736452,5,29), (nextval('id_present_ing_esen_sec'),4736452,120,23), (nextval('id_present_ing_esen_sec'),4736452,60,265), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),8050155,100,18), (nextval('id_present_ing_esen_sec'),8050155,500,44), (nextval('id_present_ing_esen_sec'),8050155,1000,84), (nextval('id_present_ing_esen_sec'),8050155,2000,151), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),28219616,30,25), (nextval('id_present_ing_esen_sec'),28219616,50,37), (nextval('id_present_ing_esen_sec'),28219616,100,63), (nextval('id_present_ing_esen_sec'),8050155,200,107), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),127424,100,29), (nextval('id_present_ing_esen_sec'),127424,500,100), (nextval('id_present_ing_esen_sec'),127424,1000,190), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),586629,30,35), (nextval('id_present_ing_esen_sec'),586629,50,53), (nextval('id_present_ing_esen_sec'),586629,100,100), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),89883,100,281), (nextval('id_present_ing_esen_sec'),89883,200,480), (nextval('id_present_ing_esen_sec'),89883,500,1080), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),106241,100,20), (nextval('id_present_ing_esen_sec'),106241,500,70), (nextval('id_present_ing_esen_sec'),106241,1000,126), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),120116,100,20), (nextval('id_present_ing_esen_sec'),120116,500,70), (nextval('id_present_ing_esen_sec'),120116,1000,126), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),66251,100,38), (nextval('id_present_ing_esen_sec'),66251,200,48), (nextval('id_present_ing_esen_sec'),66251,500,87), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),41890920,1000,80), (nextval('id_present_ing_esen_sec'),41890920,5000,110), (nextval('id_present_ing_esen_sec'),41890920,10000,200), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),41890920,1000,80), (nextval('id_present_ing_esen_sec'),41890920,5000,110), (nextval('id_present_ing_esen_sec'),41890920,10000,200), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),21112378,190000,250), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),106729,250,40), (nextval('id_present_ing_esen_sec'),106729,500,70), (nextval('id_present_ing_esen_sec'),106729,1000,125), /*unidades: gr*/
-(nextval('id_present_ing_esen_sec'),5392405,5,25), (nextval('id_present_ing_esen_sec'),5392405,100,35), (nextval('id_present_ing_esen_sec'),5392405,500,135), /*unidades: ml*/
-(nextval('id_present_ing_esen_sec'),4180238,100,25), (nextval('id_present_ing_esen_sec'),4180238,200,43), (nextval('id_present_ing_esen_sec'),4180238,500,80); /*unidades: gr*/
+(nextval('rdj_present_ing_esen_sec'),1005171,5,11), (nextval('rdj_present_ing_esen_sec'),1005171,25,36), (nextval('rdj_present_ing_esen_sec'),1005171,60,65), (nextval('rdj_present_ing_esen_sec'),1005171,200,205), 
+(nextval('rdj_present_ing_esen_sec'),68650464,5,21), (nextval('rdj_present_ing_esen_sec'),68650464,10,32), 
+(nextval('rdj_present_ing_esen_sec'),71735790,30,16), (nextval('rdj_present_ing_esen_sec'),71735790,50,20), (nextval('rdj_present_ing_esen_sec'),71735790,100,38), (nextval('rdj_present_ing_esen_sec'),71735790,200,64), (nextval('rdj_present_ing_esen_sec'),71735790,500,141), (nextval('rdj_present_ing_esen_sec'),71735790,1000,251), 
+(nextval('rdj_present_ing_esen_sec'),52424609,30,16), (nextval('rdj_present_ing_esen_sec'),52424609,50,23), (nextval('rdj_present_ing_esen_sec'),52424609,100,40), 
+(nextval('rdj_present_ing_esen_sec'),4736452,5,29), (nextval('rdj_present_ing_esen_sec'),4736452,120,23), (nextval('rdj_present_ing_esen_sec'),4736452,60,265), 
+(nextval('rdj_present_ing_esen_sec'),8050155,100,18), (nextval('rdj_present_ing_esen_sec'),8050155,500,44), (nextval('rdj_present_ing_esen_sec'),8050155,1000,84), (nextval('rdj_present_ing_esen_sec'),8050155,2000,151), 
+(nextval('rdj_present_ing_esen_sec'),28219616,30,25), (nextval('rdj_present_ing_esen_sec'),28219616,50,37), (nextval('rdj_present_ing_esen_sec'),28219616,100,63), (nextval('rdj_present_ing_esen_sec'),8050155,200,107), 
+(nextval('rdj_present_ing_esen_sec'),127424,100,29), (nextval('rdj_present_ing_esen_sec'),127424,500,100), (nextval('rdj_present_ing_esen_sec'),127424,1000,190), 
+(nextval('rdj_present_ing_esen_sec'),586629,30,35), (nextval('rdj_present_ing_esen_sec'),586629,50,53), (nextval('rdj_present_ing_esen_sec'),586629,100,100), 
+(nextval('rdj_present_ing_esen_sec'),89883,100,281), (nextval('rdj_present_ing_esen_sec'),89883,200,480), (nextval('rdj_present_ing_esen_sec'),89883,500,1080), 
+(nextval('rdj_present_ing_esen_sec'),106241,100,20), (nextval('rdj_present_ing_esen_sec'),106241,500,70), (nextval('rdj_present_ing_esen_sec'),106241,1000,126), 
+(nextval('rdj_present_ing_esen_sec'),120116,100,20), (nextval('rdj_present_ing_esen_sec'),120116,500,70), (nextval('rdj_present_ing_esen_sec'),120116,1000,126), 
+(nextval('rdj_present_ing_esen_sec'),66251,100,38), (nextval('rdj_present_ing_esen_sec'),66251,200,48), (nextval('rdj_present_ing_esen_sec'),66251,500,87), 
+(nextval('rdj_present_ing_esen_sec'),41890920,1000,80), (nextval('rdj_present_ing_esen_sec'),41890920,5000,110), (nextval('rdj_present_ing_esen_sec'),41890920,10000,200), 
+(nextval('rdj_present_ing_esen_sec'),41890920,1000,80), (nextval('rdj_present_ing_esen_sec'),41890920,5000,110), (nextval('rdj_present_ing_esen_sec'),41890920,10000,200), 
+(nextval('rdj_present_ing_esen_sec'),21112378,190000,250), 
+(nextval('rdj_present_ing_esen_sec'),106729,250,40), (nextval('rdj_present_ing_esen_sec'),106729,500,70), (nextval('rdj_present_ing_esen_sec'),106729,1000,125), 
+(nextval('rdj_present_ing_esen_sec'),5392405,5,25), (nextval('rdj_present_ing_esen_sec'),5392405,100,35), (nextval('rdj_present_ing_esen_sec'),5392405,500,135), 
+(nextval('rdj_present_ing_esen_sec'),4180238,100,25), (nextval('rdj_present_ing_esen_sec'),4180238,200,43), (nextval('rdj_present_ing_esen_sec'),4180238,500,80); 
 
 INSERT INTO rdj_ings_esencias_otros_ings (cas_otro_ing,cas_ing_esencia) VALUES
 (97676192,68650464),

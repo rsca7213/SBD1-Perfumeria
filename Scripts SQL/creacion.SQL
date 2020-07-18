@@ -1,6 +1,6 @@
 
 /*
-    CREATES, ALTERS Y SEQUENCES de la base de datos del proyecto de perfumes
+    CREATES, ALTERS, SEQUENCES e INDEXS de la base de datos del proyecto de los perfumes
     Grupo #2
     Seccion 002
     Ricardo Salvatorelli (C.I.: 26.967.602)
@@ -714,70 +714,174 @@ REFERENCES rdj_pedidos (num_pedido);
 /*************************** SECUENCIAS ***************************/
 
 /* tabla rdj_asociaciones */
-CREATE SEQUENCE id_asoc_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99;
+CREATE SEQUENCE rdj_asoc_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99;
 
 /* tabla rdj_paises */
-CREATE SEQUENCE id_pais_sec INCREMENT BY 1 START WITH 1 MAXVALUE 999;
+CREATE SEQUENCE rdj_pais_sec INCREMENT BY 1 START WITH 1 MAXVALUE 999;
 
 /* tabla rdj_proveedores */
-CREATE SEQUENCE id_proveedores_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99;
+CREATE SEQUENCE rdj_proveedores_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99;
 
 /* tabla rdj_productores */
-CREATE SEQUENCE id_productores_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99;
+CREATE SEQUENCE rdj_productores_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99;
 
 /* tabla rdj_miembros_ifra */
-CREATE SEQUENCE id_miembro_ifra_sec INCREMENT BY 1 START WITH 1 MAXVALUE 9999;
+CREATE SEQUENCE rdj_miembro_ifra_sec INCREMENT BY 1 START WITH 1 MAXVALUE 9999;
 
 /* tabla rdj_metodos_pagos */
-CREATE SEQUENCE id_metodo_pago_sec INCREMENT BY 1 START WITH 1 MAXVALUE 9999;
+CREATE SEQUENCE rdj_metodo_pago_sec INCREMENT BY 1 START WITH 1 MAXVALUE 9999;
 
 /* tabla rdj_metodos_envios */
-CREATE SEQUENCE id_metodo_envio_sec INCREMENT BY 1 START WITH 1 MAXVALUE 9999;
+CREATE SEQUENCE rdj_metodo_envio_sec INCREMENT BY 1 START WITH 1 MAXVALUE 9999;
 
 /* tabla rdj_detalles_metodos_envios */
-CREATE SEQUENCE id_det_metodoenvio_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999999;
+CREATE SEQUENCE rdj_det_metodoenvio_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999999;
 
 /* tabla rdj_criterios */
-CREATE SEQUENCE id_criterio_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99;
+CREATE SEQUENCE rdj_criterio_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99;
 
 /* tabla rdj_perfumistas */
-CREATE SEQUENCE id_perfumista_sec INCREMENT BY 1 START WITH 1 MAXVALUE 9999;
+CREATE SEQUENCE rdj_perfumista_sec INCREMENT BY 1 START WITH 1 MAXVALUE 9999;
 
 /* tabla rdj_perfumes */
-CREATE SEQUENCE id_perfume_sec INCREMENT BY 1 START WITH 1 MAXVALUE 9999;
+CREATE SEQUENCE rdj_perfume_sec INCREMENT BY 1 START WITH 1 MAXVALUE 9999;
 
 /* tabla rdj_intensidades */
-CREATE SEQUENCE id_intensidad_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999;
+CREATE SEQUENCE rdj_intensidad_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999;
 
 /* tabla rdj_presentaciones_perfumes */
-CREATE SEQUENCE id_present_perfume_sec INCREMENT BY 1 START WITH 1 MAXVALUE 999999;
+CREATE SEQUENCE rdj_present_perfume_sec INCREMENT BY 1 START WITH 1 MAXVALUE 999999;
 
 /* tabla rdj_familias_olfativas */
-CREATE SEQUENCE id_familia_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99;
+CREATE SEQUENCE rdj_familia_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99;
 
 /* tabla rdj_palabras_claves */
-CREATE SEQUENCE id_palabra_sec INCREMENT BY 1 START WITH 1 MAXVALUE 9999;
+CREATE SEQUENCE rdj_palabra_sec INCREMENT BY 1 START WITH 1 MAXVALUE 9999;
 
 /* tabla rdj_presents_otros_ings */
-CREATE SEQUENCE id_present_otro_ing_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999;
+CREATE SEQUENCE rdj_present_otro_ing_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999;
 
 /* tabla rdj_presents_ings_esencias */
-CREATE SEQUENCE id_present_ing_esen_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999;
+CREATE SEQUENCE rdj_present_ing_esen_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999;
 
 /* tabla rdj_renovacines */
-CREATE SEQUENCE id_renovacion_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999;
+CREATE SEQUENCE rdj_renovacion_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999;
 
 /* tabla rdj_detalles_contratos */
-CREATE SEQUENCE id_det_contrato_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999999;
+CREATE SEQUENCE rdj_det_contrato_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999999;
 
 /* tabla rdj_metodos_contratos */
-CREATE SEQUENCE id_metodo_contrato_sec INCREMENT BY 1 START WITH 1 MAXVALUE 999999;
+CREATE SEQUENCE rdj_metodo_contrato_sec INCREMENT BY 1 START WITH 1 MAXVALUE 999999;
 
 /* tabla rdj_pedidos */
-CREATE SEQUENCE num_pedido_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999999;
+CREATE SEQUENCE rdj_pedido_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999999;
 
 /* tabla rdj_detalles_pedidos */
-CREATE SEQUENCE id_det_pedido_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999999;
+CREATE SEQUENCE rdj_det_pedido_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999999;
 
 /* tabla rdj_pagos */
-CREATE SEQUENCE num_pago_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999999;
+CREATE SEQUENCE rdj_pago_sec INCREMENT BY 1 START WITH 1 MAXVALUE 99999999;
+
+
+
+/*********************************** INDICES ***********************************/
+
+/* tabla rdj_paises */
+CREATE INDEX rdj_asoc_pais_ind ON rdj_paises (id_asociacion);
+
+/* tabla rdj_proveedores */
+CREATE INDEX rdj_asoc_prov_ind ON rdj_proveedores (id_asociacion);
+
+/* tabla rdj_productores */
+CREATE INDEX rdj_asoc_prod_ind ON rdj_productores (id_asociacion);
+
+/* tabla rdj_miembros_ifra */
+CREATE INDEX rdj_prov_membresia_ind ON rdj_miembros_ifra (id_proveedor);
+CREATE INDEX rdj_prod_membresia_ind ON rdj_miembros_ifra (id_productor);
+
+/* tabla rdj_perfumistas */
+CREATE INDEX rdj_pais_perfumista_ind ON rdj_perfumistas (id_pais);
+
+/* tabla rdj_perfumes */
+CREATE INDEX rdj_prod_perfume_ind ON rdj_perfumes (id_productor);
+
+/* tabla rdj_otros_ingredientes */
+CREATE INDEX rdj_prov_otroing_ind ON rdj_otros_ingredientes (id_proveedor);
+
+/* tabla rdj_ingredientes_esencias */
+CREATE INDEX rdj_prov_ingesen_ind ON rdj_ingredientes_esencias (id_proveedor);
+
+/* tabla rdj_detalles_contratos */
+CREATE INDEX rdj_cas_otro_ind ON rdj_detalles_contratos (cas_otro_ing);
+CREATE INDEX rdj_cas_esen_ind ON rdj_detalles_contratos (cas_ing_esencia);
+
+/* tabla rdj_metodos_contratos */
+CREATE INDEX rdj_pago_metco_ind ON rdj_metodos_contratos (id_pago,id_prov_pago);
+CREATE INDEX rdj_envio_metco_ind ON rdj_metodos_contratos (id_envio,id_prov_envio,id_pais_envio);
+
+/* tabla rdj_pedidos */
+CREATE INDEX rdj_prov_pedido_ind ON rdj_pedidos (id_proveedor);
+CREATE INDEX rdj_prod_pedido_ind ON rdj_pedidos (id_productor);
+CREATE INDEX rdj_envio_pedido_ind ON rdj_pedidos (id_envio,fecha_ap_envio,id_prod_envio,id_prov_envio);
+CREATE INDEX rdj_pago_pedido_ind ON rdj_pedidos (id_pago,fecha_ap_pago,id_prod_pago,id_prov_pago);
+
+/* tabla rdj_detalles_pedidos */
+CREATE INDEX rdj_esencia_detped_ind ON rdj_detalles_pedidos (id_pres_esencia,cas_esencia);
+CREATE INDEX rdj_otro_detped_ind ON rdj_detalles_pedidos (id_pres_otro,cas_otro);
+
+
+
+/****************************** VISTAS *************************************/
+
+/* Vista para ver los metodos de envios de los proveedores */
+CREATE VIEW rdj_vista_metenvio (proveedor,pais,duracion,precio,tipo) AS 
+SELECT p.nombre, pa.nombre, to_char(m.duracion,'999') || ' dias', m.precio || ' $', 
+CASE WHEN m.tipo = 't' THEN 'terrestre' WHEN m.tipo = 'm' THEN 'maritimo' ELSE 'aereo' END
+FROM rdj_proveedores p, rdj_paises pa, rdj_metodos_envios m WHERE p.id=m.id_proveedor AND pa.id=m.id_pais
+ORDER BY p.nombre,pa.nombre;
+
+/* Vista para ver los metodos de pago de los proveedores */
+CREATE VIEW rdj_vista_metpago (proveedor,tipo,numero_cuotas, pago_cada_x_meses) AS
+SELECT p.nombre, CASE WHEN m.tipo = 'c' THEN 'completo' ELSE 'parcial' END,
+COALESCE(to_char(m.num_cuotas,'9'),'N/A'), COALESCE(to_char(m.porcentaje,'999'),'N/A'),
+COALESCE(to_char(m.meses,'99'),'N/A') FROM rdj_metodos_pagos m, rdj_proveedores p 
+WHERE p.id=m.id_proveedor ORDER BY p.nombre,m.tipo;
+
+/* Vista para ver proveedores con su asociacion respectiva y su membresia ifra */
+CREATE VIEW rdj_vista_prov (proveedor,fecha_inicio,fecha_fin,asociacion,pais_asociacion) AS
+SELECT prov.nombre, to_char(m.fecha_inicio,'dd-mm-yyyy'), COALESCE(to_char(m.fecha_fin,'dd-mm-yyyy'),'vigente'), 
+COALESCE(a.nombre,'N/A'), COALESCE(pa.nombre,'N/A') FROM rdj_miembros_ifra m, rdj_proveedores prov 
+LEFT OUTER JOIN rdj_asociaciones a ON a.id=prov.id_asociacion LEFT OUTER JOIN rdj_paises pa 
+ON pa.id_asociacion=a.id WHERE m.id_proveedor=prov.id ORDER BY m.fecha_inicio;
+
+/* Vista para ver detalles de metodos de envios */
+CREATE VIEW rdj_vista_detenvio (proveedor,pais,id_envio,modificador,tipo,precio,duracion) AS
+SELECT pr.nombre, pa.nombre, m.id, det.nombre, 
+CASE WHEN m.tipo = 't' THEN 'terrestre' WHEN m.tipo = 'm' THEN 'maritimo' ELSE 'aereo' END,
+det.mod_precio || ' $', det.mod_duracion || ' dias' FROM rdj_proveedores pr, rdj_paises pa, 
+rdj_detalles_metodos_envios det, rdj_metodos_envios m WHERE pr.id=det.id_proveedor AND 
+pa.id=det.id_pais AND m.id=det.id_envio ORDER BY pr.nombre,pa.nombre,m.tipo;
+
+/* Vista para ver las esencias de perfumes y las familias que tiene */
+CREATE VIEW rdj_vista_esenciasperfume (cas,esencia,tipo,familia) AS
+SELECT es.num_cas, es.nombre, CASE WHEN es.tipo = 'n' THEN 'natural' ELSE 'sintetico' END,
+fa.nombre FROM rdj_esencias_perfumes es, rdj_familias_olfativas fa, rdj_esencias_perfumes_familias ef 
+WHERE ef.id_familia=fa.id AND ef.cas_esencia=es.num_cas ORDER BY es.nombre;
+
+/* Vista para ver las notas por fases de los perfumes */
+CREATE VIEW rdj_vista_notasfases (perfume,esencia,tipo) AS
+SELECT pe.nombre, es.nombre, CASE WHEN n.tipo = 's' THEN 'salida' WHEN n.tipo = 'c' 
+THEN 'corazon' WHEN n.tipo = 'f' THEN 'fondo' END FROM rdj_esencias_perfumes es, 
+rdj_perfumes pe, rdj_notas n WHERE pe.id=n.id_perfume AND es.num_cas=n.cas_esencia ORDER BY pe.nombre,n.tipo;
+
+/* Vista para ver las notas monoliticas de los perfumes */
+CREATE VIEW rdj_vista_notasmono (perfume,esencia) AS
+SELECT pe.nombre, es.nombre FROM rdj_esencias_perfumes es, 
+rdj_perfumes pe, rdj_monoliticos m WHERE pe.id=m.id_perfume 
+AND es.num_cas=m.cas_esencia ORDER BY pe.nombre;
+
+/* Vista para ver las palabras claves de las familias */
+CREATE VIEW rdj_vista_palclave (familia,palabra) AS
+SELECT fa.nombre, pa.palabra FROM rdj_familias_olfativas fa, 
+rdj_palabras_claves pa, rdj_familias_palabras fp
+WHERE fp.id_familia=fa.id AND fp.id_palabra=pa.id ORDER BY fa.id;
