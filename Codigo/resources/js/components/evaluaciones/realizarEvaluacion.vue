@@ -568,6 +568,10 @@
         <!-- Resultados inicial -->
         <span v-if="tipoEv === 'resultadoInic'">
             <div class="row h5 justify-content-center"> 
+                <b> Evaluación Inicial </b> 
+            </div>
+            <hr>
+            <div class="row h5 justify-content-center"> 
                 <b> Proveedor Evaluado: </b> 
                 <span class="ml-1"> {{ resultadoInicial["prov"] }} </span>
             </div>
@@ -601,7 +605,7 @@
             <span v-else>
                 <div class="row h4 justify-content-center">
                     <img src="/img/iconos/cancel_red.svg" width="32">
-                    <b class="ml-1"> Reprobado </b> 
+                    <b class="ml-1 mt-1"> Reprobado </b> 
                 </div>
                 <div class="row justify-content-center">
                     <a href="realizar" class="btn btn-primary"> 
@@ -614,6 +618,10 @@
 
         <!-- Resultados anual -->
         <span v-if="tipoEv === 'resultadoAnual'">
+            <div class="row h5 justify-content-center"> 
+                <b> Evaluación Anual </b> 
+            </div>
+            <hr>
             <div class="row h5 justify-content-center"> 
                 <b> Proveedor Evaluado: </b> 
                 <span class="ml-1"> {{ resultadoAnual["prov"] }} </span>
@@ -673,7 +681,7 @@
             <span v-else>
                 <div class="row h4 justify-content-center">
                     <img src="/img/iconos/cancel_red.svg" width="32">
-                    <b class="ml-1"> Reprobado </b> 
+                    <b class="ml-1 mt-1"> Reprobado </b> 
                 </div>
                 <div class="row justify-content-center">
                     <a href="realizar" class="btn btn-primary"> 

@@ -2630,6 +2630,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["csrf"],
   data: function data() {
@@ -41400,6 +41408,10 @@ var render = function() {
     _vm._v(" "),
     _vm.tipoEv === "resultadoInic"
       ? _c("span", [
+          _vm._m(37),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
           _c("div", { staticClass: "row h5 justify-content-center" }, [
             _c("b", [_vm._v(" Proveedor Evaluado: ")]),
             _vm._v(" "),
@@ -41427,18 +41439,22 @@ var render = function() {
           parseInt(_vm.resultadoInicial["res"]) >=
           parseInt(_vm.resultadoInicial["exito"])
             ? _c("span", { staticClass: "mt-4" }, [
-                _vm._m(37),
-                _vm._v(" "),
                 _vm._m(38),
                 _vm._v(" "),
-                _vm._m(39)
+                _vm._m(39),
+                _vm._v(" "),
+                _vm._m(40)
               ])
-            : _c("span", [_vm._m(40), _vm._v(" "), _vm._m(41)])
+            : _c("span", [_vm._m(41), _vm._v(" "), _vm._m(42)])
         ])
       : _vm._e(),
     _vm._v(" "),
     _vm.tipoEv === "resultadoAnual"
       ? _c("span", [
+          _vm._m(43),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
           _c("div", { staticClass: "row h5 justify-content-center" }, [
             _c("b", [_vm._v(" Proveedor Evaluado: ")]),
             _vm._v(" "),
@@ -41465,7 +41481,7 @@ var render = function() {
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
-          _vm._m(42),
+          _vm._m(44),
           _vm._v(" "),
           _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
             _c("li", [
@@ -41524,13 +41540,13 @@ var render = function() {
           parseInt(_vm.resultadoAnual["res"]) >=
           parseInt(_vm.resultadoAnual["exito"])
             ? _c("span", { staticClass: "mt-4" }, [
-                _vm._m(43),
+                _vm._m(45),
                 _vm._v(" "),
-                _vm._m(44),
+                _vm._m(46),
                 _vm._v(" "),
-                _vm._m(45)
+                _vm._m(47)
               ])
-            : _c("span", [_vm._m(46), _vm._v(" "), _vm._m(47)])
+            : _c("span", [_vm._m(48), _vm._v(" "), _vm._m(49)])
         ])
       : _vm._e()
   ])
@@ -41988,6 +42004,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row h5 justify-content-center" }, [
+      _c("b", [_vm._v(" Evaluación Inicial ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row h4 justify-content-center" }, [
       _c("img", { attrs: { src: "/img/iconos/check_green.svg", width: "32" } }),
       _vm._v(" "),
@@ -42037,7 +42061,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row h4 justify-content-center" }, [
       _c("img", { attrs: { src: "/img/iconos/cancel_red.svg", width: "32" } }),
       _vm._v(" "),
-      _c("b", { staticClass: "ml-1" }, [_vm._v(" Reprobado ")])
+      _c("b", { staticClass: "ml-1 mt-1" }, [_vm._v(" Reprobado ")])
     ])
   },
   function() {
@@ -42055,6 +42079,14 @@ var staticRenderFns = [
           _vm._v(" Realizar otra evaluacion ")
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row h5 justify-content-center" }, [
+      _c("b", [_vm._v(" Evaluación Anual ")])
     ])
   },
   function() {
@@ -42118,7 +42150,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row h4 justify-content-center" }, [
       _c("img", { attrs: { src: "/img/iconos/cancel_red.svg", width: "32" } }),
       _vm._v(" "),
-      _c("b", { staticClass: "ml-1" }, [_vm._v(" Reprobado ")])
+      _c("b", { staticClass: "ml-1 mt-1" }, [_vm._v(" Reprobado ")])
     ])
   },
   function() {
