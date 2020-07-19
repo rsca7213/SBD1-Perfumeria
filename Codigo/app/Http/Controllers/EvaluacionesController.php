@@ -347,6 +347,133 @@ class EvaluacionesController extends Controller
         return response([$prov],200);
     }
 
+    // Funcion encargada de buscar toda la data necesaria para evaluaciones anuales
+    public function dataProveedoresAnual ($id_prod, $id_prov) {
+
+        //Busqueda de todos los paises donde quiere recibir el productor para filtrar los metodos de envio
+        $paises_prod = DB::select(DB::raw("SELECT id_pais FROM rdj_productores_paises
+        WHERE id_productor=? ORDER BY id_pais"),[$id_prod]);
+
+        $prov = []; //Variable donde se almacenan los datos a responder de la solicitud HTTP
+
+        //Busqueda de información basica del proveedor
+        $query = DB::select(
+            DB::raw("SELECT pr.id AS idp, pr.nombre AS prov, pa.nombre AS pais FROM 
+                rdj_paises pa, rdj_proveedores pr WHERE pa.id=pr.id_pais AND pr.id=?"),
+                [$id_prov]);
+
+        //Almacenamiento de la info basica en aux
+        $prov["idp"] = $query[0]->idp;
+        $prov["prov"] = $query[0]->prov;
+        $prov["pais"] = $query[0]->pais;
+            
+        //Busqueda de los metodos de pago del proveedor
+        $query = DB::select(
+            DB::raw("SELECT CASE WHEN pa.tipo='c' THEN 'Cuota única' WHEN pa.tipo='p'
+            THEN 'Por cuotas' END AS tipo, pa.num_cuotas AS numc, pa.porcentaje AS porc,
+            pa.meses AS meses, pa.id FROM rdj_metodos_pagos pa WHERE pa.id_proveedor=?"),
+            [$prov["idp"]]);
+            
+        //Almacenamiento de arreglo de metodos de pagos del proveedor
+        $prov["pagos"] = $query;
+
+        //Para los metodos de envio, creamos un arreglo ya que pueden ser varios
+        $prov["envios"] = [];
+        foreach($paises_prod as $pais) { //Para cada pais del productor buscamos si hay metodo de envio
+
+            $query = DB::select(
+                DB::raw("SELECT e.duracion, e.precio, e.id AS id_envio, p.id AS id_pais, p.nombre AS pais,
+                CASE WHEN e.tipo='t' THEN 'Terrestre' WHEN e.tipo='a' THEN 'Aéreo'
+                WHEN e.tipo='m' THEN 'Marítimo' END AS tipo FROM rdj_paises p,
+                rdj_metodos_envios e WHERE e.id_pais=? AND e.id_proveedor=?
+                AND e.id_pais=p.id ORDER BY e.id_pais"),[$pais->id_pais, $prov["idp"]]);
+
+            //Agregamos al arreglo si conseguimos un metodo de envio para el pais
+            //como pueden haber varios metodos de envio con el mismo pais necesitamos
+            //hacer otro foreach
+            if($query != []) {
+                foreach($query as $met) {
+                    $metodo = [];
+                    $metodo["detalles"] = [];
+                    $metodo["id_envio"] = $met->id_envio;
+                    $metodo["id_pais"] = $met->id_pais;
+                    $metodo["duracion"] = $met->duracion;
+                    $metodo["precio"] = $met->precio;
+                    $metodo["pais"] = $met->pais;
+                    $metodo["tipo"] = $met->tipo;
+                    array_push($prov["envios"],$metodo);
+                }
+            }
+        }
+
+        //Para los detalles o modificadores de los metodos de envios conseguidos
+        for($i = 0; $i <= sizeof($prov["envios"]) - 1; $i++) {
+            //Busqueda de los detalles de un metodo de envio
+            $query = DB::select(
+                DB::raw("SELECT d.id, d.nombre AS det, d.mod_precio AS precio, d.mod_duracion AS duracion
+                FROM rdj_detalles_metodos_envios d WHERE d.id_envio=? AND d.id_proveedor=?
+                AND d.id_pais=?"),[$prov["envios"][$i]["id_envio"], $id_prov, $prov["envios"][$i]["id_pais"]]
+            );
+            //Agregamos al arreglo si conseguimos un detalle de envio para el metodo
+            //como pueden haber varios detalles de envio con el mismo metodo necesitamos
+            //hacer otro foreach
+            if($query != []) {
+                foreach($query as $det) {
+                    $detalle = [];
+                    $detalle["id"] = $det->id;
+                    $detalle["det"] = $det->det;
+                    $detalle["precio"] = $det->precio;
+                    $detalle["duracion"] = $det->duracion;
+                    array_push($prov["envios"][$i]["detalles"],$detalle);
+                }
+            }          
+        }
+
+        /* Buscamos todas las esencias del proveedor y las guardamos */
+        $prov["esencias"] = $query = DB::select(
+            DB::raw("SELECT e.cas_ing_esencia AS cas, e.nombre AS ing, CASE WHEN
+            e.naturaleza='n' THEN 'natural' WHEN e.naturaleza='s' THEN 'sintetica' END
+            AS tipo FROM rdj_ingredientes_esencias e WHERE e.id_proveedor=? 
+            ORDER BY e.cas_ing_esencia"), 
+           [$id_prov]);
+         
+        /* Buscamos todos los otros ingredientes del proveedor y los guardamos */
+        $prov["otros"] = $query = DB::select(
+                    DB::raw("SELECT o.cas_otro_ing AS cas, o.nombre AS ing
+                    FROM rdj_otros_ingredientes o WHERE o.id_proveedor=? 
+                    ORDER BY o.cas_otro_ing"), 
+                   [$id_prov]);
+        
+        /* Buscamos las presentaciones de cada esencia y las guardamos */
+        foreach($prov["esencias"] as $esen) {
+            $query = DB::select(
+                      DB::raw("SELECT p.id, p.volumen AS vol, p.precio
+                      FROM rdj_presents_ings_esencias p WHERE p.cas_ing_esencia=?
+                      ORDER BY p.id"),
+                     [$esen->cas]);
+            $esen->cas = Controller::stringifyCas($esen->cas);
+            $esen->pres = $query;
+        }
+    
+        /* Buscamos las presentaciones de cada otro ing y las guardamos */
+        foreach($prov["otros"] as $otro) {
+            $query = DB::select(
+                      DB::raw("SELECT p.id, p.volumen AS vol, p.precio
+                      FROM rdj_present_otros_ings p WHERE p.cas_otro_ing=?
+                      ORDER BY p.id"),
+                     [$otro->cas]);
+            $otro->cas = Controller::stringifyCas($otro->cas);
+            $otro->pres = $query;
+        }
+
+        $prov["pedidosCump"] = 0;
+        $prov["pedidosRec"] = 0;
+
+    
+        //Devolvemos a la interfaz la data necesaria para continuar
+        return response([$prov],200);
+    }
+
     /*Funcion que recibe el proveedor evaluado en una evalucion inicial, y tambien
       recibe los puntajes que obtuvo para almacenarlos en la bd */
     public function guardarInicial(Request $request, $id_prod) {
@@ -387,6 +514,80 @@ class EvaluacionesController extends Controller
         DB::insert(DB::raw("INSERT INTO rdj_resultados(fecha,id_productor,id_proveedor,resultado,tipo) VALUES
                    (?,?,?,?,'i')"),[$time,$id_prod,$data['idp'],$resultado]);
 
-        return redirect('/productor/'.$id_prod.'/evaluaciones');
+        $prov = DB::select(DB::raw("SELECT nombre FROM rdj_proveedores WHERE id=?"),[$data['idp']])[0]->nombre;
+
+        $respuesta = [];
+        $respuesta["res"] = $resultado;
+        $respuesta["exito"] = $formInicial[3]->peso;
+        $respuesta["id_prod"] = $id_prod;
+        $respuesta["id_prov"] = $data['idp'];
+        $respuesta["prov"] = $prov;
+
+        return response([$respuesta],201);
+    }
+
+    /*Funcion que recibe el proveedor evaluado en una evalucion anual, y tambien
+      recibe los puntajes que obtuvo para almacenarlos en la bd */
+      public function guardarAnual(Request $request, $id_prod) {
+
+        //Pequeña validacion back end
+        $data = $request->validate([
+            'idp' => 'numeric|required',
+            'anualUbic' => 'numeric|required',
+            'anualPago' => 'numeric|required',
+            'anualEnvio' => 'numeric|required',
+            'anualCump' => 'numeric|required',
+            'fechaA' => 'required',
+            'fechaR' => 'required',
+            'ex' => 'required',
+            'exp' => 'required',   
+            'renov' => 'required'        
+        ]);
+
+        /* Buscamos la formula anual del productor */
+        $formAnual = DB::select(
+            DB::raw("SELECT c.nombre, h.peso, MAX(h.fecha_inicio) AS fecha 
+              FROM rdj_criterios c, rdj_hist_formulas h, rdj_productores p 
+              WHERE c.id=h.id_criterio AND h.id_productor=? AND h.tipo='a' 
+              AND h.fecha_fin IS NULL GROUP BY c.id, c.nombre, c.descripcion, 
+              h.peso, h.id_productor ORDER BY c.id"),
+           [$id_prod]);
+
+        /* Buscamos la escala actual del productor */
+        $escala = DB::select(
+            DB::raw("SELECT MAX(e.fecha_inicio) AS fecha,
+               e.rango_inicio AS ri, e.rango_fin AS rf FROM rdj_escalas e, rdj_productores p
+               WHERE e.id_productor=? AND e.fecha_fin IS NULL
+               GROUP BY e.rango_inicio, e.rango_fin;"),
+           [$id_prod]);
+
+        if(sizeof($escala) == 0 || sizeof($formAnual)  != 5) return back();
+        else $escala = $escala[0];
+        
+        $resultado = (($data['anualUbic'] * $formAnual[0]->peso) / ($escala->rf)) +
+                     (($data['anualPago'] * $formAnual[1]->peso) / ($escala->rf)) +
+                     (($data['anualEnvio'] * $formAnual[2]->peso) / ($escala->rf)) +
+                     (($data['anualCump'] * $formAnual[3]->peso) / ($escala->rf));
+
+        $time = Carbon::now()->toDateTimeString();
+
+        DB::insert(DB::raw("INSERT INTO rdj_resultados(fecha,id_productor,id_proveedor,resultado,tipo) VALUES
+                   (?,?,?,?,'a')"),[$time,$id_prod,$data['idp'],$resultado]);
+
+        $prov = DB::select(DB::raw("SELECT nombre FROM rdj_proveedores WHERE id=?"),[$data['idp']])[0]->nombre;
+
+        $respuesta = [];
+        $respuesta["res"] = $resultado;
+        $respuesta["exito"] = $formAnual[4]->peso;
+        $respuesta["id_prod"] = $id_prod;
+        $respuesta["id_prov"] = $data['idp'];
+        $respuesta["prov"] = $prov;
+        $respuesta["fechaA"] = $data['fechaA'];
+        $respuesta["fechaR"] = $data['fechaR'];
+        $respuesta["ex"] = $data['ex'];
+        $respuesta["exp"] = $data['exp'];
+        $respuesta["renov"] = $data['renov'];
+
+        return response([$respuesta],201);
     }
 }

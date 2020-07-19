@@ -2304,6 +2304,332 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["csrf"],
   data: function data() {
@@ -2338,10 +2664,18 @@ __webpack_require__.r(__webpack_exports__);
 
       /*arreglo que contiene los resultados que se van asignando
       a los proveedores en la evaluacion inicial */
+      provAnualRes: [0, 0, 0, 0],
+
+      /*arreglo que contiene los resultados que se van asignando
+         a los proveedores en la evaluacion anual */
       provInicData: [],
 
       /*arreglo que contiene la data que devuelve laravel
          para la evaluacion inicial del proveedor */
+      provAnualData: [],
+
+      /*arreglo que contiene la data que devuelve laravel
+        para la evaluacion anual del proveedor */
       formInic: [],
 
       /* Formula de evaluacion inicial del productor */
@@ -2355,9 +2689,17 @@ __webpack_require__.r(__webpack_exports__);
 
       /* Variable auxiliar que determina la posicion del arreglo de 
         metodos de envio que se quiere detallar */
-      indexProducto: ['e', 0]
+      indexProducto: ['e', 0],
+
       /* Variable auxiliar que determina la posicion del arreglo
       de producto y que tipo de producto es para rellenar el modal */
+      resultadoInicial: [],
+
+      /* Variable que almacena los resultados que devuelve laravel
+         luego de insertar los datos del resultado de la ev inicial */
+      resultadoAnual: []
+      /* Variable que almacena los resultados que devuelve laravel
+           luego de insertar los datos del resultado de la ev anual */
 
     };
   },
@@ -2455,7 +2797,17 @@ __webpack_require__.r(__webpack_exports__);
        llevar a cabo una evaluacion anual, envia la id del proveedor
        del cual necesita data */
     dataAnual: function dataAnual(idp) {
-      console.log('no implementado');
+      var _this5 = this;
+
+      console.log("%cAxios: Get! Buscando data para ev anual", "color: lightblue");
+      axios.get("data/anual/" + idp).then(function (response) {
+        console.log("%cAxios: Success!", "color: lightgreen");
+        _this5.provAnualData = response.data[0];
+        _this5.tipoEv = "anualStart";
+      })["catch"](function (errors) {
+        console.log("%cAxios: Error!", "color: #FFCCCB");
+        console.log(errors);
+      });
     },
 
     /* Determina que metodo de envio detallar en el modal */
@@ -2466,6 +2818,54 @@ __webpack_require__.r(__webpack_exports__);
     /* Determina que producto detallar en el modal */
     rellenarModalDetProducto: function rellenarModalDetProducto(tipo, num) {
       this.indexProducto = [tipo, num];
+    },
+    enviarInic: function enviarInic(idp) {
+      var _this6 = this;
+
+      console.log("%cAxios: Enviando resultados de ev. inicial", "color: lightblue");
+      axios.post("inicial", {
+        'idp': idp,
+        'inicUbic': this.provInicRes[0],
+        'inicPago': this.provInicRes[1],
+        'inicEnvio': this.provInicRes[2]
+      }).then(function (response) {
+        console.log("%cAxios: Post!", "color: lightgreen");
+        _this6.tipoEv = 'resultadoInic';
+        _this6.resultadoInicial = response.data[0];
+      })["catch"](function (errors) {
+        console.log("%cAxios: Error!", "color: #FFCCCB");
+        console.log(errors);
+      });
+    },
+    enviarAnual: function enviarAnual(idp) {
+      var _this7 = this;
+
+      var i = 0;
+
+      for (i = 0; i <= this.provsAnual.length - 1; i++) {
+        if (this.provsAnual[i].idp == idp) break;
+      }
+
+      console.log("%cAxios: Enviando resultados de ev. anual", "color: lightblue");
+      axios.post("anual", {
+        'idp': idp,
+        'anualUbic': this.provAnualRes[0],
+        'anualPago': this.provAnualRes[1],
+        'anualEnvio': this.provAnualRes[2],
+        'anualCump': this.provAnualRes[3],
+        'fechaA': this.provsAnual[i].fecha,
+        'fechaR': this.provsAnual[i].fechaR,
+        'ex': this.provsAnual[i].ex,
+        'exp': this.provsAnual[i].exp,
+        'renov': this.provsAnual[i].renov
+      }).then(function (response) {
+        console.log("%cAxios: Post!", "color: lightgreen");
+        _this7.tipoEv = 'resultadoAnual';
+        _this7.resultadoAnual = response.data[0];
+      })["catch"](function (errors) {
+        console.log("%cAxios: Error!", "color: #FFCCCB");
+        console.log(errors);
+      });
     }
   },
   computed: {
@@ -2494,6 +2894,36 @@ __webpack_require__.r(__webpack_exports__);
       if (this.inicUbicErr != "" || this.inicPagoErr != "" || this.inicEnvioErr != "") {
         return "disabled";
       } else return null;
+    },
+    anualUbicErr: function anualUbicErr() {
+      if (this.provAnualRes[0] < parseInt(this.escala["ri"]) || this.provAnualRes[0] > parseInt(this.escala["rf"])) {
+        return "is-invalid";
+      } else return "";
+    },
+    anualPagoErr: function anualPagoErr() {
+      if (this.provAnualRes[1] < parseInt(this.escala["ri"]) || this.provAnualRes[1] > parseInt(this.escala["rf"])) {
+        return "is-invalid";
+      } else return "";
+    },
+    anualEnvioErr: function anualEnvioErr() {
+      if (this.provAnualRes[2] < parseInt(this.escala["ri"]) || this.provAnualRes[2] > parseInt(this.escala["rf"])) {
+        return "is-invalid";
+      } else return "";
+    },
+    anualCumpErr: function anualCumpErr() {
+      if (this.provAnualRes[3] < parseInt(this.escala["ri"]) || this.provAnualRes[3] > parseInt(this.escala["rf"])) {
+        return "is-invalid";
+      } else return "";
+    },
+    anualFinalizarErr: function anualFinalizarErr() {
+      if (this.anualUbicErr != "" || this.anualPagoErr != "" || this.anualEnvioErr != "" || this.anualCumpErr != "") {
+        return "btn-danger";
+      } else return "";
+    },
+    anualFinalizarDis: function anualFinalizarDis() {
+      if (this.anualUbicErr != "" || this.anualPagoErr != "" || this.anualEnvioErr != "" || this.anualCumpErr != "") {
+        return "disabled";
+      } else return null;
     }
   }
 });
@@ -2509,21 +2939,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -39336,583 +39751,1408 @@ var render = function() {
     _vm._v(" "),
     _vm.tipoEv === "inicialStart"
       ? _c("span", [
-          _c("form", { attrs: { action: "inicial", method: "POST" } }, [
-            _c("div", { staticClass: "row d-flex justify-content-center" }, [
-              _c("span", { staticClass: "h5 col-12 text-center" }, [
-                _c("b", [_vm._v(" Proveedor: ")]),
-                _vm._v(" " + _vm._s(_vm.provInicData["prov"]) + " ")
+          _c(
+            "form",
+            {
+              attrs: { action: "inicial", method: "POST" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.enviarInic(_vm.provInicData["idp"])
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "row d-flex justify-content-center" }, [
+                _c("span", { staticClass: "h5 col-12 text-center" }, [
+                  _c("b", [_vm._v(" Proveedor: ")]),
+                  _vm._v(" " + _vm._s(_vm.provInicData["prov"]) + " ")
+                ]),
+                _vm._v(" "),
+                _vm._m(11),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-12" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-striped border border-info" },
+                    [
+                      _vm._m(12),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        [
+                          _vm._l(_vm.provInicData["esencias"], function(
+                            esen,
+                            index
+                          ) {
+                            return _c("tr", { key: esen.cas }, [
+                              _c("td", { staticClass: " p-1 m-0 pl-2" }, [
+                                _vm._v(" " + _vm._s(esen["cas"]) + " ")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "p-1 m-0" }, [
+                                _vm._v(" " + _vm._s(esen["ing"]) + " ")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "p-1 m-0" }, [
+                                _vm._v(" Esencia " + _vm._s(esen["tipo"]) + " ")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-center p-1 m-0" }, [
+                                _c("img", {
+                                  staticClass: "iconobtn",
+                                  attrs: {
+                                    src: "/img/iconos/list.svg",
+                                    alt: "ver",
+                                    width: "24",
+                                    "data-toggle": "modal",
+                                    "data-target": "#modalInicDetProducto"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.rellenarModalDetProducto(
+                                        "e",
+                                        index
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ])
+                          }),
+                          _vm._v(" "),
+                          _vm._l(_vm.provInicData["otros"], function(
+                            otro,
+                            index
+                          ) {
+                            return _c("tr", { key: otro.cas }, [
+                              _c("td", { staticClass: " p-1 m-0 pl-2" }, [
+                                _vm._v(" " + _vm._s(otro["cas"]) + " ")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "p-1 m-0" }, [
+                                _vm._v(" " + _vm._s(otro["ing"]) + " ")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "p-1 m-0" }, [
+                                _vm._v(" Componente ")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-center p-1 m-0" }, [
+                                _c("img", {
+                                  staticClass: "iconobtn",
+                                  attrs: {
+                                    src: "/img/iconos/list.svg",
+                                    alt: "ver",
+                                    width: "24",
+                                    "data-toggle": "modal",
+                                    "data-target": "#modalInicDetProducto"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.rellenarModalDetProducto(
+                                        "o",
+                                        index
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    ]
+                  )
+                ])
               ]),
               _vm._v(" "),
-              _vm._m(11),
+              _c("hr", { staticClass: "py-0 my-2" }),
               _vm._v(" "),
-              _c("div", { staticClass: "col-12" }, [
-                _c(
-                  "table",
-                  { staticClass: "table table-striped border border-info" },
-                  [
-                    _vm._m(12),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      [
-                        _vm._l(_vm.provInicData["esencias"], function(
-                          esen,
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center mx-4" },
+                [
+                  _c("span", { staticClass: "h5 col-12 text-center" }, [
+                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
+                    _vm._v(" " + _vm._s(_vm.formInic[0]["nombre"]) + " "),
+                    _c("b", [
+                      _vm._v(
+                        " \n                    (" +
+                          _vm._s(_vm.formInic[0]["peso"]) +
+                          " %) "
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-0 mb-2" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row d-flex justify-content-center mx-4" },
+                [
+                  _c(
+                    "table",
+                    { staticClass: "table table-striped mx-4 col-8" },
+                    [
+                      _c("thead", { staticClass: "text-center" }, [
+                        _c(
+                          "th",
+                          {
+                            staticClass:
+                              "bg-primary text-white border border-info",
+                            attrs: { scope: "col" }
+                          },
+                          [_vm._v(" Ubicación / Sede Principal ")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "th",
+                          {
+                            staticClass: "border border-info",
+                            staticStyle: { "background-color": "#E4E4E4" },
+                            attrs: { scope: "col" }
+                          },
+                          [_vm._v(" " + _vm._s(_vm.provInicData["pais"]) + " ")]
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "flex-row d-flex justify-content-center mx-4 align-items-center"
+                },
+                [
+                  _vm._m(13),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.number",
+                        value: _vm.provInicRes[0],
+                        expression: "provInicRes[0]",
+                        modifiers: { number: true }
+                      }
+                    ],
+                    staticClass: "form-control w-25",
+                    class: _vm.inicUbicErr,
+                    attrs: {
+                      type: "number",
+                      name: "inicUbic",
+                      min: _vm.escala.ri,
+                      max: _vm.escala.rf,
+                      id: "inicUbic"
+                    },
+                    domProps: { value: _vm.provInicRes[0] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.provInicRes,
+                          0,
+                          _vm._n($event.target.value)
+                        )
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "ml-2",
+                      staticStyle: { "font-size": "16px" }
+                    },
+                    [
+                      _c("b", [
+                        _vm._v(
+                          " (de " +
+                            _vm._s(_vm.escala.ri) +
+                            " a " +
+                            _vm._s(_vm.escala.rf) +
+                            ") "
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center" },
+                [
+                  _vm.inicUbicErr === "is-invalid"
+                    ? _c("span", [_vm._m(14)])
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-2" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center mx-4" },
+                [
+                  _c("span", { staticClass: "h5 col-12 text-center" }, [
+                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
+                    _vm._v(" " + _vm._s(_vm.formInic[1]["nombre"]) + " "),
+                    _c("b", [
+                      _vm._v(
+                        " \n                    (" +
+                          _vm._s(_vm.formInic[1]["peso"]) +
+                          " %) "
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-2" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row d-flex justify-content-center mx-4" },
+                [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-striped border border-info mx-4"
+                    },
+                    [
+                      _vm._m(15),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.provInicData["pagos"], function(pago) {
+                          return _c("tr", { key: pago.id }, [
+                            _c("td", [
+                              _vm._v(" " + _vm._s(pago["tipo"]) + " ")
+                            ]),
+                            _vm._v(" "),
+                            pago["numc"] != null
+                              ? _c("td", { staticClass: "text-center" }, [
+                                  pago["numc"] > 1
+                                    ? _c("span", [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(pago["numc"]) +
+                                            " cuotas "
+                                        )
+                                      ])
+                                    : _c("span", [_vm._v(" 1 cuota ")])
+                                ])
+                              : _c("td", { staticClass: "text-center" }, [
+                                  _vm._v(" N/A ")
+                                ]),
+                            _vm._v(" "),
+                            pago["porc"] != null
+                              ? _c("td", { staticClass: "text-center" }, [
+                                  _vm._v(" " + _vm._s(pago["porc"]) + " % ")
+                                ])
+                              : _c("td", { staticClass: "text-center" }, [
+                                  _vm._v(" N/A ")
+                                ]),
+                            _vm._v(" "),
+                            pago["meses"] != null
+                              ? _c("td", { staticClass: "text-center" }, [
+                                  pago["meses"] > 1
+                                    ? _c("span", [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(pago["meses"]) +
+                                            " meses "
+                                        )
+                                      ])
+                                    : _c("span", [_vm._v(" 1 mes ")])
+                                ])
+                              : _c("td", { staticClass: "text-center" }, [
+                                  _vm._v(" N/A ")
+                                ])
+                          ])
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "flex-row d-flex justify-content-center mx-4 align-items-center"
+                },
+                [
+                  _vm._m(16),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.number",
+                        value: _vm.provInicRes[1],
+                        expression: "provInicRes[1]",
+                        modifiers: { number: true }
+                      }
+                    ],
+                    staticClass: "form-control w-25",
+                    class: _vm.inicPagoErr,
+                    attrs: {
+                      type: "number",
+                      name: "inicPago",
+                      min: _vm.escala.ri,
+                      max: _vm.escala.rf,
+                      id: "inicPago"
+                    },
+                    domProps: { value: _vm.provInicRes[1] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.provInicRes,
+                          1,
+                          _vm._n($event.target.value)
+                        )
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "ml-2",
+                      staticStyle: { "font-size": "16px" }
+                    },
+                    [
+                      _c("b", [
+                        _vm._v(
+                          " (de " +
+                            _vm._s(_vm.escala.ri) +
+                            " a " +
+                            _vm._s(_vm.escala.rf) +
+                            ") "
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center" },
+                [
+                  _vm.inicPagoErr === "is-invalid"
+                    ? _c("span", [_vm._m(17)])
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-2" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center mx-4" },
+                [
+                  _c("span", { staticClass: "h5 col-12 text-center" }, [
+                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
+                    _vm._v(" " + _vm._s(_vm.formInic[2]["nombre"]) + " "),
+                    _c("b", [
+                      _vm._v(
+                        " \n                    (" +
+                          _vm._s(_vm.formInic[2]["peso"]) +
+                          " %) "
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-2" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row d-flex justify-content-center mx-4" },
+                [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-striped border border-info mx-4"
+                    },
+                    [
+                      _vm._m(18),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.provInicData["envios"], function(
+                          envio,
                           index
                         ) {
-                          return _c("tr", { key: esen.cas }, [
-                            _c("td", { staticClass: " p-1 m-0 pl-2" }, [
-                              _vm._v(" " + _vm._s(esen["cas"]) + " ")
+                          return _c("tr", { key: envio.id_envio }, [
+                            _c("td", [
+                              _vm._v(" " + _vm._s(envio["pais"]) + " ")
                             ]),
                             _vm._v(" "),
-                            _c("td", { staticClass: "p-1 m-0" }, [
-                              _vm._v(" " + _vm._s(esen["ing"]) + " ")
+                            _c("td", [
+                              _vm._v(" " + _vm._s(envio["tipo"]) + " ")
                             ]),
                             _vm._v(" "),
-                            _c("td", { staticClass: "p-1 m-0" }, [
-                              _vm._v(" Esencia " + _vm._s(esen["tipo"]) + " ")
+                            envio["duracion"] > 1
+                              ? _c("td", { staticClass: "text-right" }, [
+                                  _vm._v(
+                                    " " + _vm._s(envio["duracion"]) + " días "
+                                  )
+                                ])
+                              : _c("td", { staticClass: "text-right" }, [
+                                  _vm._v(" 1 día ")
+                                ]),
+                            _vm._v(" "),
+                            _c("td", { staticClass: "text-right" }, [
+                              _vm._v(" " + _vm._s(envio["precio"]) + " $ ")
                             ]),
                             _vm._v(" "),
-                            _c("td", { staticClass: "text-center p-1 m-0" }, [
+                            _c("td", { staticClass: "text-center" }, [
                               _c("img", {
                                 staticClass: "iconobtn",
                                 attrs: {
                                   src: "/img/iconos/list.svg",
-                                  alt: "ver",
+                                  alt: "expandir",
                                   width: "24",
                                   "data-toggle": "modal",
-                                  "data-target": "#modalInicDetProducto"
+                                  "data-target": "#modalInicDetEnvio"
                                 },
                                 on: {
                                   click: function($event) {
-                                    return _vm.rellenarModalDetProducto(
-                                      "e",
-                                      index
-                                    )
+                                    return _vm.rellenarModalDetEnvio(index)
                                   }
                                 }
                               })
                             ])
                           ])
                         }),
+                        0
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "flex-row d-flex justify-content-center mx-4 align-items-center"
+                },
+                [
+                  _vm._m(19),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.number",
+                        value: _vm.provInicRes[2],
+                        expression: "provInicRes[2]",
+                        modifiers: { number: true }
+                      }
+                    ],
+                    staticClass: "form-control w-25",
+                    class: _vm.inicEnvioErr,
+                    attrs: {
+                      type: "number",
+                      name: "inicEnvio",
+                      min: _vm.escala.ri,
+                      max: _vm.escala.rf,
+                      id: "inicEnvio"
+                    },
+                    domProps: { value: _vm.provInicRes[2] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.provInicRes,
+                          2,
+                          _vm._n($event.target.value)
+                        )
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "ml-2",
+                      staticStyle: { "font-size": "16px" }
+                    },
+                    [
+                      _c("b", [
+                        _vm._v(
+                          " (de " +
+                            _vm._s(_vm.escala.ri) +
+                            " a " +
+                            _vm._s(_vm.escala.rf) +
+                            ") "
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center" },
+                [
+                  _vm.inicEnvioErr === "is-invalid"
+                    ? _c("span", [_vm._m(20)])
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-2" }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: this.csrf }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "idp" },
+                domProps: { value: _vm.provInicData["idp"] }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row d-flex justify-content-center mt-2" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      class: _vm.inicFinalizarErr,
+                      attrs: { type: "submit", disabled: _vm.inicFinalizarDis }
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "mb-1",
+                        attrs: {
+                          src: "/img/iconos/check_white.svg",
+                          alt: "",
+                          width: "24"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "ml-2" }, [
+                        _vm._v(" Finalizar Evaluación ")
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipoEv === "anualStart"
+      ? _c("span", [
+          _c(
+            "form",
+            {
+              attrs: { action: "anual", method: "POST" },
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.enviarAnual(_vm.provAnualData["idp"])
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "row d-flex justify-content-center" }, [
+                _c("span", { staticClass: "h5 col-12 text-center" }, [
+                  _c("b", [_vm._v(" Proveedor: ")]),
+                  _vm._v(" " + _vm._s(_vm.provAnualData["prov"]) + " ")
+                ]),
+                _vm._v(" "),
+                _vm._m(21),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-12" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-striped border border-info" },
+                    [
+                      _vm._m(22),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        [
+                          _vm._l(_vm.provAnualData["esencias"], function(
+                            esen,
+                            index
+                          ) {
+                            return _c("tr", { key: esen.cas }, [
+                              _c("td", { staticClass: " p-1 m-0 pl-2" }, [
+                                _vm._v(" " + _vm._s(esen["cas"]) + " ")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "p-1 m-0" }, [
+                                _vm._v(" " + _vm._s(esen["ing"]) + " ")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "p-1 m-0" }, [
+                                _vm._v(" Esencia " + _vm._s(esen["tipo"]) + " ")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-center p-1 m-0" }, [
+                                _c("img", {
+                                  staticClass: "iconobtn",
+                                  attrs: {
+                                    src: "/img/iconos/list.svg",
+                                    alt: "ver",
+                                    width: "24",
+                                    "data-toggle": "modal",
+                                    "data-target": "#modalInicDetProducto"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.rellenarModalDetProducto(
+                                        "e",
+                                        index
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ])
+                          }),
+                          _vm._v(" "),
+                          _vm._l(_vm.provAnualData["otros"], function(
+                            otro,
+                            index
+                          ) {
+                            return _c("tr", { key: otro.cas }, [
+                              _c("td", { staticClass: " p-1 m-0 pl-2" }, [
+                                _vm._v(" " + _vm._s(otro["cas"]) + " ")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "p-1 m-0" }, [
+                                _vm._v(" " + _vm._s(otro["ing"]) + " ")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "p-1 m-0" }, [
+                                _vm._v(" Componente ")
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-center p-1 m-0" }, [
+                                _c("img", {
+                                  staticClass: "iconobtn",
+                                  attrs: {
+                                    src: "/img/iconos/list.svg",
+                                    alt: "ver",
+                                    width: "24",
+                                    "data-toggle": "modal",
+                                    "data-target": "#modalInicDetProducto"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.rellenarModalDetProducto(
+                                        "o",
+                                        index
+                                      )
+                                    }
+                                  }
+                                })
+                              ])
+                            ])
+                          })
+                        ],
+                        2
+                      )
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-2" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center mx-4" },
+                [
+                  _c("span", { staticClass: "h5 col-12 text-center" }, [
+                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
+                    _vm._v(" " + _vm._s(_vm.formAnual[0]["nombre"]) + " "),
+                    _c("b", [
+                      _vm._v(
+                        " \n                    (" +
+                          _vm._s(_vm.formAnual[0]["peso"]) +
+                          " %) "
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-0 mb-2" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row d-flex justify-content-center mx-4" },
+                [
+                  _c(
+                    "table",
+                    { staticClass: "table table-striped mx-4 col-8" },
+                    [
+                      _c("thead", { staticClass: "text-center" }, [
+                        _c(
+                          "th",
+                          {
+                            staticClass:
+                              "bg-primary text-white border border-info",
+                            attrs: { scope: "col" }
+                          },
+                          [_vm._v(" Ubicación / Sede Principal ")]
+                        ),
                         _vm._v(" "),
-                        _vm._l(_vm.provInicData["otros"], function(
-                          otro,
+                        _c(
+                          "th",
+                          {
+                            staticClass: "border border-info",
+                            staticStyle: { "background-color": "#E4E4E4" },
+                            attrs: { scope: "col" }
+                          },
+                          [
+                            _vm._v(
+                              " " + _vm._s(_vm.provAnualData["pais"]) + " "
+                            )
+                          ]
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "flex-row d-flex justify-content-center mx-4 align-items-center"
+                },
+                [
+                  _vm._m(23),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.number",
+                        value: _vm.provAnualRes[0],
+                        expression: "provAnualRes[0]",
+                        modifiers: { number: true }
+                      }
+                    ],
+                    staticClass: "form-control w-25",
+                    class: _vm.anualUbicErr,
+                    attrs: {
+                      type: "number",
+                      name: "anualUbic",
+                      min: _vm.escala.ri,
+                      max: _vm.escala.rf,
+                      id: "anualUbic"
+                    },
+                    domProps: { value: _vm.provAnualRes[0] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.provAnualRes,
+                          0,
+                          _vm._n($event.target.value)
+                        )
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "ml-2",
+                      staticStyle: { "font-size": "16px" }
+                    },
+                    [
+                      _c("b", [
+                        _vm._v(
+                          " (de " +
+                            _vm._s(_vm.escala.ri) +
+                            " a " +
+                            _vm._s(_vm.escala.rf) +
+                            ") "
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center" },
+                [
+                  _vm.anualUbicErr === "is-invalid"
+                    ? _c("span", [_vm._m(24)])
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-2" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center mx-4" },
+                [
+                  _c("span", { staticClass: "h5 col-12 text-center" }, [
+                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
+                    _vm._v(" " + _vm._s(_vm.formAnual[1]["nombre"]) + " "),
+                    _c("b", [
+                      _vm._v(
+                        " \n                    (" +
+                          _vm._s(_vm.formAnual[1]["peso"]) +
+                          " %) "
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-2" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row d-flex justify-content-center mx-4" },
+                [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-striped border border-info mx-4"
+                    },
+                    [
+                      _vm._m(25),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.provAnualData["pagos"], function(pago) {
+                          return _c("tr", { key: pago.id }, [
+                            _c("td", [
+                              _vm._v(" " + _vm._s(pago["tipo"]) + " ")
+                            ]),
+                            _vm._v(" "),
+                            pago["numc"] != null
+                              ? _c("td", { staticClass: "text-center" }, [
+                                  pago["numc"] > 1
+                                    ? _c("span", [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(pago["numc"]) +
+                                            " cuotas "
+                                        )
+                                      ])
+                                    : _c("span", [_vm._v(" 1 cuota ")])
+                                ])
+                              : _c("td", { staticClass: "text-center" }, [
+                                  _vm._v(" N/A ")
+                                ]),
+                            _vm._v(" "),
+                            pago["porc"] != null
+                              ? _c("td", { staticClass: "text-center" }, [
+                                  _vm._v(" " + _vm._s(pago["porc"]) + " % ")
+                                ])
+                              : _c("td", { staticClass: "text-center" }, [
+                                  _vm._v(" N/A ")
+                                ]),
+                            _vm._v(" "),
+                            pago["meses"] != null
+                              ? _c("td", { staticClass: "text-center" }, [
+                                  pago["meses"] > 1
+                                    ? _c("span", [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(pago["meses"]) +
+                                            " meses "
+                                        )
+                                      ])
+                                    : _c("span", [_vm._v(" 1 mes ")])
+                                ])
+                              : _c("td", { staticClass: "text-center" }, [
+                                  _vm._v(" N/A ")
+                                ])
+                          ])
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "flex-row d-flex justify-content-center mx-4 align-items-center"
+                },
+                [
+                  _vm._m(26),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.number",
+                        value: _vm.provAnualRes[1],
+                        expression: "provAnualRes[1]",
+                        modifiers: { number: true }
+                      }
+                    ],
+                    staticClass: "form-control w-25",
+                    class: _vm.anualPagoErr,
+                    attrs: {
+                      type: "number",
+                      name: "anualPago",
+                      min: _vm.escala.ri,
+                      max: _vm.escala.rf,
+                      id: "anualPago"
+                    },
+                    domProps: { value: _vm.provAnualRes[1] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.provAnualRes,
+                          1,
+                          _vm._n($event.target.value)
+                        )
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "ml-2",
+                      staticStyle: { "font-size": "16px" }
+                    },
+                    [
+                      _c("b", [
+                        _vm._v(
+                          " (de " +
+                            _vm._s(_vm.escala.ri) +
+                            " a " +
+                            _vm._s(_vm.escala.rf) +
+                            ") "
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center" },
+                [
+                  _vm.anualPagoErr === "is-invalid"
+                    ? _c("span", [_vm._m(27)])
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-2" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center mx-4" },
+                [
+                  _c("span", { staticClass: "h5 col-12 text-center" }, [
+                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
+                    _vm._v(" " + _vm._s(_vm.formAnual[2]["nombre"]) + " "),
+                    _c("b", [
+                      _vm._v(
+                        " \n                    (" +
+                          _vm._s(_vm.formAnual[2]["peso"]) +
+                          " %) "
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-2" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row d-flex justify-content-center mx-4" },
+                [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-striped border border-info mx-4"
+                    },
+                    [
+                      _vm._m(28),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.provAnualData["envios"], function(
+                          envio,
                           index
                         ) {
-                          return _c("tr", { key: otro.cas }, [
-                            _c("td", { staticClass: " p-1 m-0 pl-2" }, [
-                              _vm._v(" " + _vm._s(otro["cas"]) + " ")
+                          return _c("tr", { key: envio.id_envio }, [
+                            _c("td", [
+                              _vm._v(" " + _vm._s(envio["pais"]) + " ")
                             ]),
                             _vm._v(" "),
-                            _c("td", { staticClass: "p-1 m-0" }, [
-                              _vm._v(" " + _vm._s(otro["ing"]) + " ")
+                            _c("td", [
+                              _vm._v(" " + _vm._s(envio["tipo"]) + " ")
                             ]),
                             _vm._v(" "),
-                            _c("td", { staticClass: "p-1 m-0" }, [
-                              _vm._v(" Componente ")
+                            envio["duracion"] > 1
+                              ? _c("td", { staticClass: "text-right" }, [
+                                  _vm._v(
+                                    " " + _vm._s(envio["duracion"]) + " días "
+                                  )
+                                ])
+                              : _c("td", { staticClass: "text-right" }, [
+                                  _vm._v(" 1 día ")
+                                ]),
+                            _vm._v(" "),
+                            _c("td", { staticClass: "text-right" }, [
+                              _vm._v(" " + _vm._s(envio["precio"]) + " $ ")
                             ]),
                             _vm._v(" "),
-                            _c("td", { staticClass: "text-center p-1 m-0" }, [
+                            _c("td", { staticClass: "text-center" }, [
                               _c("img", {
                                 staticClass: "iconobtn",
                                 attrs: {
                                   src: "/img/iconos/list.svg",
-                                  alt: "ver",
+                                  alt: "expandir",
                                   width: "24",
                                   "data-toggle": "modal",
-                                  "data-target": "#modalInicDetProducto"
+                                  "data-target": "#modalInicDetEnvio"
                                 },
                                 on: {
                                   click: function($event) {
-                                    return _vm.rellenarModalDetProducto(
-                                      "o",
-                                      index
-                                    )
+                                    return _vm.rellenarModalDetEnvio(index)
                                   }
                                 }
                               })
                             ])
                           ])
-                        })
-                      ],
-                      2
-                    )
-                  ]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("hr", { staticClass: "py-0 my-2" }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "flex-row d-flex justify-content-center mx-4" },
-              [
-                _c("span", { staticClass: "h5 col-12 text-center" }, [
-                  _c("b", [_vm._v(" Criterio de Evaluación: ")]),
-                  _vm._v(" " + _vm._s(_vm.formInic[0]["nombre"]) + " "),
-                  _c("b", [
-                    _vm._v(
-                      " \n                    (" +
-                        _vm._s(_vm.formInic[0]["peso"]) +
-                        " %) "
-                    )
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("hr", { staticClass: "py-0 my-0 mb-2" }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "row d-flex justify-content-center mx-4" },
-              [
-                _c("table", { staticClass: "table table-striped mx-4 col-8" }, [
-                  _c("thead", { staticClass: "text-center" }, [
-                    _c(
-                      "th",
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "flex-row d-flex justify-content-center mx-4 align-items-center"
+                },
+                [
+                  _vm._m(29),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
                       {
-                        staticClass: "bg-primary text-white border border-info",
-                        attrs: { scope: "col" }
+                        name: "model",
+                        rawName: "v-model.number",
+                        value: _vm.provAnualRes[2],
+                        expression: "provAnualRes[2]",
+                        modifiers: { number: true }
+                      }
+                    ],
+                    staticClass: "form-control w-25",
+                    class: _vm.anualEnvioErr,
+                    attrs: {
+                      type: "number",
+                      name: "anualEnvio",
+                      min: _vm.escala.ri,
+                      max: _vm.escala.rf,
+                      id: "anualEnvio"
+                    },
+                    domProps: { value: _vm.provAnualRes[2] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.provAnualRes,
+                          2,
+                          _vm._n($event.target.value)
+                        )
                       },
-                      [_vm._v(" Ubicación / Sede Principal ")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "ml-2",
+                      staticStyle: { "font-size": "16px" }
+                    },
+                    [
+                      _c("b", [
+                        _vm._v(
+                          " (de " +
+                            _vm._s(_vm.escala.ri) +
+                            " a " +
+                            _vm._s(_vm.escala.rf) +
+                            ") "
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center" },
+                [
+                  _vm.anualEnvioErr === "is-invalid"
+                    ? _c("span", [_vm._m(30)])
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-2" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center mx-4" },
+                [
+                  _c("span", { staticClass: "h5 col-12 text-center" }, [
+                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
+                    _vm._v(" " + _vm._s(_vm.formAnual[3]["nombre"]) + " "),
+                    _c("b", [
+                      _vm._v(
+                        " \n                    (" +
+                          _vm._s(_vm.formAnual[3]["peso"]) +
+                          " %) "
+                      )
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-2" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "col-12 justify-content-center d-flex flex-row align-items-center h5 mt-4"
+                },
+                [
+                  _c("img", {
+                    attrs: { src: "/img/iconos/check_green.svg", width: "24" }
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "ml-2" }, [
+                    _c("b", [_vm._v(" Pedidos cumplidos: ")]),
+                    _vm._v(
+                      " \n                    " +
+                        _vm._s(_vm.provAnualData["pedidosCump"]) +
+                        "\n                "
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "col-12 justify-content-center d-flex flex-row align-items-center h5 mb-4"
+                },
+                [
+                  _c("img", {
+                    attrs: { src: "/img/iconos/cancel_red.svg", width: "24" }
+                  }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "ml-2" }, [
+                    _c("b", [_vm._v(" Pedidos rechazados: ")]),
+                    _vm._v(
+                      " \n                    " +
+                        _vm._s(_vm.provAnualData["pedidosRec"]) +
+                        "\n                "
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "flex-row d-flex justify-content-center mx-4 align-items-center"
+                },
+                [
+                  _vm._m(31),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
                       {
-                        staticClass: "border border-info",
-                        staticStyle: { "background-color": "#E4E4E4" },
-                        attrs: { scope: "col" }
+                        name: "model",
+                        rawName: "v-model.number",
+                        value: _vm.provAnualRes[3],
+                        expression: "provAnualRes[3]",
+                        modifiers: { number: true }
+                      }
+                    ],
+                    staticClass: "form-control w-25",
+                    class: _vm.anualCumpErr,
+                    attrs: {
+                      type: "number",
+                      name: "anualCump",
+                      min: _vm.escala.ri,
+                      max: _vm.escala.rf,
+                      id: "anualCump"
+                    },
+                    domProps: { value: _vm.provAnualRes[3] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.provAnualRes,
+                          3,
+                          _vm._n($event.target.value)
+                        )
                       },
-                      [_vm._v(" " + _vm._s(_vm.provInicData["pais"]) + " ")]
-                    )
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "flex-row d-flex justify-content-center mx-4 align-items-center"
-              },
-              [
-                _vm._m(13),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number",
-                      value: _vm.provInicRes[0],
-                      expression: "provInicRes[0]",
-                      modifiers: { number: true }
-                    }
-                  ],
-                  staticClass: "form-control w-25",
-                  class: _vm.inicUbicErr,
-                  attrs: {
-                    type: "number",
-                    name: "inicUbic",
-                    min: _vm.escala.ri,
-                    max: _vm.escala.rf,
-                    id: "inicUbic"
-                  },
-                  domProps: { value: _vm.provInicRes[0] },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
                       }
-                      _vm.$set(_vm.provInicRes, 0, _vm._n($event.target.value))
-                    },
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
                     }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  { staticClass: "ml-2", staticStyle: { "font-size": "16px" } },
-                  [
-                    _c("b", [
-                      _vm._v(
-                        " (de " +
-                          _vm._s(_vm.escala.ri) +
-                          " a " +
-                          _vm._s(_vm.escala.rf) +
-                          ") "
-                      )
-                    ])
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "flex-row d-flex justify-content-center" },
-              [
-                _vm.inicUbicErr === "is-invalid"
-                  ? _c("span", [_vm._m(14)])
-                  : _vm._e()
-              ]
-            ),
-            _vm._v(" "),
-            _c("hr", { staticClass: "py-0 my-2" }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "flex-row d-flex justify-content-center mx-4" },
-              [
-                _c("span", { staticClass: "h5 col-12 text-center" }, [
-                  _c("b", [_vm._v(" Criterio de Evaluación: ")]),
-                  _vm._v(" " + _vm._s(_vm.formInic[1]["nombre"]) + " "),
-                  _c("b", [
-                    _vm._v(
-                      " \n                    (" +
-                        _vm._s(_vm.formInic[1]["peso"]) +
-                        " %) "
-                    )
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("hr", { staticClass: "py-0 my-2" }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "row d-flex justify-content-center mx-4" },
-              [
-                _c(
-                  "table",
-                  {
-                    staticClass: "table table-striped border border-info mx-4"
-                  },
-                  [
-                    _vm._m(15),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.provInicData["pagos"], function(pago) {
-                        return _c("tr", { key: pago.id }, [
-                          _c("td", [_vm._v(" " + _vm._s(pago["tipo"]) + " ")]),
-                          _vm._v(" "),
-                          pago["numc"] != null
-                            ? _c("td", { staticClass: "text-center" }, [
-                                pago["numc"] > 1
-                                  ? _c("span", [
-                                      _vm._v(
-                                        " " + _vm._s(pago["numc"]) + " cuotas "
-                                      )
-                                    ])
-                                  : _c("span", [_vm._v(" 1 cuota ")])
-                              ])
-                            : _c("td", { staticClass: "text-center" }, [
-                                _vm._v(" N/A ")
-                              ]),
-                          _vm._v(" "),
-                          pago["porc"] != null
-                            ? _c("td", { staticClass: "text-center" }, [
-                                _vm._v(" " + _vm._s(pago["porc"]) + " % ")
-                              ])
-                            : _c("td", { staticClass: "text-center" }, [
-                                _vm._v(" N/A ")
-                              ]),
-                          _vm._v(" "),
-                          pago["meses"] != null
-                            ? _c("td", { staticClass: "text-center" }, [
-                                pago["meses"] > 1
-                                  ? _c("span", [
-                                      _vm._v(
-                                        " " + _vm._s(pago["meses"]) + " meses "
-                                      )
-                                    ])
-                                  : _c("span", [_vm._v(" 1 mes ")])
-                              ])
-                            : _c("td", { staticClass: "text-center" }, [
-                                _vm._v(" N/A ")
-                              ])
-                        ])
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "ml-2",
+                      staticStyle: { "font-size": "16px" }
+                    },
+                    [
+                      _c("b", [
+                        _vm._v(
+                          " (de " +
+                            _vm._s(_vm.escala.ri) +
+                            " a " +
+                            _vm._s(_vm.escala.rf) +
+                            ") "
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "flex-row d-flex justify-content-center" },
+                [
+                  _vm.anualCumpErr === "is-invalid"
+                    ? _c("span", [_vm._m(32)])
+                    : _vm._e()
+                ]
+              ),
+              _vm._v(" "),
+              _c("hr", { staticClass: "py-0 my-2" }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: this.csrf }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "idp" },
+                domProps: { value: _vm.provAnualData["idp"] }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row d-flex justify-content-center mt-2" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      class: _vm.anualFinalizarErr,
+                      attrs: { type: "submit", disabled: _vm.anualFinalizarDis }
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "mb-1",
+                        attrs: {
+                          src: "/img/iconos/check_white.svg",
+                          alt: "",
+                          width: "24"
+                        }
                       }),
-                      0
-                    )
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "flex-row d-flex justify-content-center mx-4 align-items-center"
-              },
-              [
-                _vm._m(16),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number",
-                      value: _vm.provInicRes[1],
-                      expression: "provInicRes[1]",
-                      modifiers: { number: true }
-                    }
-                  ],
-                  staticClass: "form-control w-25",
-                  class: _vm.inicPagoErr,
-                  attrs: {
-                    type: "number",
-                    name: "inicPago",
-                    min: _vm.escala.ri,
-                    max: _vm.escala.rf,
-                    id: "inicPago"
-                  },
-                  domProps: { value: _vm.provInicRes[1] },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.provInicRes, 1, _vm._n($event.target.value))
-                    },
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  { staticClass: "ml-2", staticStyle: { "font-size": "16px" } },
-                  [
-                    _c("b", [
-                      _vm._v(
-                        " (de " +
-                          _vm._s(_vm.escala.ri) +
-                          " a " +
-                          _vm._s(_vm.escala.rf) +
-                          ") "
-                      )
-                    ])
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "flex-row d-flex justify-content-center" },
-              [
-                _vm.inicPagoErr === "is-invalid"
-                  ? _c("span", [_vm._m(17)])
-                  : _vm._e()
-              ]
-            ),
-            _vm._v(" "),
-            _c("hr", { staticClass: "py-0 my-2" }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "flex-row d-flex justify-content-center mx-4" },
-              [
-                _c("span", { staticClass: "h5 col-12 text-center" }, [
-                  _c("b", [_vm._v(" Criterio de Evaluación: ")]),
-                  _vm._v(" " + _vm._s(_vm.formInic[2]["nombre"]) + " "),
-                  _c("b", [
-                    _vm._v(
-                      " \n                    (" +
-                        _vm._s(_vm.formInic[2]["peso"]) +
-                        " %) "
-                    )
-                  ])
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c("hr", { staticClass: "py-0 my-2" }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "row d-flex justify-content-center mx-4" },
-              [
-                _c(
-                  "table",
-                  {
-                    staticClass: "table table-striped border border-info mx-4"
-                  },
-                  [
-                    _vm._m(18),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.provInicData["envios"], function(
-                        envio,
-                        index
-                      ) {
-                        return _c("tr", { key: envio.id_envio }, [
-                          _c("td", [_vm._v(" " + _vm._s(envio["pais"]) + " ")]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(" " + _vm._s(envio["tipo"]) + " ")]),
-                          _vm._v(" "),
-                          envio["duracion"] > 1
-                            ? _c("td", { staticClass: "text-right" }, [
-                                _vm._v(
-                                  " " + _vm._s(envio["duracion"]) + " días "
-                                )
-                              ])
-                            : _c("td", { staticClass: "text-right" }, [
-                                _vm._v(" 1 día ")
-                              ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-right" }, [
-                            _vm._v(" " + _vm._s(envio["precio"]) + " $ ")
-                          ]),
-                          _vm._v(" "),
-                          _c("td", { staticClass: "text-center" }, [
-                            _c("img", {
-                              staticClass: "iconobtn",
-                              attrs: {
-                                src: "/img/iconos/list.svg",
-                                alt: "expandir",
-                                width: "24",
-                                "data-toggle": "modal",
-                                "data-target": "#modalInicDetEnvio"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.rellenarModalDetEnvio(index)
-                                }
-                              }
-                            })
-                          ])
-                        ])
-                      }),
-                      0
-                    )
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "flex-row d-flex justify-content-center mx-4 align-items-center"
-              },
-              [
-                _vm._m(19),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model.number",
-                      value: _vm.provInicRes[2],
-                      expression: "provInicRes[2]",
-                      modifiers: { number: true }
-                    }
-                  ],
-                  staticClass: "form-control w-25",
-                  class: _vm.inicEnvioErr,
-                  attrs: {
-                    type: "number",
-                    name: "inicEnvio",
-                    min: _vm.escala.ri,
-                    max: _vm.escala.rf,
-                    id: "inicEnvio"
-                  },
-                  domProps: { value: _vm.provInicRes[2] },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.provInicRes, 2, _vm._n($event.target.value))
-                    },
-                    blur: function($event) {
-                      return _vm.$forceUpdate()
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  { staticClass: "ml-2", staticStyle: { "font-size": "16px" } },
-                  [
-                    _c("b", [
-                      _vm._v(
-                        " (de " +
-                          _vm._s(_vm.escala.ri) +
-                          " a " +
-                          _vm._s(_vm.escala.rf) +
-                          ") "
-                      )
-                    ])
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "flex-row d-flex justify-content-center" },
-              [
-                _vm.inicEnvioErr === "is-invalid"
-                  ? _c("span", [_vm._m(20)])
-                  : _vm._e()
-              ]
-            ),
-            _vm._v(" "),
-            _c("hr", { staticClass: "py-0 my-2" }),
-            _vm._v(" "),
-            _c("input", {
-              attrs: { type: "hidden", name: "_token" },
-              domProps: { value: this.csrf }
-            }),
-            _vm._v(" "),
-            _c("input", {
-              attrs: { type: "hidden", name: "idp" },
-              domProps: { value: _vm.provInicData["idp"] }
-            }),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "row d-flex justify-content-center mt-2" },
-              [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    class: _vm.inicFinalizarErr,
-                    attrs: { type: "submit", disabled: _vm.inicFinalizarDis }
-                  },
-                  [
-                    _c("img", {
-                      staticClass: "mb-1",
-                      attrs: {
-                        src: "/img/iconos/check_white.svg",
-                        alt: "",
-                        width: "24"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "ml-2" }, [
-                      _vm._v(" Finalizar Evaluación ")
-                    ])
-                  ]
-                )
-              ]
-            )
-          ])
+                      _vm._v(" "),
+                      _c("span", { staticClass: "ml-2" }, [
+                        _vm._v(" Finalizar Evaluación ")
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]
+          )
         ])
       : _vm._e(),
     _vm._v(" "),
@@ -39943,7 +41183,7 @@ var render = function() {
                     staticStyle: { "background-color": "#F5F5F5" }
                   },
                   [
-                    _vm._m(21),
+                    _vm._m(33),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-body h5 text-center" }, [
                       _c(
@@ -39952,7 +41192,7 @@ var render = function() {
                           staticClass: "table table-striped border border-info"
                         },
                         [
-                          _vm._m(22),
+                          _vm._m(34),
                           _vm._v(" "),
                           _vm.provInicData["envios"][_vm.indexDetEnvio][
                             "detalles"
@@ -40043,7 +41283,7 @@ var render = function() {
                     staticStyle: { "background-color": "#F5F5F5" }
                   },
                   [
-                    _vm._m(23),
+                    _vm._m(35),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-body h5 text-center" }, [
                       _vm.provInicData["esencias"] != [] &&
@@ -40090,7 +41330,7 @@ var render = function() {
                           staticClass: "table table-striped border border-info"
                         },
                         [
-                          _vm._m(24),
+                          _vm._m(36),
                           _vm._v(" "),
                           _vm.provInicData["esencias"] != [] &&
                           _vm.indexProducto[0] === "e"
@@ -40156,6 +41396,142 @@ var render = function() {
             )
           ]
         )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipoEv === "resultadoInic"
+      ? _c("span", [
+          _c("div", { staticClass: "row h5 justify-content-center" }, [
+            _c("b", [_vm._v(" Proveedor Evaluado: ")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "ml-1" }, [
+              _vm._v(" " + _vm._s(_vm.resultadoInicial["prov"]) + " ")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row h5 justify-content-center" }, [
+            _c("b", [_vm._v(" Criterio de Exito: ")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "ml-1" }, [
+              _vm._v(" " + _vm._s(_vm.resultadoInicial["exito"]) + " % ")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row h5 justify-content-center" }, [
+            _c("b", [_vm._v(" Resultado: ")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "ml-1" }, [
+              _vm._v(" " + _vm._s(_vm.resultadoInicial["res"]) + " % ")
+            ])
+          ]),
+          _vm._v(" "),
+          parseInt(_vm.resultadoInicial["res"]) >=
+          parseInt(_vm.resultadoInicial["exito"])
+            ? _c("span", { staticClass: "mt-4" }, [
+                _vm._m(37),
+                _vm._v(" "),
+                _vm._m(38),
+                _vm._v(" "),
+                _vm._m(39)
+              ])
+            : _c("span", [_vm._m(40), _vm._v(" "), _vm._m(41)])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipoEv === "resultadoAnual"
+      ? _c("span", [
+          _c("div", { staticClass: "row h5 justify-content-center" }, [
+            _c("b", [_vm._v(" Proveedor Evaluado: ")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "ml-1" }, [
+              _vm._v(" " + _vm._s(_vm.resultadoAnual["prov"]) + " ")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row h5 justify-content-center" }, [
+            _c("b", [_vm._v(" Criterio de Exito: ")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "ml-1" }, [
+              _vm._v(" " + _vm._s(_vm.resultadoAnual["exito"]) + " % ")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row h5 justify-content-center" }, [
+            _c("b", [_vm._v(" Resultado: ")]),
+            _vm._v(" "),
+            _c("span", { staticClass: "ml-1" }, [
+              _vm._v(" " + _vm._s(_vm.resultadoAnual["res"]) + " % ")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _vm._m(42),
+          _vm._v(" "),
+          _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
+            _c("li", [
+              _c("b", { staticClass: "mr-1" }, [
+                _vm._v(" Fecha de Apertura: ")
+              ]),
+              _vm._v(
+                "\n            " + _vm._s(_vm.resultadoAnual["fechaA"]) + " "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
+            _c("li", [
+              _c("b", { staticClass: "mr-1" }, [
+                _vm._v(" Fecha de Renovación Actual: ")
+              ]),
+              _vm._v(
+                " \n            " +
+                  _vm._s(_vm.resultadoAnual["fechaR"]) +
+                  " \n            (renovado " +
+                  _vm._s(_vm.resultadoAnual["renov"]) +
+                  " \n            "
+              ),
+              parseInt(_vm.resultadoAnual["renov"]) == 1
+                ? _c("span", [_vm._v(" vez ")])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("span", [_vm._v(" veces ")]),
+              _vm._v(" )")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
+            _c("li", [
+              _c("b", { staticClass: "mr-1" }, [_vm._v(" Expira en: ")]),
+              _vm._v(
+                " \n            " +
+                  _vm._s(_vm.resultadoAnual["exp"]) +
+                  " \n            "
+              ),
+              parseInt(_vm.resultadoAnual["exp"]) == 1
+                ? _c("span", [_vm._v(" día ")])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("span", [_vm._v(" días ")])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
+            _c("li", [_vm._v(" " + _vm._s(_vm.resultadoAnual["ex"]) + " ")])
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          parseInt(_vm.resultadoAnual["res"]) >=
+          parseInt(_vm.resultadoAnual["exito"])
+            ? _c("span", { staticClass: "mt-4" }, [
+                _vm._m(43),
+                _vm._v(" "),
+                _vm._m(44),
+                _vm._v(" "),
+                _vm._m(45)
+              ])
+            : _c("span", [_vm._m(46), _vm._v(" "), _vm._m(47)])
+        ])
       : _vm._e()
   ])
 }
@@ -40385,6 +41761,153 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 h6" }, [
+      _vm._v(" • "),
+      _c("b", [_vm._v(" Productos disponibles en el catálogo: ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-primary text-white" }, [
+      _c("th", { staticClass: "p-1 m-0 pl-2 ", attrs: { scope: "col" } }, [
+        _vm._v(" # Cas ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "p-1 m-0", attrs: { scope: "col" } }, [
+        _vm._v(" Nombre ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "p-1 m-0", attrs: { scope: "col" } }, [
+        _vm._v(" Tipo ")
+      ]),
+      _vm._v(" "),
+      _c(
+        "th",
+        { staticClass: "p-1 m-0 text-center", attrs: { scope: "col" } },
+        [_vm._v(" Presentaciones ")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
+      [_c("b", [_vm._v(" Puntaje: ")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("small", { staticClass: "text-danger" }, [
+      _c("b", [_vm._v(" El puntaje está fuera de la escala. ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-primary text-white" }, [
+      _c("th", { attrs: { scope: "col" } }, [_vm._v(" Tipo de pago ")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v(" Número de cuotas ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v(" Porcentaje por cuota ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v(" Pago cada ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
+      [_c("b", [_vm._v(" Puntaje: ")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("small", { staticClass: "text-danger" }, [
+      _c("b", [_vm._v(" El puntaje está fuera de la escala. ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-primary text-white" }, [
+      _c("th", { attrs: { scope: "col" } }, [_vm._v(" País de envío ")]),
+      _vm._v(" "),
+      _c("th", { attrs: { scope: "col" } }, [_vm._v(" Tipo de envío ")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v(" Duración ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+        _vm._v(" Precio ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v(" Extra ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
+      [_c("b", [_vm._v(" Puntaje: ")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("small", { staticClass: "text-danger" }, [
+      _c("b", [_vm._v(" El puntaje está fuera de la escala. ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
+      [_c("b", [_vm._v(" Puntaje: ")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("small", { staticClass: "text-danger" }, [
+      _c("b", [_vm._v(" El puntaje está fuera de la escala. ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-header" }, [
       _c(
         "h5",
@@ -40458,6 +41981,160 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
         _vm._v(" Precio ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row h4 justify-content-center" }, [
+      _c("img", { attrs: { src: "/img/iconos/check_green.svg", width: "32" } }),
+      _vm._v(" "),
+      _c("b", { staticClass: "ml-1 mt-1" }, [_vm._v(" Aprobado ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row h6 mt-4 justify-content-center" }, [
+      _c("b", [_vm._v(" ¿Desea generar un contrato con el proveedor? ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row justify-content-center" }, [
+      _c(
+        "a",
+        { staticClass: "btn btn-danger mx-2", attrs: { href: "realizar" } },
+        [
+          _c("img", {
+            staticClass: "mb-1",
+            attrs: { src: "/img/iconos/cancel_white.svg", width: "24" }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "ml-2" }, [_vm._v(" Rechazar ")])
+        ]
+      ),
+      _vm._v(" "),
+      _c("a", { staticClass: "btn btn-primary mx-2", attrs: { href: "#" } }, [
+        _c("img", {
+          staticClass: "mb-1",
+          attrs: { src: "/img/iconos/crear.svg", width: "24" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar contrato ")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row h4 justify-content-center" }, [
+      _c("img", { attrs: { src: "/img/iconos/cancel_red.svg", width: "32" } }),
+      _vm._v(" "),
+      _c("b", { staticClass: "ml-1" }, [_vm._v(" Reprobado ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row justify-content-center" }, [
+      _c("a", { staticClass: "btn btn-primary", attrs: { href: "realizar" } }, [
+        _c("img", {
+          staticClass: "mb-1",
+          attrs: { src: "/img/iconos/evaluation.svg", width: "24" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "ml-2" }, [
+          _vm._v(" Realizar otra evaluacion ")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row h5 justify-content-center" }, [
+      _c("b", [_vm._v(" Datos Contrato ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row h4 justify-content-center" }, [
+      _c("img", { attrs: { src: "/img/iconos/check_green.svg", width: "32" } }),
+      _vm._v(" "),
+      _c("b", { staticClass: "ml-1 mt-1" }, [_vm._v(" Aprobado ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row h6 mt-4 justify-content-center" }, [
+      _c("b", [_vm._v(" ¿Desea renovar el contrato con el proveedor? ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row justify-content-center" }, [
+      _c(
+        "a",
+        { staticClass: "btn btn-danger mx-2", attrs: { href: "realizar" } },
+        [
+          _c("img", {
+            staticClass: "mb-1",
+            attrs: { src: "/img/iconos/cancel_white.svg", width: "24" }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "ml-2" }, [_vm._v(" Rechazar ")])
+        ]
+      ),
+      _vm._v(" "),
+      _c("a", { staticClass: "btn btn-primary mx-2", attrs: { href: "#" } }, [
+        _c("img", {
+          staticClass: "mb-1",
+          attrs: { src: "/img/iconos/renovar.svg", width: "24" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "ml-2" }, [_vm._v(" Renovar contrato ")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row h4 justify-content-center" }, [
+      _c("img", { attrs: { src: "/img/iconos/cancel_red.svg", width: "32" } }),
+      _vm._v(" "),
+      _c("b", { staticClass: "ml-1" }, [_vm._v(" Reprobado ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row justify-content-center" }, [
+      _c("a", { staticClass: "btn btn-primary", attrs: { href: "realizar" } }, [
+        _c("img", {
+          staticClass: "mb-1",
+          attrs: { src: "/img/iconos/evaluation.svg", width: "24" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "ml-2" }, [
+          _vm._v(" Realizar otra evaluacion ")
+        ])
       ])
     ])
   }
@@ -40618,26 +42295,6 @@ var render = function() {
                             _vm._v(" Reprobado ")
                           ])
                         ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", { staticClass: "text-center" }, [
-                    parseInt(res.res) >= parseInt(res.exito)
-                      ? _c("span", [
-                          _c("img", {
-                            staticClass: "iconobtn",
-                            attrs: {
-                              src: "/img/iconos/list.svg",
-                              alt: "ver",
-                              width: "24",
-                              title: "Crear contrato"
-                            }
-                          })
-                        ])
-                      : _c("span", [
-                          _vm._v(
-                            "\n                        N/A\n                    "
-                          )
-                        ])
                   ])
                 ])
               }),
@@ -40702,9 +42359,7 @@ var render = function() {
                             _vm._v(" Reprobado ")
                           ])
                         ])
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(1, true)
+                  ])
                 ])
               }),
               _vm._v(" "),
@@ -40770,9 +42425,7 @@ var render = function() {
                             _vm._v(" Reprobado ")
                           ])
                         ])
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(2, true)
+                  ])
                 ])
               }),
               _vm._v(" "),
@@ -40812,33 +42465,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", { staticClass: "text-right" }, [_vm._v(" Criterio de Éxito ")]),
       _vm._v(" "),
-      _c("th", { staticClass: "text-center" }, [_vm._v(" Aprobación ")]),
-      _vm._v(" "),
-      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v(" Acción ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "text-center" }, [
-      _c("img", {
-        staticClass: "iconobtn",
-        attrs: { src: "/img/iconos/list.svg", alt: "ver", width: "24" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "text-center" }, [
-      _c("img", {
-        staticClass: "iconobtn",
-        attrs: { src: "/img/iconos/list.svg", alt: "ver", width: "24" }
-      })
+      _c("th", { staticClass: "text-center" }, [_vm._v(" Aprobación ")])
     ])
   }
 ]

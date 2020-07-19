@@ -50,6 +50,11 @@ Route::post('/productor/{id_prod}/evaluaciones/inicial', 'EvaluacionesController
 
 /* Rutas referentes al proceso de evaluacion anual */
 Route::get('/productor/{id_prod}/evaluaciones/anual', 'EvaluacionesController@dataEvaluacionAnual');
+Route::get('/productor/{id_prod}/evaluaciones/data/anual/{id_prov}', 'EvaluacionesController@dataProveedoresAnual');
+Route::post('/productor/{id_prod}/evaluaciones/anual', 'EvaluacionesController@guardarAnual');
+
+/* Rutas referentes a la confirmación de acción de generación o renovación de contrato */
+Route::get('/productor/{id_prod}/evaluaciones/confirmar', 'EvaluacionesController@confirmacionContrato');
 
 
 /* Ruta de pagina de inicio */

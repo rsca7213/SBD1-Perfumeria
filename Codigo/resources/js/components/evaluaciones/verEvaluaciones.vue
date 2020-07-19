@@ -18,7 +18,6 @@
                 <th scope="col" class="text-right"> Resultado </th>
                 <th class="text-right"> Criterio de Éxito </th>
                 <th class="text-center"> Aprobación </th>
-                <th scope="col" class="text-center"> Acción </th>
             </thead>
             <tbody v-if="filtro === 't'">
                 <tr v-for="(res,index) in resultados" :key="index">
@@ -36,14 +35,6 @@
                             <img src="/img/iconos/cancel_red.svg" width="24">
                             <span class="ml-1"> Reprobado </span>    
                         </span>    
-                    </td>
-                    <td class="text-center">
-                        <span v-if="parseInt(res.res) >= parseInt(res.exito)"> 
-                            <img src="/img/iconos/list.svg" alt="ver" width="24" class="iconobtn" title="Crear contrato">
-                        </span>
-                        <span v-else>
-                            N/A
-                        </span>
                     </td>
                 </tr>
                 <tr class="text-center" v-if="resultados.length === 0"> 
@@ -67,9 +58,6 @@
                             <span class="ml-1"> Reprobado </span>    
                         </span>    
                     </td>
-                    <td class="text-center">
-                        <img src="/img/iconos/list.svg" alt="ver" width="24" class="iconobtn">
-                    </td>
                 </tr>
                 <tr class="text-center" v-if="resultadosIniciales.length === 0"> 
                     <td colspan="7"> Aun no tiene resultados de evaluaciones iniciales. </td>
@@ -91,9 +79,6 @@
                             <img src="/img/iconos/cancel_red.svg" width="24">
                             <span class="ml-1"> Reprobado </span>    
                         </span>    
-                    </td>
-                    <td class="text-center">
-                        <img src="/img/iconos/list.svg" alt="ver" width="24" class="iconobtn">
                     </td>
                 </tr>
                 <tr class="text-center" v-if="resultadosAnuales.length === 0"> 
