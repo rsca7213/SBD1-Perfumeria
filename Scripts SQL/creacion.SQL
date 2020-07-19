@@ -885,3 +885,16 @@ CREATE VIEW rdj_vista_palclave (familia,palabra) AS
 SELECT fa.nombre, pa.palabra FROM rdj_familias_olfativas fa, 
 rdj_palabras_claves pa, rdj_familias_palabras fp
 WHERE fp.id_familia=fa.id AND fp.id_palabra=pa.id ORDER BY fa.id;
+
+CREATE VIEW rdj_vista_presents_esencias (proveedor,esencia,cas,vol,precio) AS
+SELECT p.nombre, ing.nombre, ing.cas_ing_esencia, pr.volumen || ' ml', 
+pr.precio || ' $' FROM rdj_ingredientes_esencias ing, rdj_presents_ings_esencias pr,
+rdj_proveedores p WHERE p.id=ing.id_proveedor AND pr.cas_ing_esencia=ing.cas_ing_esencia 
+ORDER BY p.id,ing.cas_ing_esencia;
+
+
+CREATE VIEW rdj_vista_presents_otros (proveedor,otroing,cas,vol,precio) AS
+SELECT p.nombre, ing.nombre, ing.cas_otro_ing, pr.volumen || ' ml', pr.precio || ' $' 
+FROM rdj_otros_ingredientes ing, rdj_present_otros_ings pr,
+rdj_proveedores p WHERE p.id=ing.id_proveedor AND
+pr.cas_otro_ing=ing.cas_otro_ing ORDER BY p.id,ing.cas_otro_ing;
