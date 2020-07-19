@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MetodosEnvios" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="5" bottomMargin="5" uuid="7abfbae8-fc04-4abf-878f-70d6e7bb0cd2">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ProyectoBasesAdapter"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="ParEnv" class="java.lang.Integer" isForPrompting="false"/>
+	<queryString language="plsql">
+		<![CDATA[select e.id as n_metodo, CASE WHEN e.tipo='m' THEN 'Maritimo - ' WHEN e.tipo = 't' THEN 'Terreste - ' WHEN e.tipo = 'a' THEN 'Aereo - ' END
+|| c.nombre as nombre, e.duracion || ' dias' as duracion_envio, e.precio || ' $' as precio_envio
+from rdj_metodos_envios as e, rdj_paises as c, rdj_proveedores as p
+where p.id=$P{ParEnv} and c.id= e.id_pais and p.id=e.id_proveedor order by e.id]]>
+	</queryString>
+	<field name="nombre" class="java.lang.String"/>
+	<field name="n_metodo" class="java.lang.Integer"/>
+	<field name="duracion_envio" class="java.lang.String"/>
+	<field name="precio_envio" class="java.lang.String"/>
+	<detail>
+		<band height="92">
+			<textField>
+				<reportElement positionType="Float" mode="Opaque" x="132" y="35" width="163" height="30" forecolor="#707070" backcolor="#E3E3E3" uuid="e7607afb-784d-48ca-845d-7a34d04c96cd">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="70b8305f-5c9c-4563-b329-925a2a9e51fc"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="32" y="35" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="296ec54f-d612-4003-beac-deb52a367b75">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#707070"/>
+					<topPen lineWidth="1.0" lineColor="#6492FD"/>
+					<leftPen lineWidth="1.0" lineColor="#707070"/>
+					<bottomPen lineWidth="1.0" lineColor="#FFFFFF"/>
+					<rightPen lineWidth="0.0" lineColor="#707070"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Metodo envio]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="132" y="6" width="163" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="ec23ade8-7051-4b1d-b46d-c8d1b763077c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#707070"/>
+					<topPen lineWidth="1.0" lineColor="#707070"/>
+					<bottomPen lineWidth="0.0" lineColor="#707070"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="295" y="6" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="cee74f80-b2f6-4cfa-a135-795ed7dd5060">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#707070"/>
+					<topPen lineWidth="1.0" lineColor="#707070"/>
+					<bottomPen lineWidth="1.0" lineColor="#707070"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Duración]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="395" y="6" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="bb9b23f1-0075-4849-be4a-8b2cadc158df">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#707070"/>
+					<topPen lineWidth="1.0" lineColor="#707070"/>
+					<bottomPen lineWidth="1.0" lineColor="#707070"/>
+					<rightPen lineWidth="1.0" lineColor="#707070"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+			<textField>
+				<reportElement positionType="Float" mode="Opaque" x="32" y="6" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="a2100d5f-6bad-405c-abf3-afac90872485">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#707070"/>
+					<topPen lineWidth="1.0" lineColor="#707070"/>
+					<leftPen lineWidth="1.0" lineColor="#707070"/>
+					<bottomPen lineWidth="1.0" lineColor="#6492FD"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Método #"+$F{n_metodo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" mode="Opaque" x="295" y="35" width="100" height="30" forecolor="#707070" backcolor="#E3E3E3" uuid="8e643509-1e3d-4baa-bca1-6a54238274d8">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{duracion_envio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement positionType="Float" mode="Opaque" x="395" y="35" width="100" height="30" forecolor="#707070" backcolor="#E3E3E3" uuid="67901aa1-f57c-4b99-8433-b3e9155ca2e2">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precio_envio}]]></textFieldExpression>
+			</textField>
+			<subreport isUsingCache="true">
+				<reportElement positionType="Float" x="-20" y="65" width="595" height="22" uuid="f61815d3-86c1-48ae-9d58-215a97e3a948"/>
+				<subreportParameter name="PIdEnvio">
+					<subreportParameterExpression><![CDATA[$F{n_metodo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="PIdProv">
+					<subreportParameterExpression><![CDATA[$P{ParEnv}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["subreporte_det_envios.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

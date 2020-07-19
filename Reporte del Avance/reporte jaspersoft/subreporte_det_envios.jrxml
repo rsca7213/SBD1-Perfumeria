@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte_det_envios" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="0" bottomMargin="5" uuid="c034f63d-351c-4805-a4c8-803d3d46f660">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ProyectoBasesAdapter"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<style name="TablaDetalleEnvios">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($V{REPORT_COUNT}%2) == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E3E3E3"/>
+		</conditionalStyle>
+	</style>
+	<style name="Style1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2==0]]></conditionExpression>
+			<style mode="Opaque" forecolor="#FFFFFF" backcolor="#BF2A2A"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="PIdEnvio" class="java.lang.Integer"/>
+	<parameter name="PIdProv" class="java.lang.Integer"/>
+	<queryString language="plsql">
+		<![CDATA[select d.nombre as det_nombre, d.mod_precio || ' $' as det_precio, d.mod_duracion || ' dias' as det_duracion
+from rdj_metodos_envios as e, rdj_detalles_metodos_envios as d, rdj_proveedores as p
+where p.id=$P{PIdProv} and e.id=$P{PIdEnvio} and p.id=e.id_proveedor and e.id=d.id_envio]]>
+	</queryString>
+	<field name="det_nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="det_nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="rdj_detalles_metodos_envios"/>
+	</field>
+	<field name="det_precio" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="det_precio"/>
+	</field>
+	<field name="det_duracion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="det_duracion"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<property name="com.jaspersoft.studio.layout"/>
+			<textField>
+				<reportElement style="TablaDetalleEnvios" positionType="Float" mode="Opaque" x="132" y="-1" width="163" height="30" forecolor="#707070" backcolor="#E3E3E3" uuid="9d91a848-353c-4264-bcb1-d63a72b16fbc">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#707070"/>
+					<leftPen lineWidth="0.0" lineColor="#707070"/>
+					<bottomPen lineWidth="0.25" lineColor="#707070"/>
+					<rightPen lineWidth="0.0" lineColor="#707070"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{det_nombre}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" mode="Opaque" x="32" y="-1" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="1a4efbb6-d8af-47da-80b2-77a2dcaab516">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<leftPen lineWidth="1.0" lineColor="#707070"/>
+					<bottomPen lineWidth="1.0" lineColor="#707070"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Extra de envío]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="Style1" positionType="Float" mode="Opaque" x="395" y="-1" width="100" height="30" forecolor="#707070" backcolor="#E3E3E3" uuid="cbf0f752-ed5a-4935-9d50-cbc366cdc8e4">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#707070"/>
+					<leftPen lineWidth="0.0" lineColor="#707070"/>
+					<bottomPen lineWidth="0.25" lineColor="#707070"/>
+					<rightPen lineWidth="1.0" lineColor="#707070"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{det_precio}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="TablaDetalleEnvios" positionType="Float" mode="Opaque" x="295" y="-1" width="100" height="30" forecolor="#707070" backcolor="#E3E3E3" uuid="9f1d01d1-a7f9-4b5d-a87d-f221d4848db7">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineColor="#707070"/>
+					<leftPen lineWidth="0.0" lineColor="#707070"/>
+					<bottomPen lineWidth="0.25" lineColor="#707070"/>
+					<rightPen lineWidth="0.0" lineColor="#707070"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Roboto" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{det_duracion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
