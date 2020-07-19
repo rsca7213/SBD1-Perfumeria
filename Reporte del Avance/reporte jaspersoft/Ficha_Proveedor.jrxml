@@ -7,7 +7,7 @@
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="741"/>
 	<style name="RowStripping">
 		<conditionalStyle>
-			<conditionExpression><![CDATA[($F{id} % 2) == 0]]></conditionExpression>
+			<conditionExpression><![CDATA[($V{REPORT_COUNT} % 2) == 0]]></conditionExpression>
 			<style mode="Opaque" backcolor="#E3E3E3"/>
 		</conditionalStyle>
 	</style>
@@ -122,7 +122,7 @@ where p.id=1 and c.id= e.id_pais and p.id=e.id_proveedor and e.id=d.id_envio]]>
 		<parameter name="ParametroPresentacion" class="java.lang.Integer"/>
 		<queryString language="plsql">
 			<![CDATA[SELECT ing.nombre, ing.cas_ing_esencia, presIng.volumen || ' ml' as Presentacion, presIng.precio || ' $' as Precio, CASE WHEN ing.naturaleza = 's' THEN 'Esencia Sintética' WHEN ing.naturaleza = 'n' THEN 'Esencia Natural' END as tipo FROM rdj_ingredientes_esencias AS ing, rdj_presents_ings_esencias AS presIng
-WHERE ing.id_proveedor=1 AND presIng.cas_ing_esencia=ing.cas_ing_esencia 
+WHERE ing.id_proveedor=$P{ParametroPresentacion} AND presIng.cas_ing_esencia=ing.cas_ing_esencia 
 UNION SELECT otro.nombre, otro.cas_otro_ing, presOtro.volumen || ' ml' as vol, presOtro.precio || ' $' as Precio,'Componente' as tipo FROM rdj_otros_ingredientes AS otro, rdj_present_otros_ings AS presOtro
 WHERE otro.id_proveedor=$P{ParametroPresentacion} AND presOtro.cas_otro_ing=otro.cas_otro_ing ORDER BY nombre ASC;]]>
 		</queryString>
@@ -147,7 +147,7 @@ WHERE otro.id_proveedor=$P{ParametroPresentacion} AND presOtro.cas_otro_ing=otro
 		<queryString language="plsql">
 			<![CDATA[SELECT prod.nombre as productor, 'Inicial' as tipo_contrato, to_char(cont.fecha_apertura,'dd/mm/yyyy') as fecha_inicio , to_char(cont.fecha_apertura::DATE + INTERVAL '1 year','dd/mm/yyyy') as fecha_final 
 FROM rdj_proveedores as prov, rdj_productores as prod, rdj_contratos as cont 
-WHERE prov.id=1 and prov.id=cont.id_proveedor and prod.id = cont.id_productor and ((NOW() - cont.fecha_apertura) < '1 YEAR')
+WHERE prov.id=$P{ParametroClientes} and prov.id=cont.id_proveedor and prod.id = cont.id_productor and ((NOW() - cont.fecha_apertura) < '1 YEAR')
 UNION
 SELECT prod.nombre as productor, 'Renovación' as tipo_contrato, to_char(reno.fecha_renovacion,'dd/mm/yyyy') as fecha_inicio , to_char(reno.fecha_renovacion::DATE + INTERVAL '1 year','dd/mm/yyyy') as fecha_final
 FROM rdj_proveedores as prov, rdj_productores as prod, rdj_renovaciones as reno 
@@ -381,7 +381,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 				<textFieldExpression><![CDATA[$F{fecha_inicio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="90" y="245" width="200" height="20" forecolor="#707070" uuid="5abded25-72a8-4965-b52c-8fd8448bb48d">
+				<reportElement x="90" y="245" width="280" height="20" forecolor="#707070" uuid="5abded25-72a8-4965-b52c-8fd8448bb48d">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -391,7 +391,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 				<textFieldExpression><![CDATA[$F{asociacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="166" y="270" width="180" height="20" forecolor="#707070" uuid="1cc7ade6-67ff-4efe-a03f-d0f5cd9be102">
+				<reportElement x="166" y="270" width="205" height="20" forecolor="#707070" uuid="1cc7ade6-67ff-4efe-a03f-d0f5cd9be102">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -407,7 +407,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 				</reportElement>
 			</line>
 			<image hAlign="Left" vAlign="Middle">
-				<reportElement x="377" y="176" width="122" height="108" uuid="1a022140-7785-4701-b204-183664871d54"/>
+				<reportElement x="407" y="182" width="99" height="97" uuid="1a022140-7785-4701-b204-183664871d54"/>
 				<imageExpression><![CDATA["ifra-m.png"]]></imageExpression>
 			</image>
 			<image scaleImage="RetainShape" hAlign="Center" vAlign="Middle">
@@ -600,12 +600,13 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 				</componentElement>
 			</frame>
 			<componentElement>
-				<reportElement positionType="Float" isPrintRepeatedValues="false" x="-2" y="301" width="555" height="40" isRemoveLineWhenBlank="true" uuid="60ae8f8a-5fd9-4e05-a43f-87c32bfe0d35">
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="-4" y="301" width="565" height="40" isRemoveLineWhenBlank="true" uuid="60ae8f8a-5fd9-4e05-a43f-87c32bfe0d35">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
 					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="ProductosPresentaciones" uuid="d8300237-a3d5-4c4d-a367-972189e8e4e1">
@@ -680,7 +681,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="80" uuid="4958a648-63d0-4349-9262-09c3fb93d3b4">
+					<jr:column width="90" uuid="4958a648-63d0-4349-9262-09c3fb93d3b4">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
 						<jr:tableFooter height="11" rowSpan="1">
 							<box>
@@ -691,7 +692,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 						</jr:tableFooter>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="80" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="28660c9d-0fe7-4d2e-a2b1-4ef225bee2a8"/>
+								<reportElement mode="Opaque" x="0" y="0" width="90" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="28660c9d-0fe7-4d2e-a2b1-4ef225bee2a8"/>
 								<box>
 									<topPen lineWidth="1.0" lineColor="#707070"/>
 								</box>
@@ -703,7 +704,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 						</jr:columnHeader>
 						<jr:detailCell height="30">
 							<textField>
-								<reportElement style="TablaProductos" x="0" y="0" width="80" height="30" forecolor="#707070" uuid="89129080-6615-4133-8d8f-cc79ac25d96d"/>
+								<reportElement style="TablaProductos" x="0" y="0" width="90" height="30" forecolor="#707070" uuid="89129080-6615-4133-8d8f-cc79ac25d96d"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
 								</textElement>
@@ -711,7 +712,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="100" uuid="5fb3d6d8-f943-411b-8b2c-3837c050416b">
+					<jr:column width="110" uuid="5fb3d6d8-f943-411b-8b2c-3837c050416b">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
 						<jr:tableFooter height="11" rowSpan="1">
 							<box>
@@ -722,7 +723,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 						</jr:tableFooter>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="22a40011-645d-4455-8232-15a95a9c816a"/>
+								<reportElement mode="Opaque" x="0" y="0" width="110" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="22a40011-645d-4455-8232-15a95a9c816a"/>
 								<box>
 									<topPen lineWidth="1.0" lineColor="#707070"/>
 								</box>
@@ -734,7 +735,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 						</jr:columnHeader>
 						<jr:detailCell height="30">
 							<textField>
-								<reportElement style="TablaProductos" x="0" y="0" width="100" height="30" forecolor="#707070" uuid="94654640-4f1c-4eb2-8883-348ca3ff5145"/>
+								<reportElement style="TablaProductos" x="0" y="0" width="110" height="30" forecolor="#707070" uuid="94654640-4f1c-4eb2-8883-348ca3ff5145"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
 								</textElement>
@@ -742,7 +743,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="145" uuid="f358124d-a670-46c5-8958-cdd663e1db5b">
+					<jr:column width="135" uuid="f358124d-a670-46c5-8958-cdd663e1db5b">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
 						<jr:tableFooter height="11" rowSpan="1">
 							<box>
@@ -753,7 +754,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 						</jr:tableFooter>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="145" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="d1b11380-a507-498f-ad23-84b606ea7205"/>
+								<reportElement mode="Opaque" x="0" y="0" width="135" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="d1b11380-a507-498f-ad23-84b606ea7205"/>
 								<box>
 									<topPen lineWidth="1.0" lineColor="#707070"/>
 									<rightPen lineWidth="1.0" lineColor="#707070"/>
@@ -766,7 +767,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 						</jr:columnHeader>
 						<jr:detailCell height="30">
 							<textField>
-								<reportElement style="TablaProductos" x="0" y="0" width="145" height="30" forecolor="#707070" uuid="cc090814-01b3-43c5-8262-1a9c7994ec49"/>
+								<reportElement style="TablaProductos" x="0" y="0" width="135" height="30" forecolor="#707070" uuid="cc090814-01b3-43c5-8262-1a9c7994ec49"/>
 								<box>
 									<rightPen lineWidth="1.0"/>
 								</box>
@@ -839,7 +840,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 				</graphicElement>
 			</line>
 			<componentElement>
-				<reportElement positionType="Float" isPrintRepeatedValues="false" x="-2" y="220" width="555" height="39" isRemoveLineWhenBlank="true" uuid="097a3e79-04d5-4ad6-9781-52ef199b6bf8">
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="-4" y="220" width="565" height="39" isRemoveLineWhenBlank="true" uuid="097a3e79-04d5-4ad6-9781-52ef199b6bf8">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>

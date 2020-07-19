@@ -25,7 +25,7 @@ where p.id=$P{ParEnv} and c.id= e.id_pais and p.id=e.id_proveedor order by e.id]
 	<detail>
 		<band height="92">
 			<textField>
-				<reportElement positionType="Float" mode="Opaque" x="132" y="35" width="163" height="30" forecolor="#707070" backcolor="#E3E3E3" uuid="e7607afb-784d-48ca-845d-7a34d04c96cd">
+				<reportElement positionType="Float" mode="Opaque" x="146" y="35" width="163" height="30" forecolor="#707070" backcolor="#E3E3E3" uuid="e7607afb-784d-48ca-845d-7a34d04c96cd">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="70b8305f-5c9c-4563-b329-925a2a9e51fc"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -41,7 +41,7 @@ where p.id=$P{ParEnv} and c.id= e.id_pais and p.id=e.id_proveedor order by e.id]
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="32" y="35" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="296ec54f-d612-4003-beac-deb52a367b75">
+				<reportElement positionType="Float" mode="Opaque" x="46" y="35" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="296ec54f-d612-4003-beac-deb52a367b75">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -58,7 +58,7 @@ where p.id=$P{ParEnv} and c.id= e.id_pais and p.id=e.id_proveedor order by e.id]
 				<text><![CDATA[Metodo envio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="132" y="6" width="163" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="ec23ade8-7051-4b1d-b46d-c8d1b763077c">
+				<reportElement positionType="Float" mode="Opaque" x="146" y="6" width="163" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="ec23ade8-7051-4b1d-b46d-c8d1b763077c">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -72,13 +72,13 @@ where p.id=$P{ParEnv} and c.id= e.id_pais and p.id=e.id_proveedor order by e.id]
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="295" y="6" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="cee74f80-b2f6-4cfa-a135-795ed7dd5060">
+				<reportElement positionType="Float" mode="Opaque" x="309" y="6" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="cee74f80-b2f6-4cfa-a135-795ed7dd5060">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
 					<pen lineColor="#707070"/>
 					<topPen lineWidth="1.0" lineColor="#707070"/>
-					<bottomPen lineWidth="1.0" lineColor="#707070"/>
+					<bottomPen lineWidth="0.0" lineColor="#707070"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
@@ -86,13 +86,13 @@ where p.id=$P{ParEnv} and c.id= e.id_pais and p.id=e.id_proveedor order by e.id]
 				<text><![CDATA[Duración]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="395" y="6" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="bb9b23f1-0075-4849-be4a-8b2cadc158df">
+				<reportElement positionType="Float" mode="Opaque" x="409" y="6" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="bb9b23f1-0075-4849-be4a-8b2cadc158df">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
 					<pen lineColor="#707070"/>
 					<topPen lineWidth="1.0" lineColor="#707070"/>
-					<bottomPen lineWidth="1.0" lineColor="#707070"/>
+					<bottomPen lineWidth="0.0" lineColor="#707070"/>
 					<rightPen lineWidth="1.0" lineColor="#707070"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -101,7 +101,7 @@ where p.id=$P{ParEnv} and c.id= e.id_pais and p.id=e.id_proveedor order by e.id]
 				<text><![CDATA[Precio]]></text>
 			</staticText>
 			<textField>
-				<reportElement positionType="Float" mode="Opaque" x="32" y="6" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="a2100d5f-6bad-405c-abf3-afac90872485">
+				<reportElement positionType="Float" mode="Opaque" x="46" y="6" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="a2100d5f-6bad-405c-abf3-afac90872485">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
@@ -116,7 +116,7 @@ where p.id=$P{ParEnv} and c.id= e.id_pais and p.id=e.id_proveedor order by e.id]
 				<textFieldExpression><![CDATA["Método #"+$F{n_metodo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" mode="Opaque" x="295" y="35" width="100" height="30" forecolor="#707070" backcolor="#E3E3E3" uuid="8e643509-1e3d-4baa-bca1-6a54238274d8">
+				<reportElement positionType="Float" mode="Opaque" x="309" y="35" width="100" height="30" forecolor="#707070" backcolor="#E3E3E3" uuid="8e643509-1e3d-4baa-bca1-6a54238274d8">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<box>
@@ -131,7 +131,7 @@ where p.id=$P{ParEnv} and c.id= e.id_pais and p.id=e.id_proveedor order by e.id]
 				<textFieldExpression><![CDATA[$F{duracion_envio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement positionType="Float" mode="Opaque" x="395" y="35" width="100" height="30" forecolor="#707070" backcolor="#E3E3E3" uuid="67901aa1-f57c-4b99-8433-b3e9155ca2e2">
+				<reportElement positionType="Float" mode="Opaque" x="409" y="35" width="100" height="30" forecolor="#707070" backcolor="#E3E3E3" uuid="67901aa1-f57c-4b99-8433-b3e9155ca2e2">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<box>
