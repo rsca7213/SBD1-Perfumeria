@@ -2638,6 +2638,83 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["csrf"],
   data: function data() {
@@ -40444,7 +40521,7 @@ var render = function() {
                                     alt: "ver",
                                     width: "24",
                                     "data-toggle": "modal",
-                                    "data-target": "#modalInicDetProducto"
+                                    "data-target": "#modalAnualDetProducto"
                                   },
                                   on: {
                                     click: function($event) {
@@ -40484,7 +40561,7 @@ var render = function() {
                                     alt: "ver",
                                     width: "24",
                                     "data-toggle": "modal",
-                                    "data-target": "#modalInicDetProducto"
+                                    "data-target": "#modalAnualDetProducto"
                                   },
                                   on: {
                                     click: function($event) {
@@ -40881,7 +40958,7 @@ var render = function() {
                                   alt: "expandir",
                                   width: "24",
                                   "data-toggle": "modal",
-                                  "data-target": "#modalInicDetEnvio"
+                                  "data-target": "#modalAnualDetEnvio"
                                 },
                                 on: {
                                   click: function($event) {
@@ -41406,9 +41483,251 @@ var render = function() {
         )
       : _vm._e(),
     _vm._v(" "),
+    _vm.tipoEv === "anualStart"
+      ? _c(
+          "div",
+          {
+            staticClass: "modal fade",
+            attrs: {
+              id: "modalAnualDetEnvio",
+              tabindex: "-1",
+              role: "dialog",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "modal-dialog modal-dialog-centered",
+                attrs: { role: "document" }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "modal-content",
+                    staticStyle: { "background-color": "#F5F5F5" }
+                  },
+                  [
+                    _vm._m(37),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body h5 text-center" }, [
+                      _c(
+                        "table",
+                        {
+                          staticClass: "table table-striped border border-info"
+                        },
+                        [
+                          _vm._m(38),
+                          _vm._v(" "),
+                          _vm.provAnualData["envios"][_vm.indexDetEnvio][
+                            "detalles"
+                          ] != []
+                            ? _c(
+                                "tbody",
+                                _vm._l(
+                                  _vm.provAnualData["envios"][
+                                    _vm.indexDetEnvio
+                                  ]["detalles"],
+                                  function(det) {
+                                    return _c("tr", { key: det.id }, [
+                                      _c("td", [
+                                        _vm._v(" " + _vm._s(det["det"]) + " ")
+                                      ]),
+                                      _vm._v(" "),
+                                      det["duracion"] != 1 &&
+                                      det["duracion"] != -1
+                                        ? _c(
+                                            "td",
+                                            { staticClass: "text-right" },
+                                            [
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(det["duracion"]) +
+                                                  " días "
+                                              )
+                                            ]
+                                          )
+                                        : _c(
+                                            "td",
+                                            { staticClass: "text-right" },
+                                            [
+                                              _vm._v(
+                                                " " +
+                                                  _vm._s(det["duracion"]) +
+                                                  " día "
+                                              )
+                                            ]
+                                          ),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-right" }, [
+                                        _vm._v(
+                                          " " + _vm._s(det["precio"]) + " $ "
+                                        )
+                                      ])
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e()
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              ]
+            )
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.tipoEv === "anualStart"
+      ? _c(
+          "div",
+          {
+            staticClass: "modal fade",
+            attrs: {
+              id: "modalAnualDetProducto",
+              tabindex: "-1",
+              role: "dialog",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "modal-dialog modal-dialog-centered",
+                attrs: { role: "document" }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "modal-content",
+                    staticStyle: { "background-color": "#F5F5F5" }
+                  },
+                  [
+                    _vm._m(39),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body h5 text-center" }, [
+                      _vm.provAnualData["esencias"] != [] &&
+                      _vm.indexProducto[0] === "e"
+                        ? _c("span", [
+                            _c("h5", [
+                              _c("b", [
+                                _vm._v(
+                                  " " +
+                                    _vm._s(
+                                      _vm.provAnualData["esencias"][
+                                        _vm.indexProducto[1]
+                                      ]["ing"]
+                                    ) +
+                                    " "
+                                )
+                              ])
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.provAnualData["otros"] != [] &&
+                      _vm.indexProducto[0] === "o"
+                        ? _c("span", [
+                            _c("h5", [
+                              _c("b", [
+                                _vm._v(
+                                  " " +
+                                    _vm._s(
+                                      _vm.provAnualData["otros"][
+                                        _vm.indexProducto[1]
+                                      ]["ing"]
+                                    ) +
+                                    " "
+                                )
+                              ])
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c(
+                        "table",
+                        {
+                          staticClass: "table table-striped border border-info"
+                        },
+                        [
+                          _vm._m(40),
+                          _vm._v(" "),
+                          _vm.provAnualData["esencias"] != [] &&
+                          _vm.indexProducto[0] === "e"
+                            ? _c(
+                                "tbody",
+                                _vm._l(
+                                  _vm.provAnualData["esencias"][
+                                    _vm.indexProducto[1]
+                                  ]["pres"],
+                                  function(pres) {
+                                    return _c("tr", { key: pres.id }, [
+                                      _c("td", { staticClass: "text-right" }, [
+                                        _vm._v(
+                                          " " + _vm._s(pres["vol"]) + " ml "
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-right" }, [
+                                        _vm._v(
+                                          " " + _vm._s(pres["precio"]) + " $ "
+                                        )
+                                      ])
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.provAnualData["otros"] != [] &&
+                          _vm.indexProducto[0] === "o"
+                            ? _c(
+                                "tbody",
+                                _vm._l(
+                                  _vm.provAnualData["otros"][
+                                    _vm.indexProducto[1]
+                                  ]["pres"],
+                                  function(pres) {
+                                    return _c("tr", { key: pres.id }, [
+                                      _c("td", { staticClass: "text-right" }, [
+                                        _vm._v(
+                                          " " + _vm._s(pres["vol"]) + " ml "
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("td", { staticClass: "text-right" }, [
+                                        _vm._v(
+                                          " " + _vm._s(pres["precio"]) + " $ "
+                                        )
+                                      ])
+                                    ])
+                                  }
+                                ),
+                                0
+                              )
+                            : _vm._e()
+                        ]
+                      )
+                    ])
+                  ]
+                )
+              ]
+            )
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
     _vm.tipoEv === "resultadoInic"
       ? _c("span", [
-          _vm._m(37),
+          _vm._m(41),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
@@ -41436,22 +41755,22 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          parseInt(_vm.resultadoInicial["res"]) >=
-          parseInt(_vm.resultadoInicial["exito"])
+          parseFloat(_vm.resultadoInicial["res"]) >=
+          parseFloat(_vm.resultadoInicial["exito"])
             ? _c("span", { staticClass: "mt-4" }, [
-                _vm._m(38),
+                _vm._m(42),
                 _vm._v(" "),
-                _vm._m(39),
+                _vm._m(43),
                 _vm._v(" "),
-                _vm._m(40)
+                _vm._m(44)
               ])
-            : _c("span", [_vm._m(41), _vm._v(" "), _vm._m(42)])
+            : _c("span", [_vm._m(45), _vm._v(" "), _vm._m(46)])
         ])
       : _vm._e(),
     _vm._v(" "),
     _vm.tipoEv === "resultadoAnual"
       ? _c("span", [
-          _vm._m(43),
+          _vm._m(47),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
@@ -41481,7 +41800,7 @@ var render = function() {
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
-          _vm._m(44),
+          _vm._m(48),
           _vm._v(" "),
           _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
             _c("li", [
@@ -41537,16 +41856,16 @@ var render = function() {
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
-          parseInt(_vm.resultadoAnual["res"]) >=
-          parseInt(_vm.resultadoAnual["exito"])
+          parseFloat(_vm.resultadoAnual["res"]) >=
+          parseFloat(_vm.resultadoAnual["exito"])
             ? _c("span", { staticClass: "mt-4" }, [
-                _vm._m(45),
+                _vm._m(49),
                 _vm._v(" "),
-                _vm._m(46),
+                _vm._m(50),
                 _vm._v(" "),
-                _vm._m(47)
+                _vm._m(51)
               ])
-            : _c("span", [_vm._m(48), _vm._v(" "), _vm._m(49)])
+            : _c("span", [_vm._m(52), _vm._v(" "), _vm._m(53)])
         ])
       : _vm._e()
   ])
@@ -42004,6 +42323,86 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_c("b", [_vm._v(" Extra de Envío ")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-primary text-white" }, [
+      _c("th", { attrs: { scope: "col" } }, [_vm._v(" Nombre ")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+        _vm._v(" Duración ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+        _vm._v(" Precio ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_c("b", [_vm._v(" Presentaciones de Producto ")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-primary text-white" }, [
+      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+        _vm._v(" Volumen ")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+        _vm._v(" Precio ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row h5 justify-content-center" }, [
       _c("b", [_vm._v(" Evaluación Inicial ")])
     ])
@@ -42112,7 +42511,11 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row h6 mt-4 justify-content-center" }, [
-      _c("b", [_vm._v(" ¿Desea renovar el contrato con el proveedor? ")])
+      _c("b", [
+        _vm._v(
+          " ¿Desea renovar el contrato con el proveedor o generar un nuevo contrato? "
+        )
+      ])
     ])
   },
   function() {
@@ -42132,6 +42535,15 @@ var staticRenderFns = [
           _c("span", { staticClass: "ml-2" }, [_vm._v(" Rechazar ")])
         ]
       ),
+      _vm._v(" "),
+      _c("a", { staticClass: "btn btn-primary mx-2", attrs: { href: "#" } }, [
+        _c("img", {
+          staticClass: "mb-1",
+          attrs: { src: "/img/iconos/crear.svg", width: "24" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "ml-2" }, [_vm._v(" Crear contrato nuevo ")])
+      ]),
       _vm._v(" "),
       _c("a", { staticClass: "btn btn-primary mx-2", attrs: { href: "#" } }, [
         _c("img", {

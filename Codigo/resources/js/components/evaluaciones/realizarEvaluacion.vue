@@ -307,7 +307,7 @@
                                     <td class="text-center p-1 m-0"> 
                                         <img src="/img/iconos/list.svg" alt="ver" width="24" class="iconobtn" 
                                         @click="rellenarModalDetProducto('e',index)" data-toggle="modal"
-                                        data-target="#modalInicDetProducto">
+                                        data-target="#modalAnualDetProducto">
                                     </td>
                                 </tr>
                                 <tr v-for="(otro,index) in provAnualData['otros']" :key="otro.cas">
@@ -317,7 +317,7 @@
                                     <td class="text-center p-1 m-0"> 
                                         <img src="/img/iconos/list.svg" alt="ver" width="24" class="iconobtn"
                                         @click="rellenarModalDetProducto('o',index)" data-toggle="modal"
-                                        data-target="#modalInicDetProducto">
+                                        data-target="#modalAnualDetProducto">
                                     </td>
                                 </tr>
                             </tbody>
@@ -428,7 +428,7 @@
                                 <td class="text-center"> 
                                     <img src="/img/iconos/list.svg" alt="expandir" width="24" 
                                     class="iconobtn" @click="rellenarModalDetEnvio(index)" data-toggle="modal"
-                                    data-target="#modalInicDetEnvio">
+                                    data-target="#modalAnualDetEnvio">
                                 </td>
                             </tr>
                         </tbody>
@@ -492,7 +492,7 @@
             </form>
         </span>
 
-        <!-- Modal para mostrar los detalles de un metodo de envio -->
+        <!-- Modal para mostrar los detalles de un metodo de envio (ev inic) -->
         <div class="modal fade" id="modalInicDetEnvio" tabindex="-1" role="dialog" 
         aria-hidden="true" v-if="tipoEv === 'inicialStart'">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -524,7 +524,7 @@
             </div>
         </div>
 
-        <!-- Modal para mostrar los detalles de un producto -->
+        <!-- Modal para mostrar los detalles de un producto (ev inic) -->
         <div class="modal fade" id="modalInicDetProducto" tabindex="-1" role="dialog" 
         aria-hidden="true" v-if="tipoEv === 'inicialStart'">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -565,6 +565,79 @@
             </div>
         </div>
 
+        <!-- Modal para mostrar los detalles de un metodo de envio (ev anual) -->
+        <div class="modal fade" id="modalAnualDetEnvio" tabindex="-1" role="dialog" 
+        aria-hidden="true" v-if="tipoEv === 'anualStart'">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content" style="background-color: #F5F5F5">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"> <b> Extra de Envío </b> </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body h5 text-center">
+                    <table class="table table-striped border border-info">
+                        <thead class="bg-primary text-white">
+                            <th scope="col"> Nombre </th>
+                            <th scope="col" class="text-right"> Duración </th>
+                            <th scope="col" class="text-right"> Precio </th>
+                        </thead>
+                        <tbody v-if="provAnualData['envios'][indexDetEnvio]['detalles'] != []">
+                            <tr v-for="det in provAnualData['envios'][indexDetEnvio]['detalles']" :key="det.id"> 
+                                <td> {{ det["det"] }} </td>
+                                <td class="text-right" v-if="det['duracion'] != 1 && det['duracion'] != -1"> {{ det["duracion"]}} días </td>
+                                <td class="text-right" v-else> {{ det['duracion'] }} día </td>
+                                <td class="text-right"> {{ det["precio"] }} $ </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <!-- Modal para mostrar los detalles de un producto (ev anual) -->
+        <div class="modal fade" id="modalAnualDetProducto" tabindex="-1" role="dialog" 
+        aria-hidden="true" v-if="tipoEv === 'anualStart'">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content" style="background-color: #F5F5F5">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"> <b> Presentaciones de Producto </b> </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body h5 text-center">
+                    <span v-if="provAnualData['esencias'] != [] && indexProducto[0] === 'e'">
+                        <h5> <b> {{ provAnualData['esencias'][indexProducto[1]]["ing"] }} </b> </h5>
+                    </span>
+                    <span v-if="provAnualData['otros'] != [] && indexProducto[0] === 'o'">
+                        <h5> <b> {{ provAnualData['otros'][indexProducto[1]]["ing"] }} </b> </h5>
+                    </span>
+                    <table class="table table-striped border border-info">
+                        <thead class="bg-primary text-white">
+                            <th scope="col" class="text-right"> Volumen </th>
+                            <th scope="col" class="text-right"> Precio </th>
+                        </thead>
+                        <tbody v-if="provAnualData['esencias'] != [] && indexProducto[0] === 'e'">
+                            <tr v-for="pres in provAnualData['esencias'][indexProducto[1]]['pres']" :key="pres.id"> 
+                                <td class="text-right"> {{ pres["vol"] }} ml </td>
+                                <td class="text-right"> {{ pres["precio"] }} $ </td>
+                            </tr>
+                        </tbody>
+                        <tbody v-if="provAnualData['otros'] != [] && indexProducto[0] === 'o'">
+                            <tr v-for="pres in provAnualData['otros'][indexProducto[1]]['pres']" :key="pres.id"> 
+                                <td class="text-right"> {{ pres["vol"] }} ml </td>
+                                <td class="text-right"> {{ pres["precio"] }} $ </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+              </div>
+            </div>
+        </div>
+
         <!-- Resultados inicial -->
         <span v-if="tipoEv === 'resultadoInic'">
             <div class="row h5 justify-content-center"> 
@@ -583,7 +656,7 @@
                 <b> Resultado: </b> 
                 <span class="ml-1"> {{ resultadoInicial["res"] }} % </span>
             </div>
-            <span v-if="parseInt(resultadoInicial['res']) >= parseInt(resultadoInicial['exito'])" class="mt-4">
+            <span v-if="parseFloat(resultadoInicial['res']) >= parseFloat(resultadoInicial['exito'])" class="mt-4">
                 <div class="row h4 justify-content-center">
                     <img src="/img/iconos/check_green.svg" width="32">
                     <b class="ml-1 mt-1"> Aprobado </b> 
@@ -659,18 +732,22 @@
                 <li> {{ resultadoAnual["ex"] }} </li> 
             </div>
             <hr>
-            <span v-if="parseInt(resultadoAnual['res']) >= parseInt(resultadoAnual['exito'])" class="mt-4">
+            <span v-if="parseFloat(resultadoAnual['res']) >= parseFloat(resultadoAnual['exito'])" class="mt-4">
                 <div class="row h4 justify-content-center">
                     <img src="/img/iconos/check_green.svg" width="32">
                     <b class="ml-1 mt-1"> Aprobado </b> 
                 </div>
                 <div class="row h6 mt-4 justify-content-center">
-                    <b> ¿Desea renovar el contrato con el proveedor? </b> 
+                    <b> ¿Desea renovar el contrato con el proveedor o generar un nuevo contrato? </b> 
                 </div>
                 <div class="row justify-content-center">
                     <a href="realizar" class="btn btn-danger mx-2"> 
                         <img src="/img/iconos/cancel_white.svg" width="24" class="mb-1">
                         <span class="ml-2"> Rechazar </span>
+                    </a>
+                    <a href="#" class="btn btn-primary mx-2"> 
+                        <img src="/img/iconos/crear.svg" width="24" class="mb-1">
+                        <span class="ml-2"> Crear contrato nuevo </span>
                     </a>
                     <a href="#" class="btn btn-primary mx-2"> 
                         <img src="/img/iconos/renovar.svg" width="24" class="mb-1">
