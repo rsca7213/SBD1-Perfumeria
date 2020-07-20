@@ -268,7 +268,7 @@ class ContratosController extends Controller
         ),[$fecha,$id_prod]);
 
         $ingredientes_esencia=DB::select(DB::raw(
-            "SELECT dc.cas_ing_esencia AS i_cas, i.cas_ing_esencia AS cas, i.nombre AS i_nombre, i.naturaleza AS naturaleza, dc.precio AS precio, dc.descuento AS descuento 
+            "SELECT dc.cas_ing_esencia AS i_cas, i.cas_ing_esencia AS cas, i.nombre AS i_nombre, i.naturaleza AS naturaleza, dc.descuento AS descuento 
             FROM rdj_detalles_contratos dc, rdj_proveedores pv, rdj_ingredientes_esencias i, rdj_contratos c
             WHERE dc.fecha_apertura=? AND dc.id_productor=? AND dc.id_proveedor=pv.id AND dc.cas_ing_esencia=i.cas_ing_esencia AND c.fecha_apertura=dc.fecha_apertura     
             "
@@ -282,7 +282,7 @@ class ContratosController extends Controller
         ),[$id_prov]);
 
         $otros_ingredientes=DB::select(DB::raw(
-            "SELECT dc.cas_otro_ing AS cas, dc.cas_otro_ing AS o_cas, o.nombre AS o_nombre, dc.precio AS precio, dc.descuento AS descuento 
+            "SELECT dc.cas_otro_ing AS cas, dc.cas_otro_ing AS o_cas, o.nombre AS o_nombre, dc.descuento AS descuento 
             FROM rdj_detalles_contratos dc, rdj_proveedores pv, rdj_contratos c, rdj_otros_ingredientes o
             WHERE dc.fecha_apertura=? AND dc.id_productor=? AND dc.id_proveedor=pv.id AND dc.cas_otro_ing=o.cas_otro_ing AND c.fecha_apertura=dc.fecha_apertura     
             "
@@ -398,7 +398,7 @@ class ContratosController extends Controller
         ),[$fecha,$id_prov]);
 
         $otros_ingredientes=DB::select(DB::raw(
-            "SELECT dc.cas_otro_ing AS cas, dc.cas_otro_ing AS o_cas, o.nombre AS o_nombre, dc.precio AS precio, dc.descuento AS descuento 
+            "SELECT dc.cas_otro_ing AS cas, dc.cas_otro_ing AS o_cas, o.nombre AS o_nombre, dc.descuento AS descuento 
             FROM rdj_detalles_contratos dc, rdj_productores pd, rdj_contratos c, rdj_otros_ingredientes o
             WHERE dc.fecha_apertura=? AND dc.id_proveedor=? AND dc.id_productor=pd.id AND dc.cas_otro_ing=o.cas_otro_ing AND c.fecha_apertura=dc.fecha_apertura     
             "
@@ -525,7 +525,7 @@ class ContratosController extends Controller
         ),[$id_prov]);
 
         $otros_ingredientes=DB::select(DB::raw(
-            "SELECT dc.cas_otro_ing AS cas, dc.cas_otro_ing AS o_cas, o.nombre AS o_nombre, dc.precio AS precio, dc.descuento AS descuento 
+            "SELECT dc.cas_otro_ing AS cas, dc.cas_otro_ing AS o_cas, o.nombre AS o_nombre, dc.descuento AS descuento 
             FROM rdj_detalles_contratos dc, rdj_productores pd, rdj_otros_ingredientes o
             WHERE dc.fecha_apertura=? AND dc.id_proveedor=? AND dc.id_productor=pd.id AND dc.cas_otro_ing=o.cas_otro_ing     
             "
