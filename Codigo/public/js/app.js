@@ -2782,10 +2782,11 @@ __webpack_require__.r(__webpack_exports__);
 
       /* Variable que almacena los resultados que devuelve laravel
          luego de insertar los datos del resultado de la ev inicial */
-      resultadoAnual: []
+      resultadoAnual: [],
+
       /* Variable que almacena los resultados que devuelve laravel
            luego de insertar los datos del resultado de la ev anual */
-
+      generarLink: ""
     };
   },
 
@@ -2917,6 +2918,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log("%cAxios: Post!", "color: lightgreen");
         _this6.tipoEv = 'resultadoInic';
         _this6.resultadoInicial = response.data[0];
+        _this6.generarLink = "/productor/" + _this6.resultadoInicial["id_prod"] + "/contratos/generar/" + _this6.resultadoInicial["id_prov"];
       })["catch"](function (errors) {
         console.log("%cAxios: Error!", "color: #FFCCCB");
         console.log(errors);
@@ -41762,7 +41764,27 @@ var render = function() {
                 _vm._v(" "),
                 _vm._m(43),
                 _vm._v(" "),
-                _vm._m(44)
+                _c("div", { staticClass: "row justify-content-center" }, [
+                  _vm._m(44),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-primary mx-2",
+                      attrs: { href: _vm.generarLink }
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "mb-1",
+                        attrs: { src: "/img/iconos/crear.svg", width: "24" }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "ml-2" }, [
+                        _vm._v(" Generar contrato ")
+                      ])
+                    ]
+                  )
+                ])
               ])
             : _c("span", [_vm._m(45), _vm._v(" "), _vm._m(46)])
         ])
@@ -42429,29 +42451,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "a",
-        { staticClass: "btn btn-danger mx-2", attrs: { href: "realizar" } },
-        [
-          _c("img", {
-            staticClass: "mb-1",
-            attrs: { src: "/img/iconos/cancel_white.svg", width: "24" }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "ml-2" }, [_vm._v(" Rechazar ")])
-        ]
-      ),
-      _vm._v(" "),
-      _c("a", { staticClass: "btn btn-primary mx-2", attrs: { href: "#" } }, [
+    return _c(
+      "a",
+      { staticClass: "btn btn-danger mx-2", attrs: { href: "realizar" } },
+      [
         _c("img", {
           staticClass: "mb-1",
-          attrs: { src: "/img/iconos/crear.svg", width: "24" }
+          attrs: { src: "/img/iconos/cancel_white.svg", width: "24" }
         }),
         _vm._v(" "),
-        _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar contrato ")])
-      ])
-    ])
+        _c("span", { staticClass: "ml-2" }, [_vm._v(" Rechazar ")])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -56755,14 +56766,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************************!*\
   !*** ./resources/js/components/evaluaciones/realizarEvaluacion.vue ***!
   \*********************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _realizarEvaluacion_vue_vue_type_template_id_df6249f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./realizarEvaluacion.vue?vue&type=template&id=df6249f4&scoped=true& */ "./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4&scoped=true&");
 /* harmony import */ var _realizarEvaluacion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./realizarEvaluacion.vue?vue&type=script&lang=js& */ "./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _realizarEvaluacion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _realizarEvaluacion_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -56792,7 +56804,7 @@ component.options.__file = "resources/js/components/evaluaciones/realizarEvaluac
 /*!**********************************************************************************************!*\
   !*** ./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

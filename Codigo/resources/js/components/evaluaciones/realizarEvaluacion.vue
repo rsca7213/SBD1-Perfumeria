@@ -669,7 +669,7 @@
                         <img src="/img/iconos/cancel_white.svg" width="24" class="mb-1">
                         <span class="ml-2"> Rechazar </span>
                     </a>
-                    <a href="#" class="btn btn-primary mx-2"> 
+                    <a :href="generarLink" class="btn btn-primary mx-2"> 
                         <img src="/img/iconos/crear.svg" width="24" class="mb-1">
                         <span class="ml-2"> Generar contrato </span>
                     </a>
@@ -836,6 +836,8 @@ export default {
 
             resultadoAnual: [], /* Variable que almacena los resultados que devuelve laravel
                                      luego de insertar los datos del resultado de la ev anual */
+
+            generarLink: ""
         }
     },
 
@@ -971,7 +973,7 @@ export default {
                 console.log("%cAxios: Post!", "color: lightgreen");
                 this.tipoEv = 'resultadoInic';
                 this.resultadoInicial = response.data[0];
-
+                this.generarLink = "/productor/" + this.resultadoInicial["id_prod"] + "/contratos/generar/" + this.resultadoInicial["id_prov"];
                 
             })
             .catch(errors => {
