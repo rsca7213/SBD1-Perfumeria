@@ -10,7 +10,7 @@
     </li>
     <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 
-        <a href="#" class="nav-item"> Contratos </a> 
+        <a href="{{ route('verContratos', ['id_prod' => $id_prod]) }}" class="nav-item"> Contratos </a> 
     </li>
     <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 

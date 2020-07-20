@@ -56,6 +56,19 @@ Route::post('/productor/{id_prod}/evaluaciones/anual', 'EvaluacionesController@g
 /* Rutas referentes a la confirmación de acción de generación o renovación de contrato */
 Route::get('/productor/{id_prod}/evaluaciones/confirmar', 'EvaluacionesController@confirmacionContrato');
 
+/* Rutas referentes a los contratos*/
+/*Porductor*/
+Route::get('/productor/{id_prod}/contratos', 'ContratosController@verContratos')->name('verContratos');
+Route::get('/productor/{id_prod}/contratos/generar/{id_prov}', 'ContratosController@generarContrato')->name('generarContrato');
+Route::post('/productor/{id_prod}/contratos/generar/{id_prov}', 'ContratosController@insertContrato');
+Route::get('/productor/{id_prod}/contratos/detalle/{id_prov}/{fecha}', 'ContratosController@detalleContrato');
+Route::delete('/productor/{id_prod}/contratos/cancelar/{fecha}', 'ContratosController@cancelarContrato');
+/*Proveedor*/
+Route::get('/proveedor/{id_prov}/contratos', 'ContratosController@verContratosPv')->name('verContratosPv');
+Route::get('/proveedor/{id_prov}/contratos/confirmar/{id_prod}/{fecha}', 'ContratosController@confirmarContratoPv');
+Route::post('/proveedor/{id_prov}/contratos/aceptar/{fecha}', 'ContratosController@aceptarContratoPv');
+Route::get('/proveedor/{id_prov}/contratos/rechazar/{fecha}', 'ContratosController@rechazarContratoPv');
+Route::get('/proveedor/{id_prov}/contratos/detalle/{id_prod}/{fecha}', 'ContratosController@detalleContratoPv');
 
 /* Ruta de pagina de inicio */
 Route::get('/', function () {

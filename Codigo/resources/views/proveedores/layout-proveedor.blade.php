@@ -18,19 +18,19 @@
         <div id="app">
             <nav class="navbar navbar-expand-lg navbar-light shadow" style="background-color: #F5F5F5">
                 <a href="{{ url('/') }}" class="navbar-brand mx-4 pr-4">
-                    @if ($id_prov == 1)
+                    @if ($id_prov == 5)
                         <img src="{{ asset('img/empresas/emerald.png') }}" alt="Emerald Performance Materials" width="270">
                     @endif
-                    @if ($id_prov == 2)
+                    @if ($id_prov == 1)
                         <img src="{{ asset('img/empresas/firmenich.png') }}" alt="Firmenich" width="135">
                     @endif
-                    @if ($id_prov == 3)
+                    @if ($id_prov == 4)
                         <img src="{{ asset('img/empresas/indesso.png') }}" alt="Indesso" width="150">
                     @endif
-                    @if ($id_prov == 4)
+                    @if ($id_prov == 3)
                         <img src="{{ asset('img/empresas/privi.png') }}" alt="Privi Organics" width="140">
                     @endif
-                    @if ($id_prov == 5)
+                    @if ($id_prov == 2)
                         <img src="{{ asset('img/empresas/keva.png') }}" alt="Kelhar & Co" width="70">
                     @endif
                     @if ($id_prov == 6)
