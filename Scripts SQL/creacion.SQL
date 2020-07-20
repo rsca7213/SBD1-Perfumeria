@@ -841,18 +841,18 @@ FROM rdj_proveedores p, rdj_paises pa, rdj_metodos_envios m WHERE p.id=m.id_prov
 ORDER BY p.nombre,pa.nombre;
 
 /* Vista para ver los metodos de pago de los proveedores */
-CREATE VIEW rdj_vista_metpago (proveedor,tipo,numero_cuotas, pago_cada_x_meses) AS
+CREATE VIEW rdj_vista_metpago (proveedor,tipo,numero_cuotas,porcentaje,pago_cada_x_meses) AS
 SELECT p.nombre, CASE WHEN m.tipo = 'c' THEN 'completo' ELSE 'parcial' END,
 COALESCE(to_char(m.num_cuotas,'9'),'N/A'), COALESCE(to_char(m.porcentaje,'999'),'N/A'),
 COALESCE(to_char(m.meses,'99'),'N/A') FROM rdj_metodos_pagos m, rdj_proveedores p 
 WHERE p.id=m.id_proveedor ORDER BY p.nombre,m.tipo;
 
 /* Vista para ver proveedores con su asociacion respectiva y su membresia ifra */
-CREATE VIEW rdj_vista_prov (proveedor,fecha_inicio,fecha_fin,asociacion,pais_asociacion) AS
+CREATE VIEW rdj_vista_prov (proveedor,fecha_inicio,fecha_fin,asociacion,pais) AS
 SELECT prov.nombre, to_char(m.fecha_inicio,'dd-mm-yyyy'), COALESCE(to_char(m.fecha_fin,'dd-mm-yyyy'),'vigente'), 
-COALESCE(a.nombre,'N/A'), COALESCE(pa.nombre,'N/A') FROM rdj_miembros_ifra m, rdj_proveedores prov 
-LEFT OUTER JOIN rdj_asociaciones a ON a.id=prov.id_asociacion LEFT OUTER JOIN rdj_paises pa 
-ON pa.id_asociacion=a.id WHERE m.id_proveedor=prov.id ORDER BY m.fecha_inicio;
+COALESCE(a.nombre,'N/A'), pa.nombre AS pais FROM rdj_miembros_ifra m, rdj_paises pa, rdj_proveedores prov
+LEFT OUTER JOIN rdj_asociaciones a ON a.id=prov.id_asociacion
+WHERE m.id_proveedor=prov.id AND prov.id_pais=pa.id ORDER BY m.fecha_inicio;
 
 /* Vista para ver detalles de metodos de envios */
 CREATE VIEW rdj_vista_detenvio (proveedor,pais,id_envio,modificador,tipo,precio,duracion) AS
@@ -886,15 +886,29 @@ SELECT fa.nombre, pa.palabra FROM rdj_familias_olfativas fa,
 rdj_palabras_claves pa, rdj_familias_palabras fp
 WHERE fp.id_familia=fa.id AND fp.id_palabra=pa.id ORDER BY fa.id;
 
+/* Vista para ver las presentaciones de los ingredientes esencias */
 CREATE VIEW rdj_vista_presents_esencias (proveedor,esencia,cas,vol,precio) AS
 SELECT p.nombre, ing.nombre, ing.cas_ing_esencia, pr.volumen || ' ml', 
 pr.precio || ' $' FROM rdj_ingredientes_esencias ing, rdj_presents_ings_esencias pr,
 rdj_proveedores p WHERE p.id=ing.id_proveedor AND pr.cas_ing_esencia=ing.cas_ing_esencia 
 ORDER BY p.id,ing.cas_ing_esencia;
 
-
+/* Vista para ver las presentaciones de los otros ingredientes */
 CREATE VIEW rdj_vista_presents_otros (proveedor,otroing,cas,vol,precio) AS
 SELECT p.nombre, ing.nombre, ing.cas_otro_ing, pr.volumen || ' ml', pr.precio || ' $' 
 FROM rdj_otros_ingredientes ing, rdj_present_otros_ings pr,
 rdj_proveedores p WHERE p.id=ing.id_proveedor AND
 pr.cas_otro_ing=ing.cas_otro_ing ORDER BY p.id,ing.cas_otro_ing;
+
+/* Vista para ver las formulas */
+CREATE VIEW rdj_vista_formulas (productor,criterio,fecha_inicio,peso,tipo,fecha_fin) AS
+SELECT p.nombre, c.nombre, to_char(h.fecha_inicio,'dd/mm/yyyy'), to_char(h.peso,'99.99') || '%', 
+CASE WHEN h.tipo='i' THEN 'inicial' WHEN h.tipo='a' THEN 'anual' END, 
+COALESCE(to_char(h.fecha_fin,'dd/mm/yyyy'),'N/A') FROM rdj_productores p, rdj_hist_formulas h,
+rdj_criterios c WHERE c.id=h.id_criterio AND p.id=h.id_productor ORDER BY p.id,h.tipo,c.id;
+
+/* Vista para ver las escalas */
+CREATE VIEW rdj_vista_escalas (productor,fecha_inicio,rango_i,rango_f,fecha_fin) AS
+SELECT p.nombre, to_char(e.fecha_inicio,'dd/mm/yyyy'), to_char(e.rango_inicio,'999') || 'pts', to_char(e.rango_fin,'999') || 'pts', 
+COALESCE(to_char(e.fecha_fin,'dd/mm/yyyy'),'N/A') FROM rdj_productores p, rdj_escalas e
+WHERE p.id=e.id_productor ORDER BY p.id;
