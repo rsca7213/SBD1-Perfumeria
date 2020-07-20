@@ -57,41 +57,6 @@
                                             <td><b>{{$contrato->prov}}</b></td>
                                             <td>
                                                 <a href="/productor/{{$id_prod}}/contratos/detalle/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="btn btn-primary">Detalles</a>
-                                                <a href="#" class="btn btn-success">Renovar</a>
-                                                <a href="#" data-toggle="modal" data-target="#Cancelar" class="btn btn-danger">Cancelar</a>
-
-                                                <!-- Modal para cancelar Contrato -->
-                                                <div class="modal fade" id="Cancelar" tabindex="-1" role="dialog" aria-hidden="true">
-                                                    <div class="modal-dialog modal-dialog-centered" role="document">
-                                                        <div class="modal-content" style="background-color: #F5F5F5">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel"> <b> Cancelar Contrato </b> </h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                        <div class="modal-body h5 text-center">
-                                                            <b> ¿Está seguro que desea cancelar el contrato?<br>Explique sus razones de cancelación si así lo desea </b>
-                                                        </div>
-                                                        <div class="modal-footer text-center justify-content-center">
-                                                            <form action="/productor/{{$id_prod}}/contratos/cancelar/{{$contrato->fecha}}" method="POST">
-                                                                @method('DELETE')
-                                                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                                <div class="form-group">
-                                                                    <textarea class="form-control" id="razon" name="razon" rows="10" cols="80"></textarea>
-                                                                </div>
-                                                                <div class="form-group">
-                                                                    <button type="submit" class="btn btn-danger">
-                                                                        <img src="{{ asset('img/iconos/trash_white.svg') }}" alt="borrar" width="24" class="mb-1">
-                                                                        <span class="ml-2"> Cancelar Contrato </span>
-                                                                    </button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- Final Modal para cancelar Contrato -->
-
                                             </td>
                                         </tr> 
                                     @endforeach
@@ -135,12 +100,6 @@
                     </div>
                     {{-- Final Contratos no vigentes --}}
                 </div>
-                <div class="row d-flex justify-content-center mt-4"> 
-                    <a href="#" data-toggle="modal" data-target="#Generar" class="btn btn-primary mb-4"> 
-                        <img src="{{ asset('img/iconos/add_white.svg') }}" alt="agregar" width="24">
-                        Generar Contrato 
-                    </a>
-                </div>
             </div>
             <div class="card-footer bg-primary text-white">
                 <a href="{{ route('menuProductor', ['id_prod' => $id_prod]) }}">
@@ -151,59 +110,5 @@
         </div>
     </div>
 </div>
-
-<!-- Modal para generar Contrato -->
-<div class="modal fade" id="Generar" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content" style="background-color: #F5F5F5">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> <b> Generar Contrato </b> </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        <div class="modal-body h5 text-center">
-            <b> Escoja al proveedor a contratar </b>
-            <br>
-            @foreach ($proveedores as $proveedor)
-                <br>
-                @switch($proveedor->id_prov)
-                    @case(1)
-                        <a href="/productor/{{$id_prod}}/contratos/generar/{{$proveedor->id_prov}}">
-                            <img src=" {{ asset('img/empresas/firmenich.png') }}" width="150" alt="Firmenich" >
-                        </a>
-                        @break
-                    @case(2)
-                        <a href="/productor/{{$id_prod}}/contratos/generar/{{$proveedor->id_prov}}">
-                            <img src=" {{ asset('img/empresas/keva.png') }}" width="100" alt="Kelhar & Co" >
-                        </a>
-                        @break
-                    @case(3)
-                        <a href="/productor/{{$id_prod}}/contratos/generar/{{$proveedor->id_prov}}">
-                            <img src=" {{ asset('img/empresas/privi.png') }}" width="150" alt="Privi Organics" >
-                        </a>
-                        @break
-                    @case(4)
-                        <a href="/productor/{{$id_prod}}/contratos/generar/{{$proveedor->id_prov}}">
-                            <img src=" {{ asset('img/empresas/indesso.png') }}" width="150" alt="Indesso" >
-                        </a>
-                        @break
-                    @case(5)
-                        <a href="/productor/{{$id_prod}}/contratos/generar/{{$proveedor->id_prov}}">
-                            <img src=" {{ asset('img/empresas/emerald.png') }}" width="150" alt="Emerald Performance Materials" >
-                        </a>
-                        @break
-                    @case(6)
-                        <a href="/productor/{{$id_prod}}/contratos/generar/{{$proveedor->id_prov}}">
-                            <img src=" {{ asset('img/empresas/prinova.png') }}" width="150" alt="Prinova Group" >
-                        </a>
-                        @break
-                @endswitch
-                <br>
-            @endforeach
-        </div>
-    </div>
-</div>
-<!-- Final Modal para generar Contrato -->
 
 @endsection

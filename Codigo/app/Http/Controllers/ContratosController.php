@@ -45,10 +45,17 @@ class ContratosController extends Controller
     public function generarContrato($id_prod,$id_prov){
 
         $detallesIng=DB::select(DB::raw(
-            "SELECT i.cas_ing_esencia AS i_cas, i.cas_ing_esencia AS cas, i.nombre AS i_nombre, pv.nombre AS prov  
-            FROM rdj_ingredientes_esencias i, rdj_proveedores pv 
+            "SELECT i.cas_ing_esencia AS i_cas, i.cas_ing_esencia AS cas, i.nombre AS i_nombre, i.naturaleza AS naturaleza, pv.nombre AS prov  
+            FROM rdj_ingredientes_esencias i, rdj_proveedores pv
             WHERE i.id_proveedor=? AND pv.id=i.id_proveedor
-            "
+            ORDER BY i.cas_ing_esencia, i.nombre, i.naturaleza, pv.nombre"
+        ),[$id_prov]);
+
+        $presentIng=DB::select(DB::raw(
+            "SELECT i.cas_ing_esencia AS i_cas, i.nombre AS i_nombre, pie.volumen AS volumen, pie.precio AS precio, pv.nombre AS prov  
+            FROM rdj_ingredientes_esencias i, rdj_proveedores pv, rdj_presents_ings_esencias pie
+            WHERE i.id_proveedor=? AND pv.id=i.id_proveedor AND pie.cas_ing_esencia=i.cas_ing_esencia
+            ORDER BY i.cas_ing_esencia, i.nombre, pie.volumen, pie.precio, pv.nombre"
         ),[$id_prov]);
 
         $ingredientes_exclusivos=DB::select(DB::raw(
@@ -69,13 +76,18 @@ class ContratosController extends Controller
             $detallesIng=array_values($detallesIng);
         }
 
-        // dd($detallesIng);
-
         $detallesOIng=DB::select(DB::raw(
             "SELECT o.cas_otro_ing AS o_cas, o.cas_otro_ing AS cas, o.nombre AS o_nombre, pv.nombre AS prov  
             FROM rdj_otros_ingredientes o, rdj_proveedores pv 
             WHERE o.id_proveedor=? AND pv.id=o.id_proveedor  
             "
+        ),[$id_prov]);
+
+        $presentOIng=DB::select(DB::raw(
+            "SELECT o.cas_otro_ing AS o_cas, o.cas_otro_ing AS cas, o.nombre AS o_nombre, pv.nombre AS prov, poi.volumen AS volumen, poi.precio AS precio  
+            FROM rdj_otros_ingredientes o, rdj_proveedores pv, rdj_present_otros_ings poi 
+            WHERE o.id_proveedor=? AND pv.id=o.id_proveedor AND poi.cas_otro_ing=o.cas_otro_ing
+            ORDER BY o.cas_otro_ing, o.nombre, poi.volumen, poi.precio, pv.nombre"
         ),[$id_prov]);
 
         $otros_ingredientes_exclusivos=DB::select(DB::raw(
@@ -97,11 +109,18 @@ class ContratosController extends Controller
         }
 
         $detallesMEnvio=DB::select(DB::raw(
-            "SELECT pv.nombre AS prov, me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, me.id AS id, p.nombre AS pais   
+            "SELECT pv.nombre AS prov, me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, me.id AS id, p.nombre AS pais, me.id AS id   
             FROM rdj_metodos_envios me, rdj_proveedores pv, rdj_paises p, rdj_productores_paises pp
             WHERE me.id_proveedor=? AND pv.id=me.id_proveedor AND me.id_pais=p.id AND pp.id_productor=? AND pp.id_pais=me.id_pais  
             "
         ),[$id_prov,$id_prod]);
+
+        $extrasMEnvio=DB::select(DB::raw(
+            "SELECT dme.id AS id, dme.nombre AS nombre, dme.mod_precio AS precio, dme.mod_duracion AS duracion, dme.id_envio AS id_envio    
+            FROM rdj_metodos_envios me, rdj_proveedores pv, rdj_paises p, rdj_productores_paises pp, rdj_detalles_metodos_envios dme
+            WHERE dme.id_envio=me.id AND dme.id_proveedor=?
+            GROUP BY dme.id, dme.nombre, dme.mod_precio, dme.mod_duracion, dme.id_envio ORDER BY dme.id"
+        ),[$id_prov]);
 
         $detallesMPago=DB::select(DB::raw(
             "SELECT pv.nombre AS prov, pa.tipo AS tipo, pa.num_cuotas AS cuotas, pa.id AS id, pa.meses AS meses, pa.porcentaje AS porcentaje    
@@ -122,8 +141,11 @@ class ContratosController extends Controller
             'id_prod' => $id_prod,
             'id_prov' => $id_prov,
             'detallesIng' => $detallesIng,
+            'presentIng' => $presentIng,
+            'presentOIng' => $presentOIng,
             'detallesOIng' => $detallesOIng,
             'detallesMEnvio' => $detallesMEnvio,
+            'extrasMEnvio' => $extrasMEnvio,
             'detallesMPago' => $detallesMPago,
         ]);
 
@@ -202,10 +224,17 @@ class ContratosController extends Controller
 
                     for($i=0; $i<count($request->input('metodos_envio')); $i++){
 
+                        $pais=DB::select(DB::raw(
+                            "SELECT me.id_pais AS id  
+                            FROM rdj_metodos_envios me 
+                            WHERE me.id=? 
+                            "
+                        ),[$metodos_envio[$i]]);
+
                         DB::insert(DB::raw(
-                            "INSERT INTO rdj_metodos_contratos (id,fecha_cont,id_proveedor,id_productor,id_envio,id_prov_envio)VALUES
-                            (nextval('rdj_metodo_contrato_sec'),?,?,?,?,?);"
-                        ),[$time,$id_prov,$id_prod,$metodos_envio[$i],$id_prov]);
+                            "INSERT INTO rdj_metodos_contratos (id,fecha_cont,id_proveedor,id_productor,id_envio,id_prov_envio,id_pais_envio)VALUES
+                            (nextval('rdj_metodo_contrato_sec'),?,?,?,?,?,?);"
+                        ),[$time,$id_prov,$id_prod,$metodos_envio[$i],$id_prov,$pais[0]->id]);
 
                     }
 
@@ -235,29 +264,50 @@ class ContratosController extends Controller
             "SELECT dc.fecha_apertura AS fecha, pv.nombre AS prod, dc.id_proveedor AS id_prov, c.exclusivo AS exc, c.cancelacion AS cancel, c.razon_cierre AS razon 
             FROM rdj_detalles_contratos dc, rdj_proveedores pv, rdj_contratos c
             WHERE dc.fecha_apertura=? AND dc.id_productor=? AND dc.id_proveedor=pv.id AND c.fecha_apertura=dc.fecha_apertura      
-            "
+            GROUP BY dc.fecha_apertura, pv.nombre, dc.id_proveedor, c.exclusivo, c.cancelacion, c.razon_cierre"
         ),[$fecha,$id_prod]);
 
         $ingredientes_esencia=DB::select(DB::raw(
-            "SELECT dc.cas_ing_esencia AS cas, i.nombre AS i_nombre, dc.precio AS precio, dc.descuento AS descuento 
+            "SELECT dc.cas_ing_esencia AS i_cas, i.cas_ing_esencia AS cas, i.nombre AS i_nombre, i.naturaleza AS naturaleza, dc.precio AS precio, dc.descuento AS descuento 
             FROM rdj_detalles_contratos dc, rdj_proveedores pv, rdj_ingredientes_esencias i, rdj_contratos c
             WHERE dc.fecha_apertura=? AND dc.id_productor=? AND dc.id_proveedor=pv.id AND dc.cas_ing_esencia=i.cas_ing_esencia AND c.fecha_apertura=dc.fecha_apertura     
             "
         ),[$fecha,$id_prod]);
 
+        $presentIng=DB::select(DB::raw(
+            "SELECT i.cas_ing_esencia AS i_cas, i.nombre AS i_nombre, pie.volumen AS volumen, pie.precio AS precio, pv.nombre AS prov  
+            FROM rdj_ingredientes_esencias i, rdj_proveedores pv, rdj_presents_ings_esencias pie
+            WHERE i.id_proveedor=? AND pv.id=i.id_proveedor AND pie.cas_ing_esencia=i.cas_ing_esencia
+            ORDER BY i.cas_ing_esencia, i.nombre, pie.volumen, pie.precio, pv.nombre"
+        ),[$id_prov]);
+
         $otros_ingredientes=DB::select(DB::raw(
-            "SELECT dc.cas_otro_ing AS cas, o.nombre AS o_nombre, dc.precio AS precio, dc.descuento AS descuento 
+            "SELECT dc.cas_otro_ing AS cas, dc.cas_otro_ing AS o_cas, o.nombre AS o_nombre, dc.precio AS precio, dc.descuento AS descuento 
             FROM rdj_detalles_contratos dc, rdj_proveedores pv, rdj_contratos c, rdj_otros_ingredientes o
             WHERE dc.fecha_apertura=? AND dc.id_productor=? AND dc.id_proveedor=pv.id AND dc.cas_otro_ing=o.cas_otro_ing AND c.fecha_apertura=dc.fecha_apertura     
             "
         ),[$fecha,$id_prod]);
 
+        $presentOIng=DB::select(DB::raw(
+            "SELECT o.cas_otro_ing AS o_cas, o.cas_otro_ing AS cas, o.nombre AS o_nombre, pv.nombre AS prov, poi.volumen AS volumen, poi.precio AS precio  
+            FROM rdj_otros_ingredientes o, rdj_proveedores pv, rdj_present_otros_ings poi 
+            WHERE o.id_proveedor=? AND pv.id=o.id_proveedor AND poi.cas_otro_ing=o.cas_otro_ing
+            ORDER BY o.cas_otro_ing, o.nombre, poi.volumen, poi.precio, pv.nombre"
+        ),[$id_prov]);
+
         $metodo_envio=DB::select(DB::raw(
-            "SELECT me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, p.nombre AS pais   
+            "SELECT me.id AS id, me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, p.nombre AS pais   
             FROM rdj_metodos_envios me, rdj_metodos_contratos mc, rdj_contratos c, rdj_paises p
             WHERE mc.fecha_cont=c.fecha_apertura AND mc.fecha_cont=? AND mc.id_proveedor=? AND mc.id_productor=? AND me.id=mc.id_envio AND p.id=me.id_pais   
             "
         ),[$fecha,$id_prov,$id_prod]);
+
+        $extrasMEnvio=DB::select(DB::raw(
+            "SELECT dme.id AS id, dme.nombre AS nombre, dme.mod_precio AS precio, dme.mod_duracion AS duracion, dme.id_envio AS id_envio    
+            FROM rdj_metodos_envios me, rdj_proveedores pv, rdj_paises p, rdj_productores_paises pp, rdj_detalles_metodos_envios dme
+            WHERE dme.id_envio=me.id AND dme.id_proveedor=?
+            GROUP BY dme.id, dme.nombre, dme.mod_precio, dme.mod_duracion, dme.id_envio ORDER BY dme.id"
+        ),[$id_prov]);
 
         $metodo_pago=DB::select(DB::raw(
             "SELECT mp.tipo AS tipo, mp.num_cuotas AS cuotas, mp.porcentaje AS porcentaje, mp.meses AS meses    
@@ -274,13 +324,18 @@ class ContratosController extends Controller
             $detalle->cas=Controller::stringifyCas($detalle->cas);
         }
 
+        // dd($detalles);
+
         return view('productores.contratos.detalle-contrato',[
             'id_prod' => $id_prod,
             'id_prov' => $id_prov,
             'detalles' => $detalles,
+            'presentIng' => $presentIng,
+            'presentOIng' => $presentOIng,
             'ingredientes_esencia' => $ingredientes_esencia,
             'otros_ingredientes' => $otros_ingredientes,
             'metodo_envio' => $metodo_envio,
+            'extrasMEnvio' => $extrasMEnvio,
             'metodo_pago' => $metodo_pago,
         ]);
 
@@ -336,7 +391,7 @@ class ContratosController extends Controller
         ),[$fecha,$id_prov]);
 
         $ingredientes_esencia=DB::select(DB::raw(
-            "SELECT dc.cas_ing_esencia AS cas, dc.cas_ing_esencia AS i_cas, i.nombre AS i_nombre, dc.precio AS precio, dc.descuento AS descuento 
+            "SELECT dc.cas_ing_esencia AS cas, dc.cas_ing_esencia AS i_cas, i.nombre AS i_nombre, i.naturaleza AS naturaleza 
             FROM rdj_detalles_contratos dc, rdj_productores pd, rdj_ingredientes_esencias i, rdj_contratos c
             WHERE dc.fecha_apertura=? AND dc.id_proveedor=? AND dc.id_productor=pd.id AND dc.cas_ing_esencia=i.cas_ing_esencia AND c.fecha_apertura=dc.fecha_apertura     
             "
@@ -350,11 +405,18 @@ class ContratosController extends Controller
         ),[$fecha,$id_prov]);
 
         $metodo_envio=DB::select(DB::raw(
-            "SELECT me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, p.nombre AS pais   
+            "SELECT me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, p.nombre AS pais, me.id AS id   
             FROM rdj_metodos_envios me, rdj_metodos_contratos mc, rdj_contratos c, rdj_paises p
             WHERE mc.fecha_cont=c.fecha_apertura AND mc.fecha_cont=? AND mc.id_proveedor=? AND mc.id_productor=? AND me.id=mc.id_envio AND p.id=me.id_pais   
             "
         ),[$fecha,$id_prov,$id_prod]);
+
+        $extrasMEnvio=DB::select(DB::raw(
+            "SELECT dme.id AS id, dme.nombre AS nombre, dme.mod_precio AS precio, dme.mod_duracion AS duracion, dme.id_envio AS id_envio    
+            FROM rdj_metodos_envios me, rdj_proveedores pv, rdj_paises p, rdj_productores_paises pp, rdj_detalles_metodos_envios dme
+            WHERE dme.id_envio=me.id AND dme.id_proveedor=?
+            GROUP BY dme.id, dme.nombre, dme.mod_precio, dme.mod_duracion, dme.id_envio ORDER BY dme.id"
+        ),[$id_prov]);
 
         $metodo_pago=DB::select(DB::raw(
             "SELECT mp.tipo AS tipo, mp.num_cuotas AS cuotas, mp.porcentaje AS porcentaje, mp.meses AS meses    
@@ -381,6 +443,7 @@ class ContratosController extends Controller
             'ingredientes_esencia' => $ingredientes_esencia,
             'otros_ingredientes' => $otros_ingredientes,
             'metodo_envio' => $metodo_envio,
+            'extrasMEnvio' => $extrasMEnvio,
             'metodo_pago' => $metodo_pago,
         ]);
     }
@@ -399,7 +462,12 @@ class ContratosController extends Controller
                 $descuentos=$i_descuentos;
             }
         }
-
+        foreach($descuentos as $descuento){
+            if($descuento<0 || $descuento>100){
+                return back()->with('mensaje', 'Los porcentajes deben estar en un rango de 0% a 100%');
+            }
+        }
+        
         $id_detalle=DB::select(DB::raw(
             "SELECT dc.id AS id  
             FROM rdj_detalles_contratos dc 
@@ -443,26 +511,46 @@ class ContratosController extends Controller
         ),[$fecha,$id_prov]);
         
         $ingredientes_esencia=DB::select(DB::raw(
-            "SELECT dc.fecha_apertura AS fecha, pd.nombre AS prod, dc.id_productor AS id_prod, dc.cas_ing_esencia AS cas, i.nombre AS i_nombre, 
-                    c.exclusivo AS exc, dc.precio AS precio, dc.descuento AS descuento, c.cancelacion AS cancel, c.razon_cierre AS razon 
-            FROM rdj_detalles_contratos dc, rdj_productores pd, rdj_ingredientes_esencias i, rdj_contratos c
-            WHERE dc.fecha_apertura=? AND dc.id_proveedor=? AND dc.id_productor=pd.id AND dc.cas_ing_esencia=i.cas_ing_esencia AND c.fecha_apertura=dc.fecha_apertura     
+            "SELECT dc.cas_ing_esencia AS cas, dc.cas_ing_esencia AS i_cas, i.nombre AS i_nombre, dc.descuento AS descuento, i.naturaleza AS naturaleza
+            FROM rdj_detalles_contratos dc, rdj_productores pd, rdj_ingredientes_esencias i
+            WHERE dc.fecha_apertura=? AND dc.id_proveedor=? AND dc.id_productor=pd.id AND dc.cas_ing_esencia=i.cas_ing_esencia     
             "
         ),[$fecha,$id_prov]);
+
+        $presentIng=DB::select(DB::raw(
+            "SELECT i.cas_ing_esencia AS i_cas, i.nombre AS i_nombre, pie.volumen AS volumen, pie.precio AS precio, pv.nombre AS prov  
+            FROM rdj_ingredientes_esencias i, rdj_proveedores pv, rdj_presents_ings_esencias pie
+            WHERE i.id_proveedor=? AND pv.id=i.id_proveedor AND pie.cas_ing_esencia=i.cas_ing_esencia
+            ORDER BY i.cas_ing_esencia, i.nombre, pie.volumen, pie.precio, pv.nombre"
+        ),[$id_prov]);
 
         $otros_ingredientes=DB::select(DB::raw(
-            "SELECT dc.cas_otro_ing AS cas, o.nombre AS o_nombre, dc.precio AS precio, dc.descuento AS descuento 
-            FROM rdj_detalles_contratos dc, rdj_productores pd, rdj_contratos c, rdj_otros_ingredientes o
-            WHERE dc.fecha_apertura=? AND dc.id_proveedor=? AND dc.id_productor=pd.id AND dc.cas_otro_ing=o.cas_otro_ing AND c.fecha_apertura=dc.fecha_apertura     
+            "SELECT dc.cas_otro_ing AS cas, dc.cas_otro_ing AS o_cas, o.nombre AS o_nombre, dc.precio AS precio, dc.descuento AS descuento 
+            FROM rdj_detalles_contratos dc, rdj_productores pd, rdj_otros_ingredientes o
+            WHERE dc.fecha_apertura=? AND dc.id_proveedor=? AND dc.id_productor=pd.id AND dc.cas_otro_ing=o.cas_otro_ing     
             "
         ),[$fecha,$id_prov]);
 
+        $presentOIng=DB::select(DB::raw(
+            "SELECT o.cas_otro_ing AS o_cas, o.cas_otro_ing AS cas, o.nombre AS o_nombre, pv.nombre AS prov, poi.volumen AS volumen, poi.precio AS precio  
+            FROM rdj_otros_ingredientes o, rdj_proveedores pv, rdj_present_otros_ings poi 
+            WHERE o.id_proveedor=? AND pv.id=o.id_proveedor AND poi.cas_otro_ing=o.cas_otro_ing
+            ORDER BY o.cas_otro_ing, o.nombre, poi.volumen, poi.precio, pv.nombre"
+        ),[$id_prov]);
+
         $metodo_envio=DB::select(DB::raw(
-            "SELECT me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, p.nombre AS pais   
+            "SELECT me.id AS id, me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, p.nombre AS pais   
             FROM rdj_metodos_envios me, rdj_metodos_contratos mc, rdj_contratos c, rdj_paises p
             WHERE mc.fecha_cont=c.fecha_apertura AND mc.fecha_cont=? AND mc.id_proveedor=? AND mc.id_productor=? AND me.id=mc.id_envio AND p.id=me.id_pais   
             "
         ),[$fecha,$id_prov,$id_prod]);
+
+        $extrasMEnvio=DB::select(DB::raw(
+            "SELECT dme.id AS id, dme.nombre AS nombre, dme.mod_precio AS precio, dme.mod_duracion AS duracion, dme.id_envio AS id_envio    
+            FROM rdj_metodos_envios me, rdj_proveedores pv, rdj_paises p, rdj_productores_paises pp, rdj_detalles_metodos_envios dme
+            WHERE dme.id_envio=me.id AND dme.id_proveedor=?
+            GROUP BY dme.id, dme.nombre, dme.mod_precio, dme.mod_duracion, dme.id_envio ORDER BY dme.id"
+        ),[$id_prov]);
 
         $metodo_pago=DB::select(DB::raw(
             "SELECT mp.tipo AS tipo, mp.num_cuotas AS cuotas, mp.porcentaje AS porcentaje, mp.meses AS meses    
@@ -487,7 +575,10 @@ class ContratosController extends Controller
             'detalles' => $detalles,
             'ingredientes_esencia' => $ingredientes_esencia,
             'otros_ingredientes' => $otros_ingredientes,
+            'presentIng' => $presentIng,
+            'presentOIng' => $presentOIng,
             'metodo_envio' => $metodo_envio,
+            'extrasMEnvio' => $extrasMEnvio,
             'metodo_pago' => $metodo_pago,
         ]);
 

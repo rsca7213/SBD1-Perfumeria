@@ -60,6 +60,7 @@
                             <tr  class="text-center">
                                 <th scope="col">#cas</th>
                                 <th scope="col">Nombre del Ingrediente</th>
+                                <th scope="col">Tipo</th>
                                 <th scope="col">Descuento</th>
                             </tr>
                         </thead>
@@ -68,9 +69,14 @@
                                 <tr class="text-center">
                                     <td><b>{{$detalle->cas}}</b></td>
                                     <td><b>{{$detalle->i_nombre}}</b></td>
+                                    @if ($detalle->naturaleza=='n')
+                                        <td><b>Esencia natural</b></td>
+                                    @else
+                                        <td><b>Esencia sintetica</b></td>
+                                    @endif
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" id={{$detalle->i_cas}} name="i_descuentos[]">
+                                            <input type="number" placeholder="Porcentaje..." id={{$detalle->i_cas}} name="i_descuentos[]">
                                         </div>
                                     </td>
                                 </tr> 
@@ -79,9 +85,10 @@
                                 <tr class="text-center">
                                     <td><b>{{$detalle->cas}}</b></td>
                                     <td><b>{{$detalle->o_nombre}}</b></td>
+                                    <td><b>Componente</b></td>
                                     <td>
                                         <div class="form-group">
-                                            <input type="number" id={{$detalle->o_cas}} name="o_descuentos[]">
+                                            <input type="number" placeholder="Porcentaje..." id={{$detalle->o_cas}} name="o_descuentos[]">
                                         </div>
                                     </td>
                                 </tr> 
@@ -103,6 +110,7 @@
                                 <th scope="col">Duracion de envio</th>
                                 <th scope="col">Pais de envio</th>
                                 <th scope="col">Precio de envio</th>
+                                <th scope="col">Extra</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -119,9 +127,60 @@
                                             <td><b>Aereo</b></td>
                                             @break
                                     @endswitch
-                                    <td><b>{{$detalle->duracion}} meses</b></td>
+                                    @if ($detalle->duracion==1)
+                                        <td><b>{{$detalle->duracion}} mes</b></td>
+                                    @else
+                                        <td><b>{{$detalle->duracion}} meses</b></td>
+                                    @endif
                                     <td><b>{{$detalle->pais}}</b></td>
-                                    <td><b>{{$detalle->precio}}</b></td>
+                                    <td><b>{{$detalle->precio}} $</b></td>
+                                    <td>
+                                        <img src="/img/iconos/list.svg" alt="ver" width="24" class="iconobtn" data-toggle="modal" data-target="#Extras{{$detalle->id}}">
+                                        <!-- Modal para mostrar los extras de un envio -->
+                                        <div class="modal fade" id="Extras{{$detalle->id}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content" style="background-color: #F5F5F5">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"> <b> Extra de Envío </b> </h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                <div class="modal-body h5 text-center">
+                                                    <table class="table table-striped border border-info">
+                                                        <thead class="bg-primary text-white">
+                                                            <tr  class="text-center">
+                                                                <th scope="col">Nombre</th>
+                                                                <th scope="col">Duración</th>
+                                                                <th scope="col">Precio</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach ($extrasMEnvio as $extra)
+                                                                @if ($extra->id_envio==$detalle->id)
+                                                                    <tr class="text-center">
+                                                                        <td>
+                                                                            <b>{{$extra->nombre}}</b>
+                                                                        </td>
+                                                                        <td>
+                                                                            @if ($extra->duracion==1 || $extra->duracion==-1)
+                                                                                <b>{{$extra->duracion}} día</b>
+                                                                            @else
+                                                                                <b>{{$extra->duracion}} días</b>
+                                                                            @endif
+                                                                        </td>
+                                                                        <td>
+                                                                            <b>{{$extra->precio}} $</b>
+                                                                        </td>
+                                                                    </tr> 
+                                                                @endif
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr> 
                             @endforeach
                         </tbody>
@@ -169,9 +228,13 @@
                                     @endif
 
                                     @if ($detalle->meses==NULL)
-                                        <td><b></b></td>
+                                        <td><b>N/A</b></td>
                                     @else
-                                        <td><b>{{$detalle->meses}} meses</b></td>
+                                        @if ($detalle->meses==1)
+                                            <td><b>{{$detalle->meses}} mes</b></td>
+                                        @else
+                                            <td><b>{{$detalle->meses}} meses</b></td>
+                                        @endif
                                     @endif
                                 </tr> 
                             @endforeach
