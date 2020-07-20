@@ -328,7 +328,6 @@ CREATE TABLE rdj_detalles_contratos (
     fecha_apertura TIMESTAMP NOT NULL,
     id_proveedor NUMERIC(2,0) NOT NULL,
     id_productor NUMERIC(2,0) NOT NULL,
-    precio NUMERIC(20,2),
     descuento NUMERIC(5,2),
     cas_otro_ing NUMERIC(10,0),
     cas_ing_esencia NUMERIC(10,0),
