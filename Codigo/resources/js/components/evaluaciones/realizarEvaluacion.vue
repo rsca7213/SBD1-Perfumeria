@@ -654,7 +654,7 @@
             </div>
             <div class="row h5 justify-content-center"> 
                 <b> Resultado: </b> 
-                <span class="ml-1"> {{ resultadoInicial["res"] }} % </span>
+                <span class="ml-1"> {{ parseFloat(resultadoInicial["res"]).toFixed(2) }} % </span>
             </div>
             <span v-if="parseFloat(resultadoInicial['res']) >= parseFloat(resultadoInicial['exito'])" class="mt-4">
                 <div class="row h4 justify-content-center">
@@ -705,7 +705,7 @@
             </div>
             <div class="row h5 justify-content-center"> 
                 <b> Resultado: </b> 
-                <span class="ml-1"> {{ resultadoAnual["res"] }} % </span>
+                <span class="ml-1"> {{ parseFloat(resultadoAnual["res"]).toFixed(2) }} % </span>
             </div>
             <hr>
             <div class="row h5 justify-content-center"> 

@@ -24,7 +24,7 @@
                     <td class="text-center"> {{ res.fecha }} </td>
                     <td> {{ res.prov }} </td>
                     <td> {{ res.tipo }} </td>
-                    <td class="text-right"> {{ res.res }} % </td>
+                    <td class="text-right"> {{ parseFloat(res.res).toFixed(2) }} % </td>
                     <td class="text-right"> {{ res.exito }} % </td>
                     <td class="text-center">
                         <span v-if="parseInt(res.res) >= parseInt(res.exito)">
@@ -46,7 +46,7 @@
                     <td class="text-center"> {{ res.fecha }} </td>
                     <td> {{ res.prov }} </td>
                     <td> {{ res.tipo }} </td>
-                    <td class="text-right"> {{ res.res }} % </td>
+                    <td class="text-right"> {{ parseFloat(res.res).toFixed(2) }} % </td>
                     <td class="text-right"> {{ res.exito }} % </td>
                     <td class="text-center">
                         <span v-if="parseInt(res.res) >= parseInt(res.exito)">
@@ -68,7 +68,7 @@
                     <td class="text-center"> {{ res.fecha }} </td>
                     <td> {{ res.prov }} </td>
                     <td> {{ res.tipo }} </td>
-                    <td class="text-right"> {{ res.res }} % </td>
+                    <td class="text-right"> {{ parseFloat(res.res).toFixed(2) }} % </td>
                     <td class="text-right"> {{ res.exito }} % </td>
                     <td class="text-center">
                         <span v-if="parseInt(res.res) >= parseInt(res.exito)">

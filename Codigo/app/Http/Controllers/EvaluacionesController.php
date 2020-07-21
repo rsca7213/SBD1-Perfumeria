@@ -319,6 +319,35 @@ class EvaluacionesController extends Controller
                     FROM rdj_otros_ingredientes o WHERE o.id_proveedor=? 
                     ORDER BY o.cas_otro_ing"), 
                    [$id_prov]);
+
+        /* Proceso que elimina ingredientes contratados exclusivamente de la lista de ingredientes disponibles */
+        $ingsExclusivos = DB::select(DB::raw("SELECT dc.cas_ing_esencia AS cas_esen, dc.cas_otro_ing AS cas_otro 
+                   FROM rdj_contratos c, rdj_detalles_contratos dc WHERE c.fecha_apertura=dc.fecha_apertura 
+                   AND c.id_proveedor=dc.id_proveedor AND c.id_proveedor=? AND c.exclusivo=true AND c.cancelacion=false"),[$id_prov]);
+
+        $esenFiltradas = [];
+        $otrosFiltrados = [];
+
+        foreach($prov["esencias"] as $esen) {
+            $cond = false;
+            foreach($ingsExclusivos as $ing) {
+                if($ing->cas_esen != null && $esen->cas == $ing->cas_esen) 
+                    $cond = true;
+            }
+            if($cond == false) array_push($esenFiltradas, $esen);
+        }
+
+        foreach($prov["otros"] as $otro) {
+            $cond = false;
+            foreach($ingsExclusivos as $ing) {
+                if($ing->cas_otro != null && $otro->cas == $ing->cas_otro) 
+                    $cond = true;
+            }
+            if($cond == false) array_push($otrosFiltrados, $otro);
+        }
+
+        $prov["esencias"] = $esenFiltradas;
+        $prov["otros"] = $otrosFiltrados;
         
         /* Buscamos las presentaciones de cada esencia y las guardamos */
         foreach($prov["esencias"] as $esen) {
