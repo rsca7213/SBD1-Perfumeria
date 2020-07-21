@@ -121,15 +121,15 @@ where p.id=1 and c.id= e.id_pais and p.id=e.id_proveedor and e.id=d.id_envio]]>
 		<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="666"/>
 		<parameter name="ParametroPresentacion" class="java.lang.Integer"/>
 		<queryString language="plsql">
-			<![CDATA[SELECT ing.nombre, ing.cas_ing_esencia, presIng.volumen || ' ml' as Presentacion, presIng.precio || ' $' as Precio, CASE WHEN ing.naturaleza = 's' THEN 'Esencia Sintética' WHEN ing.naturaleza = 'n' THEN 'Esencia Natural' END as tipo FROM rdj_ingredientes_esencias AS ing, rdj_presents_ings_esencias AS presIng
+			<![CDATA[SELECT ing.nombre, to_char(ing.cas_ing_esencia,'9999900-00-0') as ncas, presIng.volumen || ' ml' as presentacion, presIng.precio || ' $' as precio, CASE WHEN ing.naturaleza = 's' THEN 'Esencia Sintética' WHEN ing.naturaleza = 'n' THEN 'Esencia Natural' END as tipo FROM rdj_ingredientes_esencias AS ing, rdj_presents_ings_esencias AS presIng
 WHERE ing.id_proveedor=$P{ParametroPresentacion} AND presIng.cas_ing_esencia=ing.cas_ing_esencia 
-UNION SELECT otro.nombre, otro.cas_otro_ing, presOtro.volumen || ' ml' as vol, presOtro.precio || ' $' as Precio,'Componente' as tipo FROM rdj_otros_ingredientes AS otro, rdj_present_otros_ings AS presOtro
+UNION SELECT otro.nombre, to_char(otro.cas_otro_ing,'9999900-00-0') as ncas, presOtro.volumen || ' ml' as presentacion, presOtro.precio || ' $' as precio,'Componente' as tipo FROM rdj_otros_ingredientes AS otro, rdj_present_otros_ings AS presOtro
 WHERE otro.id_proveedor=$P{ParametroPresentacion} AND presOtro.cas_otro_ing=otro.cas_otro_ing ORDER BY nombre ASC;]]>
 		</queryString>
 		<field name="nombre" class="java.lang.String">
 			<property name="com.jaspersoft.studio.field.label" value="nombre"/>
 		</field>
-		<field name="cas_ing_esencia" class="java.math.BigDecimal">
+		<field name="ncas" class="java.lang.String">
 			<property name="com.jaspersoft.studio.field.label" value="cas_ing_esencia"/>
 		</field>
 		<field name="presentacion" class="java.lang.String">
@@ -147,7 +147,7 @@ WHERE otro.id_proveedor=$P{ParametroPresentacion} AND presOtro.cas_otro_ing=otro
 		<queryString language="plsql">
 			<![CDATA[SELECT prod.nombre as productor, 'Inicial' as tipo_contrato, to_char(cont.fecha_apertura,'dd/mm/yyyy') as fecha_inicio , to_char(cont.fecha_apertura::DATE + INTERVAL '1 year','dd/mm/yyyy') as fecha_final 
 FROM rdj_proveedores as prov, rdj_productores as prod, rdj_contratos as cont 
-WHERE prov.id=$P{ParametroClientes} and prov.id=cont.id_proveedor and prod.id = cont.id_productor and ((NOW() - cont.fecha_apertura) < '1 YEAR')
+WHERE prov.id=$P{ParametroClientes} and prov.id=cont.id_proveedor and cont.cancelacion=false and prod.id = cont.id_productor and ((NOW() - cont.fecha_apertura) < '1 YEAR')
 UNION
 SELECT prod.nombre as productor, 'Renovación' as tipo_contrato, to_char(reno.fecha_renovacion,'dd/mm/yyyy') as fecha_inicio , to_char(reno.fecha_renovacion::DATE + INTERVAL '1 year','dd/mm/yyyy') as fecha_final
 FROM rdj_proveedores as prov, rdj_productores as prod, rdj_renovaciones as reno 
@@ -168,9 +168,11 @@ WHERE prov.id=$P{ParametroClientes} and prov.id=reno.id_proveedor and prod.id = 
 	</subDataset>
 	<parameter name="MainParameter" class="java.lang.Integer"/>
 	<queryString language="plsql">
-		<![CDATA[select p.id as idprov,p.nombre as nombre, p.correo as correo, p.telefono as telefono, p.url_web as url_web, COALESCE(a.nombre,'N/A') as asociacion, c.nombre as pais, to_char(m.fecha_inicio,'dd/mm/yyyy') as fecha_inicio,COALESCE(to_char(m.fecha_fin,'dd/mm/yyyy'),'Vigente') as fecha_fin,
+		<![CDATA[SELECT p.id as idprov,p.nombre AS nombre, p.correo as correo, p.telefono as telefono, p.url_web as url_web, COALESCE(a.nombre,'N/A') AS asociacion, c.nombre AS pais, to_char(m.fecha_inicio,'dd/mm/yyyy') as fecha_inicio,COALESCE(to_char(m.fecha_fin,'dd/mm/yyyy'),'Vigente') AS fecha_fin,
 CASE WHEN a.region ='eu' THEN 'Europa' WHEN a.region='al' THEN 'América Latina' WHEN a.region='an' THEN 'América del Norte' WHEN a.region='ap' THEN 'Asia Pacífico' ELSE 'N/A' END as region  
-from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer join rdj_asociaciones as a on a.id=p.id_asociacion where p.id=$P{MainParameter} and p.id_pais=c.id and m.id_proveedor=p.id]]>
+FROM rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer join rdj_asociaciones as a on a.id=p.id_asociacion WHERE p.id=$P{MainParameter} and p.id_pais=c.id and m.id_proveedor=p.id
+AND
+fecha_inicio= (SELECT MAX(fecha_inicio) FROM rdj_miembros_ifra WHERE id_proveedor=$P{MainParameter});]]>
 	</queryString>
 	<field name="nombre" class="java.lang.String"/>
 	<field name="correo" class="java.lang.String"/>
@@ -419,9 +421,9 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 	<detail>
 		<band height="352" splitType="Stretch">
 			<frame>
-				<reportElement positionType="Float" x="37" y="0" width="480" height="108" isRemoveLineWhenBlank="true" uuid="c96e23bc-d767-4c15-9dc3-ae36ddb78c2d"/>
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="37" y="0" width="480" height="108" isRemoveLineWhenBlank="true" uuid="c96e23bc-d767-4c15-9dc3-ae36ddb78c2d"/>
 				<staticText>
-					<reportElement positionType="Float" mode="Opaque" x="170" y="0" width="141" height="20" forecolor="#6492FD" backcolor="#FFFFFF" uuid="3be26984-5639-48f7-a046-e877ca3d4f62">
+					<reportElement positionType="Float" mode="Opaque" x="170" y="0" width="141" height="20" isRemoveLineWhenBlank="true" forecolor="#6492FD" backcolor="#FFFFFF" uuid="3be26984-5639-48f7-a046-e877ca3d4f62">
 						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b506ecaa-f1c4-4cf6-a05c-bbe097fc3310"/>
 						<property name="com.jaspersoft.studio.unit.y" value="px"/>
 						<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -615,7 +617,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="140" uuid="4a9a295c-d475-42f3-9268-7824bead93d8">
+					<jr:column width="100" uuid="4a9a295c-d475-42f3-9268-7824bead93d8">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
 						<jr:tableFooter height="11" rowSpan="1">
 							<box>
@@ -626,7 +628,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 						</jr:tableFooter>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="140" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="c9771cde-99e8-40e0-9fce-8197ff6ee810"/>
+								<reportElement mode="Opaque" x="0" y="0" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="c9771cde-99e8-40e0-9fce-8197ff6ee810"/>
 								<box>
 									<topPen lineWidth="1.0" lineColor="#707070"/>
 									<leftPen lineWidth="1.0" lineColor="#707070"/>
@@ -634,23 +636,23 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Roboto&#xD;&#xA;Roboto&#xD;&#xA;" size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Nombre Producto]]></text>
+								<text><![CDATA[Nº Cas]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="30">
 							<textField>
-								<reportElement style="TablaProductos" x="0" y="0" width="140" height="30" forecolor="#707070" uuid="f9be980a-08a5-4a6c-87f1-4acfca196f98"/>
+								<reportElement style="TablaClientesActivos" x="0" y="0" width="100" height="30" forecolor="#707070" uuid="5d45e539-f4fd-4c75-b6ce-e1ed11d14cdc"/>
 								<box>
 									<leftPen lineWidth="1.0" lineColor="#707070"/>
 								</box>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{ncas}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="90" uuid="5035b179-7999-4420-8b60-e260e53d8dc4">
+					<jr:column width="130" uuid="5035b179-7999-4420-8b60-e260e53d8dc4">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
 						<jr:tableFooter height="11" rowSpan="1">
 							<box>
@@ -661,27 +663,30 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 						</jr:tableFooter>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="90" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="3dd776a4-65e9-45e6-900d-e7bcfe6c5aa8"/>
+								<reportElement mode="Opaque" x="0" y="0" width="130" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="3dd776a4-65e9-45e6-900d-e7bcfe6c5aa8"/>
 								<box>
 									<topPen lineWidth="1.0" lineColor="#707070"/>
 								</box>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Roboto&#xD;&#xA;Roboto&#xD;&#xA;" size="12" isBold="true"/>
 								</textElement>
-								<text><![CDATA[Nº Cas]]></text>
+								<text><![CDATA[Nombre Producto]]></text>
 							</staticText>
 						</jr:columnHeader>
 						<jr:detailCell height="30">
 							<textField>
-								<reportElement style="TablaProductos" x="0" y="0" width="90" height="30" forecolor="#707070" uuid="afa861bc-8451-4bdb-92b9-c7bc321cb8bd"/>
+								<reportElement style="TablaProductos" x="0" y="0" width="130" height="30" forecolor="#707070" uuid="f9be980a-08a5-4a6c-87f1-4acfca196f98"/>
+								<box>
+									<leftPen lineWidth="0.0" lineColor="#707070"/>
+								</box>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
 								</textElement>
-								<textFieldExpression><![CDATA[$F{cas_ing_esencia}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="90" uuid="4958a648-63d0-4349-9262-09c3fb93d3b4">
+					<jr:column width="100" uuid="4958a648-63d0-4349-9262-09c3fb93d3b4">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
 						<jr:tableFooter height="11" rowSpan="1">
 							<box>
@@ -692,7 +697,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 						</jr:tableFooter>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="90" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="28660c9d-0fe7-4d2e-a2b1-4ef225bee2a8"/>
+								<reportElement mode="Opaque" x="0" y="0" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="28660c9d-0fe7-4d2e-a2b1-4ef225bee2a8"/>
 								<box>
 									<topPen lineWidth="1.0" lineColor="#707070"/>
 								</box>
@@ -704,7 +709,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 						</jr:columnHeader>
 						<jr:detailCell height="30">
 							<textField>
-								<reportElement style="TablaProductos" x="0" y="0" width="90" height="30" forecolor="#707070" uuid="89129080-6615-4133-8d8f-cc79ac25d96d"/>
+								<reportElement style="TablaProductos" x="0" y="0" width="100" height="30" forecolor="#707070" uuid="89129080-6615-4133-8d8f-cc79ac25d96d"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
 								</textElement>
@@ -743,7 +748,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="135" uuid="f358124d-a670-46c5-8958-cdd663e1db5b">
+					<jr:column width="125" uuid="f358124d-a670-46c5-8958-cdd663e1db5b">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
 						<jr:tableFooter height="11" rowSpan="1">
 							<box>
@@ -754,7 +759,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 						</jr:tableFooter>
 						<jr:columnHeader height="30" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="135" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="d1b11380-a507-498f-ad23-84b606ea7205"/>
+								<reportElement mode="Opaque" x="0" y="0" width="125" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="d1b11380-a507-498f-ad23-84b606ea7205"/>
 								<box>
 									<topPen lineWidth="1.0" lineColor="#707070"/>
 									<rightPen lineWidth="1.0" lineColor="#707070"/>
@@ -767,7 +772,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 						</jr:columnHeader>
 						<jr:detailCell height="30">
 							<textField>
-								<reportElement style="TablaProductos" x="0" y="0" width="135" height="30" forecolor="#707070" uuid="cc090814-01b3-43c5-8262-1a9c7994ec49"/>
+								<reportElement style="TablaProductos" x="0" y="0" width="125" height="30" forecolor="#707070" uuid="cc090814-01b3-43c5-8262-1a9c7994ec49"/>
 								<box>
 									<rightPen lineWidth="1.0"/>
 								</box>
@@ -799,7 +804,7 @@ from rdj_miembros_ifra as m ,rdj_paises as c,rdj_proveedores as p left outer joi
 					</reportElement>
 				</line>
 				<subreport isUsingCache="true">
-					<reportElement positionType="Float" x="1" y="31" width="593" height="22" isRemoveLineWhenBlank="true" uuid="267d97f3-079a-42af-9889-b2dbebe03551"/>
+					<reportElement positionType="Float" isPrintRepeatedValues="false" x="1" y="31" width="593" height="22" isRemoveLineWhenBlank="true" uuid="267d97f3-079a-42af-9889-b2dbebe03551"/>
 					<subreportParameter name="ParEnv">
 						<subreportParameterExpression><![CDATA[$F{idprov}]]></subreportParameterExpression>
 					</subreportParameter>

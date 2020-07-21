@@ -146,7 +146,7 @@ where p.id=$P{ParEnv} and c.id= e.id_pais and p.id=e.id_proveedor order by e.id]
 				<textFieldExpression><![CDATA[$F{precio_envio}]]></textFieldExpression>
 			</textField>
 			<subreport isUsingCache="true">
-				<reportElement positionType="Float" x="-20" y="65" width="595" height="22" uuid="f61815d3-86c1-48ae-9d58-215a97e3a948"/>
+				<reportElement positionType="Float" isPrintRepeatedValues="false" x="-20" y="65" width="595" height="22" isRemoveLineWhenBlank="true" uuid="f61815d3-86c1-48ae-9d58-215a97e3a948"/>
 				<subreportParameter name="PIdEnvio">
 					<subreportParameterExpression><![CDATA[$F{n_metodo}]]></subreportParameterExpression>
 				</subreportParameter>
