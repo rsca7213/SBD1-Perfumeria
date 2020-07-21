@@ -56,9 +56,15 @@
                                         <tr class="text-center">
                                             <td>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</td>
                                             <td>{{$contrato->prov}}</td>
-                                            <td>Activo</td>
                                             <td>
-                                                <a href="/productor/{{$id_prod}}/contratos/detalle/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="btn btn-primary">Detalles</a>
+                                                <img src="{{ asset('img/iconos/check_green.svg') }}" width="24" class="mt-1">
+                                                <span class="ml-2"> Activo </span>
+                                            </td>
+                                            <td>
+                                                <a href="/productor/{{$id_prod}}/contratos/detalle/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="btn btn-sm btn-primary">
+                                                    <img src="{{ asset('/img/iconos/list_white.svg') }}" width="24" class="mb-1">
+                                                    <span class="ml-2"> Detalles </span>
+                                                </a>
                                             </td>
                                         </tr> 
                                     @endforeach
@@ -66,9 +72,15 @@
                                         <tr class="text-center">
                                             <td>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</td>
                                             <td>{{$contrato->prov}}</td>
-                                            <td>Por confirmar</td>
                                             <td>
-                                                <a href="/productor/{{$id_prod}}/contratos/detalle/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="btn btn-primary">Detalles</a>
+                                                <img src="{{ asset('img/iconos/pending.svg') }}" width="24" class="mt-1">
+                                                <span class="ml-2"> Por confirmar </span>
+                                            </td>
+                                            <td>
+                                                <a href="/productor/{{$id_prod}}/contratos/detalle/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="btn btn-sm btn-primary">
+                                                    <img src="{{ asset('/img/iconos/list_white.svg') }}" width="24" class="mb-1">
+                                                    <span class="ml-2"> Detalles </span>
+                                                </a>
                                             </td>
                                         </tr> 
                                     @endforeach
@@ -110,7 +122,10 @@
                                                 </td>
                                             @endif
                                             <td>
-                                                <a href="/productor/{{$id_prod}}/contratos/detalle/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="btn btn-primary">Detalles</a>
+                                                <a href="/productor/{{$id_prod}}/contratos/detalle/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="btn btn-sm btn-primary">
+                                                    <img src="{{ asset('/img/iconos/list_white.svg') }}" width="24" class="mb-1">
+                                                    <span class="ml-2"> Detalles </span>
+                                                </a>
                                             </td>
                                         </tr> 
                                     @endforeach
