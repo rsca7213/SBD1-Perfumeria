@@ -40,7 +40,7 @@
                         @if ($contratosVigentes != [])
                             <table class="table table-striped border border-info">
                                 <thead class="bg-primary text-white">
-                                    <tr  class="text-center">
+                                    <tr  class="text-center align-items-center">
                                         <th scope="col">Fecha creación</th>
                                         <th scope="col">Productor</th>
                                         <th scope="col">Acciones</th>
@@ -49,8 +49,8 @@
                                 <tbody>
                                     @foreach ($contratosVigentes as $contrato)
                                         <tr class="text-center">
-                                            <td><b>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</b></td>
-                                            <td><b>{{$contrato->prod}}</b></td>
+                                            <td>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</td>
+                                            <td>{{$contrato->prod}}</td>
                                             <td>
                                                 <a href="/proveedor/{{$id_prov}}/contratos/detalle/{{$contrato->id_prod}}/{{$contrato->fecha}}" class="btn btn-primary">Detalles</a>
                                             </td>
@@ -72,7 +72,7 @@
                         @if ($contratosSolicitud != [])
                             <table class="table table-striped border border-info">
                                 <thead class="bg-primary text-white">
-                                    <tr  class="text-center">
+                                    <tr  class="text-center align-items-center">
                                         <th scope="col">Fecha creación</th>
                                         <th scope="col">Productor</th>
                                         <th scope="col">Acciones</th>
@@ -81,10 +81,10 @@
                                 <tbody>
                                     @foreach ($contratosSolicitud as $contrato)
                                         <tr class="text-center">
-                                            <td><b>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</b></td>
-                                            <td><b>{{$contrato->prod}}</b></td>
+                                            <td>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</td>
+                                            <td>{{$contrato->prod}}</td>
                                             <td>
-                                                <a href="/proveedor/{{$id_prov}}/contratos/confirmar/{{$contrato->id_prod}}/{{$contrato->fecha}}" class="btn btn-success">Detalles</a>
+                                                <a href="/proveedor/{{$id_prov}}/contratos/confirmar/{{$contrato->id_prod}}/{{$contrato->fecha}}" class="btn btn-primary">Detalles</a>
                                             </td>
                                         </tr> 
                                     @endforeach

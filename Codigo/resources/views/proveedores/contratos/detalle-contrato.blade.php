@@ -84,12 +84,12 @@
                             <tbody>
                                 @foreach ($ingredientes_esencia as $detalle)
                                     <tr class="text-center">
-                                        <td><b>{{$detalle->cas}}</b></td>
-                                        <td><b>{{$detalle->i_nombre}}</b></td>
+                                        <td>{{$detalle->cas}}</td>
+                                        <td>{{$detalle->i_nombre}}</td>
                                         @if ($detalle->naturaleza)
-                                        <td><b>Esencia natural</b></td>
+                                        <td>Esencia natural</td>
                                         @else
-                                        <td><b>Esencia sintetica</b></td>
+                                        <td>Esencia sintetica</td>
                                         @endif
                                         <td>
                                             <img src="/img/iconos/list.svg"alt="ver" width="24" class="iconobtn" data-toggle="modal" data-target="#Detalles_i{{$detalle->i_cas}}">
@@ -98,13 +98,13 @@
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content" style="background-color: #F5F5F5">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel"> <b> Presentaciones del Producto </b> </h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel"> Presentaciones del Producto  </h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                     <div class="modal-body h5 text-center">
-                                                        <b> {{$detalle->i_nombre}} </b>
+                                                        {{$detalle->i_nombre}} 
                                                         <br>
                                                         <br>
                                                         <table class="table table-striped border border-info">
@@ -119,10 +119,10 @@
                                                                     @if ($presentacion->i_cas==$detalle->i_cas)
                                                                         <tr class="text-center">
                                                                             <td>
-                                                                                <b>{{$presentacion->volumen}} ml</b>
+                                                                                {{$presentacion->volumen}} ml
                                                                             </td>
                                                                             <td>
-                                                                                <b>{{$presentacion->precio}} $</b>
+                                                                                {{$presentacion->precio}} $
                                                                             </td>
                                                                         </tr> 
                                                                     @endif
@@ -134,19 +134,19 @@
                                             </div>
                                         </td>
                                         <td>
-                                            @if ($detalle->descuento!=NULL)
-                                                <b>{{$detalle->descuento}}%</b>
+                                            @if ($detalle->descuento!=NULL && $detalle->descuento>0)
+                                                {{$detalle->descuento}} %
                                             @else
-                                                <b>N/A</b>
+                                                N/A
                                             @endif
                                         </td>
                                     </tr> 
                                 @endforeach
                                 @foreach ($otros_ingredientes as $detalle)
                                     <tr class="text-center">
-                                        <td><b>{{$detalle->cas}}</b></td>
-                                        <td><b>{{$detalle->o_nombre}}</b></td>
-                                        <td><b>Componente</b></td>
+                                        <td>{{$detalle->cas}}</td>
+                                        <td>{{$detalle->o_nombre}}</td>
+                                        <td>Componente</td>
                                         <td>
                                             <img src="/img/iconos/list.svg" alt="ver" width="24" class="iconobtn" data-toggle="modal" data-target="#Detalles_o{{$detalle->o_cas}}">
                                             <!-- Modal para mostrar los detalles de un ingrediente -->
@@ -154,13 +154,13 @@
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content" style="background-color: #F5F5F5">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel"> <b> Presentaciones del Producto </b> </h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel"> Presentaciones del Producto  </h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
                                                     <div class="modal-body h5 text-center">
-                                                        <b> {{$detalle->o_nombre}} </b>
+                                                        {{$detalle->o_nombre}} 
                                                         <br>
                                                         <br>
                                                         <table class="table table-striped border border-info">
@@ -175,10 +175,10 @@
                                                                     @if ($presentacion->o_cas==$detalle->o_cas)
                                                                         <tr class="text-center">
                                                                             <td>
-                                                                                <b>{{$presentacion->volumen}} ml</b>
+                                                                                {{$presentacion->volumen}} ml
                                                                             </td>
                                                                             <td>
-                                                                                <b>{{$presentacion->precio}} $</b>
+                                                                                {{$presentacion->precio}} $
                                                                             </td>
                                                                         </tr> 
                                                                     @endif
@@ -190,10 +190,10 @@
                                             </div>
                                         </td>
                                         <td>
-                                            @if ($detalle->descuento!=NULL)
-                                                <b>{{$detalle->descuento}}%</b>
+                                            @if ($detalle->descuento!=NULL && $detalle->descuento>0)
+                                                {{$detalle->descuento}} %
                                             @else
-                                                <b>N/A</b>
+                                                N/A
                                             @endif
                                         </td>
                                     </tr> 
@@ -223,22 +223,22 @@
                                     <tr class="text-center">
                                         @switch($metodo->tipo)
                                             @case('t')
-                                                <td><b> Terrestre </b></td>
+                                                <td> Terrestre </td>
                                                 @break
                                             @case('m')
-                                                <td><b> Maritimo </b></td>
+                                                <td> Maritimo </td>
                                                 @break
                                             @case('a')
-                                                <td><b> Aereo </b></td>
+                                                <td> Aereo </td>
                                                 @break
                                         @endswitch
                                         @if ($metodo->duracion==1)
-                                            <td><b>{{$metodo->duracion}} mes</b></td>
+                                            <td>{{$metodo->duracion}} día</td>
                                         @else
-                                            <td><b>{{$metodo->duracion}} meses</b></td>
+                                            <td>{{$metodo->duracion}} días</td>
                                         @endif
-                                        <td><b>{{$metodo->pais}}</b></td>
-                                        <td><b>{{$metodo->precio}} $</b></td>
+                                        <td>{{$metodo->pais}}</td>
+                                        <td>{{$metodo->precio}} $</td>
                                         <td>
                                             <img src="/img/iconos/list.svg" alt="ver" width="24" class="iconobtn" data-toggle="modal" data-target="#Extras{{$metodo->id}}">
                                             <!-- Modal para mostrar los extras de un envio -->
@@ -246,7 +246,7 @@
                                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                                     <div class="modal-content" style="background-color: #F5F5F5">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel"> <b> Extra de Envío </b> </h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">  Extra de Envío  </h5>
                                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                             </button>
@@ -265,17 +265,17 @@
                                                                     @if ($extra->id_envio==$metodo->id)
                                                                         <tr class="text-center">
                                                                             <td>
-                                                                                <b>{{$extra->nombre}}</b>
+                                                                                {{$extra->nombre}}
                                                                             </td>
                                                                             <td>
                                                                                 @if ($extra->duracion==1 || $extra->duracion==-1)
-                                                                                    <b>{{$extra->duracion}} día</b>
+                                                                                    {{$extra->duracion}} día
                                                                                 @else
-                                                                                    <b>{{$extra->duracion}} días</b>
+                                                                                    {{$extra->duracion}} días
                                                                                 @endif
                                                                             </td>
                                                                             <td>
-                                                                                <b>{{$extra->precio}} $</b>
+                                                                                {{$extra->precio}} $
                                                                             </td>
                                                                         </tr> 
                                                                     @endif
@@ -312,32 +312,32 @@
                                     <tr class="text-center">
                                         @switch($metodo->tipo)
                                             @case('p')
-                                                <td><b>Parcial</b></td>
+                                                <td>Parcial</td>
                                                 @break
                                             @case('c')
-                                                <td><b>Contado</b></td>
+                                                <td>Completo</td>
                                                 @break
                                         @endswitch
 
                                         @if ($metodo->cuotas==NULL)
-                                            <td><b>1</b></td>
+                                            <td>1</td>
                                         @else
-                                            <td><b>{{$metodo->cuotas}}</b></td>
+                                            <td>{{$metodo->cuotas}}</td>
                                         @endif
 
                                         @if ($metodo->porcentaje==NULL || $metodo->porcentaje==0)
-                                            <td><b>100 %</b></td>
+                                            <td>100 %</td>
                                         @else
-                                            <td><b>{{$metodo->porcentaje}} %</b></td>
+                                            <td>{{$metodo->porcentaje}} %</td>
                                         @endif
 
                                         @if ($metodo->meses==NULL)
-                                            <td><b>N/A</b></td>
+                                            <td>N/A</td>
                                         @else
                                             @if ($metodo->meses==1)
-                                                <td><b>{{$metodo->meses}} mes</b></td>
+                                                <td>{{$metodo->meses}} mes</td>
                                             @else
-                                                <td><b>{{$metodo->meses}} meses</b></td>
+                                                <td>{{$metodo->meses}} meses</td>
                                             @endif
                                         @endif
                                     </tr> 

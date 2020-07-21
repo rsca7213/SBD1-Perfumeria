@@ -36,25 +36,37 @@
             <div class="card-body" style="background-color: #FDFDFD">
                 <div class="row border-bottom" style="border-color: #707070">
                     {{-- Contratos vigentes --}}
-                    <div class="col-7 border-right" style="border-color: #707070">
+                    <div class="col-6 border-right" style="border-color: #707070">
                         <span class="h5"> 
                             <b class="mr-2"> Contratos vigentes </b> 
                         </span>
                         <hr>
-                        @if ($contratosVigentes != [])
+                        @if ($contratosVigentes != [] || $contratosEspera != [])
                             <table class="table table-striped border border-info">
                                 <thead class="bg-primary text-white">
-                                    <tr  class="text-center">
+                                    <tr  class="text-center align-items-center">
                                         <th scope="col">Fecha creación</th>
                                         <th scope="col">Proveedor</th>
+                                        <th scope="col">Estatus</th>
                                         <th scope="col">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($contratosVigentes as $contrato)
                                         <tr class="text-center">
-                                            <td><b>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</b></td>
-                                            <td><b>{{$contrato->prov}}</b></td>
+                                            <td>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</td>
+                                            <td>{{$contrato->prov}}</td>
+                                            <td>Activo</td>
+                                            <td>
+                                                <a href="/productor/{{$id_prod}}/contratos/detalle/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="btn btn-primary">Detalles</a>
+                                            </td>
+                                        </tr> 
+                                    @endforeach
+                                    @foreach ($contratosEspera as $contrato)
+                                        <tr class="text-center">
+                                            <td>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</td>
+                                            <td>{{$contrato->prov}}</td>
+                                            <td>Por confirmar</td>
                                             <td>
                                                 <a href="/productor/{{$id_prod}}/contratos/detalle/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="btn btn-primary">Detalles</a>
                                             </td>
@@ -68,7 +80,7 @@
                     </div>
                     {{-- Final Contratos vigentes --}}
                     {{-- Contratos no vigentes --}}
-                    <div class="col-5" >
+                    <div class="col-6" >
                         <span class="h5"> 
                             <b class="mr-2"> Contratos no vigentes </b> 
                         </span>
@@ -76,17 +88,27 @@
                         @if ($contratosNoVigentes != [])
                             <table class="table table-striped border border-info">
                                 <thead class="bg-primary text-white">
-                                    <tr  class="text-center">
+                                    <tr  class="text-center align-items-center">
                                         <th scope="col">Fecha creación</th>
                                         <th scope="col">Proveedor</th>
+                                        <th scope="col">Cancelado o Expirado</th>
                                         <th scope="col">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($contratosNoVigentes as $contrato)
                                         <tr class="text-center">
-                                            <td><b>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</b></td>
-                                            <td><b>{{$contrato->prov}}</b></td>
+                                            <td>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</td>
+                                            <td>{{$contrato->prov}}</td>
+                                            @if ($contrato->cancelacion==true)
+                                                <td>
+                                                    <img src="{{ asset('img/iconos/close.svg') }}" alt="atras" width="24">
+                                                </td>
+                                            @else
+                                                <td>
+                                                    <img src="{{ asset('img/iconos/clock.svg') }}" alt="atras" width="24">
+                                                </td>
+                                            @endif
                                             <td>
                                                 <a href="/productor/{{$id_prod}}/contratos/detalle/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="btn btn-primary">Detalles</a>
                                             </td>

@@ -20,8 +20,15 @@ class ContratosController extends Controller
             GROUP BY c.id_productor, c.fecha_apertura, pv.nombre, c.id_proveedor ORDER BY c.fecha_apertura"
         ),[$id_prod]);
 
+        $contratosEspera=DB::select(DB::raw(
+            "SELECT c.fecha_apertura AS fecha, pv.nombre AS prov, c.id_proveedor AS id_prov, c.cancelacion AS cancelacion 
+            FROM rdj_contratos c, rdj_proveedores pv
+            WHERE c.id_productor=?  AND c.cancelacion IS NULL AND c.id_proveedor=pv.id  
+            GROUP BY c.id_productor, c.fecha_apertura, pv.nombre, c.id_proveedor ORDER BY c.fecha_apertura"
+        ),[$id_prod]);
+
         $contratosNoVigentes=DB::select(DB::raw(
-            "SELECT c.fecha_apertura AS fecha, pv.nombre AS prov, c.id_proveedor AS id_prov 
+            "SELECT c.fecha_apertura AS fecha, pv.nombre AS prov, c.id_proveedor AS id_prov, c.cancelacion AS cancelacion 
             FROM rdj_contratos c, rdj_proveedores pv, rdj_productores pd
             WHERE c.id_productor=? AND c.cancelacion=true AND pv.id=c.id_proveedor
             GROUP BY c.id_productor, c.fecha_apertura, pv.nombre, c.id_proveedor ORDER BY c.fecha_apertura"
@@ -36,6 +43,7 @@ class ContratosController extends Controller
         return view('productores.contratos.ver-contratos',[
             'id_prod' => $id_prod,
             'contratosVigentes' => $contratosVigentes,
+            'contratosEspera' => $contratosEspera,
             'contratosNoVigentes' => $contratosNoVigentes,
             'proveedores' => $proveedores,
         ]);
@@ -260,12 +268,27 @@ class ContratosController extends Controller
 
     public function detalleContrato($id_prod,$id_prov,$fecha){
 
+        $contratosEspera=DB::select(DB::raw(
+            "SELECT c.fecha_apertura AS fecha, pv.nombre AS prov, c.id_proveedor AS id_prov, c.cancelacion AS cancelacion 
+            FROM rdj_contratos c, rdj_proveedores pv
+            WHERE c.id_productor=?  AND c.cancelacion IS NULL AND c.id_proveedor=pv.id  
+            GROUP BY c.id_productor, c.fecha_apertura, pv.nombre, c.id_proveedor ORDER BY c.fecha_apertura"
+        ),[$id_prod]);
+
         $detalles=DB::select(DB::raw(
             "SELECT dc.fecha_apertura AS fecha, pv.nombre AS prod, dc.id_proveedor AS id_prov, c.exclusivo AS exc, c.cancelacion AS cancel, c.razon_cierre AS razon 
             FROM rdj_detalles_contratos dc, rdj_proveedores pv, rdj_contratos c
             WHERE dc.fecha_apertura=? AND dc.id_productor=? AND dc.id_proveedor=pv.id AND c.fecha_apertura=dc.fecha_apertura      
             GROUP BY dc.fecha_apertura, pv.nombre, dc.id_proveedor, c.exclusivo, c.cancelacion, c.razon_cierre"
         ),[$fecha,$id_prod]);
+
+        // dd($detalles);
+        $i=true;
+        foreach($contratosEspera as $espera){
+            if($espera->fecha==$detalles[0]->fecha){
+                $i=false;
+            }
+        }
 
         $ingredientes_esencia=DB::select(DB::raw(
             "SELECT dc.cas_ing_esencia AS i_cas, i.cas_ing_esencia AS cas, i.nombre AS i_nombre, i.naturaleza AS naturaleza, dc.descuento AS descuento 
@@ -329,6 +352,7 @@ class ContratosController extends Controller
         return view('productores.contratos.detalle-contrato',[
             'id_prod' => $id_prod,
             'id_prov' => $id_prov,
+            'i' => $i,
             'detalles' => $detalles,
             'presentIng' => $presentIng,
             'presentOIng' => $presentOIng,
