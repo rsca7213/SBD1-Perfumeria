@@ -31,11 +31,10 @@
     <div class="col-7">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center h4">
-                Editar Formula Anual
+                Cambiar Formula Anual
             </div>
             <div class="card-body" style="background-color: #FDFDFD">
-                <editar-formula-anual id_prod="{{ $id_prod }}" csrf="{{ csrf_token() }}" ubic="{{ $formula["ubicacion"] }}"
-                pagos="{{ $formula["pagos"] }}" envios="{{ $formula["envios"] }}" exito="{{ $formula["exito"] }}" cumplim="{{ $formula["cumplim"] }}"> </editar-formula-anual>
+                <editar-formula-anual id_prod="{{ $id_prod }}" csrf="{{ csrf_token() }}"> </editar-formula-anual>
             </div>
             <div class="card-footer bg-primary text-white">
                 <a href="{{ route('verFormulas', ['id_prod' => $id_prod]) }}">

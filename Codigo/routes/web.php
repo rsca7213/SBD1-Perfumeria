@@ -21,21 +21,18 @@ Route::get('/proveedor/{id_prov}', 'MenuController@menuProveedor')->name('menuPr
 Route::get('/productor/{id_prod}/formulas', 'FormulasController@verFormulas')->name('verFormulas');
 Route::get('/productor/{id_prod}/formulas/crear/inicial', 'FormulasController@crearFormulaInicial')->name('crearFormulaInicial');
 Route::post('/productor/{id_prod}/formulas/crear/inicial', 'FormulasController@insertFormulaInicial');
-Route::get('/productor/{id_prod}/formulas/editar/inicial', 'FormulasController@editarFormulaInicial')->name('editarFormulaInicial');
-Route::patch('/productor/{id_prod}/formulas/editar/inicial', 'FormulasController@updateFormulaInicial');
-Route::delete('/productor/{id_prod}/formulas/borrar/inicial', 'FormulasController@borrarFormulaInicial');
+Route::get('/productor/{id_prod}/formulas/cambiar/inicial', 'FormulasController@cambiarFormulaInicial')->name('cambiarFormulaInicial');
+Route::patch('/productor/{id_prod}/formulas/cambiar/inicial', 'FormulasController@updateFormulaInicial');
 Route::get('/productor/{id_prod}/formulas/crear/anual', 'FormulasController@crearFormulaAnual')->name('crearFormulaAnual');
 Route::post('/productor/{id_prod}/formulas/crear/anual', 'FormulasController@insertFormulaAnual');
-Route::get('/productor/{id_prod}/formulas/editar/anual', 'FormulasController@editarFormulaAnual')->name('editarFormulaAnual');
-Route::patch('/productor/{id_prod}/formulas/editar/anual', 'FormulasController@updateFormulaAnual');
-Route::delete('/productor/{id_prod}/formulas/borrar/anual', 'FormulasController@borrarFormulaAnual');
+Route::get('/productor/{id_prod}/formulas/cambiar/anual', 'FormulasController@cambiarFormulaAnual')->name('cambiarFormulaAnual');
+Route::patch('/productor/{id_prod}/formulas/cambiar/anual', 'FormulasController@updateFormulaAnual');
 
 /* Rutas referentes a la escala de evaluacion */
 Route::get('/productor/{id_prod}/escala/crear', 'FormulasController@crearEscala')->name('crearEscala');
 Route::post('/productor/{id_prod}/escala/crear', 'FormulasController@insertEscala');
-Route::get('/productor/{id_prod}/escala/editar', 'FormulasController@editarEscala')->name('editarEscala');
-Route::patch('/productor/{id_prod}/escala/editar', 'FormulasController@updateEscala');
-Route::delete('/productor/{id_prod}/escala/borrar', 'FormulasController@borrarEscala');
+Route::get('/productor/{id_prod}/escala/cambiar', 'FormulasController@cambiarEscala')->name('cambiarEscala');
+Route::patch('/productor/{id_prod}/escala/cambiar', 'FormulasController@updateEscala');
 
 /* Rutas referentes al proceso de evaluaciones */
 Route::get('/productor/{id_prod}/evaluaciones', 'EvaluacionesController@verEvaluaciones')->name('verEvaluaciones');
@@ -50,7 +47,7 @@ Route::post('/productor/{id_prod}/evaluaciones/inicial', 'EvaluacionesController
 
 /* Rutas referentes al proceso de evaluacion anual */
 Route::get('/productor/{id_prod}/evaluaciones/anual', 'EvaluacionesController@dataEvaluacionAnual');
-Route::get('/productor/{id_prod}/evaluaciones/data/anual/{id_prov}', 'EvaluacionesController@dataProveedoresAnual');
+Route::get('/productor/{id_prod}/evaluaciones/data/anual/{id_prov}/{fecha_ap_ts}', 'EvaluacionesController@dataProveedoresAnual');
 Route::post('/productor/{id_prod}/evaluaciones/anual', 'EvaluacionesController@guardarAnual');
 
 /* Rutas referentes a la confirmación de acción de generación o renovación de contrato */

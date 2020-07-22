@@ -31,10 +31,10 @@
     <div class="col-7">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center h4">
-                Editar Escala
+                Cambiar Escala
             </div>
             <div class="card-body" style="background-color: #FDFDFD">
-                <editar-escala id_prod="{{ $id_prod }}" csrf="{{ csrf_token() }}" ri="{{ $ri }}" rf="{{ $rf }}"> </editar-escala>
+                <editar-escala id_prod="{{ $id_prod }}" csrf="{{ csrf_token() }}"> </editar-escala>
             </div>
             <div class="card-footer bg-primary text-white">
                 <a href="{{ route('verFormulas', ['id_prod' => $id_prod]) }}">

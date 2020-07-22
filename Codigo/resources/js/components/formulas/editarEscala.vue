@@ -19,8 +19,8 @@
             </div>
             <div class="form-group text-center col-12">
                 <button type="submit" class="btn btn-primary" :class="submitErr" :disabled="submitErrDis">
-                    <img src="/img/iconos/edit_white.svg" alt="crear" width="24" class="mb-1">
-                    <span class="ml-2"> Editar Escala </span>
+                    <img src="/img/iconos/cambiar_white.svg" alt="crear" width="24" class="mb-1">
+                    <span class="ml-2"> Crear Nueva Escala </span>
                 </button>
                 <br>
                 <small class="text-danger"> <b v-text="smallBtn"> </b> </small>
@@ -31,13 +31,13 @@
 
 <script>
     export default {
-        props: ["id_prod", "csrf", "ri", "rf"],
+        props: ["id_prod", "csrf"],
 
         data() {
             return {
-                riInp: parseInt(this.ri),
-                rfInp: parseInt(this.rf),
-                link: "/productor/" + this.id_prod + "/escala/editar"
+                riInp: null,
+                rfInp: null,
+                link: "/productor/" + this.id_prod + "/escala/cambiar"
             };
         },
 
@@ -72,7 +72,7 @@
                     this.submitErrDis="disabled";
                     return "btn-danger";
                 }
-                else if(this.riInp >= this.rfInp) {
+                else if(this.riInp >= this.rfInp && this.riInp != null && this.rfInp != null) {
                     this.smallBtn = "El rango final debe ser mayor al rango inicial.";
                     this.submitErrDis="disabled";
                     return "btn-danger";

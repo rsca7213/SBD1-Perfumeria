@@ -31,8 +31,8 @@
             </div>
             <div class="form-group text-center col-12">
                 <button type="submit" class="btn btn-primary" :class="submitErr" :disabled="submitErrDis">
-                    <img src="/img/iconos/edit_white.svg" alt="crear" width="24" class="mb-1">
-                    <span class="ml-2"> Editar Formula </span>
+                    <img src="/img/iconos/cambiar_white.svg" alt="crear" width="24" class="mb-1">
+                    <span class="ml-2"> Crear Nueva Formula </span>
                 </button>
                 <br>
                 <small class="text-danger"> <b v-text="smallBtn"> </b> </small>
@@ -47,11 +47,11 @@
 
         data() {
             return {
-                ubicInp: parseInt(this.ubic),
-                enviosInp: parseInt(this.envios),
-                pagosInp: parseInt(this.pagos),
-                exitoInp: parseInt(this.exito),
-                link: "/productor/" + this.id_prod + "/formulas/editar/inicial"
+                ubicInp: null,
+                enviosInp: null,
+                pagosInp: null,
+                exitoInp: null,
+                link: "/productor/" + this.id_prod + "/formulas/cambiar/inicial"
             };
         },
 

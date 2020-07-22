@@ -31,11 +31,10 @@
     <div class="col-7">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center h4">
-                Editar Formula Inicial
+                Cambiar Formula Inicial
             </div>
             <div class="card-body" style="background-color: #FDFDFD">
-                <editar-formula-inicial id_prod="{{ $id_prod }}" csrf="{{ csrf_token() }}" ubic="{{ $formula["ubicacion"] }}"
-                pagos="{{ $formula["pagos"] }}" envios="{{ $formula["envios"] }}" exito="{{ $formula["exito"] }}"> </editar-formula-inicial>
+                <editar-formula-inicial id_prod="{{ $id_prod }}" csrf="{{ csrf_token() }}"> </editar-formula-inicial>
             </div>
             <div class="card-footer bg-primary text-white">
                 <a href="{{ route('verFormulas', ['id_prod' => $id_prod]) }}">

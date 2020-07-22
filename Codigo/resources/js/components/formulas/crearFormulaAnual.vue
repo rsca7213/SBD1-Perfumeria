@@ -4,28 +4,11 @@
         <hr>
         <form :action="link" method="POST" class="row justify-content-center">
             <input type="hidden" name="_token" :value="this.csrf">
-            <div class="form-group px-4 mx-4 justify-content-center col-7">
-                <label for="ubicacion" class="mt-2 px-4"> Ubicación </label>
-                <input type="number" class="form-control" step="0.01" id="ubicacion" required :class="ubicInputErr" 
-                v-model.number="ubicInp" placeholder="Porcentaje..." name="ubicacion">
-                <small class="form-text text-danger"> <b v-text="smallUbic"> </b> </small>
-            </div>
-            <div class="form-group px-4 mx-4 justify-content-center col-7">
-                <label for="pagos" class="mt-2 px-4"> Metodos de pago </label>
-                <input type="number" class="form-control" step="0.01" id="pagos" required :class="pagosInputErr" 
-                v-model.number="pagosInp" placeholder="Porcentaje..." name="pagos">
-                <small class="form-text text-danger"> <b v-text="smallPago"> </b> </small>
-            </div>
-            <div class="form-group px-4 mx-4 justify-content-center col-7">
-                <label for="envios" class="mt-2 px-4"> Metodos de envío </label>
-                <input type="number" class="form-control" step="0.01" id="envios" required :class="enviosInputErr"
-                 v-model.number="enviosInp" placeholder="Porcentaje..." name="envios"> 
-                <small class="form-text text-danger"> <b v-text="smallEnv"> </b> </small>
-            </div>
+            <input type="hidden" name="_method" value="POST">
             <div class="form-group px-4 mx-4 justify-content-center col-7">
                 <label for="cumplim" class="mt-2 px-4"> Cumplimiento de pedidos </label>
                 <input type="number" class="form-control" step="0.01" id="cumplim" required :class="cumplimInputErr"
-                 v-model.number="cumplimInp" placeholder="Porcentaje..." name="cumplim"> 
+                 v-model.number="cumplimInp" placeholder="Porcentaje..." name="cumplim" readonly> 
                 <small class="form-text text-danger"> <b v-text="smallCum"> </b> </small>
             </div>
             <div class="form-group px-4 mx-4 justify-content-center col-7">
@@ -52,49 +35,13 @@
 
         data() {
             return {
-                ubicInp: null,
-                enviosInp: null,
-                pagosInp: null,
                 exitoInp: null,
-                cumplimInp: null,
+                cumplimInp: 100,
                 link: "/productor/" + this.id_prod + "/formulas/crear/anual"
             };
         },
 
         computed: {
-            ubicInputErr() {
-                if((this.ubicInp > 100 || this.ubicInp < 0) && (this.ubicInp != null)) {
-                    this.smallUbic = "No debe ser mayor a 100 o menor a 0.";
-                    return "is-invalid";
-                }
-                else {
-                    this.smallUbic = "";
-                    return "";
-                }
-                
-            },
-
-            pagosInputErr() {
-                if((this.pagosInp > 100 || this.pagosInp < 0) && (this.pagosInp != null)) {
-                    this.smallPago = "No debe ser mayor a 100 o menor a 0.";
-                    return "is-invalid";
-                }
-                else {
-                    this.smallPago = "";
-                    return "";
-                }
-            },
-
-            enviosInputErr() {
-                if((this.enviosInp > 100 || this.enviosInp < 0) && (this.enviosInp != null)) {
-                    this.smallEnv = "No debe ser mayor a 100 o menor a 0.";
-                    return "is-invalid";
-                }
-                else {
-                    this.smallEnv = "";
-                    return "";
-                }
-            },
 
             exitoInputErr() {
                 if((this.exitoInp > 100 || this.exitoInp < 0) && (this.exitoInp != null)) {
@@ -107,36 +54,10 @@
                 }
             },
 
-            cumplimInputErr() {
-                if((this.cumplimInp > 100 || this.cumplimInp < 0) && (this.cumplimInp != null)) {
-                    this.smallCum = "No debe ser mayor a 100 o menor a 0.";
-                    return "is-invalid";
-                }
-                else {
-                    this.smallCum = "";
-                    return "";
-                }
-            },
-
             submitErr() {
-                if(this.ubicInputErr === "is-invalid" || this.pagosInputErr === "is-invalid" || 
-                this.enviosInputErr === "is-invalid" || this.exitoInputErr === "is-invalid" || this.cumplimInputErr === "is-invalid")
+                if(this.exitoInputErr === "is-invalid")
                 {
                     this.smallBtn = "";
-                    this.submitErrDis="disabled";
-                    return "btn-danger";
-                }
-                else if(this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp > 100 && 
-                this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null
-                && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
-                    this.smallBtn = "Los criterios no deben sumar mas de 100%";
-                    this.submitErrDis="disabled";
-                    return "btn-danger";
-                }
-                else if(this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp != 100 && 
-                this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null
-                && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
-                    this.smallBtn = "Los criterios deben sumar 100%";
                     this.submitErrDis="disabled";
                     return "btn-danger";
                 }

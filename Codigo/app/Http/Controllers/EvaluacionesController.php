@@ -169,7 +169,7 @@ class EvaluacionesController extends Controller
         foreach($contratos as $cont) {
             
             $fecha = Carbon::createFromDate($cont->fecha);
-            
+
             if ($fecha->diffInDays($time) > 365) {
                 array_push($contPosibles,$cont);
             }
@@ -177,11 +177,25 @@ class EvaluacionesController extends Controller
             else {
                 $cont->renov = 0;
                 $cont->fechaR = '';
-                $cont->exp = 366 - $fecha->diffInDays($time);
+                $cont->exp = 365 - $fecha->diffInDays($time);
                 array_push($contActivos,$cont);
             }
 
         }
+
+
+        $contActivosSinR = [];
+        /* Si existiera algun contrato que fue renovado pero su fecha de apertura no se ha vencido, sera
+           filtrado por este foreach */
+        foreach($contActivos as $cont) {
+            $query = DB::select(DB::raw("SELECT COUNT(*) FROM rdj_renovaciones WHERE id_proveedor=?
+            AND id_productor=? AND fecha_apertura=? GROUP BY id_proveedor,id_productor,fecha_apertura"),
+            [$cont->idp,$id_prod,$cont->fecha]);
+
+            if(sizeof($query) == 0) array_push($contActivosSinR,$cont);
+        }
+
+        $contActivos = $contActivosSinR;
 
         /* Para los posibles, buscamos su renovacion mas reciente, si no tiene renovacion skippeamos, si tiene
            buscamos la cantidad de veces que se ha renovado con count y luego revisamos si la renovacion mas reciente
@@ -204,7 +218,7 @@ class EvaluacionesController extends Controller
             if ($fecha->diffInDays($time) <= 365) {
                 $cont->fechaR = $renovs[0]->fecha;
                 $cont->renov = $count;
-                $cont->exp = 366 - $fecha->diffInDays($time);
+                $cont->exp = 365 - $fecha->diffInDays($time);
                 array_push($contActivos,$cont);
             }
         }
@@ -213,6 +227,7 @@ class EvaluacionesController extends Controller
 
         $data = [];
         foreach($contActivos as $cont) {
+            $cont->fecha_ap_ts = $cont->fecha;
             $cont->fecha = date("d/m/Y", strtotime($cont->fecha));
             $cont->fechaR = date("d/m/Y", strtotime($cont->fechaR));
 
@@ -377,127 +392,24 @@ class EvaluacionesController extends Controller
     }
 
     // Funcion encargada de buscar toda la data necesaria para evaluaciones anuales
-    public function dataProveedoresAnual ($id_prod, $id_prov) {
-
-        //Busqueda de todos los paises donde quiere recibir el productor para filtrar los metodos de envio
-        $paises_prod = DB::select(DB::raw("SELECT id_pais FROM rdj_productores_paises
-        WHERE id_productor=? ORDER BY id_pais"),[$id_prod]);
+    public function dataProveedoresAnual ($id_prod, $id_prov, $fecha_ap_ts) {
 
         $prov = []; //Variable donde se almacenan los datos a responder de la solicitud HTTP
 
         //Busqueda de información basica del proveedor
         $query = DB::select(
-            DB::raw("SELECT pr.id AS idp, pr.nombre AS prov, pa.nombre AS pais FROM 
-                rdj_paises pa, rdj_proveedores pr WHERE pa.id=pr.id_pais AND pr.id=?"),
+            DB::raw("SELECT pr.id AS idp, pr.nombre AS prov FROM 
+                rdj_proveedores pr WHERE pr.id=?"),
                 [$id_prov]);
 
         //Almacenamiento de la info basica en aux
         $prov["idp"] = $query[0]->idp;
         $prov["prov"] = $query[0]->prov;
-        $prov["pais"] = $query[0]->pais;
-            
-        //Busqueda de los metodos de pago del proveedor
-        $query = DB::select(
-            DB::raw("SELECT CASE WHEN pa.tipo='c' THEN 'Cuota única' WHEN pa.tipo='p'
-            THEN 'Por cuotas' END AS tipo, pa.num_cuotas AS numc, pa.porcentaje AS porc,
-            pa.meses AS meses, pa.id FROM rdj_metodos_pagos pa WHERE pa.id_proveedor=?"),
-            [$prov["idp"]]);
-            
-        //Almacenamiento de arreglo de metodos de pagos del proveedor
-        $prov["pagos"] = $query;
-
-        //Para los metodos de envio, creamos un arreglo ya que pueden ser varios
-        $prov["envios"] = [];
-        foreach($paises_prod as $pais) { //Para cada pais del productor buscamos si hay metodo de envio
-
-            $query = DB::select(
-                DB::raw("SELECT e.duracion, e.precio, e.id AS id_envio, p.id AS id_pais, p.nombre AS pais,
-                CASE WHEN e.tipo='t' THEN 'Terrestre' WHEN e.tipo='a' THEN 'Aéreo'
-                WHEN e.tipo='m' THEN 'Marítimo' END AS tipo FROM rdj_paises p,
-                rdj_metodos_envios e WHERE e.id_pais=? AND e.id_proveedor=?
-                AND e.id_pais=p.id ORDER BY e.id_pais"),[$pais->id_pais, $prov["idp"]]);
-
-            //Agregamos al arreglo si conseguimos un metodo de envio para el pais
-            //como pueden haber varios metodos de envio con el mismo pais necesitamos
-            //hacer otro foreach
-            if($query != []) {
-                foreach($query as $met) {
-                    $metodo = [];
-                    $metodo["detalles"] = [];
-                    $metodo["id_envio"] = $met->id_envio;
-                    $metodo["id_pais"] = $met->id_pais;
-                    $metodo["duracion"] = $met->duracion;
-                    $metodo["precio"] = $met->precio;
-                    $metodo["pais"] = $met->pais;
-                    $metodo["tipo"] = $met->tipo;
-                    array_push($prov["envios"],$metodo);
-                }
-            }
-        }
-
-        //Para los detalles o modificadores de los metodos de envios conseguidos
-        for($i = 0; $i <= sizeof($prov["envios"]) - 1; $i++) {
-            //Busqueda de los detalles de un metodo de envio
-            $query = DB::select(
-                DB::raw("SELECT d.id, d.nombre AS det, d.mod_precio AS precio, d.mod_duracion AS duracion
-                FROM rdj_detalles_metodos_envios d WHERE d.id_envio=? AND d.id_proveedor=?
-                AND d.id_pais=?"),[$prov["envios"][$i]["id_envio"], $id_prov, $prov["envios"][$i]["id_pais"]]
-            );
-            //Agregamos al arreglo si conseguimos un detalle de envio para el metodo
-            //como pueden haber varios detalles de envio con el mismo metodo necesitamos
-            //hacer otro foreach
-            if($query != []) {
-                foreach($query as $det) {
-                    $detalle = [];
-                    $detalle["id"] = $det->id;
-                    $detalle["det"] = $det->det;
-                    $detalle["precio"] = $det->precio;
-                    $detalle["duracion"] = $det->duracion;
-                    array_push($prov["envios"][$i]["detalles"],$detalle);
-                }
-            }          
-        }
-
-        /* Buscamos todas las esencias del proveedor y las guardamos */
-        $prov["esencias"] = $query = DB::select(
-            DB::raw("SELECT e.cas_ing_esencia AS cas, e.nombre AS ing, CASE WHEN
-            e.naturaleza='n' THEN 'natural' WHEN e.naturaleza='s' THEN 'sintetica' END
-            AS tipo FROM rdj_ingredientes_esencias e WHERE e.id_proveedor=? 
-            ORDER BY e.cas_ing_esencia"), 
-           [$id_prov]);
-         
-        /* Buscamos todos los otros ingredientes del proveedor y los guardamos */
-        $prov["otros"] = $query = DB::select(
-                    DB::raw("SELECT o.cas_otro_ing AS cas, o.nombre AS ing
-                    FROM rdj_otros_ingredientes o WHERE o.id_proveedor=? 
-                    ORDER BY o.cas_otro_ing"), 
-                   [$id_prov]);
-        
-        /* Buscamos las presentaciones de cada esencia y las guardamos */
-        foreach($prov["esencias"] as $esen) {
-            $query = DB::select(
-                      DB::raw("SELECT p.id, p.volumen AS vol, p.precio
-                      FROM rdj_presents_ings_esencias p WHERE p.cas_ing_esencia=?
-                      ORDER BY p.id"),
-                     [$esen->cas]);
-            $esen->cas = Controller::stringifyCas($esen->cas);
-            $esen->pres = $query;
-        }
     
-        /* Buscamos las presentaciones de cada otro ing y las guardamos */
-        foreach($prov["otros"] as $otro) {
-            $query = DB::select(
-                      DB::raw("SELECT p.id, p.volumen AS vol, p.precio
-                      FROM rdj_present_otros_ings p WHERE p.cas_otro_ing=?
-                      ORDER BY p.id"),
-                     [$otro->cas]);
-            $otro->cas = Controller::stringifyCas($otro->cas);
-            $otro->pres = $query;
-        }
 
+        $prov["fecha_ap_ts"] = $fecha_ap_ts;
         $prov["pedidosCump"] = 0;
         $prov["pedidosRec"] = 0;
-
     
         //Devolvemos a la interfaz la data necesaria para continuar
         return response([$prov],200);
@@ -533,6 +445,14 @@ class EvaluacionesController extends Controller
 
         if(sizeof($escala) == 0 || sizeof($formInicial)  != 4) return back();
         else $escala = $escala[0];
+
+        if(intval($escala->ri) != 0) {
+            $escala->rf -= intval($escala->ri);
+            $data['inicUbic'] -= intval($escala->ri);
+            $data['inicPago'] -= intval($escala->ri);
+            $data['inicEnvio'] -= intval($escala->ri);
+            $escala->ri = 0;
+        }
         
         $resultado = (($data['inicUbic'] * $formInicial[0]->peso) / ($escala->rf)) +
                      (($data['inicPago'] * $formInicial[1]->peso) / ($escala->rf)) +
@@ -562,15 +482,8 @@ class EvaluacionesController extends Controller
         //Pequeña validacion back end
         $data = $request->validate([
             'idp' => 'numeric|required',
-            'anualUbic' => 'numeric|required',
-            'anualPago' => 'numeric|required',
-            'anualEnvio' => 'numeric|required',
             'anualCump' => 'numeric|required',
-            'fechaA' => 'required',
-            'fechaR' => 'required',
-            'ex' => 'required',
-            'exp' => 'required',   
-            'renov' => 'required'        
+            'fecha_ap_ts' => 'required'     
         ]);
 
         /* Buscamos la formula anual del productor */
@@ -590,13 +503,16 @@ class EvaluacionesController extends Controller
                GROUP BY e.rango_inicio, e.rango_fin;"),
            [$id_prod]);
 
-        if(sizeof($escala) == 0 || sizeof($formAnual)  != 5) return back();
+        if(sizeof($escala) == 0 || sizeof($formAnual)  == 0) return response('a',422);
         else $escala = $escala[0];
+
+        if(intval($escala->ri) != 0) {
+            $escala->rf -= intval($escala->ri);
+            $data['anualCump'] -= intval($escala->ri);
+            $escala->ri = 0;
+        }
         
-        $resultado = (($data['anualUbic'] * $formAnual[0]->peso) / ($escala->rf)) +
-                     (($data['anualPago'] * $formAnual[1]->peso) / ($escala->rf)) +
-                     (($data['anualEnvio'] * $formAnual[2]->peso) / ($escala->rf)) +
-                     (($data['anualCump'] * $formAnual[3]->peso) / ($escala->rf));
+        $resultado = (($data['anualCump'] * $formAnual[0]->peso) / ($escala->rf));
 
         $time = Carbon::now()->toDateTimeString();
 
@@ -605,17 +521,40 @@ class EvaluacionesController extends Controller
 
         $prov = DB::select(DB::raw("SELECT nombre FROM rdj_proveedores WHERE id=?"),[$data['idp']])[0]->nombre;
 
+        $ex = DB::SELECT(DB::raw("SELECT CASE WHEN c.exclusivo='t' THEN 'Exclusivo' ELSE 'No exclusivo' END
+        AS ex FROM rdj_contratos c WHERE c.id_productor=? AND c.id_proveedor=? AND c.fecha_apertura=?"),[$id_prod, $data['idp'], $data['fecha_ap_ts']]);
+
+        $renovs= DB::select(DB::raw("SELECT MAX(r.fecha_renovacion) AS fecha FROM rdj_renovaciones r
+        WHERE r.id_proveedor=? AND r.id_productor=? AND r.fecha_apertura=? GROUP BY r.id_proveedor,
+        r.id_productor, r.fecha_apertura"),[$data['idp'],$id_prod,$data['fecha_ap_ts']]);
+
         $respuesta = [];
+
+        if(sizeof($renovs) == 0) {
+            $respuesta["fechaR"] = null;
+            $respuesta["renov"] = 0;
+            $time = Carbon::now();
+            $respuesta["exp"] = 365 - $time->diffInDays($data['fecha_ap_ts']);
+        }
+
+        else {
+            $count = DB::select(DB::raw("SELECT COUNT(*) FROM rdj_renovaciones r WHERE r.id_proveedor=?
+            AND r.id_productor=? AND r.fecha_apertura=? GROUP BY r.id_proveedor, r.id_productor, 
+            r.fecha_apertura"),[$data['idp'],$id_prod,$data['fecha_ap_ts']]);
+            $fecha = Carbon::createFromDate($renovs[0]->fecha);
+            $respuesta["fechaR"] = date('d/m/Y', strtotime($renovs[0]->fecha));
+            $respuesta["renov"] = $count[0]->count;
+            $respuesta["exp"] = 365 - $fecha->diffInDays($time);
+        }
+
         $respuesta["res"] = $resultado;
-        $respuesta["exito"] = $formAnual[4]->peso;
+        $respuesta["exito"] = $formAnual[1]->peso;
         $respuesta["id_prod"] = $id_prod;
         $respuesta["id_prov"] = $data['idp'];
         $respuesta["prov"] = $prov;
-        $respuesta["fechaA"] = $data['fechaA'];
-        $respuesta["fechaR"] = $data['fechaR'];
-        $respuesta["ex"] = $data['ex'];
-        $respuesta["exp"] = $data['exp'];
-        $respuesta["renov"] = $data['renov'];
+        $respuesta["fecha_ap_ts"] = $data['fecha_ap_ts'];
+        $respuesta["fechaA"] = date("d/m/Y", strtotime($data['fecha_ap_ts']));
+        $respuesta["ex"] = $ex[0]->ex;
 
         return response([$respuesta],201);
     }

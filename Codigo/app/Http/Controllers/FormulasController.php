@@ -77,7 +77,7 @@ class FormulasController extends Controller
     }
 
     /* para devolver la interfaz de modificacion */
-    public function editarFormulaInicial ($id_prod) {
+    public function cambiarFormulaInicial ($id_prod) {
         $formInicial = DB::select(DB::raw("SELECT c.nombre, c.descripcion AS desc, h.peso, MAX(h.fecha_inicio) AS fecha 
         FROM rdj_criterios c, rdj_hist_formulas h, rdj_productores p 
         WHERE c.id=h.id_criterio AND h.id_productor=? AND h.tipo='i' AND h.fecha_fin IS NULL
@@ -85,16 +85,11 @@ class FormulasController extends Controller
 
         if(sizeof($formInicial) != 0)
         {
-            $formInicialArr['ubicacion'] = $formInicial[0]->peso;
-            $formInicialArr['pagos'] = $formInicial[1]->peso;
-            $formInicialArr['envios'] = $formInicial[2]->peso;
-            $formInicialArr['exito'] = $formInicial[3]->peso;
     
             /* valida que exista una formula inicial activa usando el query de arriba */
             if(sizeof($formInicial) != 0)
             return view('productores.formulas.e-formula-i',[
-                'id_prod' => $id_prod,
-                'formula' => $formInicialArr
+                'id_prod' => $id_prod
             ]);
         }
         
@@ -157,20 +152,16 @@ class FormulasController extends Controller
     public function insertFormulaAnual (Request $request, $id_prod) {
         /* validacion server-side */
         $data = $request->validate([
-            'ubicacion' => 'numeric|required|max:100|min:0',
-            'pagos' => 'numeric|required|max:100|min:0',
-            'envios' => 'numeric|required|max:100|min:0',
             'cumplim' => 'numeric|required|max:100|min:0',
             'exito' => 'numeric|required|max:100|min:0' 
         ]);
         $time = Carbon::now()->toDateTimeString();
         /* mas validacion server-side */
-        if($data['ubicacion'] + $data['pagos'] + $data['envios'] + $data['cumplim'] > 100) return back();
+        if($data['cumplim'] > 100) return back();
         else {
             /* insert de la formula */
             DB::insert(DB::raw("INSERT INTO rdj_hist_formulas (fecha_inicio, id_criterio, id_productor, peso, tipo) VALUES
-            (?,1,?,?,'a'),(?,2,?,?,'a'),(?,3,?,?,'a'),(?,4,?,?,'a'),(?,5,?,?,'a')"),[$time,$id_prod,$data['ubicacion'],
-            $time,$id_prod,$data['pagos'],$time,$id_prod,$data['envios'],$time,$id_prod,$data['cumplim'],$time,$id_prod,$data['exito']]);
+            (?,4,?,?,'a'),(?,5,?,?,'a')"),[$time,$id_prod,$data['cumplim'],$time,$id_prod,$data['exito']]);
 
             return redirect ('productor/'.$id_prod.'/formulas');
         }
@@ -178,7 +169,7 @@ class FormulasController extends Controller
     }
 
     /* para devolver la interfaz de modificacion */
-    public function editarFormulaAnual ($id_prod) {
+    public function cambiarFormulaAnual ($id_prod) {
         $formAnual = DB::select(DB::raw("SELECT c.nombre, c.descripcion AS desc, h.peso, MAX(h.fecha_inicio) AS fecha 
         FROM rdj_criterios c, rdj_hist_formulas h, rdj_productores p 
         WHERE c.id=h.id_criterio AND h.id_productor=? AND h.tipo='a' AND h.fecha_fin IS NULL
@@ -186,17 +177,12 @@ class FormulasController extends Controller
 
         if(sizeof($formAnual) != 0)
         {
-            $formAnualArr['ubicacion'] = $formAnual[0]->peso;
-            $formAnualArr['pagos'] = $formAnual[1]->peso;
-            $formAnualArr['envios'] = $formAnual[2]->peso;
-            $formAnualArr['cumplim'] = $formAnual[3]->peso;
-            $formAnualArr['exito'] = $formAnual[4]->peso;
+            
     
             /* valida que exista una formula anual activa usando el query de arriba */
             if(sizeof($formAnual) != 0)
             return view('productores.formulas.e-formula-a',[
                 'id_prod' => $id_prod,
-                'formula' => $formAnualArr
             ]);
         }
         
@@ -208,9 +194,6 @@ class FormulasController extends Controller
     public function updateFormulaAnual (Request $request, $id_prod) {
         /* validacion server-side */
         $data = $request->validate([
-            'ubicacion' => 'numeric|required|max:100|min:0',
-            'pagos' => 'numeric|required|max:100|min:0',
-            'envios' => 'numeric|required|max:100|min:0',
             'cumplim' => 'numeric|required|max:100|min:0',
             'exito' => 'numeric|required|max:100|min:0' 
         ]);
@@ -218,7 +201,7 @@ class FormulasController extends Controller
         $time = Carbon::now()->toDateTimeString();
 
         /* mas validacion server-side */
-        if($data['ubicacion'] + $data['pagos'] + $data['envios'] + $data['cumplim'] > 100) return back();
+        if($data['cumplim'] > 100) return back();
         else {
             /* busca la formula actual y devuelve sus datos para poder asignar fecha_fin */
             $formInicial = DB::select(DB::raw("SELECT h.id_productor AS idp, MAX(h.fecha_inicio) AS fecha
@@ -232,8 +215,7 @@ class FormulasController extends Controller
 
             /* insert de la formula nueva */
             DB::insert(DB::raw("INSERT INTO rdj_hist_formulas (fecha_inicio, id_criterio, id_productor, peso, tipo) VALUES
-            (?,1,?,?,'a'),(?,2,?,?,'a'),(?,3,?,?,'a'),(?,4,?,?,'a'),(?,5,?,?,'a')"),[$time,$id_prod,$data['ubicacion'],
-            $time,$id_prod,$data['pagos'],$time,$id_prod,$data['envios'],$time,$id_prod,$data['cumplim'],$time,$id_prod,$data['exito']]);
+            (?,4,?,?,'a'),(?,5,?,?,'a')"),[$time,$id_prod,$data['cumplim'],$time,$id_prod,$data['exito']]);
 
             return redirect ('productor/'.$id_prod.'/formulas');
         }
@@ -273,7 +255,7 @@ class FormulasController extends Controller
     }
 
     /* para devolver la interfaz de modificacion de escala */
-    public function editarEscala ($id_prod) {
+    public function cambiarEscala ($id_prod) {
         $escala = DB::select(DB::raw("SELECT MAX(e.fecha_inicio) AS fecha,
         e.rango_inicio AS ri, e.rango_fin AS rf FROM rdj_escalas e, rdj_productores p
         WHERE e.id_productor=? AND e.fecha_fin IS NULL
@@ -284,8 +266,6 @@ class FormulasController extends Controller
         {
             return view('productores.formulas.e-escala',[
                 'id_prod' => $id_prod,
-                'ri' => $escala[0]->ri,
-                'rf' => $escala[0]->rf
             ]);
         }
         
@@ -321,60 +301,4 @@ class FormulasController extends Controller
         }
     }
 
-    public function borrarFormulaInicial ($id_prod) {
-        $formInicial = DB::select(DB::raw("SELECT c.nombre, c.descripcion AS desc, h.peso, MAX(h.fecha_inicio) AS fecha 
-        FROM rdj_criterios c, rdj_hist_formulas h, rdj_productores p 
-        WHERE c.id=h.id_criterio AND h.id_productor=? AND h.tipo='i' AND h.fecha_fin IS NULL
-        GROUP BY c.id, c.nombre, c.descripcion, h.peso, h.id_productor ORDER BY c.id"),[$id_prod]);
-
-        $time = Carbon::now()->toDateTimeString();
-        /* valida que exista una formula inicial activa usando el query de arriba */
-        if(sizeof($formInicial) != 0) 
-        {
-            DB::update(DB::raw("UPDATE rdj_hist_formulas SET fecha_fin=?
-            WHERE tipo='i' AND fecha_fin IS NULL AND fecha_inicio=? AND id_productor=?"),
-            [$time,$formInicial[0]->fecha,$id_prod]);
-
-            return redirect('/productor/'.$id_prod.'/formulas');
-        }
-        else return redirect ('/productor/'.$id_prod.'/formulas');
-    }
-
-    public function borrarFormulaAnual ($id_prod) {
-        $formAnual = DB::select(DB::raw("SELECT c.nombre, c.descripcion AS desc, h.peso, MAX(h.fecha_inicio) AS fecha 
-        FROM rdj_criterios c, rdj_hist_formulas h, rdj_productores p 
-        WHERE c.id=h.id_criterio AND h.id_productor=? AND h.tipo='a' AND h.fecha_fin IS NULL
-        GROUP BY c.id, c.nombre, c.descripcion, h.peso, h.id_productor ORDER BY c.id"),[$id_prod]);
-
-        $time = Carbon::now()->toDateTimeString();
-        /* valida que exista una formula inicial activa usando el query de arriba */
-        if(sizeof($formAnual) != 0) 
-        {
-            DB::update(DB::raw("UPDATE rdj_hist_formulas SET fecha_fin=?
-            WHERE tipo='a' AND fecha_fin IS NULL AND fecha_inicio=? AND id_productor=?"),
-            [$time,$formAnual[0]->fecha,$id_prod]);
-
-            return redirect('/productor/'.$id_prod.'/formulas');
-        }
-        else return redirect ('/productor/'.$id_prod.'/formulas');
-    }
-
-    public function borrarEscala ($id_prod) {
-        $escala = DB::select(DB::raw("SELECT MAX(e.fecha_inicio) AS fecha, e.id_productor AS idp
-        FROM rdj_escalas e, rdj_productores p
-        WHERE e.id_productor=? AND e.fecha_fin IS NULL
-        GROUP BY e.rango_inicio, e.rango_fin, e.id_productor"),[$id_prod]);
-
-        $time = Carbon::now()->toDateTimeString();
-        /* valida que exista una escala activa usando el query de arriba */
-        if(sizeof($escala) != 0)
-        {
-            DB::update(DB::raw("UPDATE rdj_escalas SET fecha_fin=?
-            WHERE id_productor=? AND fecha_fin IS NULL AND fecha_inicio=?"),
-            [$time,$escala[0]->idp,$escala[0]->fecha]);
-            return redirect ('/productor/'.$id_prod.'/formulas');
-        }
-
-        else return redirect ('/productor/'.$id_prod.'/formulas');
-    }
 }

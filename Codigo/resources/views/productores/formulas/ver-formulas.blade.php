@@ -37,12 +37,14 @@
                     <div class="row border-bottom" style="border-color: #707070">
 
                         <!-- para formulas iniciales -->
-                        <div class="col-6 border-right" style="border-color: #707070">
+                        <div class="col-6 border-right mb-3" style="border-color: #707070">
                             <span class="h5"> 
                                 <b class="mr-2"> Formula de Evaluación Inicial </b> 
                                 @if ($form_inicial != [])
-                                    <a href="{{ route('editarFormulaInicial', ['id_prod' => $id_prod]) }}"> <img src="{{ asset('img/iconos/edit.svg') }}" alt="editar" width="24" class="mb-1 iconobtn"> </a>
-                                    <img src="{{ asset('img/iconos/trash.svg') }}" alt="borrar" width="24" class="mb-1 iconobtn" data-toggle="modal" data-target="#inicialModal"> 
+                                    <a href="{{ route('cambiarFormulaInicial', ['id_prod' => $id_prod]) }}" class="btn btn-primary"> 
+                                        <img src="{{ asset('img/iconos/cambiar_white.svg') }}" width="24">
+                                        <span class="ml-2"> Crear Nueva Formula </span>
+                                    </a> 
                                 @endif
                             </span>
                             <hr>
@@ -74,7 +76,6 @@
                                     <img src="{{ asset('img/iconos/check_green.svg') }}" alt="exito" width="24" class="mb-1">
                                     Criterio de Aprobación: <span> {{ $form_inicial[3]->peso }} % </span> 
                                 </span>
-                                <hr>
                             @else 
                                 <h5> No tiene una formula de evaluación inicial activa. </h5>
                                 <a href="{{ route('crearFormulaInicial', ['id_prod' => $id_prod]) }}" class="btn btn-primary mb-4"> 
@@ -90,8 +91,10 @@
                             <span class="h5"> 
                                 <b class="mr-2"> Formula de Evaluación Anual </b> 
                                 @if ($form_anual != [])
-                                    <a href="{{ route('editarFormulaAnual', ['id_prod' => $id_prod]) }}"> <img src="{{ asset('img/iconos/edit.svg') }}" alt="editar" width="24" class="mb-1 iconobtn"> </a>
-                                    <img src="{{ asset('img/iconos/trash.svg') }}" alt="borrar" width="24" class="mb-1 iconobtn" data-toggle="modal" data-target="#anualModal">
+                                    <a href="{{ route('cambiarFormulaAnual', ['id_prod' => $id_prod]) }}" class="btn btn-primary"> 
+                                        <img src="{{ asset('img/iconos/cambiar_white.svg') }}" width="24">
+                                        <span class="ml-2"> Crear Nueva Formula </span>
+                                    </a>
                                 @endif
                             </span>
                             <hr>
@@ -110,7 +113,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @for ($i = 0; $i <= 3; $i++)
+                                        @for ($i = 0; $i <= 0; $i++)
                                             <tr> 
                                                 <td> {{ $form_anual[$i]->nombre }}</td>
                                                 <td> {{ $form_anual[$i]->desc }}</td>
@@ -121,9 +124,8 @@
                                 </table>
                                 <span class="h5"> 
                                     <img src="{{ asset('img/iconos/check_green.svg') }}" alt="exito" width="24" class="mb-1">
-                                    Criterio de Aprobación: <span> {{ $form_anual[4]->peso }} %  </span> 
+                                    Criterio de Aprobación: <span> {{ $form_anual[1]->peso }} %  </span> 
                                 </span>
-                            <hr>
                             @else
                             <h5> No tiene una formula de evaluación anual activa. </h5>
                             <a href="{{ route('crearFormulaAnual', ['id_prod' => $id_prod]) }}" class="btn btn-primary mb-4"> 
@@ -135,20 +137,23 @@
                         <!-- fin formulas anuales -->
 
                     </div>
-                    <div class="row d-flex justify-content-center mt-4"> 
-                        <span class="h5"> 
-                            <img src="{{ asset('img/iconos/gear.svg') }}" alt="escala" width="24" class="mb-1">
-                            <span class="ml-2"> 
-                                Escala de Evaluación:
+                    <div class="row d-flex justify-content-center mt-4">  
+                            <li class="h4"> 
+                                <b> Escala de Evaluación: </b>
                                 @if ($escala != [])
                                     {{ $escala[0]->ri }} a {{ $escala[0]->rf }}
-                                    <a href="{{ route('editarEscala', ['id_prod' => $id_prod]) }}"> <img src="{{ asset('img/iconos/edit.svg') }}" alt="editar" width="24" class="mb-1 iconobtn"> </a>
-                                    <img src="{{ asset('img/iconos/trash.svg') }}" alt="borrar" width="24" class="mb-1 iconobtn" data-toggle="modal" data-target="#escalaModal">
+                                    <a href="{{ route('cambiarEscala', ['id_prod' => $id_prod]) }}" class="btn btn-primary ml-1"> 
+                                        <img src="{{ asset('img/iconos/cambiar_white.svg') }}" width="24">
+                                        <span class="ml-2"> Crear Nueva Escala </span>
+                                    </a>
                                 @else
-                                    <a href="{{ route('crearEscala', ['id_prod' => $id_prod]) }}"> <img src="{{ asset('img/iconos/add.svg') }}" alt="agregar" width="24" class="mb-1 iconobtn"> </a>
-                                @endif 
-                            </span>
-                        </span>
+                                    <a href="{{ route('crearEscala', ['id_prod' => $id_prod]) }}"  class="btn btn-primary"> 
+                                        <img src="{{ asset('img/iconos/cambiar_white.svg') }}" width="24">
+                                        <span class="ml-2"> Crear Escala </span>
+                                    </a>
+                                @endif
+                            </li>
+                            
                     </div>
                 </div>
                 <div class="card-footer bg-primary text-white">
@@ -160,85 +165,5 @@
             </div>
         </div>
     </div>
-      
-      <!-- Modal para borrar escala -->
-      <div class="modal fade" id="escalaModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content" style="background-color: #F5F5F5">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel"> <b> Borrar Escala </b> </h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body h5 text-center">
-              <b> ¿Está seguro que desea eliminar la escala? </b>
-            </div>
-            <div class="modal-footer text-center justify-content-center">
-                <form action="/productor/{{$id_prod}}/escala/borrar" method="POST">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">
-                        <img src="{{ asset('img/iconos/trash_white.svg') }}" alt="borrar" width="24" class="mb-1">
-                        <span class="ml-2"> Borrar Escala </span>
-                    </button>
-                </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-       <!-- Modal para borrar formula inicial -->
-       <div class="modal fade" id="inicialModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content" style="background-color: #F5F5F5">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel"> <b> Borrar Formula Inicial </b> </h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body h5 text-center">
-              <b> ¿Está seguro que desea eliminar la formula inicial? </b>
-            </div>
-            <div class="modal-footer text-center justify-content-center">
-                <form action="/productor/{{$id_prod}}/formulas/borrar/inicial" method="POST">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">
-                        <img src="{{ asset('img/iconos/trash_white.svg') }}" alt="borrar" width="24" class="mb-1">
-                        <span class="ml-2"> Borrar Formula </span>
-                    </button>
-                </form>
-            </div>
-          </div>
-        </div>
-      </div>
-
-       <!-- Modal para borrar formula anual -->
-       <div class="modal fade" id="anualModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-          <div class="modal-content" style="background-color: #F5F5F5">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel"> <b> Borrar Formula Anual </b> </h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body h5 text-center">
-              <b> ¿Está seguro que desea eliminar la formula anual? </b>
-            </div>
-            <div class="modal-footer text-center justify-content-center">
-                <form action="/productor/{{$id_prod}}/formulas/borrar/anual" method="POST">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-danger">
-                        <img src="{{ asset('img/iconos/trash_white.svg') }}" alt="borrar" width="24" class="mb-1">
-                        <span class="ml-2"> Borrar Formula </span>
-                    </button>
-                </form>
-            </div>
-          </div>
-        </div>
-      </div>
+       
 @endsection

@@ -2485,236 +2485,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["csrf"],
   data: function data() {
@@ -2749,10 +2519,10 @@ __webpack_require__.r(__webpack_exports__);
 
       /*arreglo que contiene los resultados que se van asignando
       a los proveedores en la evaluacion inicial */
-      provAnualRes: [0, 0, 0, 0],
+      provAnualRes: [0],
 
       /*arreglo que contiene los resultados que se van asignando
-         a los proveedores en la evaluacion anual */
+               a los proveedores en la evaluacion anual */
       provInicData: [],
 
       /*arreglo que contiene la data que devuelve laravel
@@ -2812,6 +2582,7 @@ __webpack_require__.r(__webpack_exports__);
         _this.provInicRes[0] = _this.escala["ri"];
         _this.provInicRes[1] = _this.escala["ri"];
         _this.provInicRes[2] = _this.escala["ri"];
+        _this.provAnualRes[0] = _this.escala["ri"];
       }
 
       if (_this.formInic.length === 0) {
@@ -2882,11 +2653,11 @@ __webpack_require__.r(__webpack_exports__);
     /* Funcion AXIOS que le pide a laravel toda la data necesaria para
        llevar a cabo una evaluacion anual, envia la id del proveedor
        del cual necesita data */
-    dataAnual: function dataAnual(idp) {
+    dataAnual: function dataAnual(idp, fecha_ap_ts) {
       var _this5 = this;
 
       console.log("%cAxios: Get! Buscando data para ev anual", "color: lightblue");
-      axios.get("data/anual/" + idp).then(function (response) {
+      axios.get("data/anual/" + idp + "/" + fecha_ap_ts).then(function (response) {
         console.log("%cAxios: Success!", "color: lightgreen");
         _this5.provAnualData = response.data[0];
         _this5.tipoEv = "anualStart";
@@ -2924,27 +2695,14 @@ __webpack_require__.r(__webpack_exports__);
         console.log(errors);
       });
     },
-    enviarAnual: function enviarAnual(idp) {
+    enviarAnual: function enviarAnual(idp, fecha_ap_ts) {
       var _this7 = this;
-
-      var i = 0;
-
-      for (i = 0; i <= this.provsAnual.length - 1; i++) {
-        if (this.provsAnual[i].idp == idp) break;
-      }
 
       console.log("%cAxios: Enviando resultados de ev. anual", "color: lightblue");
       axios.post("anual", {
         'idp': idp,
-        'anualUbic': this.provAnualRes[0],
-        'anualPago': this.provAnualRes[1],
-        'anualEnvio': this.provAnualRes[2],
-        'anualCump': this.provAnualRes[3],
-        'fechaA': this.provsAnual[i].fecha,
-        'fechaR': this.provsAnual[i].fechaR,
-        'ex': this.provsAnual[i].ex,
-        'exp': this.provsAnual[i].exp,
-        'renov': this.provsAnual[i].renov
+        'anualCump': this.provAnualRes[0],
+        'fecha_ap_ts': fecha_ap_ts
       }).then(function (response) {
         console.log("%cAxios: Post!", "color: lightgreen");
         _this7.tipoEv = 'resultadoAnual';
@@ -2982,33 +2740,18 @@ __webpack_require__.r(__webpack_exports__);
         return "disabled";
       } else return null;
     },
-    anualUbicErr: function anualUbicErr() {
+    anualCumpErr: function anualCumpErr() {
       if (this.provAnualRes[0] < parseInt(this.escala["ri"]) || this.provAnualRes[0] > parseInt(this.escala["rf"])) {
         return "is-invalid";
       } else return "";
     },
-    anualPagoErr: function anualPagoErr() {
-      if (this.provAnualRes[1] < parseInt(this.escala["ri"]) || this.provAnualRes[1] > parseInt(this.escala["rf"])) {
-        return "is-invalid";
-      } else return "";
-    },
-    anualEnvioErr: function anualEnvioErr() {
-      if (this.provAnualRes[2] < parseInt(this.escala["ri"]) || this.provAnualRes[2] > parseInt(this.escala["rf"])) {
-        return "is-invalid";
-      } else return "";
-    },
-    anualCumpErr: function anualCumpErr() {
-      if (this.provAnualRes[3] < parseInt(this.escala["ri"]) || this.provAnualRes[3] > parseInt(this.escala["rf"])) {
-        return "is-invalid";
-      } else return "";
-    },
     anualFinalizarErr: function anualFinalizarErr() {
-      if (this.anualUbicErr != "" || this.anualPagoErr != "" || this.anualEnvioErr != "" || this.anualCumpErr != "") {
+      if (this.anualCumpErr != "") {
         return "btn-danger";
       } else return "";
     },
     anualFinalizarDis: function anualFinalizarDis() {
-      if (this.anualUbicErr != "" || this.anualPagoErr != "" || this.anualEnvioErr != "" || this.anualCumpErr != "") {
+      if (this.anualCumpErr != "") {
         return "disabled";
       } else return null;
     }
@@ -3276,63 +3019,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["id_prod", "csrf"],
   data: function data() {
     return {
-      ubicInp: null,
-      enviosInp: null,
-      pagosInp: null,
       exitoInp: null,
-      cumplimInp: null,
+      cumplimInp: 100,
       link: "/productor/" + this.id_prod + "/formulas/crear/anual"
     };
   },
   computed: {
-    ubicInputErr: function ubicInputErr() {
-      if ((this.ubicInp > 100 || this.ubicInp < 0) && this.ubicInp != null) {
-        this.smallUbic = "No debe ser mayor a 100 o menor a 0.";
-        return "is-invalid";
-      } else {
-        this.smallUbic = "";
-        return "";
-      }
-    },
-    pagosInputErr: function pagosInputErr() {
-      if ((this.pagosInp > 100 || this.pagosInp < 0) && this.pagosInp != null) {
-        this.smallPago = "No debe ser mayor a 100 o menor a 0.";
-        return "is-invalid";
-      } else {
-        this.smallPago = "";
-        return "";
-      }
-    },
-    enviosInputErr: function enviosInputErr() {
-      if ((this.enviosInp > 100 || this.enviosInp < 0) && this.enviosInp != null) {
-        this.smallEnv = "No debe ser mayor a 100 o menor a 0.";
-        return "is-invalid";
-      } else {
-        this.smallEnv = "";
-        return "";
-      }
-    },
     exitoInputErr: function exitoInputErr() {
       if ((this.exitoInp > 100 || this.exitoInp < 0) && this.exitoInp != null) {
         this.smallEx = "No debe ser mayor a 100 o menor a 0.";
@@ -3342,26 +3038,9 @@ __webpack_require__.r(__webpack_exports__);
         return "";
       }
     },
-    cumplimInputErr: function cumplimInputErr() {
-      if ((this.cumplimInp > 100 || this.cumplimInp < 0) && this.cumplimInp != null) {
-        this.smallCum = "No debe ser mayor a 100 o menor a 0.";
-        return "is-invalid";
-      } else {
-        this.smallCum = "";
-        return "";
-      }
-    },
     submitErr: function submitErr() {
-      if (this.ubicInputErr === "is-invalid" || this.pagosInputErr === "is-invalid" || this.enviosInputErr === "is-invalid" || this.exitoInputErr === "is-invalid" || this.cumplimInputErr === "is-invalid") {
+      if (this.exitoInputErr === "is-invalid") {
         this.smallBtn = "";
-        this.submitErrDis = "disabled";
-        return "btn-danger";
-      } else if (this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp > 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
-        this.smallBtn = "Los criterios no deben sumar mas de 100%";
-        this.submitErrDis = "disabled";
-        return "btn-danger";
-      } else if (this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp != 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
-        this.smallBtn = "Los criterios deben sumar 100%";
         this.submitErrDis = "disabled";
         return "btn-danger";
       } else {
@@ -3539,12 +3218,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["id_prod", "csrf", "ri", "rf"],
+  props: ["id_prod", "csrf"],
   data: function data() {
     return {
-      riInp: parseInt(this.ri),
-      rfInp: parseInt(this.rf),
-      link: "/productor/" + this.id_prod + "/escala/editar"
+      riInp: null,
+      rfInp: null,
+      link: "/productor/" + this.id_prod + "/escala/cambiar"
     };
   },
   computed: {
@@ -3571,7 +3250,7 @@ __webpack_require__.r(__webpack_exports__);
         this.smallBtn = "";
         this.submitErrDis = "disabled";
         return "btn-danger";
-      } else if (this.riInp >= this.rfInp) {
+      } else if (this.riInp >= this.rfInp && this.riInp != null && this.rfInp != null) {
         this.smallBtn = "El rango final debe ser mayor al rango inicial.";
         this.submitErrDis = "disabled";
         return "btn-danger";
@@ -3626,64 +3305,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["id_prod", "csrf", "ubic", "pagos", "envios", "exito", "cumplim"],
+  props: ["id_prod", "csrf"],
   data: function data() {
     return {
-      ubicInp: parseInt(this.ubic),
-      enviosInp: parseInt(this.envios),
-      pagosInp: parseInt(this.pagos),
-      exitoInp: parseInt(this.exito),
-      cumplimInp: parseInt(this.cumplim),
-      link: "/productor/" + this.id_prod + "/formulas/editar/anual"
+      exitoInp: null,
+      cumplimInp: 100,
+      link: "/productor/" + this.id_prod + "/formulas/cambiar/anual"
     };
   },
   computed: {
-    ubicInputErr: function ubicInputErr() {
-      if ((this.ubicInp > 100 || this.ubicInp < 0) && this.ubicInp != null) {
-        this.smallUbic = "No debe ser mayor a 100 o menor a 0.";
-        return "is-invalid";
-      } else {
-        this.smallUbic = "";
-        return "";
-      }
-    },
-    pagosInputErr: function pagosInputErr() {
-      if ((this.pagosInp > 100 || this.pagosInp < 0) && this.pagosInp != null) {
-        this.smallPago = "No debe ser mayor a 100 o menor a 0.";
-        return "is-invalid";
-      } else {
-        this.smallPago = "";
-        return "";
-      }
-    },
-    enviosInputErr: function enviosInputErr() {
-      if ((this.enviosInp > 100 || this.enviosInp < 0) && this.enviosInp != null) {
-        this.smallEnv = "No debe ser mayor a 100 o menor a 0.";
-        return "is-invalid";
-      } else {
-        this.smallEnv = "";
-        return "";
-      }
-    },
     exitoInputErr: function exitoInputErr() {
       if ((this.exitoInp > 100 || this.exitoInp < 0) && this.exitoInp != null) {
         this.smallEx = "No debe ser mayor a 100 o menor a 0.";
@@ -3703,16 +3334,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     submitErr: function submitErr() {
-      if (this.ubicInputErr === "is-invalid" || this.pagosInputErr === "is-invalid" || this.enviosInputErr === "is-invalid" || this.exitoInputErr === "is-invalid" || this.cumplimInputErr === "is-invalid") {
+      if (this.exitoInputErr === "is-invalid") {
         this.smallBtn = "";
-        this.submitErrDis = "disabled";
-        return "btn-danger";
-      } else if (this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp > 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
-        this.smallBtn = "Los criterios no deben sumar mas de 100%";
-        this.submitErrDis = "disabled";
-        return "btn-danger";
-      } else if (this.enviosInp + this.pagosInp + this.ubicInp + this.cumplimInp != 100 && this.enviosInp != null && this.pagosInp != null && this.ubicInp != null && this.cumplimInp != null && this.enviosInp != "" && this.pagosInp != "" && this.ubicInp != "" && this.cumplimInp != "") {
-        this.smallBtn = "Los criterios deben sumar 100%";
         this.submitErrDis = "disabled";
         return "btn-danger";
       } else {
@@ -3782,11 +3405,11 @@ __webpack_require__.r(__webpack_exports__);
   props: ["id_prod", "csrf", "ubic", "pagos", "envios", "exito"],
   data: function data() {
     return {
-      ubicInp: parseInt(this.ubic),
-      enviosInp: parseInt(this.envios),
-      pagosInp: parseInt(this.pagos),
-      exitoInp: parseInt(this.exito),
-      link: "/productor/" + this.id_prod + "/formulas/editar/inicial"
+      ubicInp: null,
+      enviosInp: null,
+      pagosInp: null,
+      exitoInp: null,
+      link: "/productor/" + this.id_prod + "/formulas/cambiar/inicial"
     };
   },
   computed: {
@@ -39779,10 +39402,14 @@ var render = function() {
                           _vm._v(
                             " " +
                               _vm._s(prov["fechaR"]) +
-                              " (renovado " +
+                              " ( renovado " +
                               _vm._s(prov["renov"]) +
-                              " veces)"
-                          )
+                              " \n                    "
+                          ),
+                          prov["renov"] == 1
+                            ? _c("span", [_vm._v(" vez ")])
+                            : _c("span", [_vm._v(" veces ")]),
+                          _vm._v("\n                )")
                         ])
                   ]),
                   _vm._v(" "),
@@ -39799,7 +39426,10 @@ var render = function() {
                           staticClass: "btn btn-primary",
                           on: {
                             click: function($event) {
-                              return _vm.dataAnual(prov["idp"])
+                              return _vm.dataAnual(
+                                prov["idp"],
+                                prov["fecha_ap_ts"]
+                              )
                             }
                           }
                         },
@@ -40475,7 +40105,10 @@ var render = function() {
               on: {
                 submit: function($event) {
                   $event.preventDefault()
-                  return _vm.enviarAnual(_vm.provAnualData["idp"])
+                  return _vm.enviarAnual(
+                    _vm.provAnualData["idp"],
+                    _vm.provAnualData["fecha_ap_ts"]
+                  )
                 }
               }
             },
@@ -40484,596 +40117,8 @@ var render = function() {
                 _c("span", { staticClass: "h5 col-12 text-center" }, [
                   _c("b", [_vm._v(" Proveedor: ")]),
                   _vm._v(" " + _vm._s(_vm.provAnualData["prov"]) + " ")
-                ]),
-                _vm._v(" "),
-                _vm._m(21),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-12" }, [
-                  _c(
-                    "table",
-                    { staticClass: "table table-striped border border-info" },
-                    [
-                      _vm._m(22),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        [
-                          _vm._l(_vm.provAnualData["esencias"], function(
-                            esen,
-                            index
-                          ) {
-                            return _c("tr", { key: esen.cas }, [
-                              _c("td", { staticClass: " p-1 m-0 pl-2" }, [
-                                _vm._v(" " + _vm._s(esen["cas"]) + " ")
-                              ]),
-                              _vm._v(" "),
-                              _c("td", { staticClass: "p-1 m-0" }, [
-                                _vm._v(" " + _vm._s(esen["ing"]) + " ")
-                              ]),
-                              _vm._v(" "),
-                              _c("td", { staticClass: "p-1 m-0" }, [
-                                _vm._v(" Esencia " + _vm._s(esen["tipo"]) + " ")
-                              ]),
-                              _vm._v(" "),
-                              _c("td", { staticClass: "text-center p-1 m-0" }, [
-                                _c("img", {
-                                  staticClass: "iconobtn",
-                                  attrs: {
-                                    src: "/img/iconos/list.svg",
-                                    alt: "ver",
-                                    width: "24",
-                                    "data-toggle": "modal",
-                                    "data-target": "#modalAnualDetProducto"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.rellenarModalDetProducto(
-                                        "e",
-                                        index
-                                      )
-                                    }
-                                  }
-                                })
-                              ])
-                            ])
-                          }),
-                          _vm._v(" "),
-                          _vm._l(_vm.provAnualData["otros"], function(
-                            otro,
-                            index
-                          ) {
-                            return _c("tr", { key: otro.cas }, [
-                              _c("td", { staticClass: " p-1 m-0 pl-2" }, [
-                                _vm._v(" " + _vm._s(otro["cas"]) + " ")
-                              ]),
-                              _vm._v(" "),
-                              _c("td", { staticClass: "p-1 m-0" }, [
-                                _vm._v(" " + _vm._s(otro["ing"]) + " ")
-                              ]),
-                              _vm._v(" "),
-                              _c("td", { staticClass: "p-1 m-0" }, [
-                                _vm._v(" Componente ")
-                              ]),
-                              _vm._v(" "),
-                              _c("td", { staticClass: "text-center p-1 m-0" }, [
-                                _c("img", {
-                                  staticClass: "iconobtn",
-                                  attrs: {
-                                    src: "/img/iconos/list.svg",
-                                    alt: "ver",
-                                    width: "24",
-                                    "data-toggle": "modal",
-                                    "data-target": "#modalAnualDetProducto"
-                                  },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.rellenarModalDetProducto(
-                                        "o",
-                                        index
-                                      )
-                                    }
-                                  }
-                                })
-                              ])
-                            ])
-                          })
-                        ],
-                        2
-                      )
-                    ]
-                  )
                 ])
               ]),
-              _vm._v(" "),
-              _c("hr", { staticClass: "py-0 my-2" }),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "flex-row d-flex justify-content-center mx-4" },
-                [
-                  _c("span", { staticClass: "h5 col-12 text-center" }, [
-                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
-                    _vm._v(" " + _vm._s(_vm.formAnual[0]["nombre"]) + " "),
-                    _c("b", [
-                      _vm._v(
-                        " \n                    (" +
-                          _vm._s(_vm.formAnual[0]["peso"]) +
-                          " %) "
-                      )
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("hr", { staticClass: "py-0 my-0 mb-2" }),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "row d-flex justify-content-center mx-4" },
-                [
-                  _c(
-                    "table",
-                    { staticClass: "table table-striped mx-4 col-8" },
-                    [
-                      _c("thead", { staticClass: "text-center" }, [
-                        _c(
-                          "th",
-                          {
-                            staticClass:
-                              "bg-primary text-white border border-info",
-                            attrs: { scope: "col" }
-                          },
-                          [_vm._v(" Ubicación / Sede Principal ")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "th",
-                          {
-                            staticClass: "border border-info",
-                            staticStyle: { "background-color": "#E4E4E4" },
-                            attrs: { scope: "col" }
-                          },
-                          [
-                            _vm._v(
-                              " " + _vm._s(_vm.provAnualData["pais"]) + " "
-                            )
-                          ]
-                        )
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "flex-row d-flex justify-content-center mx-4 align-items-center"
-                },
-                [
-                  _vm._m(23),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model.number",
-                        value: _vm.provAnualRes[0],
-                        expression: "provAnualRes[0]",
-                        modifiers: { number: true }
-                      }
-                    ],
-                    staticClass: "form-control w-25",
-                    class: _vm.anualUbicErr,
-                    attrs: {
-                      type: "number",
-                      name: "anualUbic",
-                      min: _vm.escala.ri,
-                      max: _vm.escala.rf,
-                      id: "anualUbic"
-                    },
-                    domProps: { value: _vm.provAnualRes[0] },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.provAnualRes,
-                          0,
-                          _vm._n($event.target.value)
-                        )
-                      },
-                      blur: function($event) {
-                        return _vm.$forceUpdate()
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      staticClass: "ml-2",
-                      staticStyle: { "font-size": "16px" }
-                    },
-                    [
-                      _c("b", [
-                        _vm._v(
-                          " (de " +
-                            _vm._s(_vm.escala.ri) +
-                            " a " +
-                            _vm._s(_vm.escala.rf) +
-                            ") "
-                        )
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "flex-row d-flex justify-content-center" },
-                [
-                  _vm.anualUbicErr === "is-invalid"
-                    ? _c("span", [_vm._m(24)])
-                    : _vm._e()
-                ]
-              ),
-              _vm._v(" "),
-              _c("hr", { staticClass: "py-0 my-2" }),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "flex-row d-flex justify-content-center mx-4" },
-                [
-                  _c("span", { staticClass: "h5 col-12 text-center" }, [
-                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
-                    _vm._v(" " + _vm._s(_vm.formAnual[1]["nombre"]) + " "),
-                    _c("b", [
-                      _vm._v(
-                        " \n                    (" +
-                          _vm._s(_vm.formAnual[1]["peso"]) +
-                          " %) "
-                      )
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("hr", { staticClass: "py-0 my-2" }),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "row d-flex justify-content-center mx-4" },
-                [
-                  _c(
-                    "table",
-                    {
-                      staticClass: "table table-striped border border-info mx-4"
-                    },
-                    [
-                      _vm._m(25),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.provAnualData["pagos"], function(pago) {
-                          return _c("tr", { key: pago.id }, [
-                            _c("td", [
-                              _vm._v(" " + _vm._s(pago["tipo"]) + " ")
-                            ]),
-                            _vm._v(" "),
-                            pago["numc"] != null
-                              ? _c("td", { staticClass: "text-center" }, [
-                                  pago["numc"] > 1
-                                    ? _c("span", [
-                                        _vm._v(
-                                          " " +
-                                            _vm._s(pago["numc"]) +
-                                            " cuotas "
-                                        )
-                                      ])
-                                    : _c("span", [_vm._v(" 1 cuota ")])
-                                ])
-                              : _c("td", { staticClass: "text-center" }, [
-                                  _vm._v(" N/A ")
-                                ]),
-                            _vm._v(" "),
-                            pago["porc"] != null
-                              ? _c("td", { staticClass: "text-center" }, [
-                                  _vm._v(" " + _vm._s(pago["porc"]) + " % ")
-                                ])
-                              : _c("td", { staticClass: "text-center" }, [
-                                  _vm._v(" N/A ")
-                                ]),
-                            _vm._v(" "),
-                            pago["meses"] != null
-                              ? _c("td", { staticClass: "text-center" }, [
-                                  pago["meses"] > 1
-                                    ? _c("span", [
-                                        _vm._v(
-                                          " " +
-                                            _vm._s(pago["meses"]) +
-                                            " meses "
-                                        )
-                                      ])
-                                    : _c("span", [_vm._v(" 1 mes ")])
-                                ])
-                              : _c("td", { staticClass: "text-center" }, [
-                                  _vm._v(" N/A ")
-                                ])
-                          ])
-                        }),
-                        0
-                      )
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "flex-row d-flex justify-content-center mx-4 align-items-center"
-                },
-                [
-                  _vm._m(26),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model.number",
-                        value: _vm.provAnualRes[1],
-                        expression: "provAnualRes[1]",
-                        modifiers: { number: true }
-                      }
-                    ],
-                    staticClass: "form-control w-25",
-                    class: _vm.anualPagoErr,
-                    attrs: {
-                      type: "number",
-                      name: "anualPago",
-                      min: _vm.escala.ri,
-                      max: _vm.escala.rf,
-                      id: "anualPago"
-                    },
-                    domProps: { value: _vm.provAnualRes[1] },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.provAnualRes,
-                          1,
-                          _vm._n($event.target.value)
-                        )
-                      },
-                      blur: function($event) {
-                        return _vm.$forceUpdate()
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      staticClass: "ml-2",
-                      staticStyle: { "font-size": "16px" }
-                    },
-                    [
-                      _c("b", [
-                        _vm._v(
-                          " (de " +
-                            _vm._s(_vm.escala.ri) +
-                            " a " +
-                            _vm._s(_vm.escala.rf) +
-                            ") "
-                        )
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "flex-row d-flex justify-content-center" },
-                [
-                  _vm.anualPagoErr === "is-invalid"
-                    ? _c("span", [_vm._m(27)])
-                    : _vm._e()
-                ]
-              ),
-              _vm._v(" "),
-              _c("hr", { staticClass: "py-0 my-2" }),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "flex-row d-flex justify-content-center mx-4" },
-                [
-                  _c("span", { staticClass: "h5 col-12 text-center" }, [
-                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
-                    _vm._v(" " + _vm._s(_vm.formAnual[2]["nombre"]) + " "),
-                    _c("b", [
-                      _vm._v(
-                        " \n                    (" +
-                          _vm._s(_vm.formAnual[2]["peso"]) +
-                          " %) "
-                      )
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c("hr", { staticClass: "py-0 my-2" }),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "row d-flex justify-content-center mx-4" },
-                [
-                  _c(
-                    "table",
-                    {
-                      staticClass: "table table-striped border border-info mx-4"
-                    },
-                    [
-                      _vm._m(28),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.provAnualData["envios"], function(
-                          envio,
-                          index
-                        ) {
-                          return _c("tr", { key: envio.id_envio }, [
-                            _c("td", [
-                              _vm._v(" " + _vm._s(envio["pais"]) + " ")
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(" " + _vm._s(envio["tipo"]) + " ")
-                            ]),
-                            _vm._v(" "),
-                            envio["duracion"] > 1
-                              ? _c("td", { staticClass: "text-right" }, [
-                                  _vm._v(
-                                    " " + _vm._s(envio["duracion"]) + " días "
-                                  )
-                                ])
-                              : _c("td", { staticClass: "text-right" }, [
-                                  _vm._v(" 1 día ")
-                                ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-right" }, [
-                              _vm._v(" " + _vm._s(envio["precio"]) + " $ ")
-                            ]),
-                            _vm._v(" "),
-                            _c("td", { staticClass: "text-center" }, [
-                              _c("img", {
-                                staticClass: "iconobtn",
-                                attrs: {
-                                  src: "/img/iconos/list.svg",
-                                  alt: "expandir",
-                                  width: "24",
-                                  "data-toggle": "modal",
-                                  "data-target": "#modalAnualDetEnvio"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.rellenarModalDetEnvio(index)
-                                  }
-                                }
-                              })
-                            ])
-                          ])
-                        }),
-                        0
-                      )
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "flex-row d-flex justify-content-center mx-4 align-items-center"
-                },
-                [
-                  _vm._m(29),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model.number",
-                        value: _vm.provAnualRes[2],
-                        expression: "provAnualRes[2]",
-                        modifiers: { number: true }
-                      }
-                    ],
-                    staticClass: "form-control w-25",
-                    class: _vm.anualEnvioErr,
-                    attrs: {
-                      type: "number",
-                      name: "anualEnvio",
-                      min: _vm.escala.ri,
-                      max: _vm.escala.rf,
-                      id: "anualEnvio"
-                    },
-                    domProps: { value: _vm.provAnualRes[2] },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.provAnualRes,
-                          2,
-                          _vm._n($event.target.value)
-                        )
-                      },
-                      blur: function($event) {
-                        return _vm.$forceUpdate()
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      staticClass: "ml-2",
-                      staticStyle: { "font-size": "16px" }
-                    },
-                    [
-                      _c("b", [
-                        _vm._v(
-                          " (de " +
-                            _vm._s(_vm.escala.ri) +
-                            " a " +
-                            _vm._s(_vm.escala.rf) +
-                            ") "
-                        )
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "flex-row d-flex justify-content-center" },
-                [
-                  _vm.anualEnvioErr === "is-invalid"
-                    ? _c("span", [_vm._m(30)])
-                    : _vm._e()
-                ]
-              ),
-              _vm._v(" "),
-              _c("hr", { staticClass: "py-0 my-2" }),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "flex-row d-flex justify-content-center mx-4" },
-                [
-                  _c("span", { staticClass: "h5 col-12 text-center" }, [
-                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
-                    _vm._v(" " + _vm._s(_vm.formAnual[3]["nombre"]) + " "),
-                    _c("b", [
-                      _vm._v(
-                        " \n                    (" +
-                          _vm._s(_vm.formAnual[3]["peso"]) +
-                          " %) "
-                      )
-                    ])
-                  ])
-                ]
-              ),
               _vm._v(" "),
               _c("hr", { staticClass: "py-0 my-2" }),
               _vm._v(" "),
@@ -41128,15 +40173,15 @@ var render = function() {
                     "flex-row d-flex justify-content-center mx-4 align-items-center"
                 },
                 [
-                  _vm._m(31),
+                  _vm._m(21),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
                       {
                         name: "model",
                         rawName: "v-model.number",
-                        value: _vm.provAnualRes[3],
-                        expression: "provAnualRes[3]",
+                        value: _vm.provAnualRes[0],
+                        expression: "provAnualRes[0]",
                         modifiers: { number: true }
                       }
                     ],
@@ -41149,7 +40194,7 @@ var render = function() {
                       max: _vm.escala.rf,
                       id: "anualCump"
                     },
-                    domProps: { value: _vm.provAnualRes[3] },
+                    domProps: { value: _vm.provAnualRes[0] },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
@@ -41157,7 +40202,7 @@ var render = function() {
                         }
                         _vm.$set(
                           _vm.provAnualRes,
-                          3,
+                          0,
                           _vm._n($event.target.value)
                         )
                       },
@@ -41193,7 +40238,7 @@ var render = function() {
                 { staticClass: "flex-row d-flex justify-content-center" },
                 [
                   _vm.anualCumpErr === "is-invalid"
-                    ? _c("span", [_vm._m(32)])
+                    ? _c("span", [_vm._m(22)])
                     : _vm._e()
                 ]
               ),
@@ -41208,6 +40253,11 @@ var render = function() {
               _c("input", {
                 attrs: { type: "hidden", name: "idp" },
                 domProps: { value: _vm.provAnualData["idp"] }
+              }),
+              _vm._v(" "),
+              _c("input", {
+                attrs: { type: "hidden", name: "fecha_ap_ts" },
+                domProps: { value: _vm.provAnualData["fecha_ap_ts"] }
               }),
               _vm._v(" "),
               _c(
@@ -41270,7 +40320,7 @@ var render = function() {
                     staticStyle: { "background-color": "#F5F5F5" }
                   },
                   [
-                    _vm._m(33),
+                    _vm._m(23),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-body h5 text-center" }, [
                       _c(
@@ -41279,7 +40329,7 @@ var render = function() {
                           staticClass: "table table-striped border border-info"
                         },
                         [
-                          _vm._m(34),
+                          _vm._m(24),
                           _vm._v(" "),
                           _vm.provInicData["envios"][_vm.indexDetEnvio][
                             "detalles"
@@ -41370,7 +40420,7 @@ var render = function() {
                     staticStyle: { "background-color": "#F5F5F5" }
                   },
                   [
-                    _vm._m(35),
+                    _vm._m(25),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-body h5 text-center" }, [
                       _vm.provInicData["esencias"] != [] &&
@@ -41417,7 +40467,7 @@ var render = function() {
                           staticClass: "table table-striped border border-info"
                         },
                         [
-                          _vm._m(36),
+                          _vm._m(26),
                           _vm._v(" "),
                           _vm.provInicData["esencias"] != [] &&
                           _vm.indexProducto[0] === "e"
@@ -41485,251 +40535,9 @@ var render = function() {
         )
       : _vm._e(),
     _vm._v(" "),
-    _vm.tipoEv === "anualStart"
-      ? _c(
-          "div",
-          {
-            staticClass: "modal fade",
-            attrs: {
-              id: "modalAnualDetEnvio",
-              tabindex: "-1",
-              role: "dialog",
-              "aria-hidden": "true"
-            }
-          },
-          [
-            _c(
-              "div",
-              {
-                staticClass: "modal-dialog modal-dialog-centered",
-                attrs: { role: "document" }
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "modal-content",
-                    staticStyle: { "background-color": "#F5F5F5" }
-                  },
-                  [
-                    _vm._m(37),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "modal-body h5 text-center" }, [
-                      _c(
-                        "table",
-                        {
-                          staticClass: "table table-striped border border-info"
-                        },
-                        [
-                          _vm._m(38),
-                          _vm._v(" "),
-                          _vm.provAnualData["envios"][_vm.indexDetEnvio][
-                            "detalles"
-                          ] != []
-                            ? _c(
-                                "tbody",
-                                _vm._l(
-                                  _vm.provAnualData["envios"][
-                                    _vm.indexDetEnvio
-                                  ]["detalles"],
-                                  function(det) {
-                                    return _c("tr", { key: det.id }, [
-                                      _c("td", [
-                                        _vm._v(" " + _vm._s(det["det"]) + " ")
-                                      ]),
-                                      _vm._v(" "),
-                                      det["duracion"] != 1 &&
-                                      det["duracion"] != -1
-                                        ? _c(
-                                            "td",
-                                            { staticClass: "text-right" },
-                                            [
-                                              _vm._v(
-                                                " " +
-                                                  _vm._s(det["duracion"]) +
-                                                  " días "
-                                              )
-                                            ]
-                                          )
-                                        : _c(
-                                            "td",
-                                            { staticClass: "text-right" },
-                                            [
-                                              _vm._v(
-                                                " " +
-                                                  _vm._s(det["duracion"]) +
-                                                  " día "
-                                              )
-                                            ]
-                                          ),
-                                      _vm._v(" "),
-                                      _c("td", { staticClass: "text-right" }, [
-                                        _vm._v(
-                                          " " + _vm._s(det["precio"]) + " $ "
-                                        )
-                                      ])
-                                    ])
-                                  }
-                                ),
-                                0
-                              )
-                            : _vm._e()
-                        ]
-                      )
-                    ])
-                  ]
-                )
-              ]
-            )
-          ]
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.tipoEv === "anualStart"
-      ? _c(
-          "div",
-          {
-            staticClass: "modal fade",
-            attrs: {
-              id: "modalAnualDetProducto",
-              tabindex: "-1",
-              role: "dialog",
-              "aria-hidden": "true"
-            }
-          },
-          [
-            _c(
-              "div",
-              {
-                staticClass: "modal-dialog modal-dialog-centered",
-                attrs: { role: "document" }
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "modal-content",
-                    staticStyle: { "background-color": "#F5F5F5" }
-                  },
-                  [
-                    _vm._m(39),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "modal-body h5 text-center" }, [
-                      _vm.provAnualData["esencias"] != [] &&
-                      _vm.indexProducto[0] === "e"
-                        ? _c("span", [
-                            _c("h5", [
-                              _c("b", [
-                                _vm._v(
-                                  " " +
-                                    _vm._s(
-                                      _vm.provAnualData["esencias"][
-                                        _vm.indexProducto[1]
-                                      ]["ing"]
-                                    ) +
-                                    " "
-                                )
-                              ])
-                            ])
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm.provAnualData["otros"] != [] &&
-                      _vm.indexProducto[0] === "o"
-                        ? _c("span", [
-                            _c("h5", [
-                              _c("b", [
-                                _vm._v(
-                                  " " +
-                                    _vm._s(
-                                      _vm.provAnualData["otros"][
-                                        _vm.indexProducto[1]
-                                      ]["ing"]
-                                    ) +
-                                    " "
-                                )
-                              ])
-                            ])
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _c(
-                        "table",
-                        {
-                          staticClass: "table table-striped border border-info"
-                        },
-                        [
-                          _vm._m(40),
-                          _vm._v(" "),
-                          _vm.provAnualData["esencias"] != [] &&
-                          _vm.indexProducto[0] === "e"
-                            ? _c(
-                                "tbody",
-                                _vm._l(
-                                  _vm.provAnualData["esencias"][
-                                    _vm.indexProducto[1]
-                                  ]["pres"],
-                                  function(pres) {
-                                    return _c("tr", { key: pres.id }, [
-                                      _c("td", { staticClass: "text-right" }, [
-                                        _vm._v(
-                                          " " + _vm._s(pres["vol"]) + " ml "
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", { staticClass: "text-right" }, [
-                                        _vm._v(
-                                          " " + _vm._s(pres["precio"]) + " $ "
-                                        )
-                                      ])
-                                    ])
-                                  }
-                                ),
-                                0
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.provAnualData["otros"] != [] &&
-                          _vm.indexProducto[0] === "o"
-                            ? _c(
-                                "tbody",
-                                _vm._l(
-                                  _vm.provAnualData["otros"][
-                                    _vm.indexProducto[1]
-                                  ]["pres"],
-                                  function(pres) {
-                                    return _c("tr", { key: pres.id }, [
-                                      _c("td", { staticClass: "text-right" }, [
-                                        _vm._v(
-                                          " " + _vm._s(pres["vol"]) + " ml "
-                                        )
-                                      ]),
-                                      _vm._v(" "),
-                                      _c("td", { staticClass: "text-right" }, [
-                                        _vm._v(
-                                          " " + _vm._s(pres["precio"]) + " $ "
-                                        )
-                                      ])
-                                    ])
-                                  }
-                                ),
-                                0
-                              )
-                            : _vm._e()
-                        ]
-                      )
-                    ])
-                  ]
-                )
-              ]
-            )
-          ]
-        )
-      : _vm._e(),
-    _vm._v(" "),
     _vm.tipoEv === "resultadoInic"
       ? _c("span", [
-          _vm._m(41),
+          _vm._m(27),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
@@ -41764,12 +40572,12 @@ var render = function() {
           parseFloat(_vm.resultadoInicial["res"]) >=
           parseFloat(_vm.resultadoInicial["exito"])
             ? _c("span", { staticClass: "mt-4" }, [
-                _vm._m(42),
+                _vm._m(28),
                 _vm._v(" "),
-                _vm._m(43),
+                _vm._m(29),
                 _vm._v(" "),
                 _c("div", { staticClass: "row justify-content-center" }, [
-                  _vm._m(44),
+                  _vm._m(30),
                   _vm._v(" "),
                   _c(
                     "a",
@@ -41790,13 +40598,13 @@ var render = function() {
                   )
                 ])
               ])
-            : _c("span", [_vm._m(45), _vm._v(" "), _vm._m(46)])
+            : _c("span", [_vm._m(31), _vm._v(" "), _vm._m(32)])
         ])
       : _vm._e(),
     _vm._v(" "),
     _vm.tipoEv === "resultadoAnual"
       ? _c("span", [
-          _vm._m(47),
+          _vm._m(33),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
@@ -41830,7 +40638,7 @@ var render = function() {
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
-          _vm._m(48),
+          _vm._m(34),
           _vm._v(" "),
           _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
             _c("li", [
@@ -41843,26 +40651,30 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
-            _c("li", [
-              _c("b", { staticClass: "mr-1" }, [
-                _vm._v(" Fecha de Renovación Actual: ")
+          _vm.resultadoAnual["fechaR"] != null
+            ? _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
+                _c("li", [
+                  _c("b", { staticClass: "mr-1" }, [
+                    _vm._v(" Fecha de Renovación Actual: ")
+                  ]),
+                  _vm._v(
+                    " \n            " +
+                      _vm._s(_vm.resultadoAnual["fechaR"]) +
+                      " \n            ( renovado " +
+                      _vm._s(_vm.resultadoAnual["renov"]) +
+                      " \n            "
+                  ),
+                  parseInt(_vm.resultadoAnual["renov"]) == 1
+                    ? _c("span", [_vm._v(" vez ")])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("span", [_vm._v(" veces ")]),
+                  _vm._v(" )")
+                ])
+              ])
+            : _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
+                _vm._m(35)
               ]),
-              _vm._v(
-                " \n            " +
-                  _vm._s(_vm.resultadoAnual["fechaR"]) +
-                  " \n            (renovado " +
-                  _vm._s(_vm.resultadoAnual["renov"]) +
-                  " \n            "
-              ),
-              parseInt(_vm.resultadoAnual["renov"]) == 1
-                ? _c("span", [_vm._v(" vez ")])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("span", [_vm._v(" veces ")]),
-              _vm._v(" )")
-            ])
-          ]),
           _vm._v(" "),
           _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
             _c("li", [
@@ -41881,7 +40693,9 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
-            _c("li", [_vm._v(" " + _vm._s(_vm.resultadoAnual["ex"]) + " ")])
+            _c("li", [
+              _c("b", [_vm._v(" " + _vm._s(_vm.resultadoAnual["ex"]) + " ")])
+            ])
           ]),
           _vm._v(" "),
           _c("hr"),
@@ -41889,13 +40703,13 @@ var render = function() {
           parseFloat(_vm.resultadoAnual["res"]) >=
           parseFloat(_vm.resultadoAnual["exito"])
             ? _c("span", { staticClass: "mt-4" }, [
-                _vm._m(49),
+                _vm._m(36),
                 _vm._v(" "),
-                _vm._m(50),
+                _vm._m(37),
                 _vm._v(" "),
-                _vm._m(51)
+                _vm._m(38)
               ])
-            : _c("span", [_vm._m(52), _vm._v(" "), _vm._m(53)])
+            : _c("span", [_vm._m(39), _vm._v(" "), _vm._m(40)])
         ])
       : _vm._e()
   ])
@@ -42126,39 +40940,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12 h6" }, [
-      _vm._v(" • "),
-      _c("b", [_vm._v(" Productos disponibles en el catálogo: ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-primary text-white" }, [
-      _c("th", { staticClass: "p-1 m-0 pl-2 ", attrs: { scope: "col" } }, [
-        _vm._v(" # Cas ")
-      ]),
-      _vm._v(" "),
-      _c("th", { staticClass: "p-1 m-0", attrs: { scope: "col" } }, [
-        _vm._v(" Nombre ")
-      ]),
-      _vm._v(" "),
-      _c("th", { staticClass: "p-1 m-0", attrs: { scope: "col" } }, [
-        _vm._v(" Tipo ")
-      ]),
-      _vm._v(" "),
-      _c(
-        "th",
-        { staticClass: "p-1 m-0 text-center", attrs: { scope: "col" } },
-        [_vm._v(" Presentaciones ")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
       "span",
       { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
@@ -42171,182 +40952,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("small", { staticClass: "text-danger" }, [
       _c("b", [_vm._v(" El puntaje está fuera de la escala. ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-primary text-white" }, [
-      _c("th", { attrs: { scope: "col" } }, [_vm._v(" Tipo de pago ")]),
-      _vm._v(" "),
-      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v(" Número de cuotas ")
-      ]),
-      _vm._v(" "),
-      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v(" Porcentaje por cuota ")
-      ]),
-      _vm._v(" "),
-      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v(" Pago cada ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
-      [_c("b", [_vm._v(" Puntaje: ")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("small", { staticClass: "text-danger" }, [
-      _c("b", [_vm._v(" El puntaje está fuera de la escala. ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-primary text-white" }, [
-      _c("th", { attrs: { scope: "col" } }, [_vm._v(" País de envío ")]),
-      _vm._v(" "),
-      _c("th", { attrs: { scope: "col" } }, [_vm._v(" Tipo de envío ")]),
-      _vm._v(" "),
-      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v(" Duración ")
-      ]),
-      _vm._v(" "),
-      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
-        _vm._v(" Precio ")
-      ]),
-      _vm._v(" "),
-      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v(" Extra ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
-      [_c("b", [_vm._v(" Puntaje: ")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("small", { staticClass: "text-danger" }, [
-      _c("b", [_vm._v(" El puntaje está fuera de la escala. ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "span",
-      { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
-      [_c("b", [_vm._v(" Puntaje: ")])]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("small", { staticClass: "text-danger" }, [
-      _c("b", [_vm._v(" El puntaje está fuera de la escala. ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_c("b", [_vm._v(" Extra de Envío ")])]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-primary text-white" }, [
-      _c("th", { attrs: { scope: "col" } }, [_vm._v(" Nombre ")]),
-      _vm._v(" "),
-      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
-        _vm._v(" Duración ")
-      ]),
-      _vm._v(" "),
-      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
-        _vm._v(" Precio ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_c("b", [_vm._v(" Presentaciones de Producto ")])]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-primary text-white" }, [
-      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
-        _vm._v(" Volumen ")
-      ]),
-      _vm._v(" "),
-      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
-        _vm._v(" Precio ")
-      ])
     ])
   },
   function() {
@@ -42513,6 +41118,17 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row h5 justify-content-center" }, [
       _c("b", [_vm._v(" Datos Contrato ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("b", { staticClass: "mr-1" }, [
+        _vm._v(" Fecha de Renovación Actual: ")
+      ]),
+      _vm._v(" N/A ")
     ])
   },
   function() {
@@ -43135,153 +41751,9 @@ var render = function() {
           domProps: { value: this.csrf }
         }),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
-          [
-            _c(
-              "label",
-              { staticClass: "mt-2 px-4", attrs: { for: "ubicacion" } },
-              [_vm._v(" Ubicación ")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model.number",
-                  value: _vm.ubicInp,
-                  expression: "ubicInp",
-                  modifiers: { number: true }
-                }
-              ],
-              staticClass: "form-control",
-              class: _vm.ubicInputErr,
-              attrs: {
-                type: "number",
-                step: "0.01",
-                id: "ubicacion",
-                required: "",
-                placeholder: "Porcentaje...",
-                name: "ubicacion"
-              },
-              domProps: { value: _vm.ubicInp },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.ubicInp = _vm._n($event.target.value)
-                },
-                blur: function($event) {
-                  return _vm.$forceUpdate()
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("small", { staticClass: "form-text text-danger" }, [
-              _c("b", { domProps: { textContent: _vm._s(_vm.smallUbic) } })
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
-          [
-            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "pagos" } }, [
-              _vm._v(" Metodos de pago ")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model.number",
-                  value: _vm.pagosInp,
-                  expression: "pagosInp",
-                  modifiers: { number: true }
-                }
-              ],
-              staticClass: "form-control",
-              class: _vm.pagosInputErr,
-              attrs: {
-                type: "number",
-                step: "0.01",
-                id: "pagos",
-                required: "",
-                placeholder: "Porcentaje...",
-                name: "pagos"
-              },
-              domProps: { value: _vm.pagosInp },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.pagosInp = _vm._n($event.target.value)
-                },
-                blur: function($event) {
-                  return _vm.$forceUpdate()
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("small", { staticClass: "form-text text-danger" }, [
-              _c("b", { domProps: { textContent: _vm._s(_vm.smallPago) } })
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
-          [
-            _c(
-              "label",
-              { staticClass: "mt-2 px-4", attrs: { for: "envios" } },
-              [_vm._v(" Metodos de envío ")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model.number",
-                  value: _vm.enviosInp,
-                  expression: "enviosInp",
-                  modifiers: { number: true }
-                }
-              ],
-              staticClass: "form-control",
-              class: _vm.enviosInputErr,
-              attrs: {
-                type: "number",
-                step: "0.01",
-                id: "envios",
-                required: "",
-                placeholder: "Porcentaje...",
-                name: "envios"
-              },
-              domProps: { value: _vm.enviosInp },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.enviosInp = _vm._n($event.target.value)
-                },
-                blur: function($event) {
-                  return _vm.$forceUpdate()
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("small", { staticClass: "form-text text-danger" }, [
-              _c("b", { domProps: { textContent: _vm._s(_vm.smallEnv) } })
-            ])
-          ]
-        ),
+        _c("input", {
+          attrs: { type: "hidden", name: "_method", value: "POST" }
+        }),
         _vm._v(" "),
         _c(
           "div",
@@ -43311,7 +41783,8 @@ var render = function() {
                 id: "cumplim",
                 required: "",
                 placeholder: "Porcentaje...",
-                name: "cumplim"
+                name: "cumplim",
+                readonly: ""
               },
               domProps: { value: _vm.cumplimInp },
               on: {
@@ -43829,13 +42302,15 @@ var render = function() {
               _c("img", {
                 staticClass: "mb-1",
                 attrs: {
-                  src: "/img/iconos/edit_white.svg",
+                  src: "/img/iconos/cambiar_white.svg",
                   alt: "crear",
                   width: "24"
                 }
               }),
               _vm._v(" "),
-              _c("span", { staticClass: "ml-2" }, [_vm._v(" Editar Escala ")])
+              _c("span", { staticClass: "ml-2" }, [
+                _vm._v(" Crear Nueva Escala ")
+              ])
             ]
           ),
           _vm._v(" "),
@@ -43898,154 +42373,6 @@ var render = function() {
           [
             _c(
               "label",
-              { staticClass: "mt-2 px-4", attrs: { for: "ubicacion" } },
-              [_vm._v(" Ubicación ")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model.number",
-                  value: _vm.ubicInp,
-                  expression: "ubicInp",
-                  modifiers: { number: true }
-                }
-              ],
-              staticClass: "form-control",
-              class: _vm.ubicInputErr,
-              attrs: {
-                type: "number",
-                step: "0.01",
-                id: "ubicacion",
-                required: "",
-                placeholder: "Porcentaje...",
-                name: "ubicacion"
-              },
-              domProps: { value: _vm.ubicInp },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.ubicInp = _vm._n($event.target.value)
-                },
-                blur: function($event) {
-                  return _vm.$forceUpdate()
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("small", { staticClass: "form-text text-danger" }, [
-              _c("b", { domProps: { textContent: _vm._s(_vm.smallUbic) } })
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
-          [
-            _c("label", { staticClass: "mt-2 px-4", attrs: { for: "pagos" } }, [
-              _vm._v(" Metodos de pago ")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model.number",
-                  value: _vm.pagosInp,
-                  expression: "pagosInp",
-                  modifiers: { number: true }
-                }
-              ],
-              staticClass: "form-control",
-              class: _vm.pagosInputErr,
-              attrs: {
-                type: "number",
-                step: "0.01",
-                id: "pagos",
-                required: "",
-                placeholder: "Porcentaje...",
-                name: "pagos"
-              },
-              domProps: { value: _vm.pagosInp },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.pagosInp = _vm._n($event.target.value)
-                },
-                blur: function($event) {
-                  return _vm.$forceUpdate()
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("small", { staticClass: "form-text text-danger" }, [
-              _c("b", { domProps: { textContent: _vm._s(_vm.smallPago) } })
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
-          [
-            _c(
-              "label",
-              { staticClass: "mt-2 px-4", attrs: { for: "envios" } },
-              [_vm._v(" Metodos de envío ")]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model.number",
-                  value: _vm.enviosInp,
-                  expression: "enviosInp",
-                  modifiers: { number: true }
-                }
-              ],
-              staticClass: "form-control",
-              class: _vm.enviosInputErr,
-              attrs: {
-                type: "number",
-                step: "0.01",
-                id: "envios",
-                required: "",
-                placeholder: "Porcentaje...",
-                name: "envios"
-              },
-              domProps: { value: _vm.enviosInp },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.enviosInp = _vm._n($event.target.value)
-                },
-                blur: function($event) {
-                  return _vm.$forceUpdate()
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("small", { staticClass: "form-text text-danger" }, [
-              _c("b", { domProps: { textContent: _vm._s(_vm.smallEnv) } })
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
-          [
-            _c(
-              "label",
               { staticClass: "mt-2 px-4", attrs: { for: "cumplim" } },
               [_vm._v(" Cumplimiento de pedidos ")]
             ),
@@ -44068,7 +42395,8 @@ var render = function() {
                 id: "cumplim",
                 required: "",
                 placeholder: "Porcentaje...",
-                name: "cumplim"
+                name: "cumplim",
+                readonly: ""
               },
               domProps: { value: _vm.cumplimInp },
               on: {
@@ -44150,13 +42478,15 @@ var render = function() {
               _c("img", {
                 staticClass: "mb-1",
                 attrs: {
-                  src: "/img/iconos/edit_white.svg",
+                  src: "/img/iconos/cambiar_white.svg",
                   alt: "crear",
                   width: "24"
                 }
               }),
               _vm._v(" "),
-              _c("span", { staticClass: "ml-2" }, [_vm._v(" Editar Formula ")])
+              _c("span", { staticClass: "ml-2" }, [
+                _vm._v(" Crear Nueva Formula ")
+              ])
             ]
           ),
           _vm._v(" "),
@@ -44421,13 +42751,15 @@ var render = function() {
               _c("img", {
                 staticClass: "mb-1",
                 attrs: {
-                  src: "/img/iconos/edit_white.svg",
+                  src: "/img/iconos/cambiar_white.svg",
                   alt: "crear",
                   width: "24"
                 }
               }),
               _vm._v(" "),
-              _c("span", { staticClass: "ml-2" }, [_vm._v(" Editar Formula ")])
+              _c("span", { staticClass: "ml-2" }, [
+                _vm._v(" Crear Nueva Formula ")
+              ])
             ]
           ),
           _vm._v(" "),
