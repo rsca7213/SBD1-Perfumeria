@@ -14,7 +14,7 @@
     </li>
     <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 
-        <a href="#" class="nav-item"> Compras </a> 
+        <a href="{{ route('verContratosCompras', ['id_prod' => $id_prod])}}" class="nav-item"> Compras </a> 
     </li>
     <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 

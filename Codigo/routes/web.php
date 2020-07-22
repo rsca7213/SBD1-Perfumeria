@@ -67,6 +67,11 @@ Route::post('/proveedor/{id_prov}/contratos/aceptar/{fecha}', 'ContratosControll
 Route::get('/proveedor/{id_prov}/contratos/rechazar/{fecha}', 'ContratosController@rechazarContratoPv');
 Route::get('/proveedor/{id_prov}/contratos/detalle/{id_prod}/{fecha}', 'ContratosController@detalleContratoPv');
 
+
+/* Rutas referentes a las compras,pedidos,facturas */
+/* Productor */
+Route::get('/productor/{id_prod}/compras', 'ComprasController@verContratosVigentes')->name('verContratosCompras');
+
 /* Ruta de pagina de inicio */
 Route::get('/', function () {
     return view('index');
