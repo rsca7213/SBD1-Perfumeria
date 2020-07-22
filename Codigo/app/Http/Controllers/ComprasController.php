@@ -33,19 +33,30 @@ class ComprasController extends Controller
 
     }
 
-    public function crearPedido ($id_prod,$fecha) {
+    public function mostrarDetallesPedido ($id_prod,$id_proveedor,$fecha) {
 
         /* Se busca el proveedor del contrato*/
-        $id_proveedor= DB::SELECT(DB::RAW(
-            "SELECT id_proovedor 
-            FROM rdj_contratos 
-            WHERE fecha_apertura=? and id_productor=?"
-        ),[$fecha,$id_prod]);
+        $proveedor= DB::SELECT(DB::RAW(
+            "SELECT nombre 
+            FROM rdj_proveedores 
+            WHERE id=?"
+        ),[$id_proveedor]);
 
-        /* Se buscan los productos del contrato respectivo*/
-        $productosContratados=DB::select(DB::RAW(
-            "SELECT "
-        ));
+        $proveedor=$proveedor[0]->nombre;
+
+        /* Se buscan los productos(esencia) del contrato respectivo con sus respectivas presentaciones*/
+        $esenciasContratadas=DB::select(DB::RAW(
+            "SELECT det.fecha_apertura,ing.nombre, to_char(ing.cas_ing_esencia,'9999900-00-0') AS ncas, presIng.volumen || ' ml' AS presentacion, presIng.precio || ' $' AS precioIng, CASE WHEN ing.naturaleza = 's' THEN 'Esencia Sintética' WHEN ing.naturaleza = 'n' THEN 'Esencia Natural' END AS tipo 
+            FROM rdj_ingredientes_esencias AS ing, rdj_presents_ings_esencias AS presIng, rdj_detalles_contratos as det, rdj_contratos as cont
+            WHERE det.id_productor=? AND ing.id_proveedor=det.id_proveedor AND ing.cas_ing_esencia=presIng.cas_ing_esencia AND det.fecha_apertura=? AND det.cas_ing_esencia = ing.cas_ing_esencia GROUP BY det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion"
+        ),[$id_prod,$fecha]);
+
+        /* Se buscan los productos(componentes) del contrato respectivo*/
+        $componentesContratados= DB::select(DB::RAW(
+            "SELECT det.fecha_apertura,otro.nombre, to_char(otro.cas_otro_ing,'9999900-00-0') AS ncas, presOtro.volumen || ' ml' AS presentacion, presOtro.precio || ' $' AS precioIng, 'Componente' AS tipo 
+            FROM rdj_otros_ingredientes AS otro, rdj_present_otros_ings AS presOtro, rdj_detalles_contratos as det, rdj_contratos as cont
+            WHERE det.id_productor=? AND otro.id_proveedor=det.id_proveedor AND otro.cas_otro_ing=presOtro.cas_otro_ing AND det.fecha_apertura=? AND det.cas_otro_ing = otro.cas_otro_ing GROUP BY det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion"
+        ),[$id_prod,$fecha]);
 
         /* Se buscan los metodos de envio del contrato respectivo*/
 
@@ -64,5 +75,16 @@ class ComprasController extends Controller
             WHERE met.fecha_cont=? AND met.id_productor=? AND met.id_prov_pago=? AND pagos.id = met.id_pago"
         ),[$fecha,$id_prod,$id_proveedor]);
 
+        //Devolvemos a la interfaz la data necesaria para continuar
+        //return response([$esenciasContratadas,$componentesContratados,$enviosContratados,$pagosContratados],200);
+        return view('productores.compras.generar-pedido',[
+            'id_prod' => $id_prod,
+            'proveedor' => $proveedor,
+            'fecha_apertura' => $fecha,
+            'esenciasContratadas' => $esenciasContratadas,
+            'componentesContratados' => $componentesContratados,
+            'enviosContratados' => $enviosContratados,
+            'pagosContratados' => $pagosContratados,
+        ]);
     }
 }

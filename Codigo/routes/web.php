@@ -71,6 +71,8 @@ Route::get('/proveedor/{id_prov}/contratos/detalle/{id_prod}/{fecha}', 'Contrato
 /* Rutas referentes a las compras,pedidos,facturas */
 /* Productor */
 Route::get('/productor/{id_prod}/compras', 'ComprasController@verContratosVigentes')->name('verContratosCompras');
+Route::get('/productor/{id_prod}/compras/pedido/{id_proveedor}/{fecha}','ComprasController@mostrarDetallesPedido');
+
 
 /* Ruta de pagina de inicio */
 Route::get('/', function () {
