@@ -44,19 +44,7 @@ class ComprasController extends Controller
 
         $proveedor=$proveedor[0]->nombre;
 
-        /* Se buscan los productos(esencia) del contrato respectivo con sus respectivas presentaciones*/
-        $esenciasContratadas=DB::select(DB::RAW(
-            "SELECT det.fecha_apertura,ing.nombre, to_char(ing.cas_ing_esencia,'9999900-00-0') AS ncas, presIng.volumen || ' ml' AS presentacion, presIng.precio || ' $' AS precioIng, CASE WHEN ing.naturaleza = 's' THEN 'Esencia Sintética' WHEN ing.naturaleza = 'n' THEN 'Esencia Natural' END AS tipo 
-            FROM rdj_ingredientes_esencias AS ing, rdj_presents_ings_esencias AS presIng, rdj_detalles_contratos as det, rdj_contratos as cont
-            WHERE det.id_productor=? AND ing.id_proveedor=det.id_proveedor AND ing.cas_ing_esencia=presIng.cas_ing_esencia AND det.fecha_apertura=? AND det.cas_ing_esencia = ing.cas_ing_esencia GROUP BY det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion"
-        ),[$id_prod,$fecha]);
-
-        /* Se buscan los productos(componentes) del contrato respectivo*/
-        $componentesContratados= DB::select(DB::RAW(
-            "SELECT det.fecha_apertura,otro.nombre, to_char(otro.cas_otro_ing,'9999900-00-0') AS ncas, presOtro.volumen || ' ml' AS presentacion, presOtro.precio || ' $' AS precioIng, 'Componente' AS tipo 
-            FROM rdj_otros_ingredientes AS otro, rdj_present_otros_ings AS presOtro, rdj_detalles_contratos as det, rdj_contratos as cont
-            WHERE det.id_productor=? AND otro.id_proveedor=det.id_proveedor AND otro.cas_otro_ing=presOtro.cas_otro_ing AND det.fecha_apertura=? AND det.cas_otro_ing = otro.cas_otro_ing GROUP BY det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion"
-        ),[$id_prod,$fecha]);
+       
 
         /* Se buscan los metodos de envio del contrato respectivo*/
 
@@ -76,15 +64,57 @@ class ComprasController extends Controller
         ),[$fecha,$id_prod,$id_proveedor]);
 
         //Devolvemos a la interfaz la data necesaria para continuar
-        //return response([$esenciasContratadas,$componentesContratados,$enviosContratados,$pagosContratados],200);
         return view('productores.compras.generar-pedido',[
             'id_prod' => $id_prod,
             'proveedor' => $proveedor,
             'fecha_apertura' => $fecha,
-            'esenciasContratadas' => $esenciasContratadas,
-            'componentesContratados' => $componentesContratados,
             'enviosContratados' => $enviosContratados,
             'pagosContratados' => $pagosContratados,
         ]);
     }
+
+    public function enviosPagosPedido($id_prod,$id_proveedor,$fecha){
+        /* Se buscan los metodos de envio del contrato respectivo*/
+        $enviosContratados= DB::SELECT(DB::RAW(
+            "SELECT envios.id as idEnvio, envios.duracion AS duracionEnvio, envios.precio AS precioEnvio, envios.tipo AS tipoEnvio, p.nombre as paisEnvio
+            FROM rdj_metodos_envios AS envios, rdj_metodos_contratos as met, rdj_paises as p
+            WHERE met.fecha_cont=? and met.id_productor=? and met.id_prov_envio=? and envios.id = met.id_envio and
+            p.id=envios.id_pais"
+        ),[$fecha,$id_prod,$id_proveedor]);
+
+        /* Se buscan los metodos de pago del contrato respectivo*/
+        $pagosContratados= DB::SELECT(DB::RAW(
+            "SELECT pagos.id idPago,pagos.tipo AS tipoPago, pagos.num_cuotas AS cuotas, pagos.porcentaje AS porcentaje, pagos.meses AS meses
+            FROM rdj_metodos_pagos AS pagos, rdj_metodos_contratos AS met
+            WHERE met.fecha_cont=? AND met.id_productor=? AND met.id_prov_pago=? AND pagos.id = met.id_pago"
+        ),[$fecha,$id_prod,$id_proveedor]);
+
+        /* Se buscan los extras de envio del contrato respectivo*/
+        $extrasEnvio= DB::SELECT(DB::RAW(
+            "SELECT det.id_envio,det.nombre,det.mod_precio,det.mod_duracion
+            FROM rdj_detalles_metodos_envios AS det, rdj_metodos_contratos AS metCont
+            WHERE det.id_proveedor=metCont.id_proveedor AND metCont.fecha_cont=? AND det.id_envio=metCont.id_envio;"
+        ),[$fecha]);
+
+         /* Se buscan los productos(esencias y componentes) del contrato respectivo con sus respectivas presentaciones*/
+         $productos=DB::select(DB::RAW(
+            "SELECT presIng.id AS presentacionId, det.fecha_apertura as fechaApert,ing.nombre as nombreProd, to_char(ing.cas_ing_esencia,'9999900-00-0') AS ncas, presIng.volumen AS presentacion, presIng.precio AS precioIng, CASE WHEN ing.naturaleza = 's' THEN 'Esencia Sintética' WHEN ing.naturaleza = 'n' THEN 'Esencia Natural' END AS tipo 
+            FROM rdj_ingredientes_esencias AS ing, rdj_presents_ings_esencias AS presIng, rdj_detalles_contratos as det, rdj_contratos as cont
+            WHERE det.id_productor=? AND ing.id_proveedor=det.id_proveedor AND ing.cas_ing_esencia=presIng.cas_ing_esencia AND det.fecha_apertura=? AND det.cas_ing_esencia = ing.cas_ing_esencia GROUP BY det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion,presentacionId
+            UNION
+            SELECT presOtro.id AS presentacionId,det.fecha_apertura as fechaApert,otro.nombre as nombreProd, to_char(otro.cas_otro_ing,'9999900-00-0') AS ncas, presOtro.volumen AS presentacion, presOtro.precio AS precioIng, 'Componente' AS tipo 
+            FROM rdj_otros_ingredientes AS otro, rdj_present_otros_ings AS presOtro, rdj_detalles_contratos as det, rdj_contratos as cont
+            WHERE det.id_productor=? AND otro.id_proveedor=det.id_proveedor AND otro.cas_otro_ing=presOtro.cas_otro_ing AND det.fecha_apertura=? AND det.cas_otro_ing = otro.cas_otro_ing GROUP BY det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion,presentacionId ORDER BY nombreProd,presentacion ASC"
+        ),[$id_prod,$fecha,$id_prod,$fecha]);
+
+        /* Se buscan los productos(componentes) del contrato respectivo*/
+        /*$componentesContratados= DB::select(DB::RAW(
+            "SELECT det.fecha_apertura,otro.nombre, to_char(otro.cas_otro_ing,'9999900-00-0') AS ncas, presOtro.volumen || ' ml' AS presentacion, presOtro.precio || ' $' AS precioIng, 'Componente' AS tipo 
+            FROM rdj_otros_ingredientes AS otro, rdj_present_otros_ings AS presOtro, rdj_detalles_contratos as det, rdj_contratos as cont
+            WHERE det.id_productor=? AND otro.id_proveedor=det.id_proveedor AND otro.cas_otro_ing=presOtro.cas_otro_ing AND det.fecha_apertura=? AND det.cas_otro_ing = otro.cas_otro_ing GROUP BY det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion"
+        ),[$id_prod,$fecha]);*/
+
+        return response([$enviosContratados,$pagosContratados,$extrasEnvio,$productos],200);
+    }
+
 }

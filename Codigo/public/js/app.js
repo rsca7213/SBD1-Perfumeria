@@ -1932,6 +1932,174 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/realizarPedido.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/compras/realizarPedido.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["csrf"],
+  data: function data() {
+    return {
+      envios: [],
+      pagos: [],
+      extras: [],
+      productos: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    console.log("%cAxios: Buscando metodos de envio y metodos de pago.", "color: lightblue");
+    axios.get(window.location.pathname + "/enviosPagos").then(function (response) {
+      console.log(response.data[0]);
+      console.log(response.data[1]);
+      _this.envios = response.data[0];
+      _this.pagos = response.data[1];
+      _this.extras = response.data[2];
+      _this.productos = response.data[3];
+    })["catch"](function (errors) {
+      console.log("%cAxios: Error buscando metodos de envio y metodos de pago", "color: #FFCCCB");
+    });
+  },
+  methods: {
+    tipoEnvio: function tipoEnvio(tipo) {
+      if (tipo == "t") {
+        return "Terrestre";
+      } else if (tipo == "m") {
+        return "Marítimo";
+      } else {
+        return "Aéreo";
+      }
+    },
+    detallePago: function detallePago(pago) {
+      var cadames = "";
+
+      if (pago.tipopago == "p") {
+        if (pago.meses == 1) {
+          cadames = " mes";
+        } else {
+          cadames = " meses";
+        }
+
+        return pago.cuotas + " cuotas de " + pago.porcentaje + "% cada " + pago.meses + cadames;
+      } else {
+        return "Pago completo";
+      }
+    },
+    duracion: function duracion(dias) {
+      if (dias == 1) {
+        return "1 día";
+      } else {
+        return dias + " dias";
+      }
+    }
+  },
+  computed: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=script&lang=js& ***!
@@ -2485,85 +2653,282 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["csrf"],
   data: function data() {
     return {
       /* Variables que determinan si los botones para realizar evaluacion
-         estahn habilitados o no dependiendo de la disponilibidad de las
-         formulas y escala */
+               estahn habilitados o no dependiendo de la disponilibidad de las
+               formulas y escala */
       btnEvInicDis: null,
       btnEvAnualDis: null,
       escalaDisp: true,
       formInicDisp: true,
       formAnualDisp: true,
-      tipoEv: "wait",
-
+      tipoEv: "wait"
       /*encargada de determinar el tipo de evaluacion a realizar
-      wait = pagina cargando
-      "" (nada) = seleccion de tipo de evaluacion
-      inicial = seleccion de proveedores para ev inicial
-      inicialStart = proceso de evaluacion inicial
-      anual = seleccion de proveedores para ev anual
-      anualStart = proceso de evaluacion anual
-      */
-      provsInic: [],
-
+                   wait = pagina cargando
+                   "" (nada) = seleccion de tipo de evaluacion
+                   inicial = seleccion de proveedores para ev inicial
+                   inicialStart = proceso de evaluacion inicial
+                   anual = seleccion de proveedores para ev anual
+                   anualStart = proceso de evaluacion anual
+               */
+      ,
+      provsInic: []
       /*data que devuelve laravel para seleccionar los proveedores
-        de la evaluacion inicial */
-      provsAnual: [],
-
+               de la evaluacion inicial */
+      ,
+      provsAnual: []
       /* data que devuelve laravel para seleccionar los proveedores
-         de la evaluacion anual */
-      provInicRes: [0, 0, 0],
-
+                de la evaluacion anual */
+      ,
+      provInicRes: [0, 0, 0]
       /*arreglo que contiene los resultados que se van asignando
-      a los proveedores en la evaluacion inicial */
-      provAnualRes: [0],
-
+                             a los proveedores en la evaluacion inicial */
+      ,
+      provAnualRes: [0]
       /*arreglo que contiene los resultados que se van asignando
-               a los proveedores en la evaluacion anual */
-      provInicData: [],
-
+                                      a los proveedores en la evaluacion anual */
+      ,
+      provInicData: []
       /*arreglo que contiene la data que devuelve laravel
-         para la evaluacion inicial del proveedor */
-      provAnualData: [],
-
+                para la evaluacion inicial del proveedor */
+      ,
+      provAnualData: []
       /*arreglo que contiene la data que devuelve laravel
-        para la evaluacion anual del proveedor */
-      formInic: [],
-
+               para la evaluacion anual del proveedor */
+      ,
+      formInic: []
       /* Formula de evaluacion inicial del productor */
-      formAnual: [],
-
+      ,
+      formAnual: []
       /* Formula de evaluacion anual del productor */
-      escala: [],
-
+      ,
+      escala: []
       /* Escala de evaluacion del productor */
-      indexDetEnvio: 0,
-
+      ,
+      indexDetEnvio: 0
       /* Variable auxiliar que determina la posicion del arreglo de 
-        metodos de envio que se quiere detallar */
-      indexProducto: ['e', 0],
-
+               metodos de envio que se quiere detallar */
+      ,
+      indexProducto: ["e", 0]
       /* Variable auxiliar que determina la posicion del arreglo
-      de producto y que tipo de producto es para rellenar el modal */
-      resultadoInicial: [],
-
+                               de producto y que tipo de producto es para rellenar el modal */
+      ,
+      resultadoInicial: []
       /* Variable que almacena los resultados que devuelve laravel
-         luego de insertar los datos del resultado de la ev inicial */
-      resultadoAnual: [],
-
+                luego de insertar los datos del resultado de la ev inicial */
+      ,
+      resultadoAnual: []
       /* Variable que almacena los resultados que devuelve laravel
-           luego de insertar los datos del resultado de la ev anual */
+                  luego de insertar los datos del resultado de la ev anual */
+      ,
       generarLink: ""
     };
   },
 
   /* Al cargar la pagina se procede a buscar las formulas de evaluacion y la escala
-     para poder determinar si realizar evaluaciones es posible y tambien tener esa
-     data para realizar las evaluaciones. La funcion tambien se encarga de habilitar o
-     deshabilitar las evaluaciones dependiendo de la disponibilidad de formulas y escala */
+       para poder determinar si realizar evaluaciones es posible y tambien tener esa
+       data para realizar las evaluaciones. La funcion tambien se encarga de habilitar o
+       deshabilitar las evaluaciones dependiendo de la disponibilidad de formulas y escala */
   created: function created() {
     var _this = this;
 
@@ -2602,8 +2967,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     /* Funcion AXIOS que busca la data necesaria para realizar la seleccion
-       de proveedor para una evaluacion inicial y almacena que el tipo de
-       ev a realizar es de tipo inicial */
+           de proveedor para una evaluacion inicial y almacena que el tipo de
+           ev a realizar es de tipo inicial */
     evInicial: function evInicial() {
       var _this2 = this;
 
@@ -2618,8 +2983,8 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     /* Funcion AXIOS que busca la data necesaria para realizar la seleccion
-    de proveedores para una evaluacion anual y almacena que el tipo de
-    ev a realizar es de tipo anual*/
+        de proveedores para una evaluacion anual y almacena que el tipo de
+        ev a realizar es de tipo anual*/
     evAnual: function evAnual() {
       var _this3 = this;
 
@@ -2634,8 +2999,8 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     /* Funcion AXIOS que le pide a laravel toda la data necesaria para
-      llevar a cabo una evaluacion inicial, envia la id del proveedor
-      del cual necesita data */
+           llevar a cabo una evaluacion inicial, envia la id del proveedor
+           del cual necesita data */
     dataInicial: function dataInicial(idp) {
       var _this4 = this;
 
@@ -2651,8 +3016,8 @@ __webpack_require__.r(__webpack_exports__);
     },
 
     /* Funcion AXIOS que le pide a laravel toda la data necesaria para
-       llevar a cabo una evaluacion anual, envia la id del proveedor
-       del cual necesita data */
+           llevar a cabo una evaluacion anual, envia la id del proveedor
+           del cual necesita data */
     dataAnual: function dataAnual(idp, fecha_ap_ts) {
       var _this5 = this;
 
@@ -2681,13 +3046,13 @@ __webpack_require__.r(__webpack_exports__);
 
       console.log("%cAxios: Enviando resultados de ev. inicial", "color: lightblue");
       axios.post("inicial", {
-        'idp': idp,
-        'inicUbic': this.provInicRes[0],
-        'inicPago': this.provInicRes[1],
-        'inicEnvio': this.provInicRes[2]
+        idp: idp,
+        inicUbic: this.provInicRes[0],
+        inicPago: this.provInicRes[1],
+        inicEnvio: this.provInicRes[2]
       }).then(function (response) {
         console.log("%cAxios: Post!", "color: lightgreen");
-        _this6.tipoEv = 'resultadoInic';
+        _this6.tipoEv = "resultadoInic";
         _this6.resultadoInicial = response.data[0];
         _this6.generarLink = "/productor/" + _this6.resultadoInicial["id_prod"] + "/contratos/generar/" + _this6.resultadoInicial["id_prov"];
       })["catch"](function (errors) {
@@ -2700,12 +3065,12 @@ __webpack_require__.r(__webpack_exports__);
 
       console.log("%cAxios: Enviando resultados de ev. anual", "color: lightblue");
       axios.post("anual", {
-        'idp': idp,
-        'anualCump': this.provAnualRes[0],
-        'fecha_ap_ts': fecha_ap_ts
+        idp: idp,
+        anualCump: this.provAnualRes[0],
+        fecha_ap_ts: fecha_ap_ts
       }).then(function (response) {
         console.log("%cAxios: Post!", "color: lightgreen");
-        _this7.tipoEv = 'resultadoAnual';
+        _this7.tipoEv = "resultadoAnual";
         _this7.resultadoAnual = response.data[0];
       })["catch"](function (errors) {
         console.log("%cAxios: Error!", "color: #FFCCCB");
@@ -7899,6 +8264,112 @@ __webpack_require__.r(__webpack_exports__);
 
 })));
 //# sourceMappingURL=bootstrap.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/realizarPedido.vue?vue&type=style&index=0&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/compras/realizarPedido.vue?vue&type=style&index=0&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.combo {\r\n  color: #707070;\r\n  font-weight: bold;\r\n  width: 340px;\r\n  padding-top: 5px;\r\n  padding-bottom: 5px;\r\n  padding-left: 5px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/lib/css-base.js":
+/*!*************************************************!*\
+  !*** ./node_modules/css-loader/lib/css-base.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+// css base code, injected by the css-loader
+module.exports = function(useSourceMap) {
+	var list = [];
+
+	// return the list of modules as css string
+	list.toString = function toString() {
+		return this.map(function (item) {
+			var content = cssWithMappingToString(item, useSourceMap);
+			if(item[2]) {
+				return "@media " + item[2] + "{" + content + "}";
+			} else {
+				return content;
+			}
+		}).join("");
+	};
+
+	// import a list of modules into the list
+	list.i = function(modules, mediaQuery) {
+		if(typeof modules === "string")
+			modules = [[null, modules, ""]];
+		var alreadyImportedModules = {};
+		for(var i = 0; i < this.length; i++) {
+			var id = this[i][0];
+			if(typeof id === "number")
+				alreadyImportedModules[id] = true;
+		}
+		for(i = 0; i < modules.length; i++) {
+			var item = modules[i];
+			// skip already imported module
+			// this implementation is not 100% perfect for weird media query combinations
+			//  when a module is imported multiple times with different media queries.
+			//  I hope this will never occur (Hey this way we have smaller bundles)
+			if(typeof item[0] !== "number" || !alreadyImportedModules[item[0]]) {
+				if(mediaQuery && !item[2]) {
+					item[2] = mediaQuery;
+				} else if(mediaQuery) {
+					item[2] = "(" + item[2] + ") and (" + mediaQuery + ")";
+				}
+				list.push(item);
+			}
+		}
+	};
+	return list;
+};
+
+function cssWithMappingToString(item, useSourceMap) {
+	var content = item[1] || '';
+	var cssMapping = item[3];
+	if (!cssMapping) {
+		return content;
+	}
+
+	if (useSourceMap && typeof btoa === 'function') {
+		var sourceMapping = toComment(cssMapping);
+		var sourceURLs = cssMapping.sources.map(function (source) {
+			return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */'
+		});
+
+		return [content].concat(sourceURLs).concat([sourceMapping]).join('\n');
+	}
+
+	return [content].join('\n');
+}
+
+// Adapted from convert-source-map (MIT)
+function toComment(sourceMap) {
+	// eslint-disable-next-line no-undef
+	var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));
+	var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;
+
+	return '/*# ' + data + ' */';
+}
 
 
 /***/ }),
@@ -38975,6 +39446,545 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/realizarPedido.vue?vue&type=style&index=0&lang=css&":
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/compras/realizarPedido.vue?vue&type=style&index=0&lang=css& ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./realizarPedido.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/realizarPedido.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/lib/addStyles.js":
+/*!****************************************************!*\
+  !*** ./node_modules/style-loader/lib/addStyles.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+	MIT License http://www.opensource.org/licenses/mit-license.php
+	Author Tobias Koppers @sokra
+*/
+
+var stylesInDom = {};
+
+var	memoize = function (fn) {
+	var memo;
+
+	return function () {
+		if (typeof memo === "undefined") memo = fn.apply(this, arguments);
+		return memo;
+	};
+};
+
+var isOldIE = memoize(function () {
+	// Test for IE <= 9 as proposed by Browserhacks
+	// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+	// Tests for existence of standard globals is to allow style-loader
+	// to operate correctly into non-standard environments
+	// @see https://github.com/webpack-contrib/style-loader/issues/177
+	return window && document && document.all && !window.atob;
+});
+
+var getTarget = function (target, parent) {
+  if (parent){
+    return parent.querySelector(target);
+  }
+  return document.querySelector(target);
+};
+
+var getElement = (function (fn) {
+	var memo = {};
+
+	return function(target, parent) {
+                // If passing function in options, then use it for resolve "head" element.
+                // Useful for Shadow Root style i.e
+                // {
+                //   insertInto: function () { return document.querySelector("#foo").shadowRoot }
+                // }
+                if (typeof target === 'function') {
+                        return target();
+                }
+                if (typeof memo[target] === "undefined") {
+			var styleTarget = getTarget.call(this, target, parent);
+			// Special case to return head of iframe instead of iframe itself
+			if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
+				try {
+					// This will throw an exception if access to iframe is blocked
+					// due to cross-origin restrictions
+					styleTarget = styleTarget.contentDocument.head;
+				} catch(e) {
+					styleTarget = null;
+				}
+			}
+			memo[target] = styleTarget;
+		}
+		return memo[target]
+	};
+})();
+
+var singleton = null;
+var	singletonCounter = 0;
+var	stylesInsertedAtTop = [];
+
+var	fixUrls = __webpack_require__(/*! ./urls */ "./node_modules/style-loader/lib/urls.js");
+
+module.exports = function(list, options) {
+	if (typeof DEBUG !== "undefined" && DEBUG) {
+		if (typeof document !== "object") throw new Error("The style-loader cannot be used in a non-browser environment");
+	}
+
+	options = options || {};
+
+	options.attrs = typeof options.attrs === "object" ? options.attrs : {};
+
+	// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+	// tags it will allow on a page
+	if (!options.singleton && typeof options.singleton !== "boolean") options.singleton = isOldIE();
+
+	// By default, add <style> tags to the <head> element
+        if (!options.insertInto) options.insertInto = "head";
+
+	// By default, add <style> tags to the bottom of the target
+	if (!options.insertAt) options.insertAt = "bottom";
+
+	var styles = listToStyles(list, options);
+
+	addStylesToDom(styles, options);
+
+	return function update (newList) {
+		var mayRemove = [];
+
+		for (var i = 0; i < styles.length; i++) {
+			var item = styles[i];
+			var domStyle = stylesInDom[item.id];
+
+			domStyle.refs--;
+			mayRemove.push(domStyle);
+		}
+
+		if(newList) {
+			var newStyles = listToStyles(newList, options);
+			addStylesToDom(newStyles, options);
+		}
+
+		for (var i = 0; i < mayRemove.length; i++) {
+			var domStyle = mayRemove[i];
+
+			if(domStyle.refs === 0) {
+				for (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();
+
+				delete stylesInDom[domStyle.id];
+			}
+		}
+	};
+};
+
+function addStylesToDom (styles, options) {
+	for (var i = 0; i < styles.length; i++) {
+		var item = styles[i];
+		var domStyle = stylesInDom[item.id];
+
+		if(domStyle) {
+			domStyle.refs++;
+
+			for(var j = 0; j < domStyle.parts.length; j++) {
+				domStyle.parts[j](item.parts[j]);
+			}
+
+			for(; j < item.parts.length; j++) {
+				domStyle.parts.push(addStyle(item.parts[j], options));
+			}
+		} else {
+			var parts = [];
+
+			for(var j = 0; j < item.parts.length; j++) {
+				parts.push(addStyle(item.parts[j], options));
+			}
+
+			stylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};
+		}
+	}
+}
+
+function listToStyles (list, options) {
+	var styles = [];
+	var newStyles = {};
+
+	for (var i = 0; i < list.length; i++) {
+		var item = list[i];
+		var id = options.base ? item[0] + options.base : item[0];
+		var css = item[1];
+		var media = item[2];
+		var sourceMap = item[3];
+		var part = {css: css, media: media, sourceMap: sourceMap};
+
+		if(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});
+		else newStyles[id].parts.push(part);
+	}
+
+	return styles;
+}
+
+function insertStyleElement (options, style) {
+	var target = getElement(options.insertInto)
+
+	if (!target) {
+		throw new Error("Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.");
+	}
+
+	var lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];
+
+	if (options.insertAt === "top") {
+		if (!lastStyleElementInsertedAtTop) {
+			target.insertBefore(style, target.firstChild);
+		} else if (lastStyleElementInsertedAtTop.nextSibling) {
+			target.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);
+		} else {
+			target.appendChild(style);
+		}
+		stylesInsertedAtTop.push(style);
+	} else if (options.insertAt === "bottom") {
+		target.appendChild(style);
+	} else if (typeof options.insertAt === "object" && options.insertAt.before) {
+		var nextSibling = getElement(options.insertAt.before, target);
+		target.insertBefore(style, nextSibling);
+	} else {
+		throw new Error("[Style Loader]\n\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\n Must be 'top', 'bottom', or Object.\n (https://github.com/webpack-contrib/style-loader#insertat)\n");
+	}
+}
+
+function removeStyleElement (style) {
+	if (style.parentNode === null) return false;
+	style.parentNode.removeChild(style);
+
+	var idx = stylesInsertedAtTop.indexOf(style);
+	if(idx >= 0) {
+		stylesInsertedAtTop.splice(idx, 1);
+	}
+}
+
+function createStyleElement (options) {
+	var style = document.createElement("style");
+
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
+
+	if(options.attrs.nonce === undefined) {
+		var nonce = getNonce();
+		if (nonce) {
+			options.attrs.nonce = nonce;
+		}
+	}
+
+	addAttrs(style, options.attrs);
+	insertStyleElement(options, style);
+
+	return style;
+}
+
+function createLinkElement (options) {
+	var link = document.createElement("link");
+
+	if(options.attrs.type === undefined) {
+		options.attrs.type = "text/css";
+	}
+	options.attrs.rel = "stylesheet";
+
+	addAttrs(link, options.attrs);
+	insertStyleElement(options, link);
+
+	return link;
+}
+
+function addAttrs (el, attrs) {
+	Object.keys(attrs).forEach(function (key) {
+		el.setAttribute(key, attrs[key]);
+	});
+}
+
+function getNonce() {
+	if (false) {}
+
+	return __webpack_require__.nc;
+}
+
+function addStyle (obj, options) {
+	var style, update, remove, result;
+
+	// If a transform function was defined, run it on the css
+	if (options.transform && obj.css) {
+	    result = typeof options.transform === 'function'
+		 ? options.transform(obj.css) 
+		 : options.transform.default(obj.css);
+
+	    if (result) {
+	    	// If transform returns a value, use that instead of the original css.
+	    	// This allows running runtime transformations on the css.
+	    	obj.css = result;
+	    } else {
+	    	// If the transform function returns a falsy value, don't add this css.
+	    	// This allows conditional loading of css
+	    	return function() {
+	    		// noop
+	    	};
+	    }
+	}
+
+	if (options.singleton) {
+		var styleIndex = singletonCounter++;
+
+		style = singleton || (singleton = createStyleElement(options));
+
+		update = applyToSingletonTag.bind(null, style, styleIndex, false);
+		remove = applyToSingletonTag.bind(null, style, styleIndex, true);
+
+	} else if (
+		obj.sourceMap &&
+		typeof URL === "function" &&
+		typeof URL.createObjectURL === "function" &&
+		typeof URL.revokeObjectURL === "function" &&
+		typeof Blob === "function" &&
+		typeof btoa === "function"
+	) {
+		style = createLinkElement(options);
+		update = updateLink.bind(null, style, options);
+		remove = function () {
+			removeStyleElement(style);
+
+			if(style.href) URL.revokeObjectURL(style.href);
+		};
+	} else {
+		style = createStyleElement(options);
+		update = applyToTag.bind(null, style);
+		remove = function () {
+			removeStyleElement(style);
+		};
+	}
+
+	update(obj);
+
+	return function updateStyle (newObj) {
+		if (newObj) {
+			if (
+				newObj.css === obj.css &&
+				newObj.media === obj.media &&
+				newObj.sourceMap === obj.sourceMap
+			) {
+				return;
+			}
+
+			update(obj = newObj);
+		} else {
+			remove();
+		}
+	};
+}
+
+var replaceText = (function () {
+	var textStore = [];
+
+	return function (index, replacement) {
+		textStore[index] = replacement;
+
+		return textStore.filter(Boolean).join('\n');
+	};
+})();
+
+function applyToSingletonTag (style, index, remove, obj) {
+	var css = remove ? "" : obj.css;
+
+	if (style.styleSheet) {
+		style.styleSheet.cssText = replaceText(index, css);
+	} else {
+		var cssNode = document.createTextNode(css);
+		var childNodes = style.childNodes;
+
+		if (childNodes[index]) style.removeChild(childNodes[index]);
+
+		if (childNodes.length) {
+			style.insertBefore(cssNode, childNodes[index]);
+		} else {
+			style.appendChild(cssNode);
+		}
+	}
+}
+
+function applyToTag (style, obj) {
+	var css = obj.css;
+	var media = obj.media;
+
+	if(media) {
+		style.setAttribute("media", media)
+	}
+
+	if(style.styleSheet) {
+		style.styleSheet.cssText = css;
+	} else {
+		while(style.firstChild) {
+			style.removeChild(style.firstChild);
+		}
+
+		style.appendChild(document.createTextNode(css));
+	}
+}
+
+function updateLink (link, options, obj) {
+	var css = obj.css;
+	var sourceMap = obj.sourceMap;
+
+	/*
+		If convertToAbsoluteUrls isn't defined, but sourcemaps are enabled
+		and there is no publicPath defined then lets turn convertToAbsoluteUrls
+		on by default.  Otherwise default to the convertToAbsoluteUrls option
+		directly
+	*/
+	var autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;
+
+	if (options.convertToAbsoluteUrls || autoFixUrls) {
+		css = fixUrls(css);
+	}
+
+	if (sourceMap) {
+		// http://stackoverflow.com/a/26603875
+		css += "\n/*# sourceMappingURL=data:application/json;base64," + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + " */";
+	}
+
+	var blob = new Blob([css], { type: "text/css" });
+
+	var oldSrc = link.href;
+
+	link.href = URL.createObjectURL(blob);
+
+	if(oldSrc) URL.revokeObjectURL(oldSrc);
+}
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/lib/urls.js":
+/*!***********************************************!*\
+  !*** ./node_modules/style-loader/lib/urls.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+
+/**
+ * When source maps are enabled, `style-loader` uses a link element with a data-uri to
+ * embed the css on the page. This breaks all relative urls because now they are relative to a
+ * bundle instead of the current page.
+ *
+ * One solution is to only use full urls, but that may be impossible.
+ *
+ * Instead, this function "fixes" the relative urls to be absolute according to the current page location.
+ *
+ * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.
+ *
+ */
+
+module.exports = function (css) {
+  // get current location
+  var location = typeof window !== "undefined" && window.location;
+
+  if (!location) {
+    throw new Error("fixUrls requires window.location");
+  }
+
+	// blank or null?
+	if (!css || typeof css !== "string") {
+	  return css;
+  }
+
+  var baseUrl = location.protocol + "//" + location.host;
+  var currentDir = baseUrl + location.pathname.replace(/\/[^\/]*$/, "/");
+
+	// convert each url(...)
+	/*
+	This regular expression is just a way to recursively match brackets within
+	a string.
+
+	 /url\s*\(  = Match on the word "url" with any whitespace after it and then a parens
+	   (  = Start a capturing group
+	     (?:  = Start a non-capturing group
+	         [^)(]  = Match anything that isn't a parentheses
+	         |  = OR
+	         \(  = Match a start parentheses
+	             (?:  = Start another non-capturing groups
+	                 [^)(]+  = Match anything that isn't a parentheses
+	                 |  = OR
+	                 \(  = Match a start parentheses
+	                     [^)(]*  = Match anything that isn't a parentheses
+	                 \)  = Match a end parentheses
+	             )  = End Group
+              *\) = Match anything and then a close parens
+          )  = Close non-capturing group
+          *  = Match anything
+       )  = Close capturing group
+	 \)  = Match a close parens
+
+	 /gi  = Get all matches, not the first.  Be case insensitive.
+	 */
+	var fixedCss = css.replace(/url\s*\(((?:[^)(]|\((?:[^)(]+|\([^)(]*\))*\))*)\)/gi, function(fullMatch, origUrl) {
+		// strip quotes (if they exist)
+		var unquotedOrigUrl = origUrl
+			.trim()
+			.replace(/^"(.*)"$/, function(o, $1){ return $1; })
+			.replace(/^'(.*)'$/, function(o, $1){ return $1; });
+
+		// already a full url? no change
+		if (/^(#|data:|http:\/\/|https:\/\/|file:\/\/\/|\s*$)/i.test(unquotedOrigUrl)) {
+		  return fullMatch;
+		}
+
+		// convert the url to a full url
+		var newUrl;
+
+		if (unquotedOrigUrl.indexOf("//") === 0) {
+		  	//TODO: should we add protocol?
+			newUrl = unquotedOrigUrl;
+		} else if (unquotedOrigUrl.indexOf("/") === 0) {
+			// path should be relative to the base url
+			newUrl = baseUrl + unquotedOrigUrl; // already starts with '/'
+		} else {
+			// path should be relative to current directory
+			newUrl = currentDir + unquotedOrigUrl.replace(/^\.\//, ""); // Strip leading './'
+		}
+
+		// send back the fixed url(...)
+		return "url(" + JSON.stringify(newUrl) + ")";
+	});
+
+	// send back the fixed css
+	return fixedCss;
+};
+
+
+/***/ }),
+
 /***/ "./node_modules/timers-browserify/main.js":
 /*!************************************************!*\
   !*** ./node_modules/timers-browserify/main.js ***!
@@ -39097,6 +40107,334 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/realizarPedido.vue?vue&type=template&id=67534b6c&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/compras/realizarPedido.vue?vue&type=template&id=67534b6c& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "d-flex flex-column align-items-center" }, [
+    _c("div", { staticClass: "d-flex justify-content-around col-10 my-2" }, [
+      _c(
+        "label",
+        { staticStyle: { "font-weight": "bold" }, attrs: { for: "envios" } },
+        [_vm._v("Método de envío")]
+      ),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticClass: "combo",
+          staticStyle: { outline: "none" },
+          attrs: { name: "envios", id: "envios" }
+        },
+        _vm._l(_vm.envios, function(envio, index) {
+          return _c("option", { key: index, staticClass: "combo" }, [
+            _vm._v(
+              "\n        " +
+                _vm._s(
+                  _vm.tipoEnvio(envio.tipoenvio) +
+                    " - " +
+                    envio.paisenvio +
+                    " (" +
+                    envio.precioenvio +
+                    "$ - " +
+                    _vm.duracion(envio.duracionenvio) +
+                    ")"
+                ) +
+                "\n      "
+            )
+          ])
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "d-flex justify-content-around col-10 my-2" }, [
+      _c(
+        "label",
+        { staticStyle: { "font-weight": "bold" }, attrs: { for: "pagos" } },
+        [_vm._v("Método de pago")]
+      ),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticClass: "combo",
+          staticStyle: { outline: "none" },
+          attrs: { name: "pagos", id: "pagos" }
+        },
+        _vm._l(_vm.pagos, function(pago, index) {
+          return _c("option", { key: index, staticClass: "combo" }, [
+            _vm._v(_vm._s(_vm.detallePago(pago)))
+          ])
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-striped border border-info" }, [
+      _vm._m(2),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.productos, function(producto, index) {
+          return _c("tr", { key: index }, [
+            _c("td", { staticClass: "text-center" }, [
+              _vm._v(
+                _vm._s(
+                  producto.nombreprod + " (" + producto.presentacion + " ml)"
+                )
+              )
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s())]),
+            _vm._v(" "),
+            _c("td", { staticClass: "text-center" }, [
+              _vm._v(_vm._s(producto.precioing + " $"))
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "text-center" }, [_vm._v("a")]),
+            _vm._v(" "),
+            _c("td", { staticClass: "text-center" }, [_vm._v("b")])
+          ])
+        }),
+        0
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "d-flex justify-content-around col-10 my-2" },
+      [
+        _c(
+          "label",
+          {
+            staticStyle: { "font-weight": "bold" },
+            attrs: { for: "detalleEnvio" }
+          },
+          [_vm._v("Extras de envío")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary",
+            staticStyle: { width: "340px" },
+            attrs: { "data-toggle": "modal", "data-target": "#extraEnvio" }
+          },
+          [
+            _c("img", {
+              staticClass: "pr-2",
+              attrs: {
+                src: "/img/iconos/add_white.svg",
+                alt: "crear",
+                width: "24"
+              }
+            }),
+            _vm._v(" Agregar Extra de Envío\n    ")
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "modal fade",
+            attrs: {
+              id: "extraEnvio",
+              tabindex: "-1",
+              role: "dialog",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "modal-dialog modal-dialog-centered",
+                attrs: { role: "document" }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "modal-content",
+                    staticStyle: { "background-color": "#F5F5F5" }
+                  },
+                  [
+                    _c("div", { staticClass: "modal-header" }, [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "modal-title",
+                          attrs: { id: "exampleModalLabel" }
+                        },
+                        [_vm._v("Extras De Envío")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close"
+                          }
+                        },
+                        [
+                          _c("span", { attrs: { "aria-hidden": "true" } }, [
+                            _vm._v("×")
+                          ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "modal-body h5 text-center" }, [
+                      _vm._v(
+                        "\n            AQUI DEBE IR EL NOMBRE DEL METODO\n            "
+                      ),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c(
+                        "table",
+                        {
+                          staticClass: "table table-striped border border-info"
+                        },
+                        [
+                          _c(
+                            "thead",
+                            { staticClass: "bg-primary text-white" },
+                            [
+                              _c("tr", { staticClass: "text-center" }, [
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v("Nombre")
+                                ]),
+                                _vm._v(" "),
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v("Precio")
+                                ]),
+                                _vm._v(" "),
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v("Días de Retraso")
+                                ]),
+                                _vm._v(" "),
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v("Seleccionar")
+                                ])
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("tbody", [
+                            _c("tr", [
+                              _c("td", [_vm._v("hola")]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v("hola")]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v("hola")]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("input", {
+                                  attrs: {
+                                    type: "checkbox",
+                                    id: "",
+                                    name: "",
+                                    value: ""
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("br")
+                              ])
+                            ])
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          staticStyle: { width: "110px" },
+                          attrs: {
+                            "data-dismiss": "modal",
+                            "aria-label": "Close"
+                          }
+                        },
+                        [_vm._v("Aceptar")]
+                      )
+                    ])
+                  ]
+                )
+              ]
+            )
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "align-items-center h5 text-center mt-3" },
+      [
+        _c("b", { staticClass: "text-center" }, [
+          _vm._v("Productos Contratados")
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-primary text-white" }, [
+      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v("Ingrediente")
+      ]),
+      _vm._v(" "),
+      _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")]),
+      _vm._v(" "),
+      _c("th", { attrs: { scope: "col" } }, [_vm._v("Precio Unitario")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v("Subtotal")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center" }, [_vm._v("Acción")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluaciones/realizarEvaluacion.vue?vue&type=template&id=df6249f4&scoped=true& ***!
@@ -39117,7 +40455,7 @@ var render = function() {
       ? _c("span", [
           _c("div", { staticClass: "row d-flex justify-content-center" }, [
             _c("span", { staticClass: "h5 mr-3 mt-2" }, [
-              _vm._v(" Tipo de Evaluación: ")
+              _vm._v("Tipo de Evaluación:")
             ]),
             _vm._v(" "),
             _c(
@@ -39127,7 +40465,7 @@ var render = function() {
                 attrs: { disabled: _vm.btnEvInicDis },
                 on: { click: _vm.evInicial }
               },
-              [_vm._v(" Inicial ")]
+              [_vm._v("Inicial")]
             ),
             _vm._v(" "),
             _c(
@@ -39137,7 +40475,7 @@ var render = function() {
                 attrs: { disabled: _vm.btnEvAnualDis },
                 on: { click: _vm.evAnual }
               },
-              [_vm._v(" Anual ")]
+              [_vm._v("Anual")]
             )
           ]),
           _vm._v(" "),
@@ -39246,28 +40584,28 @@ var render = function() {
                 },
                 [
                   _c("span", { staticClass: "col-12 h5" }, [
-                    _c("b", [_vm._v(" Proveedor: ")]),
-                    _vm._v(" " + _vm._s(prov["prov"]))
+                    _c("b", [_vm._v("Proveedor:")]),
+                    _vm._v("\n        " + _vm._s(prov["prov"]) + "\n      ")
                   ]),
                   _vm._v(" "),
                   _c("span", { staticClass: "col-6" }, [
-                    _vm._v(" • "),
-                    _c("b", [_vm._v(" Fecha de inicio membresia IFRA: ")]),
-                    _vm._v(" " + _vm._s(prov["memb"]) + " ")
+                    _vm._v("\n        •\n        "),
+                    _c("b", [_vm._v("Fecha de inicio membresia IFRA:")]),
+                    _vm._v("\n        " + _vm._s(prov["memb"]) + "\n      ")
                   ]),
                   _vm._v(" "),
                   _c("span", { staticClass: "col-6" }, [
-                    _vm._v(" • "),
-                    _c("b", [_vm._v(" Tipo de membresia IFRA: ")]),
-                    _vm._v(" " + _vm._s(prov["tipo"]))
+                    _vm._v("\n        •\n        "),
+                    _c("b", [_vm._v("Tipo de membresia IFRA:")]),
+                    _vm._v("\n        " + _vm._s(prov["tipo"]) + "\n      ")
                   ]),
                   _vm._v(" "),
                   _c("span", { staticClass: "col-6" }, [
-                    _vm._v(" \n                • "),
-                    _c("b", [_vm._v(" Asociación: ")]),
-                    _vm._v(" " + _vm._s(prov["asoc"]) + "\n                "),
+                    _vm._v("\n        •\n        "),
+                    _c("b", [_vm._v("Asociación:")]),
+                    _vm._v("\n        " + _vm._s(prov["asoc"]) + "\n        "),
                     prov["asoc"] === null
-                      ? _c("span", [_vm._v(" No aplica ")])
+                      ? _c("span", [_vm._v("No aplica")])
                       : _vm._e()
                   ]),
                   _vm._v(" "),
@@ -39275,12 +40613,12 @@ var render = function() {
                     "span",
                     { staticClass: "col-6" },
                     [
-                      _vm._v(" • "),
-                      _c("b", [_vm._v(" Paises de envío: ")]),
+                      _vm._v("\n        •\n        "),
+                      _c("b", [_vm._v("Paises de envío:")]),
                       _vm._v(" "),
                       _vm._l(prov["paises"], function(pais, index) {
                         return _c("span", { key: pais }, [
-                          _c("span", [_vm._v(" " + _vm._s(pais) + " ")]),
+                          _c("span", [_vm._v(_vm._s(pais))]),
                           _vm._v(" "),
                           !(prov["paises"].length - 1 === index)
                             ? _c("span", [_vm._v(",")])
@@ -39319,7 +40657,7 @@ var render = function() {
                           }),
                           _vm._v(" "),
                           _c("span", { staticClass: "ml-2" }, [
-                            _vm._v(" Evaluar ")
+                            _vm._v("Evaluar")
                           ])
                         ]
                       )
@@ -39332,7 +40670,7 @@ var render = function() {
             _vm.provsInic.length === 0
               ? _c("div", { staticClass: "mx-4 h5 text-center" }, [
                   _vm._v(
-                    " \n            No tiene proveedores que envien a los paises requeridos o que sean miembros\n            activos IFRA actualmente.\n        "
+                    "\n      No tiene proveedores que envien a los paises requeridos o que sean miembros\n      activos IFRA actualmente.\n    "
                   )
                 ])
               : _vm._e()
@@ -39359,57 +40697,49 @@ var render = function() {
                 { key: index, staticClass: "row mx-4 p-2 border border-info" },
                 [
                   _c("span", { staticClass: "col-12 h5" }, [
-                    _c("b", [_vm._v(" Proveedor: ")]),
-                    _vm._v(" " + _vm._s(prov["prov"]) + " \n                "),
+                    _c("b", [_vm._v("Proveedor:")]),
+                    _vm._v("\n        " + _vm._s(prov["prov"]) + "\n        "),
                     parseInt(prov["exp"]) === 1
                       ? _c("span", [
-                          _vm._v(" (expira en " + _vm._s(prov["exp"]) + " día)")
+                          _vm._v("(expira en " + _vm._s(prov["exp"]) + " día)")
                         ])
                       : _c("span", [
-                          _vm._v(
-                            " (expira en " + _vm._s(prov["exp"]) + " días)"
-                          )
+                          _vm._v("(expira en " + _vm._s(prov["exp"]) + " días)")
                         ])
                   ]),
                   _vm._v(" "),
                   _c("span", { staticClass: "col-6" }, [
-                    _vm._v(" • "),
-                    _c("b", [_vm._v(" Fecha de apertura del contrato: ")]),
-                    _vm._v(
-                      " \n                " +
-                        _vm._s(prov["fecha"]) +
-                        " \n            "
-                    )
+                    _vm._v("\n        •\n        "),
+                    _c("b", [_vm._v("Fecha de apertura del contrato:")]),
+                    _vm._v("\n        " + _vm._s(prov["fecha"]) + "\n      ")
                   ]),
                   _vm._v(" "),
                   _c("span", { staticClass: "col-6" }, [
-                    _vm._v("\n                • "),
-                    _c("b", [_vm._v(" Exclusividad: ")]),
+                    _vm._v("\n        •\n        "),
+                    _c("b", [_vm._v("Exclusividad:")]),
                     _vm._v(
-                      "\n                Contrato " +
-                        _vm._s(prov["ex"]) +
-                        "\n            "
+                      "\n        Contrato " + _vm._s(prov["ex"]) + "\n      "
                     )
                   ]),
                   _vm._v(" "),
                   _c("span", { staticClass: "col-12" }, [
-                    _vm._v(" • "),
-                    _c("b", [_vm._v(" Fecha de renovación más reciente: ")]),
+                    _vm._v("\n        •\n        "),
+                    _c("b", [_vm._v("Fecha de renovación más reciente:")]),
                     _vm._v(" "),
                     parseInt(prov["renov"]) === 0
-                      ? _c("span", [_vm._v(" N/A ")])
+                      ? _c("span", [_vm._v("N/A")])
                       : _c("span", [
                           _vm._v(
-                            " " +
+                            "\n          " +
                               _vm._s(prov["fechaR"]) +
                               " ( renovado " +
                               _vm._s(prov["renov"]) +
-                              " \n                    "
+                              "\n          "
                           ),
                           prov["renov"] == 1
-                            ? _c("span", [_vm._v(" vez ")])
-                            : _c("span", [_vm._v(" veces ")]),
-                          _vm._v("\n                )")
+                            ? _c("span", [_vm._v("vez")])
+                            : _c("span", [_vm._v("veces")]),
+                          _vm._v("\n          )\n        ")
                         ])
                   ]),
                   _vm._v(" "),
@@ -39444,7 +40774,7 @@ var render = function() {
                           }),
                           _vm._v(" "),
                           _c("span", { staticClass: "ml-2" }, [
-                            _vm._v(" Evaluar ")
+                            _vm._v("Evaluar")
                           ])
                         ]
                       )
@@ -39457,7 +40787,7 @@ var render = function() {
             _vm.provsAnual.length === 0
               ? _c("div", { staticClass: "mx-4 h5 text-center" }, [
                   _vm._v(
-                    " \n            Aun no tiene proveedores cuyos contratos esten a 1 mes de expirar. \n        "
+                    "Aun no tiene proveedores cuyos contratos esten a 1 mes de expirar."
                   )
                 ])
               : _vm._e()
@@ -39482,8 +40812,12 @@ var render = function() {
             [
               _c("div", { staticClass: "row d-flex justify-content-center" }, [
                 _c("span", { staticClass: "h5 col-12 text-center" }, [
-                  _c("b", [_vm._v(" Proveedor: ")]),
-                  _vm._v(" " + _vm._s(_vm.provInicData["prov"]) + " ")
+                  _c("b", [_vm._v("Proveedor:")]),
+                  _vm._v(
+                    "\n          " +
+                      _vm._s(_vm.provInicData["prov"]) +
+                      "\n        "
+                  )
                 ]),
                 _vm._v(" "),
                 _vm._m(11),
@@ -39503,16 +40837,16 @@ var render = function() {
                             index
                           ) {
                             return _c("tr", { key: esen.cas }, [
-                              _c("td", { staticClass: " p-1 m-0 pl-2" }, [
-                                _vm._v(" " + _vm._s(esen["cas"]) + " ")
+                              _c("td", { staticClass: "p-1 m-0 pl-2" }, [
+                                _vm._v(_vm._s(esen["cas"]))
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "p-1 m-0" }, [
-                                _vm._v(" " + _vm._s(esen["ing"]) + " ")
+                                _vm._v(_vm._s(esen["ing"]))
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "p-1 m-0" }, [
-                                _vm._v(" Esencia " + _vm._s(esen["tipo"]) + " ")
+                                _vm._v("Esencia " + _vm._s(esen["tipo"]))
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "text-center p-1 m-0" }, [
@@ -39543,16 +40877,16 @@ var render = function() {
                             index
                           ) {
                             return _c("tr", { key: otro.cas }, [
-                              _c("td", { staticClass: " p-1 m-0 pl-2" }, [
-                                _vm._v(" " + _vm._s(otro["cas"]) + " ")
+                              _c("td", { staticClass: "p-1 m-0 pl-2" }, [
+                                _vm._v(_vm._s(otro["cas"]))
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "p-1 m-0" }, [
-                                _vm._v(" " + _vm._s(otro["ing"]) + " ")
+                                _vm._v(_vm._s(otro["ing"]))
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "p-1 m-0" }, [
-                                _vm._v(" Componente ")
+                                _vm._v("Componente")
                               ]),
                               _vm._v(" "),
                               _c("td", { staticClass: "text-center p-1 m-0" }, [
@@ -39592,14 +40926,14 @@ var render = function() {
                 { staticClass: "flex-row d-flex justify-content-center mx-4" },
                 [
                   _c("span", { staticClass: "h5 col-12 text-center" }, [
-                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
-                    _vm._v(" " + _vm._s(_vm.formInic[0]["nombre"]) + " "),
+                    _c("b", [_vm._v("Criterio de Evaluación:")]),
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.formInic[0]["nombre"]) +
+                        "\n          "
+                    ),
                     _c("b", [
-                      _vm._v(
-                        " \n                    (" +
-                          _vm._s(_vm.formInic[0]["peso"]) +
-                          " %) "
-                      )
+                      _vm._v("(" + _vm._s(_vm.formInic[0]["peso"]) + " %)")
                     ])
                   ])
                 ]
@@ -39623,7 +40957,7 @@ var render = function() {
                               "bg-primary text-white border border-info",
                             attrs: { scope: "col" }
                           },
-                          [_vm._v(" Ubicación / Sede Principal ")]
+                          [_vm._v("Ubicación / Sede Principal")]
                         ),
                         _vm._v(" "),
                         _c(
@@ -39633,7 +40967,7 @@ var render = function() {
                             staticStyle: { "background-color": "#E4E4E4" },
                             attrs: { scope: "col" }
                           },
-                          [_vm._v(" " + _vm._s(_vm.provInicData["pais"]) + " ")]
+                          [_vm._v(_vm._s(_vm.provInicData["pais"]))]
                         )
                       ])
                     ]
@@ -39696,11 +41030,11 @@ var render = function() {
                     [
                       _c("b", [
                         _vm._v(
-                          " (de " +
+                          "(de " +
                             _vm._s(_vm.escala.ri) +
                             " a " +
                             _vm._s(_vm.escala.rf) +
-                            ") "
+                            ")"
                         )
                       ])
                     ]
@@ -39725,14 +41059,14 @@ var render = function() {
                 { staticClass: "flex-row d-flex justify-content-center mx-4" },
                 [
                   _c("span", { staticClass: "h5 col-12 text-center" }, [
-                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
-                    _vm._v(" " + _vm._s(_vm.formInic[1]["nombre"]) + " "),
+                    _c("b", [_vm._v("Criterio de Evaluación:")]),
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.formInic[1]["nombre"]) +
+                        "\n          "
+                    ),
                     _c("b", [
-                      _vm._v(
-                        " \n                    (" +
-                          _vm._s(_vm.formInic[1]["peso"]) +
-                          " %) "
-                      )
+                      _vm._v("(" + _vm._s(_vm.formInic[1]["peso"]) + " %)")
                     ])
                   ])
                 ]
@@ -39756,48 +41090,38 @@ var render = function() {
                         "tbody",
                         _vm._l(_vm.provInicData["pagos"], function(pago) {
                           return _c("tr", { key: pago.id }, [
-                            _c("td", [
-                              _vm._v(" " + _vm._s(pago["tipo"]) + " ")
-                            ]),
+                            _c("td", [_vm._v(_vm._s(pago["tipo"]))]),
                             _vm._v(" "),
                             pago["numc"] != null
                               ? _c("td", { staticClass: "text-center" }, [
                                   pago["numc"] > 1
                                     ? _c("span", [
-                                        _vm._v(
-                                          " " +
-                                            _vm._s(pago["numc"]) +
-                                            " cuotas "
-                                        )
+                                        _vm._v(_vm._s(pago["numc"]) + " cuotas")
                                       ])
-                                    : _c("span", [_vm._v(" 1 cuota ")])
+                                    : _c("span", [_vm._v("1 cuota")])
                                 ])
                               : _c("td", { staticClass: "text-center" }, [
-                                  _vm._v(" N/A ")
+                                  _vm._v("N/A")
                                 ]),
                             _vm._v(" "),
                             pago["porc"] != null
                               ? _c("td", { staticClass: "text-center" }, [
-                                  _vm._v(" " + _vm._s(pago["porc"]) + " % ")
+                                  _vm._v(_vm._s(pago["porc"]) + " %")
                                 ])
                               : _c("td", { staticClass: "text-center" }, [
-                                  _vm._v(" N/A ")
+                                  _vm._v("N/A")
                                 ]),
                             _vm._v(" "),
                             pago["meses"] != null
                               ? _c("td", { staticClass: "text-center" }, [
                                   pago["meses"] > 1
                                     ? _c("span", [
-                                        _vm._v(
-                                          " " +
-                                            _vm._s(pago["meses"]) +
-                                            " meses "
-                                        )
+                                        _vm._v(_vm._s(pago["meses"]) + " meses")
                                       ])
-                                    : _c("span", [_vm._v(" 1 mes ")])
+                                    : _c("span", [_vm._v("1 mes")])
                                 ])
                               : _c("td", { staticClass: "text-center" }, [
-                                  _vm._v(" N/A ")
+                                  _vm._v("N/A")
                                 ])
                           ])
                         }),
@@ -39863,11 +41187,11 @@ var render = function() {
                     [
                       _c("b", [
                         _vm._v(
-                          " (de " +
+                          "(de " +
                             _vm._s(_vm.escala.ri) +
                             " a " +
                             _vm._s(_vm.escala.rf) +
-                            ") "
+                            ")"
                         )
                       ])
                     ]
@@ -39892,14 +41216,14 @@ var render = function() {
                 { staticClass: "flex-row d-flex justify-content-center mx-4" },
                 [
                   _c("span", { staticClass: "h5 col-12 text-center" }, [
-                    _c("b", [_vm._v(" Criterio de Evaluación: ")]),
-                    _vm._v(" " + _vm._s(_vm.formInic[2]["nombre"]) + " "),
+                    _c("b", [_vm._v("Criterio de Evaluación:")]),
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.formInic[2]["nombre"]) +
+                        "\n          "
+                    ),
                     _c("b", [
-                      _vm._v(
-                        " \n                    (" +
-                          _vm._s(_vm.formInic[2]["peso"]) +
-                          " %) "
-                      )
+                      _vm._v("(" + _vm._s(_vm.formInic[2]["peso"]) + " %)")
                     ])
                   ])
                 ]
@@ -39926,26 +41250,20 @@ var render = function() {
                           index
                         ) {
                           return _c("tr", { key: envio.id_envio }, [
-                            _c("td", [
-                              _vm._v(" " + _vm._s(envio["pais"]) + " ")
-                            ]),
+                            _c("td", [_vm._v(_vm._s(envio["pais"]))]),
                             _vm._v(" "),
-                            _c("td", [
-                              _vm._v(" " + _vm._s(envio["tipo"]) + " ")
-                            ]),
+                            _c("td", [_vm._v(_vm._s(envio["tipo"]))]),
                             _vm._v(" "),
                             envio["duracion"] > 1
                               ? _c("td", { staticClass: "text-right" }, [
-                                  _vm._v(
-                                    " " + _vm._s(envio["duracion"]) + " días "
-                                  )
+                                  _vm._v(_vm._s(envio["duracion"]) + " días")
                                 ])
                               : _c("td", { staticClass: "text-right" }, [
-                                  _vm._v(" 1 día ")
+                                  _vm._v("1 día")
                                 ]),
                             _vm._v(" "),
                             _c("td", { staticClass: "text-right" }, [
-                              _vm._v(" " + _vm._s(envio["precio"]) + " $ ")
+                              _vm._v(_vm._s(envio["precio"]) + " $")
                             ]),
                             _vm._v(" "),
                             _c("td", { staticClass: "text-center" }, [
@@ -40029,11 +41347,11 @@ var render = function() {
                     [
                       _c("b", [
                         _vm._v(
-                          " (de " +
+                          "(de " +
                             _vm._s(_vm.escala.ri) +
                             " a " +
                             _vm._s(_vm.escala.rf) +
-                            ") "
+                            ")"
                         )
                       ])
                     ]
@@ -40085,7 +41403,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("span", { staticClass: "ml-2" }, [
-                        _vm._v(" Finalizar Evaluación ")
+                        _vm._v("Finalizar Evaluación")
                       ])
                     ]
                   )
@@ -40115,8 +41433,12 @@ var render = function() {
             [
               _c("div", { staticClass: "row d-flex justify-content-center" }, [
                 _c("span", { staticClass: "h5 col-12 text-center" }, [
-                  _c("b", [_vm._v(" Proveedor: ")]),
-                  _vm._v(" " + _vm._s(_vm.provAnualData["prov"]) + " ")
+                  _c("b", [_vm._v("Proveedor:")]),
+                  _vm._v(
+                    "\n          " +
+                      _vm._s(_vm.provAnualData["prov"]) +
+                      "\n        "
+                  )
                 ])
               ]),
               _vm._v(" "),
@@ -40134,11 +41456,11 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("span", { staticClass: "ml-2" }, [
-                    _c("b", [_vm._v(" Pedidos cumplidos: ")]),
+                    _c("b", [_vm._v("Pedidos cumplidos:")]),
                     _vm._v(
-                      " \n                    " +
+                      "\n          " +
                         _vm._s(_vm.provAnualData["pedidosCump"]) +
-                        "\n                "
+                        "\n        "
                     )
                   ])
                 ]
@@ -40156,11 +41478,11 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("span", { staticClass: "ml-2" }, [
-                    _c("b", [_vm._v(" Pedidos rechazados: ")]),
+                    _c("b", [_vm._v("Pedidos rechazados:")]),
                     _vm._v(
-                      " \n                    " +
+                      "\n          " +
                         _vm._s(_vm.provAnualData["pedidosRec"]) +
-                        "\n                "
+                        "\n        "
                     )
                   ])
                 ]
@@ -40221,11 +41543,11 @@ var render = function() {
                     [
                       _c("b", [
                         _vm._v(
-                          " (de " +
+                          "(de " +
                             _vm._s(_vm.escala.ri) +
                             " a " +
                             _vm._s(_vm.escala.rf) +
-                            ") "
+                            ")"
                         )
                       ])
                     ]
@@ -40282,7 +41604,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("span", { staticClass: "ml-2" }, [
-                        _vm._v(" Finalizar Evaluación ")
+                        _vm._v("Finalizar Evaluación")
                       ])
                     ]
                   )
@@ -40342,9 +41664,7 @@ var render = function() {
                                   ],
                                   function(det) {
                                     return _c("tr", { key: det.id }, [
-                                      _c("td", [
-                                        _vm._v(" " + _vm._s(det["det"]) + " ")
-                                      ]),
+                                      _c("td", [_vm._v(_vm._s(det["det"]))]),
                                       _vm._v(" "),
                                       det["duracion"] != 1 &&
                                       det["duracion"] != -1
@@ -40353,9 +41673,8 @@ var render = function() {
                                             { staticClass: "text-right" },
                                             [
                                               _vm._v(
-                                                " " +
-                                                  _vm._s(det["duracion"]) +
-                                                  " días "
+                                                _vm._s(det["duracion"]) +
+                                                  " días"
                                               )
                                             ]
                                           )
@@ -40364,17 +41683,13 @@ var render = function() {
                                             { staticClass: "text-right" },
                                             [
                                               _vm._v(
-                                                " " +
-                                                  _vm._s(det["duracion"]) +
-                                                  " día "
+                                                _vm._s(det["duracion"]) + " día"
                                               )
                                             ]
                                           ),
                                       _vm._v(" "),
                                       _c("td", { staticClass: "text-right" }, [
-                                        _vm._v(
-                                          " " + _vm._s(det["precio"]) + " $ "
-                                        )
+                                        _vm._v(_vm._s(det["precio"]) + " $")
                                       ])
                                     ])
                                   }
@@ -40429,13 +41744,11 @@ var render = function() {
                             _c("h5", [
                               _c("b", [
                                 _vm._v(
-                                  " " +
-                                    _vm._s(
-                                      _vm.provInicData["esencias"][
-                                        _vm.indexProducto[1]
-                                      ]["ing"]
-                                    ) +
-                                    " "
+                                  _vm._s(
+                                    _vm.provInicData["esencias"][
+                                      _vm.indexProducto[1]
+                                    ]["ing"]
+                                  )
                                 )
                               ])
                             ])
@@ -40448,13 +41761,11 @@ var render = function() {
                             _c("h5", [
                               _c("b", [
                                 _vm._v(
-                                  " " +
-                                    _vm._s(
-                                      _vm.provInicData["otros"][
-                                        _vm.indexProducto[1]
-                                      ]["ing"]
-                                    ) +
-                                    " "
+                                  _vm._s(
+                                    _vm.provInicData["otros"][
+                                      _vm.indexProducto[1]
+                                    ]["ing"]
+                                  )
                                 )
                               ])
                             ])
@@ -40480,15 +41791,11 @@ var render = function() {
                                   function(pres) {
                                     return _c("tr", { key: pres.id }, [
                                       _c("td", { staticClass: "text-right" }, [
-                                        _vm._v(
-                                          " " + _vm._s(pres["vol"]) + " ml "
-                                        )
+                                        _vm._v(_vm._s(pres["vol"]) + " ml")
                                       ]),
                                       _vm._v(" "),
                                       _c("td", { staticClass: "text-right" }, [
-                                        _vm._v(
-                                          " " + _vm._s(pres["precio"]) + " $ "
-                                        )
+                                        _vm._v(_vm._s(pres["precio"]) + " $")
                                       ])
                                     ])
                                   }
@@ -40508,15 +41815,11 @@ var render = function() {
                                   function(pres) {
                                     return _c("tr", { key: pres.id }, [
                                       _c("td", { staticClass: "text-right" }, [
-                                        _vm._v(
-                                          " " + _vm._s(pres["vol"]) + " ml "
-                                        )
+                                        _vm._v(_vm._s(pres["vol"]) + " ml")
                                       ]),
                                       _vm._v(" "),
                                       _c("td", { staticClass: "text-right" }, [
-                                        _vm._v(
-                                          " " + _vm._s(pres["precio"]) + " $ "
-                                        )
+                                        _vm._v(_vm._s(pres["precio"]) + " $")
                                       ])
                                     ])
                                   }
@@ -40542,29 +41845,28 @@ var render = function() {
           _c("hr"),
           _vm._v(" "),
           _c("div", { staticClass: "row h5 justify-content-center" }, [
-            _c("b", [_vm._v(" Proveedor Evaluado: ")]),
+            _c("b", [_vm._v("Proveedor Evaluado:")]),
             _vm._v(" "),
             _c("span", { staticClass: "ml-1" }, [
-              _vm._v(" " + _vm._s(_vm.resultadoInicial["prov"]) + " ")
+              _vm._v(_vm._s(_vm.resultadoInicial["prov"]))
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row h5 justify-content-center" }, [
-            _c("b", [_vm._v(" Criterio de Exito: ")]),
+            _c("b", [_vm._v("Criterio de Exito:")]),
             _vm._v(" "),
             _c("span", { staticClass: "ml-1" }, [
-              _vm._v(" " + _vm._s(_vm.resultadoInicial["exito"]) + " % ")
+              _vm._v(_vm._s(_vm.resultadoInicial["exito"]) + " %")
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row h5 justify-content-center" }, [
-            _c("b", [_vm._v(" Resultado: ")]),
+            _c("b", [_vm._v("Resultado:")]),
             _vm._v(" "),
             _c("span", { staticClass: "ml-1" }, [
               _vm._v(
-                " " +
-                  _vm._s(parseFloat(_vm.resultadoInicial["res"]).toFixed(2)) +
-                  " % "
+                _vm._s(parseFloat(_vm.resultadoInicial["res"]).toFixed(2)) +
+                  " %"
               )
             ])
           ]),
@@ -40592,7 +41894,7 @@ var render = function() {
                       }),
                       _vm._v(" "),
                       _c("span", { staticClass: "ml-2" }, [
-                        _vm._v(" Generar contrato ")
+                        _vm._v("Generar contrato")
                       ])
                     ]
                   )
@@ -40609,29 +41911,27 @@ var render = function() {
           _c("hr"),
           _vm._v(" "),
           _c("div", { staticClass: "row h5 justify-content-center" }, [
-            _c("b", [_vm._v(" Proveedor Evaluado: ")]),
+            _c("b", [_vm._v("Proveedor Evaluado:")]),
             _vm._v(" "),
             _c("span", { staticClass: "ml-1" }, [
-              _vm._v(" " + _vm._s(_vm.resultadoAnual["prov"]) + " ")
+              _vm._v(_vm._s(_vm.resultadoAnual["prov"]))
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row h5 justify-content-center" }, [
-            _c("b", [_vm._v(" Criterio de Exito: ")]),
+            _c("b", [_vm._v("Criterio de Exito:")]),
             _vm._v(" "),
             _c("span", { staticClass: "ml-1" }, [
-              _vm._v(" " + _vm._s(_vm.resultadoAnual["exito"]) + " % ")
+              _vm._v(_vm._s(_vm.resultadoAnual["exito"]) + " %")
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row h5 justify-content-center" }, [
-            _c("b", [_vm._v(" Resultado: ")]),
+            _c("b", [_vm._v("Resultado:")]),
             _vm._v(" "),
             _c("span", { staticClass: "ml-1" }, [
               _vm._v(
-                " " +
-                  _vm._s(parseFloat(_vm.resultadoAnual["res"]).toFixed(2)) +
-                  " % "
+                _vm._s(parseFloat(_vm.resultadoAnual["res"]).toFixed(2)) + " %"
               )
             ])
           ]),
@@ -40642,11 +41942,9 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
             _c("li", [
-              _c("b", { staticClass: "mr-1" }, [
-                _vm._v(" Fecha de Apertura: ")
-              ]),
+              _c("b", { staticClass: "mr-1" }, [_vm._v("Fecha de Apertura:")]),
               _vm._v(
-                "\n            " + _vm._s(_vm.resultadoAnual["fechaA"]) + " "
+                "\n        " + _vm._s(_vm.resultadoAnual["fechaA"]) + "\n      "
               )
             ])
           ]),
@@ -40655,21 +41953,21 @@ var render = function() {
             ? _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
                 _c("li", [
                   _c("b", { staticClass: "mr-1" }, [
-                    _vm._v(" Fecha de Renovación Actual: ")
+                    _vm._v("Fecha de Renovación Actual:")
                   ]),
                   _vm._v(
-                    " \n            " +
+                    "\n        " +
                       _vm._s(_vm.resultadoAnual["fechaR"]) +
-                      " \n            ( renovado " +
+                      "\n        ( renovado " +
                       _vm._s(_vm.resultadoAnual["renov"]) +
-                      " \n            "
+                      "\n        "
                   ),
                   parseInt(_vm.resultadoAnual["renov"]) == 1
-                    ? _c("span", [_vm._v(" vez ")])
+                    ? _c("span", [_vm._v("vez")])
                     : _vm._e(),
                   _vm._v(" "),
-                  _c("span", [_vm._v(" veces ")]),
-                  _vm._v(" )")
+                  _c("span", [_vm._v("veces")]),
+                  _vm._v(" )\n      ")
                 ])
               ])
             : _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
@@ -40678,24 +41976,20 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
             _c("li", [
-              _c("b", { staticClass: "mr-1" }, [_vm._v(" Expira en: ")]),
+              _c("b", { staticClass: "mr-1" }, [_vm._v("Expira en:")]),
               _vm._v(
-                " \n            " +
-                  _vm._s(_vm.resultadoAnual["exp"]) +
-                  " \n            "
+                "\n        " + _vm._s(_vm.resultadoAnual["exp"]) + "\n        "
               ),
               parseInt(_vm.resultadoAnual["exp"]) == 1
-                ? _c("span", [_vm._v(" día ")])
+                ? _c("span", [_vm._v("día")])
                 : _vm._e(),
               _vm._v(" "),
-              _c("span", [_vm._v(" días ")])
+              _c("span", [_vm._v("días")])
             ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "row h5 text-left ml-4 pl-4" }, [
-            _c("li", [
-              _c("b", [_vm._v(" " + _vm._s(_vm.resultadoAnual["ex"]) + " ")])
-            ])
+            _c("li", [_c("b", [_vm._v(_vm._s(_vm.resultadoAnual["ex"]))])])
           ]),
           _vm._v(" "),
           _c("hr"),
@@ -40720,7 +42014,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row d-flex justify-content-center" }, [
-      _c("h5", [_vm._v(" Selecciona un tipo de evaluación... ")])
+      _c("h5", [_vm._v("Selecciona un tipo de evaluación...")])
     ])
   },
   function() {
@@ -40728,7 +42022,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "h6 ml-2" }, [
-      _c("b", [_vm._v(" Formula inicial disponible. ")])
+      _c("b", [_vm._v("Formula inicial disponible.")])
     ])
   },
   function() {
@@ -40736,7 +42030,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "h6 ml-2" }, [
-      _c("b", [_vm._v(" Formula inicial no disponible. ")])
+      _c("b", [_vm._v("Formula inicial no disponible.")])
     ])
   },
   function() {
@@ -40744,7 +42038,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "h6 ml-2" }, [
-      _c("b", [_vm._v(" Formula anual disponible. ")])
+      _c("b", [_vm._v("Formula anual disponible.")])
     ])
   },
   function() {
@@ -40752,7 +42046,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "h6 ml-2" }, [
-      _c("b", [_vm._v(" Formula anual no disponible. ")])
+      _c("b", [_vm._v("Formula anual no disponible.")])
     ])
   },
   function() {
@@ -40760,7 +42054,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "h6 ml-2" }, [
-      _c("b", [_vm._v(" Escala de evaluación disponible. ")])
+      _c("b", [_vm._v("Escala de evaluación disponible.")])
     ])
   },
   function() {
@@ -40768,7 +42062,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "h6 ml-2" }, [
-      _c("b", [_vm._v(" Escala de evaluación no disponible. ")])
+      _c("b", [_vm._v("Escala de evaluación no disponible.")])
     ])
   },
   function() {
@@ -40777,7 +42071,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row d-flex justify-content-center" }, [
       _c("span", { staticClass: "h5" }, [
-        _c("b", [_vm._v(" Evaluación Inicial ")])
+        _c("b", [_vm._v("Evaluación Inicial")])
       ])
     ])
   },
@@ -40786,7 +42080,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "h5" }, [
-      _c("b", [_vm._v(" Seleccionar proveedor a evaluar: ")])
+      _c("b", [_vm._v("Seleccionar proveedor a evaluar:")])
     ])
   },
   function() {
@@ -40794,9 +42088,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row d-flex justify-content-center" }, [
-      _c("span", { staticClass: "h5" }, [
-        _c("b", [_vm._v(" Evaluación Anual ")])
-      ])
+      _c("span", { staticClass: "h5" }, [_c("b", [_vm._v("Evaluación Anual")])])
     ])
   },
   function() {
@@ -40804,7 +42096,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "h5" }, [
-      _c("b", [_vm._v(" Seleccionar proveedor a evaluar: ")])
+      _c("b", [_vm._v("Seleccionar proveedor a evaluar:")])
     ])
   },
   function() {
@@ -40812,8 +42104,8 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-12 h6" }, [
-      _vm._v(" • "),
-      _c("b", [_vm._v(" Productos disponibles en el catálogo: ")])
+      _vm._v("\n          •\n          "),
+      _c("b", [_vm._v("Productos disponibles en el catálogo:")])
     ])
   },
   function() {
@@ -40821,22 +42113,22 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-primary text-white" }, [
-      _c("th", { staticClass: "p-1 m-0 pl-2 ", attrs: { scope: "col" } }, [
-        _vm._v(" # Cas ")
+      _c("th", { staticClass: "p-1 m-0 pl-2", attrs: { scope: "col" } }, [
+        _vm._v("# Cas")
       ]),
       _vm._v(" "),
       _c("th", { staticClass: "p-1 m-0", attrs: { scope: "col" } }, [
-        _vm._v(" Nombre ")
+        _vm._v("Nombre")
       ]),
       _vm._v(" "),
       _c("th", { staticClass: "p-1 m-0", attrs: { scope: "col" } }, [
-        _vm._v(" Tipo ")
+        _vm._v("Tipo")
       ]),
       _vm._v(" "),
       _c(
         "th",
         { staticClass: "p-1 m-0 text-center", attrs: { scope: "col" } },
-        [_vm._v(" Presentaciones ")]
+        [_vm._v("Presentaciones")]
       )
     ])
   },
@@ -40847,7 +42139,7 @@ var staticRenderFns = [
     return _c(
       "span",
       { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
-      [_c("b", [_vm._v(" Puntaje: ")])]
+      [_c("b", [_vm._v("Puntaje:")])]
     )
   },
   function() {
@@ -40855,7 +42147,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("small", { staticClass: "text-danger" }, [
-      _c("b", [_vm._v(" El puntaje está fuera de la escala. ")])
+      _c("b", [_vm._v("El puntaje está fuera de la escala.")])
     ])
   },
   function() {
@@ -40863,18 +42155,18 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-primary text-white" }, [
-      _c("th", { attrs: { scope: "col" } }, [_vm._v(" Tipo de pago ")]),
+      _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo de pago")]),
       _vm._v(" "),
       _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v(" Número de cuotas ")
+        _vm._v("Número de cuotas")
       ]),
       _vm._v(" "),
       _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v(" Porcentaje por cuota ")
+        _vm._v("Porcentaje por cuota")
       ]),
       _vm._v(" "),
       _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v(" Pago cada ")
+        _vm._v("Pago cada")
       ])
     ])
   },
@@ -40885,7 +42177,7 @@ var staticRenderFns = [
     return _c(
       "span",
       { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
-      [_c("b", [_vm._v(" Puntaje: ")])]
+      [_c("b", [_vm._v("Puntaje:")])]
     )
   },
   function() {
@@ -40893,7 +42185,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("small", { staticClass: "text-danger" }, [
-      _c("b", [_vm._v(" El puntaje está fuera de la escala. ")])
+      _c("b", [_vm._v("El puntaje está fuera de la escala.")])
     ])
   },
   function() {
@@ -40901,20 +42193,20 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-primary text-white" }, [
-      _c("th", { attrs: { scope: "col" } }, [_vm._v(" País de envío ")]),
+      _c("th", { attrs: { scope: "col" } }, [_vm._v("País de envío")]),
       _vm._v(" "),
-      _c("th", { attrs: { scope: "col" } }, [_vm._v(" Tipo de envío ")]),
+      _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo de envío")]),
       _vm._v(" "),
       _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v(" Duración ")
+        _vm._v("Duración")
       ]),
       _vm._v(" "),
       _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
-        _vm._v(" Precio ")
+        _vm._v("Precio")
       ]),
       _vm._v(" "),
       _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v(" Extra ")
+        _vm._v("Extra")
       ])
     ])
   },
@@ -40925,7 +42217,7 @@ var staticRenderFns = [
     return _c(
       "span",
       { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
-      [_c("b", [_vm._v(" Puntaje: ")])]
+      [_c("b", [_vm._v("Puntaje:")])]
     )
   },
   function() {
@@ -40933,7 +42225,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("small", { staticClass: "text-danger" }, [
-      _c("b", [_vm._v(" El puntaje está fuera de la escala. ")])
+      _c("b", [_vm._v("El puntaje está fuera de la escala.")])
     ])
   },
   function() {
@@ -40943,7 +42235,7 @@ var staticRenderFns = [
     return _c(
       "span",
       { staticClass: "mr-2", staticStyle: { "font-size": "16px" } },
-      [_c("b", [_vm._v(" Puntaje: ")])]
+      [_c("b", [_vm._v("Puntaje:")])]
     )
   },
   function() {
@@ -40951,7 +42243,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("small", { staticClass: "text-danger" }, [
-      _c("b", [_vm._v(" El puntaje está fuera de la escala. ")])
+      _c("b", [_vm._v("El puntaje está fuera de la escala.")])
     ])
   },
   function() {
@@ -40962,7 +42254,7 @@ var staticRenderFns = [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_c("b", [_vm._v(" Extra de Envío ")])]
+        [_c("b", [_vm._v("Extra de Envío")])]
       ),
       _vm._v(" "),
       _c(
@@ -40984,14 +42276,14 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-primary text-white" }, [
-      _c("th", { attrs: { scope: "col" } }, [_vm._v(" Nombre ")]),
+      _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
       _vm._v(" "),
       _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
-        _vm._v(" Duración ")
+        _vm._v("Duración")
       ]),
       _vm._v(" "),
       _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
-        _vm._v(" Precio ")
+        _vm._v("Precio")
       ])
     ])
   },
@@ -41003,7 +42295,7 @@ var staticRenderFns = [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
-        [_c("b", [_vm._v(" Presentaciones de Producto ")])]
+        [_c("b", [_vm._v("Presentaciones de Producto")])]
       ),
       _vm._v(" "),
       _c(
@@ -41026,11 +42318,11 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-primary text-white" }, [
       _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
-        _vm._v(" Volumen ")
+        _vm._v("Volumen")
       ]),
       _vm._v(" "),
       _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
-        _vm._v(" Precio ")
+        _vm._v("Precio")
       ])
     ])
   },
@@ -41039,7 +42331,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row h5 justify-content-center" }, [
-      _c("b", [_vm._v(" Evaluación Inicial ")])
+      _c("b", [_vm._v("Evaluación Inicial")])
     ])
   },
   function() {
@@ -41049,7 +42341,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row h4 justify-content-center" }, [
       _c("img", { attrs: { src: "/img/iconos/check_green.svg", width: "32" } }),
       _vm._v(" "),
-      _c("b", { staticClass: "ml-1 mt-1" }, [_vm._v(" Aprobado ")])
+      _c("b", { staticClass: "ml-1 mt-1" }, [_vm._v("Aprobado")])
     ])
   },
   function() {
@@ -41057,7 +42349,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row h6 mt-4 justify-content-center" }, [
-      _c("b", [_vm._v(" ¿Desea generar un contrato con el proveedor? ")])
+      _c("b", [_vm._v("¿Desea generar un contrato con el proveedor?")])
     ])
   },
   function() {
@@ -41073,7 +42365,7 @@ var staticRenderFns = [
           attrs: { src: "/img/iconos/cancel_white.svg", width: "24" }
         }),
         _vm._v(" "),
-        _c("span", { staticClass: "ml-2" }, [_vm._v(" Rechazar ")])
+        _c("span", { staticClass: "ml-2" }, [_vm._v("Rechazar")])
       ]
     )
   },
@@ -41084,7 +42376,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row h4 justify-content-center" }, [
       _c("img", { attrs: { src: "/img/iconos/cancel_red.svg", width: "32" } }),
       _vm._v(" "),
-      _c("b", { staticClass: "ml-1 mt-1" }, [_vm._v(" Reprobado ")])
+      _c("b", { staticClass: "ml-1 mt-1" }, [_vm._v("Reprobado")])
     ])
   },
   function() {
@@ -41099,7 +42391,7 @@ var staticRenderFns = [
         }),
         _vm._v(" "),
         _c("span", { staticClass: "ml-2" }, [
-          _vm._v(" Realizar otra evaluacion ")
+          _vm._v("Realizar otra evaluacion")
         ])
       ])
     ])
@@ -41109,7 +42401,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row h5 justify-content-center" }, [
-      _c("b", [_vm._v(" Evaluación Anual ")])
+      _c("b", [_vm._v("Evaluación Anual")])
     ])
   },
   function() {
@@ -41117,7 +42409,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row h5 justify-content-center" }, [
-      _c("b", [_vm._v(" Datos Contrato ")])
+      _c("b", [_vm._v("Datos Contrato")])
     ])
   },
   function() {
@@ -41125,10 +42417,8 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("li", [
-      _c("b", { staticClass: "mr-1" }, [
-        _vm._v(" Fecha de Renovación Actual: ")
-      ]),
-      _vm._v(" N/A ")
+      _c("b", { staticClass: "mr-1" }, [_vm._v("Fecha de Renovación Actual:")]),
+      _vm._v(" N/A\n      ")
     ])
   },
   function() {
@@ -41138,7 +42428,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row h4 justify-content-center" }, [
       _c("img", { attrs: { src: "/img/iconos/check_green.svg", width: "32" } }),
       _vm._v(" "),
-      _c("b", { staticClass: "ml-1 mt-1" }, [_vm._v(" Aprobado ")])
+      _c("b", { staticClass: "ml-1 mt-1" }, [_vm._v("Aprobado")])
     ])
   },
   function() {
@@ -41148,7 +42438,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row h6 mt-4 justify-content-center" }, [
       _c("b", [
         _vm._v(
-          " ¿Desea renovar el contrato con el proveedor o generar un nuevo contrato? "
+          "¿Desea renovar el contrato con el proveedor o generar un nuevo contrato?"
         )
       ])
     ])
@@ -41167,7 +42457,7 @@ var staticRenderFns = [
             attrs: { src: "/img/iconos/cancel_white.svg", width: "24" }
           }),
           _vm._v(" "),
-          _c("span", { staticClass: "ml-2" }, [_vm._v(" Rechazar ")])
+          _c("span", { staticClass: "ml-2" }, [_vm._v("Rechazar")])
         ]
       ),
       _vm._v(" "),
@@ -41177,7 +42467,7 @@ var staticRenderFns = [
           attrs: { src: "/img/iconos/crear.svg", width: "24" }
         }),
         _vm._v(" "),
-        _c("span", { staticClass: "ml-2" }, [_vm._v(" Crear contrato nuevo ")])
+        _c("span", { staticClass: "ml-2" }, [_vm._v("Crear contrato nuevo")])
       ]),
       _vm._v(" "),
       _c("a", { staticClass: "btn btn-primary mx-2", attrs: { href: "#" } }, [
@@ -41186,7 +42476,7 @@ var staticRenderFns = [
           attrs: { src: "/img/iconos/renovar.svg", width: "24" }
         }),
         _vm._v(" "),
-        _c("span", { staticClass: "ml-2" }, [_vm._v(" Renovar contrato ")])
+        _c("span", { staticClass: "ml-2" }, [_vm._v("Renovar contrato")])
       ])
     ])
   },
@@ -41197,7 +42487,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row h4 justify-content-center" }, [
       _c("img", { attrs: { src: "/img/iconos/cancel_red.svg", width: "32" } }),
       _vm._v(" "),
-      _c("b", { staticClass: "ml-1 mt-1" }, [_vm._v(" Reprobado ")])
+      _c("b", { staticClass: "ml-1 mt-1" }, [_vm._v("Reprobado")])
     ])
   },
   function() {
@@ -41212,7 +42502,7 @@ var staticRenderFns = [
         }),
         _vm._v(" "),
         _c("span", { staticClass: "ml-2" }, [
-          _vm._v(" Realizar otra evaluacion ")
+          _vm._v("Realizar otra evaluacion")
         ])
       ])
     ])
@@ -54967,15 +56257,16 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-Vue.component('crear-formula-inicial', __webpack_require__(/*! ./components/formulas/crearFormulaInicial.vue */ "./resources/js/components/formulas/crearFormulaInicial.vue")["default"]);
-Vue.component('editar-formula-inicial', __webpack_require__(/*! ./components/formulas/editarFormulaInicial.vue */ "./resources/js/components/formulas/editarFormulaInicial.vue")["default"]);
-Vue.component('crear-formula-anual', __webpack_require__(/*! ./components/formulas/crearFormulaAnual.vue */ "./resources/js/components/formulas/crearFormulaAnual.vue")["default"]);
-Vue.component('editar-formula-anual', __webpack_require__(/*! ./components/formulas/editarFormulaAnual.vue */ "./resources/js/components/formulas/editarFormulaAnual.vue")["default"]);
-Vue.component('crear-escala', __webpack_require__(/*! ./components/formulas/crearEscala.vue */ "./resources/js/components/formulas/crearEscala.vue")["default"]);
-Vue.component('editar-escala', __webpack_require__(/*! ./components/formulas/editarEscala.vue */ "./resources/js/components/formulas/editarEscala.vue")["default"]);
-Vue.component('realizar-evaluacion', __webpack_require__(/*! ./components/evaluaciones/realizarEvaluacion.vue */ "./resources/js/components/evaluaciones/realizarEvaluacion.vue")["default"]);
-Vue.component('ver-evaluaciones', __webpack_require__(/*! ./components/evaluaciones/verEvaluaciones.vue */ "./resources/js/components/evaluaciones/verEvaluaciones.vue")["default"]);
+Vue.component("example-component", __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
+Vue.component("crear-formula-inicial", __webpack_require__(/*! ./components/formulas/crearFormulaInicial.vue */ "./resources/js/components/formulas/crearFormulaInicial.vue")["default"]);
+Vue.component("editar-formula-inicial", __webpack_require__(/*! ./components/formulas/editarFormulaInicial.vue */ "./resources/js/components/formulas/editarFormulaInicial.vue")["default"]);
+Vue.component("crear-formula-anual", __webpack_require__(/*! ./components/formulas/crearFormulaAnual.vue */ "./resources/js/components/formulas/crearFormulaAnual.vue")["default"]);
+Vue.component("editar-formula-anual", __webpack_require__(/*! ./components/formulas/editarFormulaAnual.vue */ "./resources/js/components/formulas/editarFormulaAnual.vue")["default"]);
+Vue.component("crear-escala", __webpack_require__(/*! ./components/formulas/crearEscala.vue */ "./resources/js/components/formulas/crearEscala.vue")["default"]);
+Vue.component("editar-escala", __webpack_require__(/*! ./components/formulas/editarEscala.vue */ "./resources/js/components/formulas/editarEscala.vue")["default"]);
+Vue.component("realizar-evaluacion", __webpack_require__(/*! ./components/evaluaciones/realizarEvaluacion.vue */ "./resources/js/components/evaluaciones/realizarEvaluacion.vue")["default"]);
+Vue.component("ver-evaluaciones", __webpack_require__(/*! ./components/evaluaciones/verEvaluaciones.vue */ "./resources/js/components/evaluaciones/verEvaluaciones.vue")["default"]);
+Vue.component("realizar-pedido", __webpack_require__(/*! ./components/compras/realizarPedido.vue */ "./resources/js/components/compras/realizarPedido.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -54983,7 +56274,7 @@ Vue.component('ver-evaluaciones', __webpack_require__(/*! ./components/evaluacio
  */
 
 var app = new Vue({
-  el: '#app'
+  el: "#app"
 });
 
 /***/ }),
@@ -55097,6 +56388,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/compras/realizarPedido.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/compras/realizarPedido.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _realizarPedido_vue_vue_type_template_id_67534b6c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./realizarPedido.vue?vue&type=template&id=67534b6c& */ "./resources/js/components/compras/realizarPedido.vue?vue&type=template&id=67534b6c&");
+/* harmony import */ var _realizarPedido_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./realizarPedido.vue?vue&type=script&lang=js& */ "./resources/js/components/compras/realizarPedido.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _realizarPedido_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./realizarPedido.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/compras/realizarPedido.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _realizarPedido_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _realizarPedido_vue_vue_type_template_id_67534b6c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _realizarPedido_vue_vue_type_template_id_67534b6c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/compras/realizarPedido.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/compras/realizarPedido.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/compras/realizarPedido.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarPedido_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./realizarPedido.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/realizarPedido.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarPedido_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/compras/realizarPedido.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/compras/realizarPedido.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarPedido_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./realizarPedido.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/realizarPedido.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarPedido_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarPedido_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarPedido_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarPedido_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarPedido_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/compras/realizarPedido.vue?vue&type=template&id=67534b6c&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/compras/realizarPedido.vue?vue&type=template&id=67534b6c& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarPedido_vue_vue_type_template_id_67534b6c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./realizarPedido.vue?vue&type=template&id=67534b6c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/realizarPedido.vue?vue&type=template&id=67534b6c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarPedido_vue_vue_type_template_id_67534b6c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_realizarPedido_vue_vue_type_template_id_67534b6c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -55672,8 +57050,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

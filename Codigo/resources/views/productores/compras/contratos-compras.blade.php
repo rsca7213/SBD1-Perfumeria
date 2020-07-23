@@ -28,7 +28,7 @@
 
 @section('content')
 <div class="row d-flex justify-content-center mt-4 rounded">
-    <div class="col-10">
+    <div class="col-8">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center h4">
                 Compras
@@ -41,7 +41,7 @@
                             <b class="text-center"> Contratos vigentes </b> 
                         </div>
                         <hr>
-                        @if ($contratosVigentes != [] || $contratosEspera != [])
+                        @if ($contratosVigentes != [])
                             <table class="table table-striped border border-info">
                                 <thead class="bg-primary text-white">
                                     <tr  class="text-center align-items-center">
