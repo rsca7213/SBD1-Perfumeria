@@ -12,12 +12,22 @@ class ComprasController extends Controller
     //Muestra los contratos vigentes del productor respectivo
     public function verContratosVigentes ($id_prod) {
 
-        $contratosVigentes=DB::select(DB::raw(
+        /*$contratosVigentes=DB::select(DB::raw(
             "SELECT c.fecha_apertura AS fecha, pv.nombre AS prov, c.id_proveedor AS id_prov 
             FROM rdj_contratos c, rdj_proveedores pv
             WHERE c.id_productor=? AND c.cancelacion=false AND pv.id=c.id_proveedor  
             GROUP BY c.id_productor, c.fecha_apertura, pv.nombre, c.id_proveedor ORDER BY c.fecha_apertura"
-        ),[$id_prod]);
+        ),[$id_prod]);*/
+
+        $contratosVigentes=DB::SELECT(DB::RAW(
+            "SELECT cont.fecha_apertura as fechaContrato,prod.nombre AS productor,prov.nombre AS prov,cont.id_proveedor AS id_prov, 'Inicial' AS tipo_contrato,cont.fecha_apertura AS fecha , to_char(cont.fecha_apertura::DATE + INTERVAL '1 year','dd/mm/yyyy') AS fecha_final 
+            FROM rdj_proveedores AS prov, rdj_productores AS prod, rdj_contratos AS cont 
+            WHERE prod.id=? AND prov.id=cont.id_proveedor AND cont.cancelacion=false AND prod.id = cont.id_productor AND ((NOW() - cont.fecha_apertura) < '1 YEAR')
+            UNION
+            SELECT reno.fecha_apertura as fechaContrato,prod.nombre AS productor,prov.nombre AS prov,reno.id_proveedor AS id_prov, 'Renovación' AS tipo_contrato, reno.fecha_renovacion AS fecha , to_char(reno.fecha_renovacion::DATE + INTERVAL '1 year','dd/mm/yyyy') AS fecha_final
+            FROM rdj_proveedores AS prov, rdj_productores AS prod, rdj_renovaciones AS reno 
+            WHERE prod.id=? AND prov.id=reno.id_proveedor AND prod.id = reno.id_productor AND ((NOW() - reno.fecha_renovacion) < '1 YEAR') ORDER BY fechaContrato ASC"
+        ),[$id_prod,$id_prod]);
 
         $proveedores=DB::select(DB::raw(
             "SELECT pv.id AS id_prov, pv.nombre AS prov 
@@ -98,13 +108,13 @@ class ComprasController extends Controller
 
          /* Se buscan los productos(esencias y componentes) del contrato respectivo con sus respectivas presentaciones*/
          $productos=DB::select(DB::RAW(
-            "SELECT presIng.id AS presentacionId, det.fecha_apertura as fechaApert,ing.nombre as nombreProd, to_char(ing.cas_ing_esencia,'9999900-00-0') AS ncas, presIng.volumen AS presentacion, presIng.precio AS precioIng, CASE WHEN ing.naturaleza = 's' THEN 'Esencia Sintética' WHEN ing.naturaleza = 'n' THEN 'Esencia Natural' END AS tipo 
+            "SELECT ing.cas_ing_esencia AS cas_prod, presIng.id AS presentacionId, det.fecha_apertura as fechaApert,ing.nombre as nombreProd, to_char(ing.cas_ing_esencia,'9999900-00-0') AS ncas, presIng.volumen AS presentacion, presIng.precio AS precioIng, CASE WHEN ing.naturaleza = 's' THEN 'Esencia Sintética' WHEN ing.naturaleza = 'n' THEN 'Esencia Natural' END AS tipo 
             FROM rdj_ingredientes_esencias AS ing, rdj_presents_ings_esencias AS presIng, rdj_detalles_contratos as det, rdj_contratos as cont
-            WHERE det.id_productor=? AND ing.id_proveedor=det.id_proveedor AND ing.cas_ing_esencia=presIng.cas_ing_esencia AND det.fecha_apertura=? AND det.cas_ing_esencia = ing.cas_ing_esencia GROUP BY det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion,presentacionId
+            WHERE det.id_productor=? AND ing.id_proveedor=det.id_proveedor AND ing.cas_ing_esencia=presIng.cas_ing_esencia AND det.fecha_apertura=? AND det.cas_ing_esencia = ing.cas_ing_esencia GROUP BY cas_prod, det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion,presentacionId
             UNION
-            SELECT presOtro.id AS presentacionId,det.fecha_apertura as fechaApert,otro.nombre as nombreProd, to_char(otro.cas_otro_ing,'9999900-00-0') AS ncas, presOtro.volumen AS presentacion, presOtro.precio AS precioIng, 'Componente' AS tipo 
+            SELECT otro.cas_otro_ing AS cas_prod,presOtro.id AS presentacionId,det.fecha_apertura as fechaApert,otro.nombre as nombreProd, to_char(otro.cas_otro_ing,'9999900-00-0') AS ncas, presOtro.volumen AS presentacion, presOtro.precio AS precioIng, 'Componente' AS tipo 
             FROM rdj_otros_ingredientes AS otro, rdj_present_otros_ings AS presOtro, rdj_detalles_contratos as det, rdj_contratos as cont
-            WHERE det.id_productor=? AND otro.id_proveedor=det.id_proveedor AND otro.cas_otro_ing=presOtro.cas_otro_ing AND det.fecha_apertura=? AND det.cas_otro_ing = otro.cas_otro_ing GROUP BY det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion,presentacionId ORDER BY nombreProd,presentacion ASC"
+            WHERE det.id_productor=? AND otro.id_proveedor=det.id_proveedor AND otro.cas_otro_ing=presOtro.cas_otro_ing AND det.fecha_apertura=? AND det.cas_otro_ing = otro.cas_otro_ing GROUP BY cas_prod,det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion,presentacionId ORDER BY nombreProd,presentacion ASC"
         ),[$id_prod,$fecha,$id_prod,$fecha]);
 
         /* Se buscan los productos(componentes) del contrato respectivo*/

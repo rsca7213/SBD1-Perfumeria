@@ -45,7 +45,8 @@
                             <table class="table table-striped border border-info">
                                 <thead class="bg-primary text-white">
                                     <tr  class="text-center align-items-center">
-                                        <th scope="col">Fecha creación</th>
+                                        <th scope="col">Fecha Apetura</th>
+                                        <th scope="col">Tipo de Contrato</th>
                                         <th scope="col">Proveedor</th>
                                         <th scope="col">Pedidos</th>
                                         <th scope="col">Facturas</th>
@@ -54,7 +55,8 @@
                                 <tbody>
                                     @foreach ($contratosVigentes as $contrato)
                                         <tr class="text-center">
-                                            <td>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</td>
+                                            <td>{{ date("d/m/Y", strtotime($contrato->fechacontrato)) }}</td>
+                                            <td>{{$contrato->tipo_contrato}}</td>
                                             <td>{{$contrato->prov}}</td>
                                             <td>
                                                 <a href="/productor/{{$id_prod}}/compras/pedido/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="mr-2">

@@ -2037,6 +2037,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["csrf"],
   data: function data() {
@@ -40124,100 +40128,119 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "d-flex flex-column align-items-center" }, [
-    _c("div", { staticClass: "d-flex justify-content-around col-10 my-2" }, [
-      _c(
-        "label",
-        { staticStyle: { "font-weight": "bold" }, attrs: { for: "envios" } },
-        [_vm._v("Método de envío")]
-      ),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          staticClass: "combo",
-          staticStyle: { outline: "none" },
-          attrs: { name: "envios", id: "envios" }
-        },
-        _vm._l(_vm.envios, function(envio, index) {
-          return _c("option", { key: index, staticClass: "combo" }, [
-            _vm._v(
-              "\n        " +
-                _vm._s(
-                  _vm.tipoEnvio(envio.tipoenvio) +
-                    " - " +
-                    envio.paisenvio +
-                    " (" +
-                    envio.precioenvio +
-                    "$ - " +
-                    _vm.duracion(envio.duracionenvio) +
-                    ")"
-                ) +
-                "\n      "
-            )
-          ])
-        }),
-        0
-      )
-    ]),
-    _vm._v(" "),
-    _vm._m(0),
-    _vm._v(" "),
-    _c("div", { staticClass: "d-flex justify-content-around col-10 my-2" }, [
-      _c(
-        "label",
-        { staticStyle: { "font-weight": "bold" }, attrs: { for: "pagos" } },
-        [_vm._v("Método de pago")]
-      ),
-      _vm._v(" "),
-      _c(
-        "select",
-        {
-          staticClass: "combo",
-          staticStyle: { outline: "none" },
-          attrs: { name: "pagos", id: "pagos" }
-        },
-        _vm._l(_vm.pagos, function(pago, index) {
-          return _c("option", { key: index, staticClass: "combo" }, [
-            _vm._v(_vm._s(_vm.detallePago(pago)))
-          ])
-        }),
-        0
-      )
-    ]),
-    _vm._v(" "),
-    _vm._m(1),
-    _vm._v(" "),
-    _c("table", { staticClass: "table table-striped border border-info" }, [
-      _vm._m(2),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.productos, function(producto, index) {
-          return _c("tr", { key: index }, [
-            _c("td", { staticClass: "text-center" }, [
+  return _c(
+    "div",
+    { staticClass: "d-flex flex-column align-items-center col-12" },
+    [
+      _c("div", { staticClass: "d-flex justify-content-around col-10 my-2" }, [
+        _c(
+          "label",
+          { staticStyle: { "font-weight": "bold" }, attrs: { for: "envios" } },
+          [_vm._v("Método de envío")]
+        ),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            staticClass: "combo",
+            staticStyle: { outline: "none" },
+            attrs: { name: "envios", id: "envios" }
+          },
+          _vm._l(_vm.envios, function(envio, index) {
+            return _c("option", { key: index, staticClass: "combo" }, [
               _vm._v(
-                _vm._s(
-                  producto.nombreprod + " (" + producto.presentacion + " ml)"
-                )
+                "\n        " +
+                  _vm._s(
+                    _vm.tipoEnvio(envio.tipoenvio) +
+                      " - " +
+                      envio.paisenvio +
+                      " (" +
+                      envio.precioenvio +
+                      "$ - " +
+                      _vm.duracion(envio.duracionenvio) +
+                      ")"
+                  ) +
+                  "\n      "
               )
-            ]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s())]),
-            _vm._v(" "),
-            _c("td", { staticClass: "text-center" }, [
-              _vm._v(_vm._s(producto.precioing + " $"))
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "text-center" }, [_vm._v("a")]),
-            _vm._v(" "),
-            _c("td", { staticClass: "text-center" }, [_vm._v("b")])
-          ])
-        }),
-        0
+            ])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "d-flex justify-content-around col-10 my-2" }, [
+        _c(
+          "label",
+          { staticStyle: { "font-weight": "bold" }, attrs: { for: "pagos" } },
+          [_vm._v("Método de pago")]
+        ),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            staticClass: "combo",
+            staticStyle: { outline: "none" },
+            attrs: { name: "pagos", id: "pagos" }
+          },
+          _vm._l(_vm.pagos, function(pago, index) {
+            return _c("option", { key: index, staticClass: "combo" }, [
+              _vm._v(_vm._s(_vm.detallePago(pago)))
+            ])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "table",
+        { staticClass: "table table-striped border border-info col-12" },
+        [
+          _vm._m(2),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.productos, function(producto, index) {
+              return _c("tr", { key: index }, [
+                _c("td", { staticClass: "text-left" }, [
+                  _vm._v(_vm._s(producto.ncas))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-left" }, [
+                  _vm._v(
+                    _vm._s(
+                      producto.nombreprod +
+                        " (" +
+                        producto.presentacion +
+                        " ml)"
+                    )
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-left" }, [
+                  _vm._v(_vm._s(producto.tipo))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [
+                  _vm._v(_vm._s(producto.precioing + " $"))
+                ]),
+                _vm._v(" "),
+                _vm._m(3, true),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-center" }, [
+                  _vm._v("Precio*Cantidad")
+                ])
+              ])
+            }),
+            0
+          )
+        ]
       )
-    ])
-  ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
@@ -40415,19 +40438,36 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-primary text-white" }, [
-      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+      _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
+        _vm._v("Nº Cas")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
         _vm._v("Ingrediente")
       ]),
       _vm._v(" "),
-      _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")]),
-      _vm._v(" "),
-      _c("th", { attrs: { scope: "col" } }, [_vm._v("Precio Unitario")]),
-      _vm._v(" "),
-      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
-        _vm._v("Subtotal")
+      _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
+        _vm._v("Tipo de Producto")
       ]),
       _vm._v(" "),
-      _c("th", { staticClass: "text-center" }, [_vm._v("Acción")])
+      _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
+        _vm._v("Precio Unitario")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-left" }, [_vm._v("Cantidad")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-left" }, [_vm._v("Subtotal")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-left" }, [
+      _c("input", {
+        staticStyle: { width: "80px" },
+        attrs: { type: "number", id: "", name: "", value: "" }
+      })
     ])
   }
 ]
@@ -57069,8 +57109,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

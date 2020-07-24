@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column align-items-center">
+  <div class="d-flex flex-column align-items-center col-12">
     <div class="d-flex justify-content-around col-10 my-2">
       <label style="font-weight:bold;" for="envios">Método de envío</label>
       <select class="combo" name="envios" id="envios" style="outline:none;">
@@ -73,21 +73,25 @@
     <div class="align-items-center h5 text-center mt-3">
       <b class="text-center">Productos Contratados</b>
     </div>
-    <table class="table table-striped border border-info">
+    <table class="table table-striped border border-info col-12">
       <thead class="bg-primary text-white">
-        <th scope="col" class="text-center">Ingrediente</th>
-        <th scope="col">Cantidad</th>
-        <th scope="col">Precio Unitario</th>
-        <th scope="col" class="text-center">Subtotal</th>
-        <th class="text-center">Acción</th>
+        <th scope="col" class="text-left">Nº Cas</th>
+        <th scope="col" class="text-left">Ingrediente</th>
+        <th scope="col" class="text-left">Tipo de Producto</th>
+        <th scope="col" class="text-left">Precio Unitario</th>
+        <th class="text-left">Cantidad</th>
+        <th class="text-left">Subtotal</th>
       </thead>
       <tbody>
         <tr v-for="(producto,index) in productos" :key="index">
-          <td class="text-center">{{ producto.nombreprod + " (" + producto.presentacion+ " ml)" }}</td>
-          <td>{{ }}</td>
-          <td class="text-center">{{producto.precioing + " $"}}</td>
-          <td class="text-center">a</td>
-          <td class="text-center">b</td>
+          <td class="text-left">{{producto.ncas}}</td>
+          <td class="text-left">{{ producto.nombreprod + " (" + producto.presentacion+ " ml)" }}</td>
+          <td class="text-left">{{ producto.tipo}}</td>
+          <td class="text-right">{{producto.precioing + " $"}}</td>
+          <td class="text-left">
+            <input style="width: 80px;" type="number" id name value />
+          </td>
+          <td class="text-center">Precio*Cantidad</td>
         </tr>
       </tbody>
     </table>
