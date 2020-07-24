@@ -347,7 +347,7 @@
             <thead class="bg-primary text-white">
               <th scope="col">País de envío</th>
               <th scope="col">Tipo de envío</th>
-              <th scope="col" class="text-center">Duración</th>
+              <th scope="col" class="text-right">Duración</th>
               <th scope="col" class="text-right">Precio</th>
               <th scope="col" class="text-center">Extra</th>
             </thead>
@@ -508,13 +508,13 @@
           <div class="modal-body h5 text-center">
             <table class="table table-striped border border-info">
               <thead class="bg-primary text-white">
-                <th scope="col">Nombre</th>
+                <th scope="col" class="text-left">Nombre</th>
                 <th scope="col" class="text-right">Duración</th>
                 <th scope="col" class="text-right">Precio</th>
               </thead>
               <tbody v-if="provInicData['envios'][indexDetEnvio]['detalles'] != []">
                 <tr v-for="det in provInicData['envios'][indexDetEnvio]['detalles']" :key="det.id">
-                  <td>{{ det["det"] }}</td>
+                  <td class="text-left">{{ det["det"] }}</td>
                   <td
                     class="text-right"
                     v-if="det['duracion'] != 1 && det['duracion'] != -1"
