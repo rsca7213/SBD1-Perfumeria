@@ -75,12 +75,13 @@
     </div>
     <table class="table table-striped border border-info col-12">
       <thead class="bg-primary text-white">
-        <th scope="col" class="text-left">Nº Cas</th>
+        <th scope="col" class="text-left"># Cas</th>
         <th scope="col" class="text-left">Ingrediente</th>
         <th scope="col" class="text-left">Tipo de Producto</th>
-        <th scope="col" class="text-left">Precio Unitario</th>
-        <th class="text-left">Cantidad</th>
-        <th class="text-left">Subtotal</th>
+        <th scope="col" class="text-right">Precio Unitario</th>
+        <th class="text-center">Cantidad</th>
+        <th class="text-center">Descuento</th>
+        <th class="text-right">Subtotal</th>
       </thead>
       <tbody>
         <tr v-for="(producto,index) in productos" :key="index">
@@ -88,10 +89,11 @@
           <td class="text-left">{{ producto.nombreprod + " (" + producto.presentacion+ " ml)" }}</td>
           <td class="text-left">{{ producto.tipo}}</td>
           <td class="text-right">{{producto.precioing + " $"}}</td>
-          <td class="text-left">
-            <input style="width: 80px;" type="number" id name value />
+          <td class="text-center">
+            <input style="width: 80px;" type="number" min="0" value="0" id name class="text-right"/>
           </td>
-          <td class="text-center">Precio*Cantidad</td>
+          <td class="text-center"> XX.XX % </td>
+          <td class="text-right">XXX.XX $</td>
         </tr>
       </tbody>
     </table>

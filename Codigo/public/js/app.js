@@ -2041,6 +2041,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["csrf"],
   data: function data() {
@@ -40230,9 +40232,9 @@ var render = function() {
                 _vm._v(" "),
                 _vm._m(3, true),
                 _vm._v(" "),
-                _c("td", { staticClass: "text-center" }, [
-                  _vm._v("Precio*Cantidad")
-                ])
+                _c("td", { staticClass: "text-center" }, [_vm._v(" XX.XX % ")]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [_vm._v("XXX.XX $")])
               ])
             }),
             0
@@ -40439,7 +40441,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-primary text-white" }, [
       _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
-        _vm._v("Nº Cas")
+        _vm._v("# Cas")
       ]),
       _vm._v(" "),
       _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
@@ -40450,23 +40452,26 @@ var staticRenderFns = [
         _vm._v("Tipo de Producto")
       ]),
       _vm._v(" "),
-      _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
+      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
         _vm._v("Precio Unitario")
       ]),
       _vm._v(" "),
-      _c("th", { staticClass: "text-left" }, [_vm._v("Cantidad")]),
+      _c("th", { staticClass: "text-center" }, [_vm._v("Cantidad")]),
       _vm._v(" "),
-      _c("th", { staticClass: "text-left" }, [_vm._v("Subtotal")])
+      _c("th", { staticClass: "text-center" }, [_vm._v("Descuento")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-right" }, [_vm._v("Subtotal")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "text-left" }, [
+    return _c("td", { staticClass: "text-center" }, [
       _c("input", {
+        staticClass: "text-right",
         staticStyle: { width: "80px" },
-        attrs: { type: "number", id: "", name: "", value: "" }
+        attrs: { type: "number", min: "0", value: "0", id: "", name: "" }
       })
     ])
   }
@@ -57113,8 +57118,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -28,7 +28,7 @@
 
 @section('content')
 <div class="row d-flex justify-content-center mt-4 rounded">
-    <div class="col-8">
+    <div class="col-9">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center h4">
                 Generación de Pedido
@@ -46,6 +46,7 @@
                         <tbody>
                        </tbody>
                     </table>
+                    <hr>
                     <realizar-pedido csrf="{{ csrf_token() }}"></realizar-pedido>
                 </div>
                 <div class="card-footer bg-primary text-white">
