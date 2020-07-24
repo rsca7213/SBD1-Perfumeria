@@ -41666,7 +41666,9 @@ var render = function() {
                                   ],
                                   function(det) {
                                     return _c("tr", { key: det.id }, [
-                                      _c("td", [_vm._v(_vm._s(det["det"]))]),
+                                      _c("td", { staticClass: "text-left" }, [
+                                        _vm._v(_vm._s(det["det"]))
+                                      ]),
                                       _vm._v(" "),
                                       det["duracion"] != 1 &&
                                       det["duracion"] != -1
@@ -42219,7 +42221,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", { attrs: { scope: "col" } }, [_vm._v("Tipo de envío")]),
       _vm._v(" "),
-      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
         _vm._v("Duración")
       ]),
       _vm._v(" "),
@@ -42298,7 +42300,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-primary text-white" }, [
-      _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
+      _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
+        _vm._v("Nombre")
+      ]),
       _vm._v(" "),
       _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
         _vm._v("Duración")
