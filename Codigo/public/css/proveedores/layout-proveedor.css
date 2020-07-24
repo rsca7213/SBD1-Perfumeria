@@ -28,3 +28,7 @@ hr {
     color: --primary;
     text-decoration: underline;
 }
+
+.iconobtn {
+    cursor: pointer;
+}

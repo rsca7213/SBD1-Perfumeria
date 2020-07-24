@@ -61,6 +61,7 @@ Route::post('/productor/{id_prod}/contratos/generar/{id_prov}', 'ContratosContro
 Route::get('/productor/{id_prod}/contratos/detalle/{id_prov}/{fecha}', 'ContratosController@detalleContrato');
 Route::delete('/productor/{id_prod}/contratos/cancelar/{fecha}', 'ContratosController@cancelarContrato');
 Route::get('/productor/{id_prod}/contratos/renovar/{id_prov}/{fecha}', 'ContratosController@renovarContrato');
+Route::get('/productor/{id_prod}/contratos/generar_nuevo/{id_prov}/{fecha}', 'ContratosController@generarNuevoContrato');
 /*Proveedor*/
 Route::get('/proveedor/{id_prov}/contratos', 'ContratosController@verContratosPv')->name('verContratosPv');
 Route::get('/proveedor/{id_prov}/contratos/confirmar/{id_prod}/{fecha}', 'ContratosController@confirmarContratoPv');

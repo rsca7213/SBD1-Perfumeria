@@ -58,7 +58,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($detallesIng as $detalle)
+                            @foreach ($ingsDisponibles as $detalle)
                                 <tr class="text-center">
                                     <td>{{$detalle->cas}}</td>
                                     <td>{{$detalle->i_nombre}}</td>
@@ -109,14 +109,35 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value={{$detalle->i_cas}} id={{$detalle->i_cas}} name="ingredientes_esencia[]">
-                                        </div>
-                                    </td>
+                                    @if ($detallesIngContrato != [])
+                                        @foreach ($detallesIngContrato as $ingcontrato)
+                                            @if ($ingcontrato->i_cas==$detalle->i_cas)
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value={{$detalle->i_cas}} id={{$detalle->i_cas}} name="ingredientes_esencia[]" checked>
+                                                    </div>
+                                                </td>
+                                            @endif
+                                        @endforeach
+                                        @foreach ($detallesIng as $ingrediente)
+                                            @if ($ingrediente->i_cas==$detalle->i_cas)
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value={{$detalle->i_cas}} id={{$detalle->i_cas}} name="ingredientes_esencia[]">
+                                                    </div>
+                                                </td>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value={{$detalle->i_cas}} id={{$detalle->i_cas}} name="ingredientes_esencia[]">
+                                            </div>
+                                        </td>
+                                    @endif
                                 </tr> 
                             @endforeach
-                            @foreach ($detallesOIng as $detalle)
+                            @foreach ($otrosIngsDisponibles as $detalle)
                                 <tr class="text-center">
                                     <td>{{$detalle->cas}}</td>
                                     <td>{{$detalle->o_nombre}}</td>
@@ -163,11 +184,32 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value={{$detalle->o_cas}} id={{$detalle->o_cas}} name="otros_ingredientes[]">
-                                        </div>
-                                    </td>
+                                    @if ($detallesOIngContrato != [])
+                                        @foreach ($detallesOIngContrato as $ingcontrato)
+                                            @if ($ingcontrato->o_cas==$detalle->o_cas)
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value={{$detalle->o_cas}} id={{$detalle->o_cas}} name="otros_ingredientes[]" checked>
+                                                    </div>
+                                                </td>
+                                            @endif
+                                        @endforeach
+                                        @foreach ($detallesOIng as $ingrediente)
+                                            @if ($ingrediente->o_cas==$detalle->o_cas)
+                                                <td>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value={{$detalle->o_cas}} id={{$detalle->o_cas}} name="otros_ingredientes[]">
+                                                    </div>
+                                                </td>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value={{$detalle->o_cas}} id={{$detalle->o_cas}} name="otros_ingredientes[]">
+                                            </div>
+                                        </td>
+                                    @endif
                                 </tr> 
                             @endforeach
                         </tbody>

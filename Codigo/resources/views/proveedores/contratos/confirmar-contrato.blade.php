@@ -284,7 +284,7 @@
                 @else
                     <div class="row d-flex justify-content-center mt-4">
                         <a href="/proveedor/{{$id_prov}}/contratos/renovar/{{$fecha}}" class="btn btn-primary mb-4">
-                            <img src="{{ asset('img/iconos/add_white.svg') }}" alt="aceptar" width="24">
+                            <img src="{{ asset('img/iconos/renovar.svg') }}" alt="aceptar" width="24">
                             <span class="ml-2"> Renovar Contrato </span>
                         </a>
                     </div>

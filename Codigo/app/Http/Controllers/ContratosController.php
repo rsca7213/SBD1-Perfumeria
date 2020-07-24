@@ -104,6 +104,9 @@ class ContratosController extends Controller
 
     public function generarContrato($id_prod,$id_prov){
 
+        $detallesIngContrato=[];
+        $detallesOIngContrato=[];
+
         $detallesIng=DB::select(DB::raw(
             "SELECT i.cas_ing_esencia AS i_cas, i.cas_ing_esencia AS cas, i.nombre AS i_nombre, i.naturaleza AS naturaleza, pv.nombre AS prov  
             FROM rdj_ingredientes_esencias i, rdj_proveedores pv
@@ -136,6 +139,8 @@ class ContratosController extends Controller
             $detallesIng=array_values($detallesIng);
         }
 
+        $ingsDisponibles=$detallesIng;
+
         $detallesOIng=DB::select(DB::raw(
             "SELECT o.cas_otro_ing AS o_cas, o.cas_otro_ing AS cas, o.nombre AS o_nombre, pv.nombre AS prov  
             FROM rdj_otros_ingredientes o, rdj_proveedores pv 
@@ -167,6 +172,8 @@ class ContratosController extends Controller
             }
             $detallesOIng=array_values($detallesOIng);
         }
+
+        $otrosIngsDisponibles=$detallesOIng;
 
         $detallesMEnvio=DB::select(DB::raw(
             "SELECT pv.nombre AS prov, me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, me.id AS id, p.nombre AS pais, me.id AS id   
@@ -207,6 +214,10 @@ class ContratosController extends Controller
             'detallesMEnvio' => $detallesMEnvio,
             'extrasMEnvio' => $extrasMEnvio,
             'detallesMPago' => $detallesMPago,
+            'detallesIngContrato' => $detallesIngContrato,
+            'detallesOIngContrato' => $detallesOIngContrato,
+            'otrosIngsDisponibles' => $otrosIngsDisponibles,
+            'ingsDisponibles' => $ingsDisponibles,
         ]);
 
     }
@@ -318,6 +329,164 @@ class ContratosController extends Controller
 
     }
 
+    public function generarNuevoContrato($id_prod,$id_prov,$fecha){
+
+        $detallesIngContrato=DB::select(DB::raw(
+            "SELECT dc.cas_ing_esencia AS i_cas, c.cancelacion AS cancelacion  
+            FROM rdj_detalles_contratos dc, rdj_proveedores pv, rdj_contratos c 
+            WHERE dc.id_proveedor=? AND dc.fecha_apertura=? AND dc.fecha_apertura=c.fecha_apertura AND dc.cas_ing_esencia IS NOT NULL 
+            GROUP BY dc.cas_ing_esencia, c.cancelacion"
+        ),[$id_prov,$fecha]);
+
+        $detallesOIngContrato=DB::select(DB::raw(
+            "SELECT dc.cas_otro_ing AS o_cas, c.cancelacion AS cancelacion 
+            FROM rdj_detalles_contratos dc, rdj_proveedores pv, rdj_contratos c 
+            WHERE dc.id_proveedor=? AND dc.fecha_apertura=? AND dc.fecha_apertura=c.fecha_apertura AND dc.cas_otro_ing IS NOT NULL 
+            GROUP BY dc.cas_otro_ing, c.cancelacion"
+        ),[$id_prov,$fecha]);
+
+        DB::update(DB::raw(
+            "UPDATE rdj_contratos 
+            SET cancelacion=TRUE
+            WHERE id_productor=? AND fecha_apertura=?"),[$id_prod,$fecha]);
+
+        $detallesIng=DB::select(DB::raw(
+            "SELECT i.cas_ing_esencia AS i_cas, i.cas_ing_esencia AS cas, i.nombre AS i_nombre, i.naturaleza AS naturaleza, pv.nombre AS prov  
+            FROM rdj_ingredientes_esencias i, rdj_proveedores pv
+            WHERE i.id_proveedor=? AND pv.id=i.id_proveedor
+            ORDER BY i.cas_ing_esencia, i.nombre, i.naturaleza, pv.nombre"
+        ),[$id_prov]);
+
+        $presentIng=DB::select(DB::raw(
+            "SELECT i.cas_ing_esencia AS i_cas, i.nombre AS i_nombre, pie.volumen AS volumen, pie.precio AS precio, pv.nombre AS prov  
+            FROM rdj_ingredientes_esencias i, rdj_proveedores pv, rdj_presents_ings_esencias pie
+            WHERE i.id_proveedor=? AND pv.id=i.id_proveedor AND pie.cas_ing_esencia=i.cas_ing_esencia
+            ORDER BY i.cas_ing_esencia, i.nombre, pie.volumen, pie.precio, pv.nombre"
+        ),[$id_prov]);
+
+        $ingredientes_exclusivos=DB::select(DB::raw(
+            "SELECT dc.cas_ing_esencia AS i_cas  
+            FROM rdj_detalles_contratos dc, rdj_proveedores pv, rdj_contratos c 
+            WHERE dc.id_proveedor=? AND dc.fecha_apertura=c.fecha_apertura AND c.cancelacion=false AND c.exclusivo=true AND dc.cas_ing_esencia IS NOT NULL 
+            GROUP BY dc.cas_ing_esencia"
+        ),[$id_prov]);
+
+        foreach($ingredientes_exclusivos as $exclusivo){
+            $i=0;
+            foreach($detallesIng as $ing){
+                if($exclusivo->i_cas==$ing->i_cas){
+                    unset($detallesIng[$i]);
+                }
+                $i++;
+            }
+            $detallesIng=array_values($detallesIng);
+        }
+
+        $ingsDisponibles=$detallesIng;
+
+        foreach($detallesIngContrato as $contrato){
+            $i=0;
+            foreach($detallesIng as $ing){
+                if($contrato->i_cas==$ing->i_cas){
+                    unset($detallesIng[$i]);
+                }
+                $i++;
+            }
+            $detallesIng=array_values($detallesIng);
+        }
+
+        $detallesOIng=DB::select(DB::raw(
+            "SELECT o.cas_otro_ing AS o_cas, o.cas_otro_ing AS cas, o.nombre AS o_nombre, pv.nombre AS prov  
+            FROM rdj_otros_ingredientes o, rdj_proveedores pv 
+            WHERE o.id_proveedor=? AND pv.id=o.id_proveedor  
+            "
+        ),[$id_prov]);
+
+        $presentOIng=DB::select(DB::raw(
+            "SELECT o.cas_otro_ing AS o_cas, o.cas_otro_ing AS cas, o.nombre AS o_nombre, pv.nombre AS prov, poi.volumen AS volumen, poi.precio AS precio  
+            FROM rdj_otros_ingredientes o, rdj_proveedores pv, rdj_present_otros_ings poi 
+            WHERE o.id_proveedor=? AND pv.id=o.id_proveedor AND poi.cas_otro_ing=o.cas_otro_ing
+            ORDER BY o.cas_otro_ing, o.nombre, poi.volumen, poi.precio, pv.nombre"
+        ),[$id_prov]);
+
+        $otros_ingredientes_exclusivos=DB::select(DB::raw(
+            "SELECT dc.cas_otro_ing AS o_cas  
+            FROM rdj_detalles_contratos dc, rdj_proveedores pv, rdj_contratos c 
+            WHERE dc.id_proveedor=? AND dc.fecha_apertura=c.fecha_apertura AND c.cancelacion=false AND c.exclusivo=true AND dc.cas_otro_ing IS NOT NULL 
+            GROUP BY dc.cas_otro_ing"
+        ),[$id_prov]);
+
+        foreach($otros_ingredientes_exclusivos as $exclusivo){
+            $i=0;
+            foreach($detallesOIng as $ing){
+                if($exclusivo->o_cas==$ing->o_cas){
+                    unset($detallesOIng[$i]);
+                }
+                $i++;
+            }
+            $detallesOIng=array_values($detallesOIng);
+        }
+
+        $otrosIngsDisponibles=$detallesOIng;
+
+        foreach($detallesOIngContrato as $contrato){
+            $i=0;
+            foreach($detallesOIng as $ing){
+                if($contrato->o_cas==$ing->o_cas){
+                    unset($detallesOIng[$i]);
+                }
+                $i++;
+            }
+            $detallesOIng=array_values($detallesOIng);
+        }
+
+        $detallesMEnvio=DB::select(DB::raw(
+            "SELECT pv.nombre AS prov, me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, me.id AS id, p.nombre AS pais, me.id AS id   
+            FROM rdj_metodos_envios me, rdj_proveedores pv, rdj_paises p, rdj_productores_paises pp
+            WHERE me.id_proveedor=? AND pv.id=me.id_proveedor AND me.id_pais=p.id AND pp.id_productor=? AND pp.id_pais=me.id_pais  
+            "
+        ),[$id_prov,$id_prod]);
+
+        $extrasMEnvio=DB::select(DB::raw(
+            "SELECT dme.id AS id, dme.nombre AS nombre, dme.mod_precio AS precio, dme.mod_duracion AS duracion, dme.id_envio AS id_envio    
+            FROM rdj_metodos_envios me, rdj_proveedores pv, rdj_paises p, rdj_productores_paises pp, rdj_detalles_metodos_envios dme
+            WHERE dme.id_envio=me.id AND dme.id_proveedor=?
+            GROUP BY dme.id, dme.nombre, dme.mod_precio, dme.mod_duracion, dme.id_envio ORDER BY dme.id"
+        ),[$id_prov]);
+
+        $detallesMPago=DB::select(DB::raw(
+            "SELECT pv.nombre AS prov, pa.tipo AS tipo, pa.num_cuotas AS cuotas, pa.id AS id, pa.meses AS meses, pa.porcentaje AS porcentaje    
+            FROM rdj_metodos_pagos pa, rdj_proveedores pv 
+            WHERE pa.id_proveedor=? AND pv.id=pa.id_proveedor 
+            "
+        ),[$id_prov]);
+
+        foreach($detallesIng as $detalle){
+            $detalle->cas=Controller::stringifyCas($detalle->cas);
+        }
+
+        foreach($detallesOIng as $detalle){
+            $detalle->cas=Controller::stringifyCas($detalle->cas);
+        }
+
+        return view('productores.contratos.g-contrato',[
+            'id_prod' => $id_prod,
+            'id_prov' => $id_prov,
+            'detallesIng' => $detallesIng,
+            'presentIng' => $presentIng,
+            'presentOIng' => $presentOIng,
+            'detallesOIng' => $detallesOIng,
+            'detallesMEnvio' => $detallesMEnvio,
+            'extrasMEnvio' => $extrasMEnvio,
+            'detallesMPago' => $detallesMPago,
+            'detallesIngContrato' => $detallesIngContrato,
+            'detallesOIngContrato' => $detallesOIngContrato,
+            'otrosIngsDisponibles' => $otrosIngsDisponibles,
+            'ingsDisponibles' => $ingsDisponibles,
+        ]);
+
+    }
+
     public function detalleContrato($id_prod,$id_prov,$fecha){
 
         $contratosEspera=DB::select(DB::raw(
@@ -338,8 +507,20 @@ class ContratosController extends Controller
             "SELECT dc.fecha_apertura AS fecha, pv.nombre AS prod, dc.id_proveedor AS id_prov, c.exclusivo AS exc, c.cancelacion AS cancel, c.razon_cierre AS razon, r.fecha_renovacion AS renovacion 
             FROM rdj_detalles_contratos dc, rdj_proveedores pv, rdj_contratos c, rdj_renovaciones r
             WHERE dc.fecha_apertura=? AND dc.id_productor=? AND dc.id_proveedor=pv.id AND c.fecha_apertura=dc.fecha_apertura AND r.id_proveedor=dc.id_proveedor AND c.fecha_apertura=r.fecha_apertura      
-            GROUP BY dc.fecha_apertura, pv.nombre, dc.id_proveedor, c.exclusivo, c.cancelacion, c.razon_cierre, r.fecha_renovacion"
+            GROUP BY dc.fecha_apertura, pv.nombre, dc.id_proveedor, c.exclusivo, c.cancelacion, c.razon_cierre, r.fecha_renovacion ORDER BY r.fecha_renovacion"
         ),[$fecha,$id_prod]);  
+
+        $i=0;
+        foreach($detallesRenovado as $contrato){
+            
+            foreach($detallesRenovado as $renovado){
+                if($contrato->fecha==$renovado->fecha && $contrato->renovacion<$renovado->renovacion){
+                    unset($detallesRenovado[$i]);
+                }
+            }
+            $i++;
+            $detallesRenovado=array_values($detallesRenovado);
+        }
 
         $k=false;
         
@@ -455,11 +636,23 @@ class ContratosController extends Controller
     public function renovarContrato ($id_prod,$id_prov,$fecha) {
 
         $renovacion=DB::select(DB::raw(
-            "SELECT r.fecha_renovacion AS fecha 
+            "SELECT r.fecha_renovacion AS fecha, r.fecha_renovacion AS renovacion 
             FROM rdj_renovaciones r
             WHERE r.fecha_apertura=? AND r.id_productor=? AND r.id_proveedor=?      
-            GROUP BY r.fecha_renovacion ORDER BY r.fecha_renovacion"
+            GROUP BY r.fecha_renovacion"
         ),[$fecha,$id_prod,$id_prov]);
+
+        
+        foreach($renovacion as $contrato){
+            $i=0;
+            foreach($renovacion as $renovado){
+                if($contrato->renovacion<$renovado->renovacion){
+                    unset($renovacion[$i]);
+                }
+            }
+            $i++;
+            $renovacion=array_values($renovacion);
+        }
 
         if($renovacion!=[]){
             $fecha_renovacion=Carbon::parse($renovacion[0]->fecha)->addYear(1);
@@ -553,14 +746,16 @@ class ContratosController extends Controller
         ),[$id_prov]);
 
         $contratosSolicitudRenovacion=DB::select(DB::raw(
-            "SELECT c.fecha_apertura AS fecha, pd.nombre AS prod, c.id_productor AS id_prod, r.fecha_renovacion AS renovacion 
+            "SELECT r.fecha_apertura AS fecha, pd.nombre AS prod, c.id_productor AS id_prod, r.fecha_renovacion AS renovacion
             FROM rdj_contratos c, rdj_proveedores pv, rdj_productores pd, rdj_renovaciones r
             WHERE c.id_proveedor=? AND c.cancelacion IS NULL AND pd.id=c.id_productor AND pv.id=c.id_proveedor AND c.fecha_apertura=r.fecha_apertura AND c.id_proveedor=r.id_proveedor
             ORDER BY c.fecha_apertura"
         ),[$id_prov]);
 
+        // dd($contratosSolicitudRenovacion);
+
+        $i=0;
         foreach($contratosSolicitud as $solucitud){
-            $i=0;
             foreach($contratosSolicitudRenovacion as $renovacion){
                 if($solucitud->fecha==$renovacion->fecha){
                     unset($contratosSolicitud[$i]);
@@ -568,6 +763,19 @@ class ContratosController extends Controller
             }
             $i++;
         }
+
+        $i=0;
+        foreach($contratosSolicitudRenovacion as $solucitud){
+            
+            foreach($contratosSolicitudRenovacion as $renovacion){
+                if($solucitud->fecha==$renovacion->fecha && $solucitud->renovacion<$renovacion->renovacion){
+                    unset($contratosSolicitudRenovacion[$i]);
+                }
+            }
+            $i++;
+        }
+
+        // dd($contratosSolicitudRenovacion);
 
         return view('proveedores.contratos.ver-contratos',[
             'id_prov' => $id_prov,
@@ -734,6 +942,25 @@ class ContratosController extends Controller
 
     public function rechazarRenovacionContratoPv ($id_prov, $fecha) {
 
+        $detallesRenovados=DB::select(DB::raw(
+            "SELECT dc.fecha_apertura AS fecha, pd.nombre AS prod, dc.id_productor AS id_prod, c.exclusivo AS exc, r.fecha_renovacion AS renovacion, c.cancelacion AS cancelacion  
+            FROM rdj_detalles_contratos dc, rdj_productores pd, rdj_contratos c, rdj_renovaciones r
+            WHERE dc.fecha_apertura=? AND dc.id_proveedor=? AND dc.id_productor=pd.id AND c.fecha_apertura=dc.fecha_apertura AND c.fecha_apertura=r.fecha_apertura AND r.id_proveedor=dc.id_proveedor      
+            "
+        ),[$fecha,$id_prov]);
+
+        $i=0;
+        foreach($detallesRenovados as $contrato){
+            
+            foreach($detallesRenovados as $renovado){
+                if($contrato->fecha==$renovado->fecha && $contrato->renovacion<$renovado->renovacion){
+                    unset($detallesRenovados[$i]);
+                }
+            }
+            $i++;
+            $detallesRenovados=array_values($detallesRenovados);
+        }
+
         DB::update(DB::raw(
             "UPDATE rdj_contratos 
             SET cancelacion=FALSE
@@ -741,8 +968,8 @@ class ContratosController extends Controller
 
         DB::delete(DB::raw(
             "DELETE FROM rdj_renovaciones
-            WHERE fecha_apertura=? AND id_proveedor=?"
-        ),[$fecha,$id_prov]);
+            WHERE fecha_renovacion=? AND id_proveedor=?"
+        ),[$detallesRenovados[0]->renovacion,$id_prov]);
 
         return redirect('/proveedor/'.$id_prov.'/contratos'); 
     }
@@ -762,6 +989,18 @@ class ContratosController extends Controller
             WHERE dc.fecha_apertura=? AND dc.id_proveedor=? AND dc.id_productor=pd.id AND c.fecha_apertura=dc.fecha_apertura AND c.fecha_apertura=r.fecha_apertura AND r.id_proveedor=dc.id_proveedor      
             "
         ),[$fecha,$id_prov]);
+
+        $i=0;
+        foreach($detallesRenovados as $contrato){
+            
+            foreach($detallesRenovados as $renovado){
+                if($contrato->fecha==$renovado->fecha && $contrato->renovacion<$renovado->renovacion){
+                    unset($detallesRenovados[$i]);
+                }
+            }
+            $i++;
+            $detallesRenovados=array_values($detallesRenovados);
+        }
 
         if($detallesRenovados==[]){
             $flag=false;
