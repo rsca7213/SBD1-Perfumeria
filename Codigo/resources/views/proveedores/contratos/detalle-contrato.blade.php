@@ -48,10 +48,12 @@
                                 </span>
                             </div>
                             <div class="col-4 text-center">
-                                {{-- <span class="h5"> 
-                                    <img src="{{ asset('img/iconos/date.svg') }}" alt="fecha" width="24" class="mb-1">
-                                    Fecha de renovacion:
-                                </span> --}}
+                                @if ($flag && $detalles[0]->cancelacion==false)
+                                    <span class="h5"> 
+                                        <img src="{{ asset('img/iconos/date.svg') }}" alt="fecha" width="24" class="mb-1">
+                                        Fecha de renovacion: {{ date("d/m/Y", strtotime($detalles[0]->renovacion)) }}
+                                    </span>
+                                @endif
                             </div>
                             <div class="col-4 text-center">
                                 <span class="h5"> 

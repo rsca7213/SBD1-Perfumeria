@@ -115,10 +115,12 @@
                                             @if ($contrato->cancelacion==true)
                                                 <td>
                                                     <img src="{{ asset('img/iconos/close.svg') }}" alt="atras" width="24">
+                                                    <span class="ml-2"> Cancelado </span>
                                                 </td>
                                             @else
                                                 <td>
                                                     <img src="{{ asset('img/iconos/clock.svg') }}" alt="atras" width="24">
+                                                    <span class="ml-2"> Expirado </span>
                                                 </td>
                                             @endif
                                             <td>

@@ -52,10 +52,12 @@
                                 </span>
                             </div>
                             <div class="col-4 text-center">
-                                {{-- <span class="h5"> 
-                                    <img src="{{ asset('img/iconos/date.svg') }}" alt="fecha" width="24" class="mb-1">
-                                    Fecha de renovacion:
-                                </span> --}}
+                                @if ($flag!=true && $i!=true)
+                                    <span class="h5"> 
+                                        <img src="{{ asset('img/iconos/date.svg') }}" alt="fecha" width="24" class="mb-1">
+                                        Fecha de renovacion: {{ date("d/m/Y", strtotime($detalles[0]->renovacion)) }}
+                                    </span>
+                                @endif
                             </div>
                             <div class="col-4 text-center">
                                 <span class="h5"> 
@@ -361,17 +363,17 @@
                         <br>
                     </div>
                 </div>
-                @if ($i==true)
+                @if ($i!=true &&  $detalles[0]->cancel!=true && $k!=true)
                     <div class="row d-flex justify-content-center mt-4"> 
                         <a href="#" class="btn btn-primary mb-4"> 
                             <img src="{{ asset('img/iconos/add_white.svg') }}" alt="agregar" width="24">
-                            Solicitar pedido
+                            <span> Solicitar pedido </span>
                         </a>
                     </div>
                     <div class="row d-flex justify-content-center">
                         <a href="#" data-toggle="modal" data-target="#Cancelar" class="btn btn-danger">
                             <img src="{{ asset('img/iconos/trash_white.svg') }}" alt="cancelar" width="24">
-                            Cancelar 
+                            <span> Cancelar </span> 
                         </a>
                     </div>
                 @endif

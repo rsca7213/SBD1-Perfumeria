@@ -74,11 +74,19 @@
                                     @else
                                         <td>Esencia sintetica</td>
                                     @endif
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="number" placeholder="Porcentaje..." id={{$detalle->i_cas}} name="i_descuentos[]">
-                                        </div>
-                                    </td>
+                                    @if ($flag)
+                                        @if ($detalle->descuento==NULL)
+                                            <td>N/A</td>
+                                        @else
+                                            <td>{{$detalle->descuento}} %</td>
+                                        @endif
+                                    @else
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" placeholder="Porcentaje..." id={{$detalle->i_cas}} name="i_descuentos[]">
+                                            </div>
+                                        </td>
+                                    @endif
                                 </tr> 
                             @endforeach
                             @foreach ($otros_ingredientes as $detalle)
@@ -86,11 +94,19 @@
                                     <td>{{$detalle->cas}}</td>
                                     <td>{{$detalle->o_nombre}}</td>
                                     <td>Componente</td>
-                                    <td>
-                                        <div class="form-group">
-                                            <input type="number" placeholder="Porcentaje..." id={{$detalle->o_cas}} name="o_descuentos[]">
-                                        </div>
-                                    </td>
+                                    @if ($flag)
+                                        @if ($detalle->descuento==NULL)
+                                            <td>N/A</td>
+                                        @else
+                                            <td>{{$detalle->descuento}} %</td>
+                                        @endif
+                                    @else
+                                        <td>
+                                            <div class="form-group">
+                                                <input type="number" placeholder="Porcentaje..." id={{$detalle->o_cas}} name="i_descuentos[]">
+                                            </div>
+                                        </td>
+                                    @endif
                                 </tr> 
                             @endforeach
                         </tbody>
@@ -249,19 +265,36 @@
                         </div>
                     @endif
                     <br>
-                    <div class="form-group text-center">
-                        <button type="submit" class="btn btn-primary">
-                            <img src="{{ asset('img/iconos/add_white.svg') }}" alt="aceptar" width="24">
-                            <span class="ml-2"> Aceptar Contrato </span>
-                        </button>
-                    </div>
+                    @if ($flag==false)
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary">
+                                <img src="{{ asset('img/iconos/add_white.svg') }}" alt="aceptar" width="24">
+                                <span class="ml-2"> Aceptar Contrato </span>
+                            </button>
+                        </div>
+                    @endif
                 </form>
-                {{-- <div class="row d-flex justify-content-center mt-4"> 
-                    <a href="/proveedor/{{$id_prov}}/contratos/rechazar/{{$fecha}}" class="btn btn-danger mb-4"> 
-                        <img src="{{ asset('img/iconos/trash_white.svg') }}" alt="rechazar" width="24">
-                        Reechazar Contrato 
-                    </a>
-                </div> --}}
+                @if ($flag==false)
+                    <div class="row d-flex justify-content-center mt-4"> 
+                        <a href="/proveedor/{{$id_prov}}/contratos/rechazar/{{$fecha}}" class="btn btn-danger mb-4"> 
+                            <img src="{{ asset('img/iconos/trash_white.svg') }}" alt="rechazar" width="24">
+                            <span class="ml-2"> Rechazar Contrato </span> 
+                        </a>
+                    </div>
+                @else
+                    <div class="row d-flex justify-content-center mt-4">
+                        <a href="/proveedor/{{$id_prov}}/contratos/renovar/{{$fecha}}" class="btn btn-primary mb-4">
+                            <img src="{{ asset('img/iconos/add_white.svg') }}" alt="aceptar" width="24">
+                            <span class="ml-2"> Renovar Contrato </span>
+                        </a>
+                    </div>
+                    <div class="row d-flex justify-content-center"> 
+                        <a href="/proveedor/{{$id_prov}}/contratos/no_renovar/{{$fecha}}" class="btn btn-danger mb-4"> 
+                            <img src="{{ asset('img/iconos/trash_white.svg') }}" alt="rechazar" width="24">
+                            <span class="ml-2"> Rechazar Renovación </span> 
+                        </a>
+                    </div>
+                @endif
             </div>
             <div class="card-footer bg-primary text-white">
                 <a href="{{ route('verContratosPv', ['id_prov' => $id_prov]) }}">

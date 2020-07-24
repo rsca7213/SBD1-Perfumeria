@@ -72,12 +72,13 @@
                             <b class="mr-2"> Solucitud de Contrato </b> 
                         </span>
                         <hr>
-                        @if ($contratosSolicitud != [])
+                        @if ($contratosSolicitud != [] || $contratosSolicitudRenovacion != [])
                             <table class="table table-striped border border-info">
                                 <thead class="bg-primary text-white">
                                     <tr  class="text-center align-items-center">
                                         <th scope="col">Fecha creación</th>
                                         <th scope="col">Productor</th>
+                                        <th scope="col">Petición</th>
                                         <th scope="col">Acciones</th>
                                     </tr>
                                 </thead>
@@ -86,6 +87,20 @@
                                         <tr class="text-center">
                                             <td>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</td>
                                             <td>{{$contrato->prod}}</td>
+                                            <td><span class="ml-2"> Generar </span></td>
+                                            <td>
+                                                <a href="/proveedor/{{$id_prov}}/contratos/confirmar/{{$contrato->id_prod}}/{{$contrato->fecha}}" class="btn btn-sm btn-primary">
+                                                    <img src="{{ asset('/img/iconos/list_white.svg') }}" width="24" class="mb-1">
+                                                    <span class="ml-2"> Detalles </span>
+                                                </a>
+                                            </td>
+                                        </tr> 
+                                    @endforeach
+                                    @foreach ($contratosSolicitudRenovacion as $contrato)
+                                        <tr class="text-center">
+                                            <td>{{ date("d/m/Y", strtotime($contrato->fecha)) }}</td>
+                                            <td>{{$contrato->prod}}</td>
+                                            <td><span class="ml-2"> Renovar </span></td>
                                             <td>
                                                 <a href="/proveedor/{{$id_prov}}/contratos/confirmar/{{$contrato->id_prod}}/{{$contrato->fecha}}" class="btn btn-sm btn-primary">
                                                     <img src="{{ asset('/img/iconos/list_white.svg') }}" width="24" class="mb-1">
