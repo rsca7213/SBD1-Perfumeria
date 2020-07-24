@@ -2043,14 +2043,63 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["csrf"],
   data: function data() {
     return {
-      envios: [],
-      pagos: [],
-      extras: [],
+      envios: []
+      /* Todos los envios que posee el contrato respectivo */
+      ,
+      pagos: []
+      /* Todos los pagos que posee el contrato respectivo */
+      ,
+      extras: []
+      /* Todos los extras de envios que posee el contrato respectivo */
+      ,
       productos: []
+      /* Todos los productos que posee el contrato respectivo */
+      ,
+      cantidad: []
+      /* Cantidad de cada producto*/
+      ,
+      extrasAusar: []
+      /* Extras de envio a usar en el pedido*/
+      ,
+      envioAusar: 0
+      /* Id del envio a usar*/
+
     };
   },
   created: function created() {
@@ -2058,8 +2107,6 @@ __webpack_require__.r(__webpack_exports__);
 
     console.log("%cAxios: Buscando metodos de envio y metodos de pago.", "color: lightblue");
     axios.get(window.location.pathname + "/enviosPagos").then(function (response) {
-      console.log(response.data[0]);
-      console.log(response.data[1]);
       _this.envios = response.data[0];
       _this.pagos = response.data[1];
       _this.extras = response.data[2];
@@ -2069,6 +2116,19 @@ __webpack_require__.r(__webpack_exports__);
     });
   },
   methods: {
+    /* Funcion para obtener el nombre del envio*/
+    nombreEnvio: function nombreEnvio(tipoEnvio, paisEnvio, precioEnvio, duracionEnvio) {
+      return this.tipoEnvio(tipoEnvio) + " - " + paisEnvio + " (" + precioEnvio + "$ - " + this.duracion(duracionEnvio) + ")";
+    },
+
+    /* Funcion para colocar el nombre del envio en el modal extra envio*/
+    nombreEnvioDetalle: function nombreEnvioDetalle() {
+      for (var index = 0; index < this.envios.length; index++) {
+        if (this.envios[index].idenvio == this.envioAusar) {
+          return this.nombreEnvio(this.envios[index].tipoenvio, this.envios[index].paisenvio, this.envios[index].precioenvio, this.envios[index].duracionenvio);
+        }
+      }
+    },
     tipoEnvio: function tipoEnvio(tipo) {
       if (tipo == "t") {
         return "Terrestre";
@@ -2099,6 +2159,16 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return dias + " dias";
       }
+    },
+    extrasEnvios: function extrasEnvios() {
+      var _this2 = this;
+
+      this.extrasAusar = [];
+      this.extras.forEach(function (extra) {
+        if (extra.idenvio === _this2.envioAusar) {
+          _this2.extrasAusar.push(extra);
+        }
+      });
     }
   },
   computed: {}
@@ -40144,115 +40214,75 @@ var render = function() {
         _c(
           "select",
           {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.envioAusar,
+                expression: "envioAusar"
+              }
+            ],
             staticClass: "combo",
             staticStyle: { outline: "none" },
-            attrs: { name: "envios", id: "envios" }
+            attrs: {
+              placeholder: "Metodo de envio",
+              name: "envios",
+              id: "envios"
+            },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.envioAusar = $event.target.multiple
+                  ? $$selectedVal
+                  : $$selectedVal[0]
+              }
+            }
           },
-          _vm._l(_vm.envios, function(envio, index) {
-            return _c("option", { key: index, staticClass: "combo" }, [
-              _vm._v(
-                "\n        " +
-                  _vm._s(
-                    _vm.tipoEnvio(envio.tipoenvio) +
-                      " - " +
-                      envio.paisenvio +
-                      " (" +
-                      envio.precioenvio +
-                      "$ - " +
-                      _vm.duracion(envio.duracionenvio) +
-                      ")"
-                  ) +
-                  "\n      "
-              )
-            ])
-          }),
-          0
-        )
-      ]),
-      _vm._v(" "),
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "d-flex justify-content-around col-10 my-2" }, [
-        _c(
-          "label",
-          { staticStyle: { "font-weight": "bold" }, attrs: { for: "pagos" } },
-          [_vm._v("Método de pago")]
-        ),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            staticClass: "combo",
-            staticStyle: { outline: "none" },
-            attrs: { name: "pagos", id: "pagos" }
-          },
-          _vm._l(_vm.pagos, function(pago, index) {
-            return _c("option", { key: index, staticClass: "combo" }, [
-              _vm._v(_vm._s(_vm.detallePago(pago)))
-            ])
-          }),
-          0
-        )
-      ]),
-      _vm._v(" "),
-      _vm._m(1),
-      _vm._v(" "),
-      _c(
-        "table",
-        { staticClass: "table table-striped border border-info col-12" },
-        [
-          _vm._m(2),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.productos, function(producto, index) {
-              return _c("tr", { key: index }, [
-                _c("td", { staticClass: "text-left" }, [
-                  _vm._v(_vm._s(producto.ncas))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-left" }, [
+          [
+            _c(
+              "option",
+              {
+                staticClass: "combo",
+                attrs: { selected: "selected", value: "0" }
+              },
+              [_vm._v("Selecciona un Metodo de Envio")]
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.envios, function(envio, index) {
+              return _c(
+                "option",
+                {
+                  key: index,
+                  staticClass: "combo",
+                  domProps: { value: envio.idenvio }
+                },
+                [
                   _vm._v(
                     _vm._s(
-                      producto.nombreprod +
-                        " (" +
-                        producto.presentacion +
-                        " ml)"
+                      _vm.nombreEnvio(
+                        envio.tipoenvio,
+                        envio.paisenvio,
+                        envio.precioenvio,
+                        envio.duracionenvio
+                      )
                     )
                   )
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-left" }, [
-                  _vm._v(_vm._s(producto.tipo))
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-right" }, [
-                  _vm._v(_vm._s(producto.precioing + " $"))
-                ]),
-                _vm._v(" "),
-                _vm._m(3, true),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-center" }, [_vm._v(" XX.XX % ")]),
-                _vm._v(" "),
-                _c("td", { staticClass: "text-right" }, [_vm._v("XXX.XX $")])
-              ])
-            }),
-            0
-          )
-        ]
-      )
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "d-flex justify-content-around col-10 my-2" },
-      [
+                ]
+              )
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "d-flex justify-content-around col-10 my-2" }, [
         _c(
           "label",
           {
@@ -40267,7 +40297,16 @@ var staticRenderFns = [
           {
             staticClass: "btn btn-primary",
             staticStyle: { width: "340px" },
-            attrs: { "data-toggle": "modal", "data-target": "#extraEnvio" }
+            attrs: {
+              disabled: _vm.envioAusar == 0,
+              "data-toggle": "modal",
+              "data-target": "#extraEnvio"
+            },
+            on: {
+              click: function($event) {
+                return _vm.extrasEnvios()
+              }
+            }
           },
           [
             _c("img", {
@@ -40297,7 +40336,7 @@ var staticRenderFns = [
             _c(
               "div",
               {
-                staticClass: "modal-dialog modal-dialog-centered",
+                staticClass: "modal-dialog modal-dialog-centered modal-lg",
                 attrs: { role: "document" }
               },
               [
@@ -40308,38 +40347,13 @@ var staticRenderFns = [
                     staticStyle: { "background-color": "#F5F5F5" }
                   },
                   [
-                    _c("div", { staticClass: "modal-header" }, [
-                      _c(
-                        "h5",
-                        {
-                          staticClass: "modal-title",
-                          attrs: { id: "exampleModalLabel" }
-                        },
-                        [_vm._v("Extras De Envío")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "close",
-                          attrs: {
-                            type: "button",
-                            "data-dismiss": "modal",
-                            "aria-label": "Close"
-                          }
-                        },
-                        [
-                          _c("span", { attrs: { "aria-hidden": "true" } }, [
-                            _vm._v("×")
-                          ])
-                        ]
-                      )
-                    ]),
+                    _vm._m(0),
                     _vm._v(" "),
                     _c("div", { staticClass: "modal-body h5 text-center" }, [
-                      _vm._v(
-                        "\n            AQUI DEBE IR EL NOMBRE DEL METODO\n            "
-                      ),
+                      _vm.envioAusar != null && _vm.envioAusar != 0
+                        ? _c("span", [_vm._v(_vm._s(_vm.nombreEnvioDetalle()))])
+                        : _vm._e(),
+                      _vm._v(" "),
                       _c("br"),
                       _vm._v(" "),
                       _c("br"),
@@ -40350,52 +40364,29 @@ var staticRenderFns = [
                           staticClass: "table table-striped border border-info"
                         },
                         [
-                          _c(
-                            "thead",
-                            { staticClass: "bg-primary text-white" },
-                            [
-                              _c("tr", { staticClass: "text-center" }, [
-                                _c("th", { attrs: { scope: "col" } }, [
-                                  _vm._v("Nombre")
-                                ]),
-                                _vm._v(" "),
-                                _c("th", { attrs: { scope: "col" } }, [
-                                  _vm._v("Precio")
-                                ]),
-                                _vm._v(" "),
-                                _c("th", { attrs: { scope: "col" } }, [
-                                  _vm._v("Días de Retraso")
-                                ]),
-                                _vm._v(" "),
-                                _c("th", { attrs: { scope: "col" } }, [
-                                  _vm._v("Seleccionar")
-                                ])
-                              ])
-                            ]
-                          ),
+                          _vm._m(1),
                           _vm._v(" "),
-                          _c("tbody", [
-                            _c("tr", [
-                              _c("td", [_vm._v("hola")]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v("hola")]),
-                              _vm._v(" "),
-                              _c("td", [_vm._v("hola")]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c("input", {
-                                  attrs: {
-                                    type: "checkbox",
-                                    id: "",
-                                    name: "",
-                                    value: ""
-                                  }
-                                }),
+                          _c(
+                            "tbody",
+                            _vm._l(_vm.extrasAusar, function(extra, index) {
+                              return _c("tr", { key: index }, [
+                                _c("td", { staticClass: "text-left" }, [
+                                  _vm._v(_vm._s(extra.nombre))
+                                ]),
                                 _vm._v(" "),
-                                _c("br")
+                                _c("td", { staticClass: "text-right" }, [
+                                  _vm._v(_vm._s(extra.precio + " $"))
+                                ]),
+                                _vm._v(" "),
+                                _c("td", { staticClass: "text-right" }, [
+                                  _vm._v(_vm._s(_vm.duracion(extra.duracion)))
+                                ]),
+                                _vm._v(" "),
+                                _vm._m(2, true)
                               ])
-                            ])
-                          ])
+                            }),
+                            0
+                          )
                         ]
                       ),
                       _vm._v(" "),
@@ -40418,8 +40409,192 @@ var staticRenderFns = [
             )
           ]
         )
-      ]
-    )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "d-flex justify-content-around col-10 my-2" }, [
+        _c(
+          "label",
+          { staticStyle: { "font-weight": "bold" }, attrs: { for: "pagos" } },
+          [_vm._v("Método de pago")]
+        ),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            staticClass: "combo",
+            staticStyle: { outline: "none" },
+            attrs: { name: "pagos", id: "pagos" }
+          },
+          _vm._l(_vm.pagos, function(pago, index) {
+            return _c("option", { key: index, staticClass: "combo" }, [
+              _vm._v(_vm._s(_vm.detallePago(pago)))
+            ])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(3),
+      _vm._v(" "),
+      _c(
+        "table",
+        { staticClass: "table table-striped border border-info col-12" },
+        [
+          _vm._m(4),
+          _vm._v(" "),
+          _c(
+            "tbody",
+            _vm._l(_vm.productos, function(producto, index) {
+              return _c("tr", { key: index }, [
+                _c("td", { staticClass: "text-left" }, [
+                  _vm._v(_vm._s(producto.ncas))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-left" }, [
+                  _vm._v(
+                    _vm._s(
+                      producto.nombreprod +
+                        " (" +
+                        producto.presentacion +
+                        " ml)"
+                    )
+                  )
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-left" }, [
+                  _vm._v(_vm._s(producto.tipo))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [
+                  _vm._v(_vm._s(producto.precioing + " $"))
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-center" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model.number",
+                        value: _vm.cantidad[index],
+                        expression: "cantidad[index]",
+                        modifiers: { number: true }
+                      }
+                    ],
+                    staticClass: "text-right",
+                    staticStyle: { width: "80px" },
+                    attrs: {
+                      type: "number",
+                      min: "0",
+                      max: "9999",
+                      id: "",
+                      name: ""
+                    },
+                    domProps: { value: _vm.cantidad[index] },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.cantidad,
+                          index,
+                          _vm._n($event.target.value)
+                        )
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "text-right" }, [
+                  _vm._v(_vm._s(producto.descuento_producto + " %"))
+                ]),
+                _vm._v(" "),
+                _vm.cantidad[index] != null
+                  ? _c("td", { staticClass: "text-right" }, [
+                      _vm._v(
+                        _vm._s(
+                          producto.precioing * _vm.cantidad[index] -
+                            (producto.descuento_producto / 100) *
+                              _vm.cantidad[index] *
+                              producto.precioing +
+                            " $"
+                        )
+                      )
+                    ])
+                  : _c("td", { staticClass: "text-right" }, [_vm._v("0 $")])
+              ])
+            }),
+            0
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _vm._m(5)
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Extras De Envío")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-primary text-white" }, [
+      _c("tr", { staticClass: "text-center" }, [
+        _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
+          _vm._v("Nombre")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+          _vm._v("Precio")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+          _vm._v("Duración")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+          _vm._v("Seleccionar")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "text-center" }, [
+      _c("input", { attrs: { type: "checkbox", id: "", name: "", value: "" } }),
+      _vm._v(" "),
+      _c("br")
+    ])
   },
   function() {
     var _vm = this
@@ -40458,7 +40633,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("th", { staticClass: "text-center" }, [_vm._v("Cantidad")]),
       _vm._v(" "),
-      _c("th", { staticClass: "text-center" }, [_vm._v("Descuento")]),
+      _c("th", { staticClass: "text-right" }, [_vm._v("Descuento")]),
       _vm._v(" "),
       _c("th", { staticClass: "text-right" }, [_vm._v("Subtotal")])
     ])
@@ -40467,13 +40642,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "text-center" }, [
-      _c("input", {
-        staticClass: "text-right",
-        staticStyle: { width: "80px" },
-        attrs: { type: "number", min: "0", value: "0", id: "", name: "" }
-      })
-    ])
+    return _c(
+      "div",
+      { staticClass: "row d-flex justify-content-center col-6" },
+      [
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-primary mx-4 btn-lg col-8",
+            attrs: { href: "#" }
+          },
+          [
+            _c("img", {
+              attrs: {
+                src: "/img/iconos/evaluation.svg",
+                alt: "inicial",
+                width: "24"
+              }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "ml-2" }, [_vm._v("Realizar Pedido")])
+          ]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -57118,8 +57310,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

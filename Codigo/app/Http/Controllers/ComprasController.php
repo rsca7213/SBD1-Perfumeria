@@ -101,20 +101,25 @@ class ComprasController extends Controller
 
         /* Se buscan los extras de envio del contrato respectivo*/
         $extrasEnvio= DB::SELECT(DB::RAW(
-            "SELECT det.id_envio,det.nombre,det.mod_precio,det.mod_duracion
+            "SELECT det.id_envio as idEnvio,det.nombre AS nombre,det.mod_precio AS precio,det.mod_duracion AS duracion
             FROM rdj_detalles_metodos_envios AS det, rdj_metodos_contratos AS metCont
             WHERE det.id_proveedor=metCont.id_proveedor AND metCont.fecha_cont=? AND det.id_envio=metCont.id_envio;"
         ),[$fecha]);
 
          /* Se buscan los productos(esencias y componentes) del contrato respectivo con sus respectivas presentaciones*/
          $productos=DB::select(DB::RAW(
-            "SELECT ing.cas_ing_esencia AS cas_prod, presIng.id AS presentacionId, det.fecha_apertura as fechaApert,ing.nombre as nombreProd, to_char(ing.cas_ing_esencia,'9999900-00-0') AS ncas, presIng.volumen AS presentacion, presIng.precio AS precioIng, CASE WHEN ing.naturaleza = 's' THEN 'Esencia sintética' WHEN ing.naturaleza = 'n' THEN 'Esencia natural' END AS tipo 
-            FROM rdj_ingredientes_esencias AS ing, rdj_presents_ings_esencias AS presIng, rdj_detalles_contratos as det, rdj_contratos as cont
-            WHERE det.id_productor=? AND ing.id_proveedor=det.id_proveedor AND ing.cas_ing_esencia=presIng.cas_ing_esencia AND det.fecha_apertura=? AND det.cas_ing_esencia = ing.cas_ing_esencia GROUP BY cas_prod, det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion,presentacionId
+            "SELECT detcont.descuento AS descuento_producto,ing.cas_ing_esencia AS cas_prod, presIng.id AS presentacionId, det.fecha_apertura as fechaApert,ing.nombre as nombreProd, to_char(ing.cas_ing_esencia,'9999900-00-0') AS ncas, presIng.volumen AS presentacion, presIng.precio AS precioIng, CASE WHEN ing.naturaleza = 's' THEN 'Esencia sintética' WHEN ing.naturaleza = 'n' THEN 'Esencia natural' END AS tipo 
+            FROM rdj_ingredientes_esencias AS ing, rdj_presents_ings_esencias AS presIng, rdj_detalles_contratos AS det, rdj_contratos AS cont,rdj_detalles_contratos AS detcont
+            WHERE det.id_productor=? AND ing.id_proveedor=det.id_proveedor AND ing.cas_ing_esencia=presIng.cas_ing_esencia
+            AND det.fecha_apertura=? AND det.fecha_apertura=detcont.fecha_apertura AND det.cas_ing_esencia = ing.cas_ing_esencia AND cont.fecha_apertura=detcont.fecha_apertura AND ing.cas_ing_esencia = detcont.cas_ing_esencia
+            GROUP BY cas_prod, det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion,presentacionId,descuento_producto
             UNION
-            SELECT otro.cas_otro_ing AS cas_prod,presOtro.id AS presentacionId,det.fecha_apertura as fechaApert,otro.nombre as nombreProd, to_char(otro.cas_otro_ing,'9999900-00-0') AS ncas, presOtro.volumen AS presentacion, presOtro.precio AS precioIng, 'Componente' AS tipo 
-            FROM rdj_otros_ingredientes AS otro, rdj_present_otros_ings AS presOtro, rdj_detalles_contratos as det, rdj_contratos as cont
-            WHERE det.id_productor=? AND otro.id_proveedor=det.id_proveedor AND otro.cas_otro_ing=presOtro.cas_otro_ing AND det.fecha_apertura=? AND det.cas_otro_ing = otro.cas_otro_ing GROUP BY cas_prod,det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion,presentacionId ORDER BY nombreProd,presentacion ASC"
+            SELECT detcont.descuento AS descuento_producto,otro.cas_otro_ing AS cas_prod,presOtro.id AS presentacionId,det.fecha_apertura AS fechaApert,otro.nombre AS nombreProd, to_char(otro.cas_otro_ing,'9999900-00-0') AS ncas, presOtro.volumen AS presentacion, presOtro.precio AS precioIng, 'Componente' AS tipo 
+            FROM rdj_otros_ingredientes AS otro, rdj_present_otros_ings AS presOtro, rdj_detalles_contratos AS det, rdj_contratos AS cont,rdj_detalles_contratos AS detcont
+            WHERE det.id_productor=? AND otro.id_proveedor=det.id_proveedor AND otro.cas_otro_ing=presOtro.cas_otro_ing 
+            AND det.fecha_apertura=? AND det.fecha_apertura=detcont.fecha_apertura AND det.cas_otro_ing = otro.cas_otro_ing AND cont.fecha_apertura=detcont.fecha_apertura AND otro.cas_otro_ing = detcont.cas_otro_ing
+            GROUP BY cas_prod,det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion,presentacionId,descuento_producto 
+            ORDER BY nombreProd,presentacion ASC"
         ),[$id_prod,$fecha,$id_prod,$fecha]);
 
         /* Se buscan los productos(componentes) del contrato respectivo*/

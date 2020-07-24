@@ -28,7 +28,7 @@
 
 @section('content')
 <div class="row d-flex justify-content-center mt-4 rounded">
-    <div class="col-9">
+    <div class="col-10">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center h4">
                 Generación de Pedido
@@ -49,7 +49,7 @@
                     <hr>
                     <realizar-pedido csrf="{{ csrf_token() }}"></realizar-pedido>
                 </div>
-                <div class="card-footer bg-primary text-white">
+                <div class="card-footer bg-primary text-white mt-3">
                     <a href="{{ route('menuProductor', ['id_prod' => $id_prod]) }}">
                         <img src="{{ asset('img/iconos/back.svg') }}" alt="atras" width="24">
                         <span class="text-white h6 ml-2 mt-1"> Volver al Menú Principal </span>
