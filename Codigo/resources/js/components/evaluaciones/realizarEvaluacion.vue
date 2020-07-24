@@ -675,7 +675,7 @@
           <span
             v-if="parseInt(resultadoAnual['renov']) == 1"
           >vez</span>
-          <span>veces</span> )
+          <span v-else>veces</span> )
         </li>
       </div>
       <div class="row h5 text-left ml-4 pl-4" v-else>
@@ -717,7 +717,7 @@
             <img src="/img/iconos/crear.svg" width="24" class="mb-1" />
             <span class="ml-2">Crear contrato nuevo</span>
           </a>
-          <a href="#" class="btn btn-primary mx-2">
+          <a :href="renovarLink" class="btn btn-primary mx-2">
             <img src="/img/iconos/renovar.svg" width="24" class="mb-1" />
             <span class="ml-2">Renovar contrato</span>
           </a>
@@ -813,6 +813,8 @@ export default {
                                      luego de insertar los datos del resultado de la ev anual */,
 
       generarLink: "",
+
+      renovarLink: ""
     };
   },
 
@@ -999,6 +1001,8 @@ export default {
           console.log("%cAxios: Post!", "color: lightgreen");
           this.tipoEv = "resultadoAnual";
           this.resultadoAnual = response.data[0];
+          this.renovarLink = "/productor/" + this.resultadoAnual["id_prod"] +
+          "/contratos/renovar/" + idp + "/" + fecha_ap_ts;
         })
         .catch((errors) => {
           console.log("%cAxios: Error!", "color: #FFCCCB");

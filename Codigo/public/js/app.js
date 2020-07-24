@@ -2921,7 +2921,8 @@ __webpack_require__.r(__webpack_exports__);
       /* Variable que almacena los resultados que devuelve laravel
                   luego de insertar los datos del resultado de la ev anual */
       ,
-      generarLink: ""
+      generarLink: "",
+      renovarLink: ""
     };
   },
 
@@ -3072,6 +3073,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log("%cAxios: Post!", "color: lightgreen");
         _this7.tipoEv = "resultadoAnual";
         _this7.resultadoAnual = response.data[0];
+        _this7.renovarLink = "/productor/" + _this7.resultadoAnual["id_prod"] + "/contratos/renovar/" + idp + "/" + fecha_ap_ts;
       })["catch"](function (errors) {
         console.log("%cAxios: Error!", "color: #FFCCCB");
         console.log(errors);
@@ -41964,9 +41966,7 @@ var render = function() {
                   ),
                   parseInt(_vm.resultadoAnual["renov"]) == 1
                     ? _c("span", [_vm._v("vez")])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("span", [_vm._v("veces")]),
+                    : _c("span", [_vm._v("veces")]),
                   _vm._v(" )\n      ")
                 ])
               ])
@@ -42001,9 +42001,31 @@ var render = function() {
                 _vm._v(" "),
                 _vm._m(37),
                 _vm._v(" "),
-                _vm._m(38)
+                _c("div", { staticClass: "row justify-content-center" }, [
+                  _vm._m(38),
+                  _vm._v(" "),
+                  _vm._m(39),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-primary mx-2",
+                      attrs: { href: _vm.renovarLink }
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "mb-1",
+                        attrs: { src: "/img/iconos/renovar.svg", width: "24" }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "ml-2" }, [
+                        _vm._v("Renovar contrato")
+                      ])
+                    ]
+                  )
+                ])
               ])
-            : _c("span", [_vm._m(39), _vm._v(" "), _vm._m(40)])
+            : _c("span", [_vm._m(40), _vm._v(" "), _vm._m(41)])
         ])
       : _vm._e()
   ])
@@ -42447,38 +42469,35 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "a",
-        { staticClass: "btn btn-danger mx-2", attrs: { href: "realizar" } },
-        [
-          _c("img", {
-            staticClass: "mb-1",
-            attrs: { src: "/img/iconos/cancel_white.svg", width: "24" }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "ml-2" }, [_vm._v("Rechazar")])
-        ]
-      ),
-      _vm._v(" "),
-      _c("a", { staticClass: "btn btn-primary mx-2", attrs: { href: "#" } }, [
+    return _c(
+      "a",
+      { staticClass: "btn btn-danger mx-2", attrs: { href: "realizar" } },
+      [
+        _c("img", {
+          staticClass: "mb-1",
+          attrs: { src: "/img/iconos/cancel_white.svg", width: "24" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "ml-2" }, [_vm._v("Rechazar")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      { staticClass: "btn btn-primary mx-2", attrs: { href: "#" } },
+      [
         _c("img", {
           staticClass: "mb-1",
           attrs: { src: "/img/iconos/crear.svg", width: "24" }
         }),
         _vm._v(" "),
         _c("span", { staticClass: "ml-2" }, [_vm._v("Crear contrato nuevo")])
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "btn btn-primary mx-2", attrs: { href: "#" } }, [
-        _c("img", {
-          staticClass: "mb-1",
-          attrs: { src: "/img/iconos/renovar.svg", width: "24" }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "ml-2" }, [_vm._v("Renovar contrato")])
-      ])
-    ])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -57050,8 +57069,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

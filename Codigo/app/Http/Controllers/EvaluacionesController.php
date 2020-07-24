@@ -44,7 +44,7 @@ class EvaluacionesController extends Controller
                AND f.id_productor=? AND f.tipo='a' AND f.fecha_inicio < ? AND COALESCE(f.fecha_fin,?) > ?"),
                [$id_prod,$res->fecha,$time,$res->fecha]); 
 
-               $res->exito = $exito[0]->peso;
+               if($exito !=[]) $res->exito = $exito[0]->peso;
             }
             $res->fecha = date("d/m/Y", strtotime($res->fecha));
         }
