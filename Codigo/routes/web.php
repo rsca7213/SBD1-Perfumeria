@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 /* Rutas referentes al recomendador de perfumes */
 Route::get('/recomendador', 'RecomendadorController@inicio')->name('inicioRecomendador');
 Route::get('/recomendador/iniciar', 'RecomendadorController@iniciar')->name('iniciarRecomendador');
+Route::get('/recomendador/resultados', 'RecomendadorController@resultados');
 
 /* Rutas para acceder a los menus principales de las empresas */
 Route::get('/productor/{id_prod}', 'MenuController@menuProductor')->name('menuProductor');

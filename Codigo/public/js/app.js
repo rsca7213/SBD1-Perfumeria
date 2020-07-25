@@ -4432,11 +4432,74 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      filtro: 1
+      pregunta: 1,
+
+      /* Variable que determina por cual pregunta va el usuario */
+      respuestas: ["m", "in", "lig", [], [], [], "di", []],
+
+      /* Variable que va almacenando las respuestas del usuario */
+      textoErr: ""
+      /* Variable que almacena texto para mostrar al realizar validacion front end */
+
     };
+  },
+  methods: {
+    enviarRespuestas: function enviarRespuestas() {
+      console.log("%cAxios: Enviando respuestas!", "color: lightblue");
+      axios.post("resultados", {
+        'pregunta': this.pregunta,
+        'respuestas': this.respuestas
+      }).then(function (response) {
+        console.log("%cAxios: Resultados recibidos!", "color: lightgreen");
+        console.log(response.data);
+      })["catch"](function (errors) {
+        console.log("%cAxios: Error!", "color: #FFCCCB");
+        console.log(errors);
+      });
+    },
+    sigPregunta: function sigPregunta() {
+      if (this.pregunta === 4 && this.respuestas[3].length === 0) {
+        this.textoErr = "Debe seleccionar al menos 1 carácter.";
+      } else if (this.pregunta === 5 && this.respuestas[4].length === 0) {
+        this.textoErr = "Debe seleccionar al menos 1 familia olfativa.";
+      } else if (this.pregunta === 6 && this.respuestas[5].length === 0) {
+        this.textoErr = "Debe seleccionar al menos 1 aroma.";
+      } else if (this.pregunta === 8 && this.respuestas[7].length === 0) {
+        this.textoErr = "Debe seleccionar al menos 1 aspecto de personalidad.";
+      } else {
+        this.textoErr = "";
+        this.pregunta++;
+      }
+    },
+    validarEnvio: function validarEnvio() {
+      if (this.pregunta === 4 && this.respuestas[3].length === 0) {
+        this.textoErr = "Debe seleccionar al menos 1 carácter.";
+      } else if (this.pregunta === 5 && this.respuestas[4].length === 0) {
+        this.textoErr = "Debe seleccionar al menos 1 familia olfativa.";
+      } else if (this.pregunta === 6 && this.respuestas[5].length === 0) {
+        this.textoErr = "Debe seleccionar al menos 1 aroma.";
+      } else if (this.pregunta === 8 && this.respuestas[7].length === 0) {
+        this.textoErr = "Debe seleccionar al menos 1 aspecto de personalidad.";
+      } else {
+        this.textoErr = "";
+        this.enviarRespuestas();
+      }
+    }
   }
 });
 
@@ -44918,7 +44981,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.filtro === 1
+    _vm.pregunta === 1
       ? _c("span", [
           _vm._m(0),
           _vm._v(" "),
@@ -44928,6 +44991,143 @@ var render = function() {
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
+          _c("div", { staticClass: "radio col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[0],
+                    expression: "respuestas[0]"
+                  }
+                ],
+                attrs: { type: "radio", name: "genero", value: "m" },
+                domProps: { checked: _vm._q(_vm.respuestas[0], "m") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.respuestas, 0, "m")
+                  }
+                }
+              }),
+              _vm._v(" \n                Masculino \n                "),
+              _c("img", {
+                staticClass: "ml-1",
+                attrs: {
+                  src: "/img/iconos/recomendador/hombre.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[0],
+                    expression: "respuestas[0]"
+                  }
+                ],
+                attrs: { type: "radio", name: "genero", value: "f" },
+                domProps: { checked: _vm._q(_vm.respuestas[0], "f") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.respuestas, 0, "f")
+                  }
+                }
+              }),
+              _vm._v(" \n                Femenino \n                "),
+              _c("img", {
+                staticClass: "ml-1",
+                attrs: {
+                  src: "/img/iconos/recomendador/mujer.svg",
+                  width: "26"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[0],
+                    expression: "respuestas[0]"
+                  }
+                ],
+                attrs: { type: "radio", name: "genero", value: "u" },
+                domProps: { checked: _vm._q(_vm.respuestas[0], "u") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.respuestas, 0, "u")
+                  }
+                }
+              }),
+              _vm._v(" \n                Unisex \n                "),
+              _c("img", {
+                staticClass: "ml-1",
+                attrs: {
+                  src: "/img/iconos/recomendador/unisex.svg",
+                  width: "26"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "row d-flex justify-content-center" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success mx-4 btn-lg",
+                on: { click: _vm.validarEnvio }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Generar resultados ")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mx-4 btn-lg",
+                on: { click: _vm.sigPregunta }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: {
+                    src: "/img/iconos/recomendador/siguiente.svg",
+                    width: "24"
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Siguiente pregunta ")
+                ])
+              ]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.pregunta === 2
+      ? _c("span", [
           _vm._m(3),
           _vm._v(" "),
           _vm._m(4),
@@ -44936,18 +45136,128 @@ var render = function() {
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
+          _c("div", { staticClass: "radio col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[1],
+                    expression: "respuestas[1]"
+                  }
+                ],
+                attrs: { type: "radio", name: "edad", value: "in" },
+                domProps: { checked: _vm._q(_vm.respuestas[1], "in") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.respuestas, 1, "in")
+                  }
+                }
+              }),
+              _vm._v(" \n                Infantil\n                "),
+              _vm._m(6)
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[1],
+                    expression: "respuestas[1]"
+                  }
+                ],
+                attrs: { type: "radio", name: "edad", value: "jo" },
+                domProps: { checked: _vm._q(_vm.respuestas[1], "jo") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.respuestas, 1, "jo")
+                  }
+                }
+              }),
+              _vm._v(" \n                Joven\n                "),
+              _vm._m(7)
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[1],
+                    expression: "respuestas[1]"
+                  }
+                ],
+                attrs: { type: "radio", name: "edad", value: "ad" },
+                domProps: { checked: _vm._q(_vm.respuestas[1], "ad") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.respuestas, 1, "ad")
+                  }
+                }
+              }),
+              _vm._v(" \n                Adulto\n                "),
+              _vm._m(8)
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[1],
+                    expression: "respuestas[1]"
+                  }
+                ],
+                attrs: { type: "radio", name: "edad", value: "at" },
+                domProps: { checked: _vm._q(_vm.respuestas[1], "at") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.respuestas, 1, "at")
+                  }
+                }
+              }),
+              _vm._v(" \n                Atemporal\n                "),
+              _vm._m(9)
+            ])
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
           _c("div", { staticClass: "row d-flex justify-content-center" }, [
-            _vm._m(6),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success mx-4 btn-lg",
+                on: { click: _vm.validarEnvio }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Generar resultados ")
+                ])
+              ]
+            ),
             _vm._v(" "),
             _c(
               "button",
               {
                 staticClass: "btn btn-primary mx-4 btn-lg",
-                on: {
-                  click: function($event) {
-                    _vm.filtro++
-                  }
-                }
+                on: { click: _vm.sigPregunta }
               },
               [
                 _c("img", {
@@ -44967,38 +45277,114 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.filtro === 2
+    _vm.pregunta === 3
       ? _c("span", [
-          _vm._m(7),
-          _vm._v(" "),
-          _vm._m(8),
-          _vm._v(" "),
-          _vm._m(9),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
           _vm._m(10),
           _vm._v(" "),
           _vm._m(11),
           _vm._v(" "),
           _vm._m(12),
           _vm._v(" "),
-          _vm._m(13),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[2],
+                    expression: "respuestas[2]"
+                  }
+                ],
+                attrs: { type: "radio", name: "intensidad", value: "lig" },
+                domProps: { checked: _vm._q(_vm.respuestas[2], "lig") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.respuestas, 2, "lig")
+                  }
+                }
+              }),
+              _vm._v(" \n                Ligera / Fresca\n                "),
+              _vm._m(13)
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[2],
+                    expression: "respuestas[2]"
+                  }
+                ],
+                attrs: { type: "radio", name: "intensidad", value: "inter" },
+                domProps: { checked: _vm._q(_vm.respuestas[2], "inter") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.respuestas, 2, "inter")
+                  }
+                }
+              }),
+              _vm._v(" \n                Intermedia\n                "),
+              _vm._m(14)
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[2],
+                    expression: "respuestas[2]"
+                  }
+                ],
+                attrs: { type: "radio", name: "intensidad", value: "intensa" },
+                domProps: { checked: _vm._q(_vm.respuestas[2], "intensa") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.respuestas, 2, "intensa")
+                  }
+                }
+              }),
+              _vm._v(" \n                Intensa / Profunda\n                "),
+              _vm._m(15)
+            ])
+          ]),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
           _c("div", { staticClass: "row d-flex justify-content-center" }, [
-            _vm._m(14),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success mx-4 btn-lg",
+                on: { click: _vm.validarEnvio }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Generar resultados ")
+                ])
+              ]
+            ),
             _vm._v(" "),
             _c(
               "button",
               {
                 staticClass: "btn btn-primary mx-4 btn-lg",
-                on: {
-                  click: function($event) {
-                    _vm.filtro++
-                  }
-                }
+                on: { click: _vm.sigPregunta }
               },
               [
                 _c("img", {
@@ -45018,36 +45404,324 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.filtro === 3
+    _vm.pregunta === 4
       ? _c("span", [
-          _vm._m(15),
-          _vm._v(" "),
           _vm._m(16),
           _vm._v(" "),
           _vm._m(17),
-          _vm._v(" "),
-          _c("hr"),
           _vm._v(" "),
           _vm._m(18),
           _vm._v(" "),
           _vm._m(19),
           _vm._v(" "),
-          _vm._m(20),
+          _c("div", { staticClass: "row d-flex justify-content-center h5" }, [
+            _c("b", {
+              staticClass: "mr-2 text-danger",
+              domProps: { textContent: _vm._s(_vm.textoErr) }
+            })
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[3],
+                    expression: "respuestas[3]"
+                  }
+                ],
+                attrs: {
+                  type: "checkbox",
+                  name: "caracter",
+                  value: "Informal"
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[3])
+                    ? _vm._i(_vm.respuestas[3], "Informal") > -1
+                    : _vm.respuestas[3]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[3],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Informal",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 3, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            3,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 3, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" \n                Informal\n                "),
+              _c("img", {
+                staticClass: "ml-1",
+                attrs: {
+                  src: "/img/iconos/recomendador/informal.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[3],
+                    expression: "respuestas[3]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "caracter", value: "Natural" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[3])
+                    ? _vm._i(_vm.respuestas[3], "Natural") > -1
+                    : _vm.respuestas[3]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[3],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Natural",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 3, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            3,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 3, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" \n                Natural\n                "),
+              _c("img", {
+                staticClass: "ml-1",
+                attrs: {
+                  src: "/img/iconos/recomendador/natural.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[3],
+                    expression: "respuestas[3]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "caracter", value: "Clasico" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[3])
+                    ? _vm._i(_vm.respuestas[3], "Clasico") > -1
+                    : _vm.respuestas[3]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[3],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Clasico",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 3, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            3,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 3, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" \n                Clásico\n                "),
+              _c("img", {
+                staticClass: "ml-1",
+                attrs: {
+                  src: "/img/iconos/recomendador/clasico.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[3],
+                    expression: "respuestas[3]"
+                  }
+                ],
+                attrs: {
+                  type: "checkbox",
+                  name: "caracter",
+                  value: "Seductor"
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[3])
+                    ? _vm._i(_vm.respuestas[3], "Seductor") > -1
+                    : _vm.respuestas[3]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[3],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Seductor",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 3, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            3,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 3, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" \n                Seductor\n                "),
+              _c("img", {
+                staticClass: "ml-1",
+                attrs: {
+                  src: "/img/iconos/recomendador/seductor.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[3],
+                    expression: "respuestas[3]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "caracter", value: "Moderno" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[3])
+                    ? _vm._i(_vm.respuestas[3], "Moderno") > -1
+                    : _vm.respuestas[3]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[3],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Moderno",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 3, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            3,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 3, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" \n                Moderno\n                "),
+              _c("img", {
+                staticClass: "ml-1",
+                attrs: {
+                  src: "/img/iconos/recomendador/moderno.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
           _c("div", { staticClass: "row d-flex justify-content-center" }, [
-            _vm._m(21),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success mx-4 btn-lg",
+                on: { click: _vm.validarEnvio }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Generar resultados ")
+                ])
+              ]
+            ),
             _vm._v(" "),
             _c(
               "button",
               {
                 staticClass: "btn btn-primary mx-4 btn-lg",
-                on: {
-                  click: function($event) {
-                    _vm.filtro++
-                  }
-                }
+                on: { click: _vm.sigPregunta }
               },
               [
                 _c("img", {
@@ -45067,22 +45741,1086 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.filtro === 4
+    _vm.pregunta === 5
       ? _c("span", [
+          _vm._m(20),
+          _vm._v(" "),
+          _vm._m(21),
+          _vm._v(" "),
           _vm._m(22),
           _vm._v(" "),
           _vm._m(23),
           _vm._v(" "),
+          _c("div", { staticClass: "row d-flex justify-content-center h5" }, [
+            _c("b", {
+              staticClass: "mr-2 text-danger",
+              domProps: { textContent: _vm._s(_vm.textoErr) }
+            })
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[4],
+                    expression: "respuestas[4]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "familias", value: "Verde" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[4])
+                    ? _vm._i(_vm.respuestas[4], "Verde") > -1
+                    : _vm.respuestas[4]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[4],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Verde",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 4, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            4,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 4, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("b", [_vm._v(" Verde: ")]),
+              _vm._v(
+                "\n                Hierba, pino y tallos de plantas.                                     \n            "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[4],
+                    expression: "respuestas[4]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "familias", value: "Citrica" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[4])
+                    ? _vm._i(_vm.respuestas[4], "Citrica") > -1
+                    : _vm.respuestas[4]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[4],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Citrica",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 4, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            4,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 4, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("b", [_vm._v(" Cítrica: ")]),
+              _vm._v(
+                "\n                Naranjas, bergamotas, limones, mandarinas y pomelos. \n            "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[4],
+                    expression: "respuestas[4]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "familias", value: "Floral" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[4])
+                    ? _vm._i(_vm.respuestas[4], "Floral") > -1
+                    : _vm.respuestas[4]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[4],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Floral",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 4, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            4,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 4, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("b", [_vm._v(" Floral: ")]),
+              _vm._v(
+                "\n                Rosa, jazmín, violetas, narcisos y lirios.\n            "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[4],
+                    expression: "respuestas[4]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "familias", value: "Frutal" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[4])
+                    ? _vm._i(_vm.respuestas[4], "Frutal") > -1
+                    : _vm.respuestas[4]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[4],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Frutal",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 4, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            4,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 4, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("b", [_vm._v(" Frutal: ")]),
+              _vm._v(
+                "\n                Mango, higo, melocotón, pera, manzana y frambuesa. \n            "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[4],
+                    expression: "respuestas[4]"
+                  }
+                ],
+                attrs: {
+                  type: "checkbox",
+                  name: "familias",
+                  value: "Aromatica"
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[4])
+                    ? _vm._i(_vm.respuestas[4], "Aromatica") > -1
+                    : _vm.respuestas[4]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[4],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Aromatica",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 4, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            4,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 4, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("b", [_vm._v(" Aromática: ")]),
+              _vm._v(
+                "\n                Lavanda, geranio, albahaca, comino, romero y salvia. \n            "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[4],
+                    expression: "respuestas[4]"
+                  }
+                ],
+                attrs: {
+                  type: "checkbox",
+                  name: "familias",
+                  value: "Helechos"
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[4])
+                    ? _vm._i(_vm.respuestas[4], "Helechos") > -1
+                    : _vm.respuestas[4]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[4],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Helechos",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 4, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            4,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 4, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("b", [_vm._v(" Helechos: ")]),
+              _vm._v(
+                "\n                Lavandas, maderas, comino, bergamota y musgo de roble.\n            "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[4],
+                    expression: "respuestas[4]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "familias", value: "Chipre" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[4])
+                    ? _vm._i(_vm.respuestas[4], "Chipre") > -1
+                    : _vm.respuestas[4]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[4],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Chipre",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 4, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            4,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 4, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("b", [_vm._v(" Chipre: ")]),
+              _vm._v(
+                "\n                Musgo de roble, láudano, pachuli y bergamota. \n            "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[4],
+                    expression: "respuestas[4]"
+                  }
+                ],
+                attrs: {
+                  type: "checkbox",
+                  name: "familias",
+                  value: "Amaderada"
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[4])
+                    ? _vm._i(_vm.respuestas[4], "Amaderada") > -1
+                    : _vm.respuestas[4]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[4],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Amaderada",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 4, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            4,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 4, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("b", [_vm._v(" Amaderada: ")]),
+              _vm._v(
+                "\n                Sándalo, pachuli, cedro, lavanda y pino.\n            "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[4],
+                    expression: "respuestas[4]"
+                  }
+                ],
+                attrs: {
+                  type: "checkbox",
+                  name: "familias",
+                  value: "Oriental"
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[4])
+                    ? _vm._i(_vm.respuestas[4], "Oriental") > -1
+                    : _vm.respuestas[4]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[4],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Oriental",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 4, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            4,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 4, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("b", [_vm._v(" Oriental: ")]),
+              _vm._v(
+                "\n                Vainilla, láudano y esencias variadas muy fuertes.\n            "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[4],
+                    expression: "respuestas[4]"
+                  }
+                ],
+                attrs: {
+                  type: "checkbox",
+                  name: "familias",
+                  value: "Aldehidica"
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[4])
+                    ? _vm._i(_vm.respuestas[4], "Aldehidica") > -1
+                    : _vm.respuestas[4]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[4],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Aldehidica",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 4, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            4,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 4, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("b", [_vm._v(" Aldehidica: ")]),
+              _vm._v(
+                "\n                Fragancias variadas que provienen de aldehidos.\n            "
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "row d-flex justify-content-center" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success mx-4 btn-lg",
+                on: { click: _vm.validarEnvio }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Generar resultados ")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mx-4 btn-lg",
+                on: { click: _vm.sigPregunta }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: {
+                    src: "/img/iconos/recomendador/siguiente.svg",
+                    width: "24"
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Siguiente pregunta ")
+                ])
+              ]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.pregunta === 6
+      ? _c("span", [
           _vm._m(24),
           _vm._v(" "),
           _vm._m(25),
-          _vm._v(" "),
-          _c("hr"),
           _vm._v(" "),
           _vm._m(26),
           _vm._v(" "),
           _vm._m(27),
           _vm._v(" "),
+          _c("div", { staticClass: "row d-flex justify-content-center h5" }, [
+            _c("b", {
+              staticClass: "mr-2 text-danger",
+              domProps: { textContent: _vm._s(_vm.textoErr) }
+            })
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[5],
+                    expression: "respuestas[5]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "aroma", value: "Floral" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[5])
+                    ? _vm._i(_vm.respuestas[5], "Floral") > -1
+                    : _vm.respuestas[5]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[5],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Floral",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 5, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            5,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 5, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" \n                Florales\n                "),
+              _c("img", {
+                staticClass: "mb-1 mr-2",
+                attrs: {
+                  src: "/img/iconos/recomendador/aromas/florales.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[5],
+                    expression: "respuestas[5]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "aroma", value: "Frutal" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[5])
+                    ? _vm._i(_vm.respuestas[5], "Frutal") > -1
+                    : _vm.respuestas[5]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[5],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Frutal",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 5, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            5,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 5, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" \n                Frutales\n                "),
+              _c("img", {
+                staticClass: "mb-1 mr-2",
+                attrs: {
+                  src: "/img/iconos/recomendador/aromas/frutales.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[5],
+                    expression: "respuestas[5]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "aroma", value: "Verde" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[5])
+                    ? _vm._i(_vm.respuestas[5], "Verde") > -1
+                    : _vm.respuestas[5]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[5],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Verde",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 5, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            5,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 5, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" \n                Verdes\n                "),
+              _c("img", {
+                staticClass: "mb-1 mr-2",
+                attrs: {
+                  src: "/img/iconos/recomendador/aromas/verdes.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[5],
+                    expression: "respuestas[5]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "aroma", value: "Herbal" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[5])
+                    ? _vm._i(_vm.respuestas[5], "Herbal") > -1
+                    : _vm.respuestas[5]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[5],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Herbal",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 5, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            5,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 5, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" \n                Herbales\n                "),
+              _c("img", {
+                staticClass: "mb-1 mr-2",
+                attrs: {
+                  src: "/img/iconos/recomendador/aromas/herbales.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[5],
+                    expression: "respuestas[5]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "aroma", value: "Citrico" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[5])
+                    ? _vm._i(_vm.respuestas[5], "Citrico") > -1
+                    : _vm.respuestas[5]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[5],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Citrico",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 5, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            5,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 5, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" \n                Citricos\n                "),
+              _c("img", {
+                staticClass: "mb-1 mr-2",
+                attrs: {
+                  src: "/img/iconos/recomendador/aromas/citricos.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[5],
+                    expression: "respuestas[5]"
+                  }
+                ],
+                attrs: {
+                  type: "checkbox",
+                  name: "aroma",
+                  value: "Herbal aromatico"
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[5])
+                    ? _vm._i(_vm.respuestas[5], "Herbal aromatico") > -1
+                    : _vm.respuestas[5]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[5],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Herbal aromatico",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 5, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            5,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 5, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(
+                " \n                Herbales Aromáticos\n                "
+              ),
+              _c("img", {
+                staticClass: "mb-1 mr-2",
+                attrs: {
+                  src: "/img/iconos/recomendador/aromas/aromaticos.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[5],
+                    expression: "respuestas[5]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "aroma", value: "Amaderado" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[5])
+                    ? _vm._i(_vm.respuestas[5], "Amaderado") > -1
+                    : _vm.respuestas[5]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[5],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Amaderado",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 5, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            5,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 5, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" \n                Amaderados\n                "),
+              _c("img", {
+                staticClass: "mb-1 mr-2",
+                attrs: {
+                  src: "/img/iconos/recomendador/aromas/amaderados.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[5],
+                    expression: "respuestas[5]"
+                  }
+                ],
+                attrs: { type: "checkbox", name: "aroma", value: "Otros" },
+                domProps: {
+                  checked: Array.isArray(_vm.respuestas[5])
+                    ? _vm._i(_vm.respuestas[5], "Otros") > -1
+                    : _vm.respuestas[5]
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.respuestas[5],
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = "Otros",
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.respuestas, 5, $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.respuestas,
+                            5,
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.respuestas, 5, $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" \n                Otros\n                "),
+              _c("img", {
+                staticClass: "mb-1 mr-2",
+                attrs: {
+                  src: "/img/iconos/recomendador/aromas/otros.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "row d-flex justify-content-center" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success mx-4 btn-lg",
+                on: { click: _vm.validarEnvio }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Generar resultados ")
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mx-4 btn-lg",
+                on: { click: _vm.sigPregunta }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: {
+                    src: "/img/iconos/recomendador/siguiente.svg",
+                    width: "24"
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Siguiente pregunta ")
+                ])
+              ]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.pregunta === 7
+      ? _c("span", [
           _vm._m(28),
           _vm._v(" "),
           _vm._m(29),
@@ -45091,18 +46829,124 @@ var render = function() {
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
+          _c("div", { staticClass: "radio col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[6],
+                    expression: "respuestas[6]"
+                  }
+                ],
+                attrs: { type: "radio", name: "uso", value: "di" },
+                domProps: { checked: _vm._q(_vm.respuestas[6], "di") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.respuestas, 6, "di")
+                  }
+                }
+              }),
+              _vm._v(" \n                Uso diario\n                "),
+              _c("img", {
+                staticClass: "ml-1",
+                attrs: {
+                  src: "/img/iconos/recomendador/diario.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[6],
+                    expression: "respuestas[6]"
+                  }
+                ],
+                attrs: { type: "radio", name: "uso", value: "tr" },
+                domProps: { checked: _vm._q(_vm.respuestas[6], "tr") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.respuestas, 6, "tr")
+                  }
+                }
+              }),
+              _vm._v(" \n                Trabajo\n                "),
+              _c("img", {
+                staticClass: "ml-1",
+                attrs: {
+                  src: "/img/iconos/recomendador/trabajo.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "radio col-12 text-center h4" }, [
+            _c("label", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.respuestas[6],
+                    expression: "respuestas[6]"
+                  }
+                ],
+                attrs: { type: "radio", name: "uso", value: "es" },
+                domProps: { checked: _vm._q(_vm.respuestas[6], "es") },
+                on: {
+                  change: function($event) {
+                    return _vm.$set(_vm.respuestas, 6, "es")
+                  }
+                }
+              }),
+              _vm._v(
+                " \n                Ocasiones especiales\n                "
+              ),
+              _c("img", {
+                staticClass: "ml-1",
+                attrs: {
+                  src: "/img/iconos/recomendador/especial.svg",
+                  width: "24"
+                }
+              })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
           _c("div", { staticClass: "row d-flex justify-content-center" }, [
-            _vm._m(31),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success mx-4 btn-lg",
+                on: { click: _vm.validarEnvio }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Generar resultados ")
+                ])
+              ]
+            ),
             _vm._v(" "),
             _c(
               "button",
               {
                 staticClass: "btn btn-primary mx-4 btn-lg",
-                on: {
-                  click: function($event) {
-                    _vm.filtro++
-                  }
-                }
+                on: { click: _vm.sigPregunta }
               },
               [
                 _c("img", {
@@ -45122,198 +46966,780 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.filtro === 5
+    _vm.pregunta === 8
       ? _c("span", [
+          _vm._m(31),
+          _vm._v(" "),
           _vm._m(32),
           _vm._v(" "),
           _vm._m(33),
           _vm._v(" "),
           _vm._m(34),
           _vm._v(" "),
-          _vm._m(35),
+          _c("div", { staticClass: "row d-flex justify-content-center h5" }, [
+            _c("b", {
+              staticClass: "mr-2 text-danger",
+              domProps: { textContent: _vm._s(_vm.textoErr) }
+            })
+          ]),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
-          _vm._m(36),
-          _vm._v(" "),
-          _vm._m(37),
-          _vm._v(" "),
-          _vm._m(38),
-          _vm._v(" "),
-          _vm._m(39),
-          _vm._v(" "),
-          _vm._m(40),
-          _vm._v(" "),
-          _vm._m(41),
-          _vm._v(" "),
-          _vm._m(42),
-          _vm._v(" "),
-          _vm._m(43),
-          _vm._v(" "),
-          _vm._m(44),
-          _vm._v(" "),
-          _vm._m(45),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-5 offset-1" }, [
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Libertad"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Libertad") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Libertad",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Libertad                            \n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Independencia"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Independencia") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Independencia",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Independencia                            \n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Creatividad"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Creatividad") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Creatividad",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Creatividad                         \n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Diversion"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Diversion") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Diversion",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Diversión                         \n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Fantasia"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Fantasia") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Fantasia",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Fantasía\n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Lucidez"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Lucidez") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Lucidez",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Lucidez\n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Familiaridad"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Familiaridad") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Familiaridad",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Familiaridad\n                    "
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-4 offset-2" }, [
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Versatibilidad"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Versatibilidad") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Versatibilidad",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Versatibilidad                            \n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Delicadeza"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Delicadeza") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Delicadeza",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Delicadeza                            \n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Sensualidad"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Sensualidad") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Sensualidad",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Sensualidad                         \n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Optimismo"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Optimismo") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Optimismo",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Optimismo\n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Alegria"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Alegria") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Alegria",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Alegría\n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Confianza"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Confianza") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Confianza",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Confianza\n                    "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.respuestas[7],
+                        expression: "respuestas[7]"
+                      }
+                    ],
+                    attrs: {
+                      type: "checkbox",
+                      name: "personalidad",
+                      value: "Energia"
+                    },
+                    domProps: {
+                      checked: Array.isArray(_vm.respuestas[7])
+                        ? _vm._i(_vm.respuestas[7], "Energia") > -1
+                        : _vm.respuestas[7]
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.respuestas[7],
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = "Energia",
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(_vm.respuestas, 7, $$a.concat([$$v]))
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.respuestas,
+                                7,
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.respuestas, 7, $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    " \n                        Energía\n                    "
+                  )
+                ])
+              ])
+            ])
+          ]),
           _vm._v(" "),
           _c("hr"),
           _vm._v(" "),
           _c("div", { staticClass: "row d-flex justify-content-center" }, [
-            _vm._m(46),
-            _vm._v(" "),
             _c(
               "button",
               {
-                staticClass: "btn btn-primary mx-4 btn-lg",
-                on: {
-                  click: function($event) {
-                    _vm.filtro++
-                  }
-                }
+                staticClass: "btn btn-success mx-4 btn-lg",
+                on: { click: _vm.validarEnvio }
               },
               [
                 _c("img", {
                   staticClass: "mb-1",
-                  attrs: {
-                    src: "/img/iconos/recomendador/siguiente.svg",
-                    width: "24"
-                  }
+                  attrs: { src: "/img/iconos/check_white.svg", width: "24" }
                 }),
                 _vm._v(" "),
                 _c("span", { staticClass: "ml-2" }, [
-                  _vm._v(" Siguiente pregunta ")
+                  _vm._v(" Generar resultados ")
                 ])
               ]
             )
           ])
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.filtro === 6
-      ? _c("span", [
-          _vm._m(47),
-          _vm._v(" "),
-          _vm._m(48),
-          _vm._v(" "),
-          _vm._m(49),
-          _vm._v(" "),
-          _vm._m(50),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _vm._m(51),
-          _vm._v(" "),
-          _vm._m(52),
-          _vm._v(" "),
-          _vm._m(53),
-          _vm._v(" "),
-          _vm._m(54),
-          _vm._v(" "),
-          _vm._m(55),
-          _vm._v(" "),
-          _vm._m(56),
-          _vm._v(" "),
-          _vm._m(57),
-          _vm._v(" "),
-          _vm._m(58),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c("div", { staticClass: "row d-flex justify-content-center" }, [
-            _vm._m(59),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary mx-4 btn-lg",
-                on: {
-                  click: function($event) {
-                    _vm.filtro++
-                  }
-                }
-              },
-              [
-                _c("img", {
-                  staticClass: "mb-1",
-                  attrs: {
-                    src: "/img/iconos/recomendador/siguiente.svg",
-                    width: "24"
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "ml-2" }, [
-                  _vm._v(" Siguiente pregunta ")
-                ])
-              ]
-            )
-          ])
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.filtro === 7
-      ? _c("span", [
-          _vm._m(60),
-          _vm._v(" "),
-          _vm._m(61),
-          _vm._v(" "),
-          _vm._m(62),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _vm._m(63),
-          _vm._v(" "),
-          _vm._m(64),
-          _vm._v(" "),
-          _vm._m(65),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _c("div", { staticClass: "row d-flex justify-content-center" }, [
-            _vm._m(66),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary mx-4 btn-lg",
-                on: {
-                  click: function($event) {
-                    _vm.filtro++
-                  }
-                }
-              },
-              [
-                _c("img", {
-                  staticClass: "mb-1",
-                  attrs: {
-                    src: "/img/iconos/recomendador/siguiente.svg",
-                    width: "24"
-                  }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "ml-2" }, [
-                  _vm._v(" Siguiente pregunta ")
-                ])
-              ]
-            )
-          ])
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.filtro === 8
-      ? _c("span", [
-          _vm._m(67),
-          _vm._v(" "),
-          _vm._m(68),
-          _vm._v(" "),
-          _vm._m(69),
-          _vm._v(" "),
-          _vm._m(70),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _vm._m(71),
-          _vm._v(" "),
-          _c("hr"),
-          _vm._v(" "),
-          _vm._m(72)
         ])
       : _vm._e()
   ])
@@ -45366,64 +47792,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", { attrs: { type: "radio", name: "genero", value: "m" } }),
-        _vm._v(" \n                Masculino \n                "),
-        _c("img", {
-          staticClass: "ml-1",
-          attrs: { src: "/img/iconos/recomendador/hombre.svg", width: "24" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", { attrs: { type: "radio", name: "genero", value: "f" } }),
-        _vm._v(" \n                Femenino \n                "),
-        _c("img", {
-          staticClass: "ml-1",
-          attrs: { src: "/img/iconos/recomendador/mujer.svg", width: "26" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", { attrs: { type: "radio", name: "genero", value: "u" } }),
-        _vm._v(" \n                Unisex \n                "),
-        _c("img", {
-          staticClass: "ml-1",
-          attrs: { src: "/img/iconos/recomendador/unisex.svg", width: "26" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
-      _c("img", {
-        staticClass: "mb-1",
-        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row d-flex justify-content-center h3" }, [
       _c("b", { staticClass: "text-primary mr-2" }, [_vm._v(" Pregunta #2: ")]),
       _vm._v(" Edad\n        ")
@@ -45467,69 +47835,32 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", { attrs: { type: "radio", name: "edad", value: "in" } }),
-        _vm._v(" \n                Infantil\n                "),
-        _c("span", { staticClass: "text-info h4" }, [
-          _c("b", [_vm._v(" (0 a 9) ")])
-        ])
-      ])
+    return _c("span", { staticClass: "text-info h4" }, [
+      _c("b", [_vm._v(" (0 a 9) ")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", { attrs: { type: "radio", name: "edad", value: "jo" } }),
-        _vm._v(" \n                Joven\n                "),
-        _c("span", { staticClass: "text-info h4" }, [
-          _c("b", [_vm._v(" (10 a 20) ")])
-        ])
-      ])
+    return _c("span", { staticClass: "text-info h4" }, [
+      _c("b", [_vm._v(" (10 a 20) ")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", { attrs: { type: "radio", name: "edad", value: "ad" } }),
-        _vm._v(" \n                Adulto\n                "),
-        _c("span", { staticClass: "text-info h4" }, [
-          _c("b", [_vm._v(" (21+) ")])
-        ])
-      ])
+    return _c("span", { staticClass: "text-info h4" }, [
+      _c("b", [_vm._v(" (21+) ")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", { attrs: { type: "radio", name: "edad", value: "at" } }),
-        _vm._v(" \n                Atemporal\n                "),
-        _c("span", { staticClass: "text-info h4" }, [
-          _c("b", [_vm._v(" (Cualquiera) ")])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
-      _c("img", {
-        staticClass: "mb-1",
-        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
+    return _c("span", { staticClass: "text-info h4" }, [
+      _c("b", [_vm._v(" (Cualquiera) ")])
     ])
   },
   function() {
@@ -45581,61 +47912,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "radio", name: "intensidad", value: "lig" }
-        }),
-        _vm._v(" \n                Ligera / Fresca\n                "),
-        _c("span", { staticClass: "text-info h4" }, [
-          _c("b", [_vm._v(" (Eau de Splash y Eau de Cologne) ")])
-        ])
-      ])
+    return _c("span", { staticClass: "text-info h4" }, [
+      _c("b", [_vm._v(" (Eau de Splash y Eau de Cologne) ")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "radio", name: "intensidad", value: "inter" }
-        }),
-        _vm._v(" \n                Intermedia\n                "),
-        _c("span", { staticClass: "text-info h4" }, [
-          _c("b", [_vm._v(" (Eau de Toilette) ")])
-        ])
-      ])
+    return _c("span", { staticClass: "text-info h4" }, [
+      _c("b", [_vm._v(" (Eau de Toilette) ")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "radio", name: "intensidad", value: "intensa" }
-        }),
-        _vm._v(" \n                Intensa / Profunda\n                "),
-        _c("span", { staticClass: "text-info h4" }, [
-          _c("b", [_vm._v(" (Eau de Perfume y Perfume) ")])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
-      _c("img", {
-        staticClass: "mb-1",
-        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
+    return _c("span", { staticClass: "text-info h4" }, [
+      _c("b", [_vm._v(" (Eau de Perfume y Perfume) ")])
     ])
   },
   function() {
@@ -45695,104 +47989,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "caracter", value: "in" }
-        }),
-        _vm._v(" \n                Informal\n                "),
-        _c("img", {
-          staticClass: "ml-1",
-          attrs: { src: "/img/iconos/recomendador/informal.svg", width: "24" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "caracter", value: "in" }
-        }),
-        _vm._v(" \n                Natural\n                "),
-        _c("img", {
-          staticClass: "ml-1",
-          attrs: { src: "/img/iconos/recomendador/natural.svg", width: "24" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "caracter", value: "in" }
-        }),
-        _vm._v(" \n                Clásico\n                "),
-        _c("img", {
-          staticClass: "ml-1",
-          attrs: { src: "/img/iconos/recomendador/clasico.svg", width: "24" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "caracter", value: "in" }
-        }),
-        _vm._v(" \n                Seductor\n                "),
-        _c("img", {
-          staticClass: "ml-1",
-          attrs: { src: "/img/iconos/recomendador/seductor.svg", width: "24" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "caracter", value: "in" }
-        }),
-        _vm._v(" \n                Moderno\n                "),
-        _c("img", {
-          staticClass: "ml-1",
-          attrs: { src: "/img/iconos/recomendador/moderno.svg", width: "24" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
-      _c("img", {
-        staticClass: "mb-1",
-        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row d-flex justify-content-center h3" }, [
       _c("b", { staticClass: "text-primary mr-2" }, [_vm._v(" Pregunta #5: ")]),
       _vm._v(" Familias Olfativas\n        ")
@@ -45840,189 +48036,6 @@ var staticRenderFns = [
       _c("b", { staticClass: "mr-2" }, [
         _vm._v(" Nota: Puedes seleccionar varias familias olfativas. ")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "familias", value: "verde" }
-        }),
-        _vm._v(" "),
-        _c("b", [_vm._v(" Verde: ")]),
-        _vm._v(
-          "\n                Hierba, pino y tallos de plantas.                                     \n            "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "familias", value: "citrica" }
-        }),
-        _vm._v(" "),
-        _c("b", [_vm._v(" Cítrica: ")]),
-        _vm._v(
-          "\n                Naranjas, bergamotas, limones, mandarinas y pomelos. \n            "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "familias", value: "floral" }
-        }),
-        _vm._v(" "),
-        _c("b", [_vm._v(" Floral: ")]),
-        _vm._v(
-          "\n                Rosa, jazmín, violetas, narcisos y lirios.\n            "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "familias", value: "frutal" }
-        }),
-        _vm._v(" "),
-        _c("b", [_vm._v(" Frutal: ")]),
-        _vm._v(
-          "\n                Mango, higo, melocotón, pera, manzana y frambuesa. \n            "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "familias", value: "aromatica" }
-        }),
-        _vm._v(" "),
-        _c("b", [_vm._v(" Aromática: ")]),
-        _vm._v(
-          "\n                Lavanda, geranio, albahaca, comino, romero y salvia. \n            "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "familias", value: "helechos" }
-        }),
-        _vm._v(" "),
-        _c("b", [_vm._v(" Helechos: ")]),
-        _vm._v(
-          "\n                Lavandas, maderas, comino, bergamota y musgo de roble.\n            "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "familias", value: "chipre" }
-        }),
-        _vm._v(" "),
-        _c("b", [_vm._v(" Chipre: ")]),
-        _vm._v(
-          "\n                Musgo de roble, láudano, pachuli y bergamota. \n            "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "familias", value: "amaderada" }
-        }),
-        _vm._v(" "),
-        _c("b", [_vm._v(" Amaderada: ")]),
-        _vm._v(
-          "\n                Sándalo, pachuli, cedro, lavanda y pino.\n            "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "familias", value: "oriental" }
-        }),
-        _vm._v(" "),
-        _c("b", [_vm._v(" Oriental: ")]),
-        _vm._v(
-          "\n                Vainilla, láudano y esencias variadas muy fuertes.\n            "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "familias", value: "aldehidica" }
-        }),
-        _vm._v(" "),
-        _c("b", [_vm._v(" Aldehidica: ")]),
-        _vm._v(
-          "\n                Fragancias variadas que provienen de aldehidos.\n            "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
-      _c("img", {
-        staticClass: "mb-1",
-        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
     ])
   },
   function() {
@@ -46084,179 +48097,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "aroma", value: "floral" }
-        }),
-        _vm._v(" \n                Florales\n                "),
-        _c("img", {
-          staticClass: "mb-1 mr-2",
-          attrs: {
-            src: "/img/iconos/recomendador/aromas/florales.svg",
-            width: "24"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "aroma", value: "frutal" }
-        }),
-        _vm._v(" \n                Frutales\n                "),
-        _c("img", {
-          staticClass: "mb-1 mr-2",
-          attrs: {
-            src: "/img/iconos/recomendador/aromas/frutales.svg",
-            width: "24"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "aroma", value: "verde" }
-        }),
-        _vm._v(" \n                Verdes\n                "),
-        _c("img", {
-          staticClass: "mb-1 mr-2",
-          attrs: {
-            src: "/img/iconos/recomendador/aromas/verdes.svg",
-            width: "24"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "aroma", value: "herbal" }
-        }),
-        _vm._v(" \n                Herbales\n                "),
-        _c("img", {
-          staticClass: "mb-1 mr-2",
-          attrs: {
-            src: "/img/iconos/recomendador/aromas/herbales.svg",
-            width: "24"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "aroma", value: "citrico" }
-        }),
-        _vm._v(" \n                Citricos\n                "),
-        _c("img", {
-          staticClass: "mb-1 mr-2",
-          attrs: {
-            src: "/img/iconos/recomendador/aromas/citricos.svg",
-            width: "24"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "aroma", value: "herbal_ar" }
-        }),
-        _vm._v(" \n                Herbales Aromáticos\n                "),
-        _c("img", {
-          staticClass: "mb-1 mr-2",
-          attrs: {
-            src: "/img/iconos/recomendador/aromas/aromaticos.svg",
-            width: "24"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "aroma", value: "amaderado" }
-        }),
-        _vm._v(" \n                Amaderados\n                "),
-        _c("img", {
-          staticClass: "mb-1 mr-2",
-          attrs: {
-            src: "/img/iconos/recomendador/aromas/amaderados.svg",
-            width: "24"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", {
-          attrs: { type: "checkbox", name: "aroma", value: "otros" }
-        }),
-        _vm._v(" \n                Otros\n                "),
-        _c("img", {
-          staticClass: "mb-1 mr-2",
-          attrs: {
-            src: "/img/iconos/recomendador/aromas/otros.svg",
-            width: "24"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
-      _c("img", {
-        staticClass: "mb-1",
-        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row d-flex justify-content-center h3" }, [
       _c("b", { staticClass: "text-primary mr-2" }, [_vm._v(" Pregunta #7: ")]),
       _vm._v(" Preferencias de Uso\n        ")
@@ -46294,64 +48134,6 @@ var staticRenderFns = [
       _c("b", { staticClass: "mr-2" }, [
         _vm._v(" ¿Cúando deseas usar tu perfume ideal? ")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", { attrs: { type: "radio", name: "uso", value: "di" } }),
-        _vm._v(" \n                Uso diario\n                "),
-        _c("img", {
-          staticClass: "ml-1",
-          attrs: { src: "/img/iconos/recomendador/diario.svg", width: "24" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", { attrs: { type: "radio", name: "uso", value: "tr" } }),
-        _vm._v(" \n                Trabajo\n                "),
-        _c("img", {
-          staticClass: "ml-1",
-          attrs: { src: "/img/iconos/recomendador/trabajo.svg", width: "24" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
-      _c("label", [
-        _c("input", { attrs: { type: "radio", name: "uso", value: "es" } }),
-        _vm._v(" \n                Ocasiones especiales\n                "),
-        _c("img", {
-          staticClass: "ml-1",
-          attrs: { src: "/img/iconos/recomendador/especial.svg", width: "24" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
-      _c("img", {
-        staticClass: "mb-1",
-        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
-      }),
-      _vm._v(" "),
-      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
     ])
   },
   function() {
@@ -46406,229 +48188,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row d-flex justify-content-center h6" }, [
       _c("b", { staticClass: "mr-2" }, [
         _vm._v(" Nota: Puedes seleccionar varios aspectos de personalidad. ")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-5 offset-1" }, [
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Libertad"
-              }
-            }),
-            _vm._v(
-              " \n                        Libertad                            \n                    "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Independencia"
-              }
-            }),
-            _vm._v(
-              " \n                        Independencia                            \n                    "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Creatividad"
-              }
-            }),
-            _vm._v(
-              " \n                        Creatividad                         \n                    "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Diversion"
-              }
-            }),
-            _vm._v(
-              " \n                        Diversión                         \n                    "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Fantasia"
-              }
-            }),
-            _vm._v(" \n                        Fantasía\n                    ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Lucidez"
-              }
-            }),
-            _vm._v(" \n                        Lucidez\n                    ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Familiaridad"
-              }
-            }),
-            _vm._v(
-              " \n                        Familiaridad\n                    "
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-4 offset-2" }, [
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Versatibilidad"
-              }
-            }),
-            _vm._v(
-              " \n                        Versatibilidad                            \n                    "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Delicadeza"
-              }
-            }),
-            _vm._v(
-              " \n                        Delicadeza                            \n                    "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Sensualidad"
-              }
-            }),
-            _vm._v(
-              " \n                        Sensualidad                         \n                    "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Optimismo"
-              }
-            }),
-            _vm._v(" \n                        Optimismo\n                    ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Alegria"
-              }
-            }),
-            _vm._v(" \n                        Alegría\n                    ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Confianza"
-              }
-            }),
-            _vm._v(" \n                        Confianza\n                    ")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
-          _c("label", [
-            _c("input", {
-              attrs: {
-                type: "checkbox",
-                name: "personalidad",
-                value: "Energía"
-              }
-            }),
-            _vm._v(" \n                        Energía\n                    ")
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row d-flex justify-content-center" }, [
-      _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
-        _c("img", {
-          staticClass: "mb-1",
-          attrs: { src: "/img/iconos/check_white.svg", width: "24" }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
       ])
     ])
   }
