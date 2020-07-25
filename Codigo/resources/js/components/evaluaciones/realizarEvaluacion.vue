@@ -688,7 +688,7 @@
           <b class="mr-1">Expira en:</b>
           {{ resultadoAnual["exp"] }}
           <span v-if="parseInt(resultadoAnual['exp']) == 1">día</span>
-          <span>días</span>
+          <span v-else>días</span>
         </li>
       </div>
       <div class="row h5 text-left ml-4 pl-4">
@@ -713,7 +713,7 @@
             <img src="/img/iconos/cancel_white.svg" width="24" class="mb-1" />
             <span class="ml-2">Rechazar</span>
           </a>
-          <a href="#" class="btn btn-primary mx-2">
+          <a :href="norenovarLink" class="btn btn-primary mx-2">
             <img src="/img/iconos/crear.svg" width="24" class="mb-1" />
             <span class="ml-2">Crear contrato nuevo</span>
           </a>
@@ -814,7 +814,9 @@ export default {
 
       generarLink: "",
 
-      renovarLink: ""
+      renovarLink: "",
+
+      norenovarLink: ""
     };
   },
 
@@ -1003,6 +1005,8 @@ export default {
           this.resultadoAnual = response.data[0];
           this.renovarLink = "/productor/" + this.resultadoAnual["id_prod"] +
           "/contratos/renovar/" + idp + "/" + fecha_ap_ts;
+          this.norenovarLink = "/productor/" + this.resultadoAnual["id_prod"] +
+          "/contratos/generar_nuevo/" + idp + "/" + fecha_ap_ts;
         })
         .catch((errors) => {
           console.log("%cAxios: Error!", "color: #FFCCCB");

@@ -2998,7 +2998,8 @@ __webpack_require__.r(__webpack_exports__);
                   luego de insertar los datos del resultado de la ev anual */
       ,
       generarLink: "",
-      renovarLink: ""
+      renovarLink: "",
+      norenovarLink: ""
     };
   },
 
@@ -3150,6 +3151,7 @@ __webpack_require__.r(__webpack_exports__);
         _this7.tipoEv = "resultadoAnual";
         _this7.resultadoAnual = response.data[0];
         _this7.renovarLink = "/productor/" + _this7.resultadoAnual["id_prod"] + "/contratos/renovar/" + idp + "/" + fecha_ap_ts;
+        _this7.norenovarLink = "/productor/" + _this7.resultadoAnual["id_prod"] + "/contratos/generar_nuevo/" + idp + "/" + fecha_ap_ts;
       })["catch"](function (errors) {
         console.log("%cAxios: Error!", "color: #FFCCCB");
         console.log(errors);
@@ -3911,6 +3913,530 @@ __webpack_require__.r(__webpack_exports__);
         return "";
       }
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      filtro: 1
+    };
   }
 });
 
@@ -8359,6 +8885,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "\n.combo {\r\n  color: #707070;\r\n  font-weight: bold;\r\n  width: 340px;\r\n  padding-top: 5px;\r\n  padding-bottom: 5px;\r\n  padding-left: 5px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=style&index=0&id=5394a82d&scoped=true&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=style&index=0&id=5394a82d&scoped=true&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ninput[type=radio][data-v-5394a82d] {\n    width: 18px;\n    height: 18px;\n}\ninput[type=checkbox][data-v-5394a82d] {\n    width: 18px;\n    height: 18px;\n}\n", ""]);
 
 // exports
 
@@ -39554,6 +40099,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=style&index=0&id=5394a82d&scoped=true&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=style&index=0&id=5394a82d&scoped=true&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./filtrosRecomendador.vue?vue&type=style&index=0&id=5394a82d&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=style&index=0&id=5394a82d&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -42221,9 +42796,7 @@ var render = function() {
               ),
               parseInt(_vm.resultadoAnual["exp"]) == 1
                 ? _c("span", [_vm._v("día")])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("span", [_vm._v("días")])
+                : _c("span", [_vm._v("días")])
             ])
           ]),
           _vm._v(" "),
@@ -42243,7 +42816,23 @@ var render = function() {
                 _c("div", { staticClass: "row justify-content-center" }, [
                   _vm._m(38),
                   _vm._v(" "),
-                  _vm._m(39),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-primary mx-2",
+                      attrs: { href: _vm.norenovarLink }
+                    },
+                    [
+                      _c("img", {
+                        staticClass: "mb-1",
+                        attrs: { src: "/img/iconos/crear.svg", width: "24" }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "ml-2" }, [
+                        _vm._v("Crear contrato nuevo")
+                      ])
+                    ]
+                  ),
                   _vm._v(" "),
                   _c(
                     "a",
@@ -42264,7 +42853,7 @@ var render = function() {
                   )
                 ])
               ])
-            : _c("span", [_vm._m(40), _vm._v(" "), _vm._m(41)])
+            : _c("span", [_vm._m(39), _vm._v(" "), _vm._m(40)])
         ])
       : _vm._e()
   ])
@@ -42720,23 +43309,6 @@ var staticRenderFns = [
         }),
         _vm._v(" "),
         _c("span", { staticClass: "ml-2" }, [_vm._v("Rechazar")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "btn btn-primary mx-2", attrs: { href: "#" } },
-      [
-        _c("img", {
-          staticClass: "mb-1",
-          attrs: { src: "/img/iconos/crear.svg", width: "24" }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "ml-2" }, [_vm._v("Crear contrato nuevo")])
       ]
     )
   },
@@ -44324,6 +44896,1743 @@ var render = function() {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=template&id=5394a82d&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=template&id=5394a82d&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.filtro === 1
+      ? _c("span", [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _vm._m(2),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _vm._m(3),
+          _vm._v(" "),
+          _vm._m(4),
+          _vm._v(" "),
+          _vm._m(5),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "row d-flex justify-content-center" }, [
+            _vm._m(6),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mx-4 btn-lg",
+                on: {
+                  click: function($event) {
+                    _vm.filtro++
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: {
+                    src: "/img/iconos/recomendador/siguiente.svg",
+                    width: "24"
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Siguiente pregunta ")
+                ])
+              ]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.filtro === 2
+      ? _c("span", [
+          _vm._m(7),
+          _vm._v(" "),
+          _vm._m(8),
+          _vm._v(" "),
+          _vm._m(9),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _vm._m(10),
+          _vm._v(" "),
+          _vm._m(11),
+          _vm._v(" "),
+          _vm._m(12),
+          _vm._v(" "),
+          _vm._m(13),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "row d-flex justify-content-center" }, [
+            _vm._m(14),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mx-4 btn-lg",
+                on: {
+                  click: function($event) {
+                    _vm.filtro++
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: {
+                    src: "/img/iconos/recomendador/siguiente.svg",
+                    width: "24"
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Siguiente pregunta ")
+                ])
+              ]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.filtro === 3
+      ? _c("span", [
+          _vm._m(15),
+          _vm._v(" "),
+          _vm._m(16),
+          _vm._v(" "),
+          _vm._m(17),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _vm._m(18),
+          _vm._v(" "),
+          _vm._m(19),
+          _vm._v(" "),
+          _vm._m(20),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "row d-flex justify-content-center" }, [
+            _vm._m(21),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mx-4 btn-lg",
+                on: {
+                  click: function($event) {
+                    _vm.filtro++
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: {
+                    src: "/img/iconos/recomendador/siguiente.svg",
+                    width: "24"
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Siguiente pregunta ")
+                ])
+              ]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.filtro === 4
+      ? _c("span", [
+          _vm._m(22),
+          _vm._v(" "),
+          _vm._m(23),
+          _vm._v(" "),
+          _vm._m(24),
+          _vm._v(" "),
+          _vm._m(25),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _vm._m(26),
+          _vm._v(" "),
+          _vm._m(27),
+          _vm._v(" "),
+          _vm._m(28),
+          _vm._v(" "),
+          _vm._m(29),
+          _vm._v(" "),
+          _vm._m(30),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "row d-flex justify-content-center" }, [
+            _vm._m(31),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mx-4 btn-lg",
+                on: {
+                  click: function($event) {
+                    _vm.filtro++
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: {
+                    src: "/img/iconos/recomendador/siguiente.svg",
+                    width: "24"
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Siguiente pregunta ")
+                ])
+              ]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.filtro === 5
+      ? _c("span", [
+          _vm._m(32),
+          _vm._v(" "),
+          _vm._m(33),
+          _vm._v(" "),
+          _vm._m(34),
+          _vm._v(" "),
+          _vm._m(35),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _vm._m(36),
+          _vm._v(" "),
+          _vm._m(37),
+          _vm._v(" "),
+          _vm._m(38),
+          _vm._v(" "),
+          _vm._m(39),
+          _vm._v(" "),
+          _vm._m(40),
+          _vm._v(" "),
+          _vm._m(41),
+          _vm._v(" "),
+          _vm._m(42),
+          _vm._v(" "),
+          _vm._m(43),
+          _vm._v(" "),
+          _vm._m(44),
+          _vm._v(" "),
+          _vm._m(45),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "row d-flex justify-content-center" }, [
+            _vm._m(46),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mx-4 btn-lg",
+                on: {
+                  click: function($event) {
+                    _vm.filtro++
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: {
+                    src: "/img/iconos/recomendador/siguiente.svg",
+                    width: "24"
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Siguiente pregunta ")
+                ])
+              ]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.filtro === 6
+      ? _c("span", [
+          _vm._m(47),
+          _vm._v(" "),
+          _vm._m(48),
+          _vm._v(" "),
+          _vm._m(49),
+          _vm._v(" "),
+          _vm._m(50),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _vm._m(51),
+          _vm._v(" "),
+          _vm._m(52),
+          _vm._v(" "),
+          _vm._m(53),
+          _vm._v(" "),
+          _vm._m(54),
+          _vm._v(" "),
+          _vm._m(55),
+          _vm._v(" "),
+          _vm._m(56),
+          _vm._v(" "),
+          _vm._m(57),
+          _vm._v(" "),
+          _vm._m(58),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "row d-flex justify-content-center" }, [
+            _vm._m(59),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mx-4 btn-lg",
+                on: {
+                  click: function($event) {
+                    _vm.filtro++
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: {
+                    src: "/img/iconos/recomendador/siguiente.svg",
+                    width: "24"
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Siguiente pregunta ")
+                ])
+              ]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.filtro === 7
+      ? _c("span", [
+          _vm._m(60),
+          _vm._v(" "),
+          _vm._m(61),
+          _vm._v(" "),
+          _vm._m(62),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _vm._m(63),
+          _vm._v(" "),
+          _vm._m(64),
+          _vm._v(" "),
+          _vm._m(65),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _c("div", { staticClass: "row d-flex justify-content-center" }, [
+            _vm._m(66),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mx-4 btn-lg",
+                on: {
+                  click: function($event) {
+                    _vm.filtro++
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  staticClass: "mb-1",
+                  attrs: {
+                    src: "/img/iconos/recomendador/siguiente.svg",
+                    width: "24"
+                  }
+                }),
+                _vm._v(" "),
+                _c("span", { staticClass: "ml-2" }, [
+                  _vm._v(" Siguiente pregunta ")
+                ])
+              ]
+            )
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.filtro === 8
+      ? _c("span", [
+          _vm._m(67),
+          _vm._v(" "),
+          _vm._m(68),
+          _vm._v(" "),
+          _vm._m(69),
+          _vm._v(" "),
+          _vm._m(70),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _vm._m(71),
+          _vm._v(" "),
+          _c("hr"),
+          _vm._v(" "),
+          _vm._m(72)
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h3" }, [
+      _c("b", { staticClass: "text-primary mr-2" }, [_vm._v(" Pregunta #1: ")]),
+      _vm._v(" Género\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "progress my-2 border border-light",
+        staticStyle: { height: "20px" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "progress-bar progress-bar-striped progress-bar-animated",
+            staticStyle: { width: "12.5%" },
+            attrs: { role: "progressbar" }
+          },
+          [_vm._v("\n                1 de 8\n            ")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h4" }, [
+      _c("b", { staticClass: "mr-2" }, [
+        _vm._v(" ¿Para qué género es tu perfume ideal? ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", { attrs: { type: "radio", name: "genero", value: "m" } }),
+        _vm._v(" \n                Masculino \n                "),
+        _c("img", {
+          staticClass: "ml-1",
+          attrs: { src: "/img/iconos/recomendador/hombre.svg", width: "24" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", { attrs: { type: "radio", name: "genero", value: "f" } }),
+        _vm._v(" \n                Femenino \n                "),
+        _c("img", {
+          staticClass: "ml-1",
+          attrs: { src: "/img/iconos/recomendador/mujer.svg", width: "26" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", { attrs: { type: "radio", name: "genero", value: "u" } }),
+        _vm._v(" \n                Unisex \n                "),
+        _c("img", {
+          staticClass: "ml-1",
+          attrs: { src: "/img/iconos/recomendador/unisex.svg", width: "26" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
+      _c("img", {
+        staticClass: "mb-1",
+        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h3" }, [
+      _c("b", { staticClass: "text-primary mr-2" }, [_vm._v(" Pregunta #2: ")]),
+      _vm._v(" Edad\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "progress my-2 border border-light",
+        staticStyle: { height: "20px" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "progress-bar progress-bar-striped progress-bar-animated",
+            staticStyle: { width: "25%" },
+            attrs: { role: "progressbar" }
+          },
+          [_vm._v("\n                2 de 8\n            ")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h4" }, [
+      _c("b", { staticClass: "mr-2" }, [
+        _vm._v(" ¿Qué rango de edad debe tener tu perfume ideal? ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", { attrs: { type: "radio", name: "edad", value: "in" } }),
+        _vm._v(" \n                Infantil\n                "),
+        _c("span", { staticClass: "text-info h4" }, [
+          _c("b", [_vm._v(" (0 a 9) ")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", { attrs: { type: "radio", name: "edad", value: "jo" } }),
+        _vm._v(" \n                Joven\n                "),
+        _c("span", { staticClass: "text-info h4" }, [
+          _c("b", [_vm._v(" (10 a 20) ")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", { attrs: { type: "radio", name: "edad", value: "ad" } }),
+        _vm._v(" \n                Adulto\n                "),
+        _c("span", { staticClass: "text-info h4" }, [
+          _c("b", [_vm._v(" (21+) ")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", { attrs: { type: "radio", name: "edad", value: "at" } }),
+        _vm._v(" \n                Atemporal\n                "),
+        _c("span", { staticClass: "text-info h4" }, [
+          _c("b", [_vm._v(" (Cualquiera) ")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
+      _c("img", {
+        staticClass: "mb-1",
+        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h3" }, [
+      _c("b", { staticClass: "text-primary mr-2" }, [_vm._v(" Pregunta #3: ")]),
+      _vm._v(" Intensidad\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "progress my-2 border border-light",
+        staticStyle: { height: "20px" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "progress-bar progress-bar-striped progress-bar-animated",
+            staticStyle: { width: "37.5%" },
+            attrs: { role: "progressbar" }
+          },
+          [_vm._v("\n                3 de 8\n            ")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h4" }, [
+      _c("b", { staticClass: "mr-2" }, [
+        _vm._v(
+          " ¿Cual es la intensidad de olor que deseas en tu perfume ideal? "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "radio", name: "intensidad", value: "lig" }
+        }),
+        _vm._v(" \n                Ligera / Fresca\n                "),
+        _c("span", { staticClass: "text-info h4" }, [
+          _c("b", [_vm._v(" (Eau de Splash y Eau de Cologne) ")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "radio", name: "intensidad", value: "inter" }
+        }),
+        _vm._v(" \n                Intermedia\n                "),
+        _c("span", { staticClass: "text-info h4" }, [
+          _c("b", [_vm._v(" (Eau de Toilette) ")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "radio", name: "intensidad", value: "intensa" }
+        }),
+        _vm._v(" \n                Intensa / Profunda\n                "),
+        _c("span", { staticClass: "text-info h4" }, [
+          _c("b", [_vm._v(" (Eau de Perfume y Perfume) ")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
+      _c("img", {
+        staticClass: "mb-1",
+        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h3" }, [
+      _c("b", { staticClass: "text-primary mr-2" }, [_vm._v(" Pregunta #4: ")]),
+      _vm._v(" Carácter\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "progress my-2 border border-light",
+        staticStyle: { height: "20px" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "progress-bar progress-bar-striped progress-bar-animated",
+            staticStyle: { width: "50%" },
+            attrs: { role: "progressbar" }
+          },
+          [_vm._v("\n                4 de 8\n            ")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h4" }, [
+      _c("b", { staticClass: "mr-2" }, [
+        _vm._v(" ¿Cúal es el carácter que deseas que genere tu perfume ideal? ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h6" }, [
+      _c("b", { staticClass: "mr-2" }, [
+        _vm._v(" Nota: Puedes seleccionar varios caracteres. ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "caracter", value: "in" }
+        }),
+        _vm._v(" \n                Informal\n                "),
+        _c("img", {
+          staticClass: "ml-1",
+          attrs: { src: "/img/iconos/recomendador/informal.svg", width: "24" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "caracter", value: "in" }
+        }),
+        _vm._v(" \n                Natural\n                "),
+        _c("img", {
+          staticClass: "ml-1",
+          attrs: { src: "/img/iconos/recomendador/natural.svg", width: "24" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "caracter", value: "in" }
+        }),
+        _vm._v(" \n                Clásico\n                "),
+        _c("img", {
+          staticClass: "ml-1",
+          attrs: { src: "/img/iconos/recomendador/clasico.svg", width: "24" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "caracter", value: "in" }
+        }),
+        _vm._v(" \n                Seductor\n                "),
+        _c("img", {
+          staticClass: "ml-1",
+          attrs: { src: "/img/iconos/recomendador/seductor.svg", width: "24" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "caracter", value: "in" }
+        }),
+        _vm._v(" \n                Moderno\n                "),
+        _c("img", {
+          staticClass: "ml-1",
+          attrs: { src: "/img/iconos/recomendador/moderno.svg", width: "24" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
+      _c("img", {
+        staticClass: "mb-1",
+        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h3" }, [
+      _c("b", { staticClass: "text-primary mr-2" }, [_vm._v(" Pregunta #5: ")]),
+      _vm._v(" Familias Olfativas\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "progress my-2 border border-light",
+        staticStyle: { height: "20px" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "progress-bar progress-bar-striped progress-bar-animated",
+            staticStyle: { width: "62.5%" },
+            attrs: { role: "progressbar" }
+          },
+          [_vm._v("\n                5 de 8\n            ")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h4" }, [
+      _c("b", { staticClass: "mr-2" }, [
+        _vm._v(" ¿Qué familias de olores debería tener tu perfume ideal? ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h6" }, [
+      _c("b", { staticClass: "mr-2" }, [
+        _vm._v(" Nota: Puedes seleccionar varias familias olfativas. ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "familias", value: "verde" }
+        }),
+        _vm._v(" "),
+        _c("b", [_vm._v(" Verde: ")]),
+        _vm._v(
+          "\n                Hierba, pino y tallos de plantas.                                     \n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "familias", value: "citrica" }
+        }),
+        _vm._v(" "),
+        _c("b", [_vm._v(" Cítrica: ")]),
+        _vm._v(
+          "\n                Naranjas, bergamotas, limones, mandarinas y pomelos. \n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "familias", value: "floral" }
+        }),
+        _vm._v(" "),
+        _c("b", [_vm._v(" Floral: ")]),
+        _vm._v(
+          "\n                Rosa, jazmín, violetas, narcisos y lirios.\n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "familias", value: "frutal" }
+        }),
+        _vm._v(" "),
+        _c("b", [_vm._v(" Frutal: ")]),
+        _vm._v(
+          "\n                Mango, higo, melocotón, pera, manzana y frambuesa. \n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "familias", value: "aromatica" }
+        }),
+        _vm._v(" "),
+        _c("b", [_vm._v(" Aromática: ")]),
+        _vm._v(
+          "\n                Lavanda, geranio, albahaca, comino, romero y salvia. \n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "familias", value: "helechos" }
+        }),
+        _vm._v(" "),
+        _c("b", [_vm._v(" Helechos: ")]),
+        _vm._v(
+          "\n                Lavandas, maderas, comino, bergamota y musgo de roble.\n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "familias", value: "chipre" }
+        }),
+        _vm._v(" "),
+        _c("b", [_vm._v(" Chipre: ")]),
+        _vm._v(
+          "\n                Musgo de roble, láudano, pachuli y bergamota. \n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "familias", value: "amaderada" }
+        }),
+        _vm._v(" "),
+        _c("b", [_vm._v(" Amaderada: ")]),
+        _vm._v(
+          "\n                Sándalo, pachuli, cedro, lavanda y pino.\n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "familias", value: "oriental" }
+        }),
+        _vm._v(" "),
+        _c("b", [_vm._v(" Oriental: ")]),
+        _vm._v(
+          "\n                Vainilla, láudano y esencias variadas muy fuertes.\n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-left h4 ml-4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "familias", value: "aldehidica" }
+        }),
+        _vm._v(" "),
+        _c("b", [_vm._v(" Aldehidica: ")]),
+        _vm._v(
+          "\n                Fragancias variadas que provienen de aldehidos.\n            "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
+      _c("img", {
+        staticClass: "mb-1",
+        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h3" }, [
+      _c("b", { staticClass: "text-primary mr-2" }, [_vm._v(" Pregunta #6: ")]),
+      _vm._v(" Aromas importantes\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "progress my-2 border border-light",
+        staticStyle: { height: "20px" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "progress-bar progress-bar-striped progress-bar-animated",
+            staticStyle: { width: "75%" },
+            attrs: { role: "progressbar" }
+          },
+          [_vm._v("\n                6 de 8\n            ")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h4" }, [
+      _c("b", { staticClass: "mr-2" }, [
+        _vm._v(
+          " ¿Cúales son los aromas que deben prevalecer en tu perfume ideal? "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h6" }, [
+      _c("b", { staticClass: "mr-2" }, [
+        _vm._v(" Nota: Puedes seleccionar varios aromas. ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "aroma", value: "floral" }
+        }),
+        _vm._v(" \n                Florales\n                "),
+        _c("img", {
+          staticClass: "mb-1 mr-2",
+          attrs: {
+            src: "/img/iconos/recomendador/aromas/florales.svg",
+            width: "24"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "aroma", value: "frutal" }
+        }),
+        _vm._v(" \n                Frutales\n                "),
+        _c("img", {
+          staticClass: "mb-1 mr-2",
+          attrs: {
+            src: "/img/iconos/recomendador/aromas/frutales.svg",
+            width: "24"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "aroma", value: "verde" }
+        }),
+        _vm._v(" \n                Verdes\n                "),
+        _c("img", {
+          staticClass: "mb-1 mr-2",
+          attrs: {
+            src: "/img/iconos/recomendador/aromas/verdes.svg",
+            width: "24"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "aroma", value: "herbal" }
+        }),
+        _vm._v(" \n                Herbales\n                "),
+        _c("img", {
+          staticClass: "mb-1 mr-2",
+          attrs: {
+            src: "/img/iconos/recomendador/aromas/herbales.svg",
+            width: "24"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "aroma", value: "citrico" }
+        }),
+        _vm._v(" \n                Citricos\n                "),
+        _c("img", {
+          staticClass: "mb-1 mr-2",
+          attrs: {
+            src: "/img/iconos/recomendador/aromas/citricos.svg",
+            width: "24"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "aroma", value: "herbal_ar" }
+        }),
+        _vm._v(" \n                Herbales Aromáticos\n                "),
+        _c("img", {
+          staticClass: "mb-1 mr-2",
+          attrs: {
+            src: "/img/iconos/recomendador/aromas/aromaticos.svg",
+            width: "24"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "aroma", value: "amaderado" }
+        }),
+        _vm._v(" \n                Amaderados\n                "),
+        _c("img", {
+          staticClass: "mb-1 mr-2",
+          attrs: {
+            src: "/img/iconos/recomendador/aromas/amaderados.svg",
+            width: "24"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", {
+          attrs: { type: "checkbox", name: "aroma", value: "otros" }
+        }),
+        _vm._v(" \n                Otros\n                "),
+        _c("img", {
+          staticClass: "mb-1 mr-2",
+          attrs: {
+            src: "/img/iconos/recomendador/aromas/otros.svg",
+            width: "24"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
+      _c("img", {
+        staticClass: "mb-1",
+        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h3" }, [
+      _c("b", { staticClass: "text-primary mr-2" }, [_vm._v(" Pregunta #7: ")]),
+      _vm._v(" Preferencias de Uso\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "progress my-2 border border-light",
+        staticStyle: { height: "20px" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "progress-bar progress-bar-striped progress-bar-animated",
+            staticStyle: { width: "87.5%" },
+            attrs: { role: "progressbar" }
+          },
+          [_vm._v("\n                7 de 8\n            ")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h4" }, [
+      _c("b", { staticClass: "mr-2" }, [
+        _vm._v(" ¿Cúando deseas usar tu perfume ideal? ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", { attrs: { type: "radio", name: "uso", value: "di" } }),
+        _vm._v(" \n                Uso diario\n                "),
+        _c("img", {
+          staticClass: "ml-1",
+          attrs: { src: "/img/iconos/recomendador/diario.svg", width: "24" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", { attrs: { type: "radio", name: "uso", value: "tr" } }),
+        _vm._v(" \n                Trabajo\n                "),
+        _c("img", {
+          staticClass: "ml-1",
+          attrs: { src: "/img/iconos/recomendador/trabajo.svg", width: "24" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "radio col-12 text-center h4" }, [
+      _c("label", [
+        _c("input", { attrs: { type: "radio", name: "uso", value: "es" } }),
+        _vm._v(" \n                Ocasiones especiales\n                "),
+        _c("img", {
+          staticClass: "ml-1",
+          attrs: { src: "/img/iconos/recomendador/especial.svg", width: "24" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
+      _c("img", {
+        staticClass: "mb-1",
+        attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h3" }, [
+      _c("b", { staticClass: "text-primary mr-2" }, [_vm._v(" Pregunta #8: ")]),
+      _vm._v(" Aspectos de Personalidad\n        ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "progress my-2 border border-light",
+        staticStyle: { height: "20px" }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "progress-bar progress-bar-striped progress-bar-animated",
+            staticStyle: { width: "100%" },
+            attrs: { role: "progressbar" }
+          },
+          [_vm._v("\n                8 de 8\n            ")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h4" }, [
+      _c("b", { staticClass: "mr-2" }, [
+        _vm._v(
+          " ¿Cúales son los aspectos de tu personalidad que deseas que el perfume emita? "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h6" }, [
+      _c("b", { staticClass: "mr-2" }, [
+        _vm._v(" Nota: Puedes seleccionar varios aspectos de personalidad. ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-5 offset-1" }, [
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Libertad"
+              }
+            }),
+            _vm._v(
+              " \n                        Libertad                            \n                    "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Independencia"
+              }
+            }),
+            _vm._v(
+              " \n                        Independencia                            \n                    "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Creatividad"
+              }
+            }),
+            _vm._v(
+              " \n                        Creatividad                         \n                    "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Diversion"
+              }
+            }),
+            _vm._v(
+              " \n                        Diversión                         \n                    "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Fantasia"
+              }
+            }),
+            _vm._v(" \n                        Fantasía\n                    ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Lucidez"
+              }
+            }),
+            _vm._v(" \n                        Lucidez\n                    ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Familiaridad"
+              }
+            }),
+            _vm._v(
+              " \n                        Familiaridad\n                    "
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-4 offset-2" }, [
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Versatibilidad"
+              }
+            }),
+            _vm._v(
+              " \n                        Versatibilidad                            \n                    "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Delicadeza"
+              }
+            }),
+            _vm._v(
+              " \n                        Delicadeza                            \n                    "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Sensualidad"
+              }
+            }),
+            _vm._v(
+              " \n                        Sensualidad                         \n                    "
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Optimismo"
+              }
+            }),
+            _vm._v(" \n                        Optimismo\n                    ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Alegria"
+              }
+            }),
+            _vm._v(" \n                        Alegría\n                    ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Confianza"
+              }
+            }),
+            _vm._v(" \n                        Confianza\n                    ")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "checkbox row text-left h4 ml-4" }, [
+          _c("label", [
+            _c("input", {
+              attrs: {
+                type: "checkbox",
+                name: "personalidad",
+                value: "Energía"
+              }
+            }),
+            _vm._v(" \n                        Energía\n                    ")
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center" }, [
+      _c("button", { staticClass: "btn btn-success mx-4 btn-lg" }, [
+        _c("img", {
+          staticClass: "mb-1",
+          attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "ml-2" }, [_vm._v(" Generar resultados ")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -56527,6 +58836,7 @@ Vue.component("editar-escala", __webpack_require__(/*! ./components/formulas/edi
 Vue.component("realizar-evaluacion", __webpack_require__(/*! ./components/evaluaciones/realizarEvaluacion.vue */ "./resources/js/components/evaluaciones/realizarEvaluacion.vue")["default"]);
 Vue.component("ver-evaluaciones", __webpack_require__(/*! ./components/evaluaciones/verEvaluaciones.vue */ "./resources/js/components/evaluaciones/verEvaluaciones.vue")["default"]);
 Vue.component("realizar-pedido", __webpack_require__(/*! ./components/compras/realizarPedido.vue */ "./resources/js/components/compras/realizarPedido.vue")["default"]);
+Vue.component("filtros-recomendador", __webpack_require__(/*! ./components/recomendador/filtrosRecomendador.vue */ "./resources/js/components/recomendador/filtrosRecomendador.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -57292,6 +59602,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/recomendador/filtrosRecomendador.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/recomendador/filtrosRecomendador.vue ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _filtrosRecomendador_vue_vue_type_template_id_5394a82d_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./filtrosRecomendador.vue?vue&type=template&id=5394a82d&scoped=true& */ "./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=template&id=5394a82d&scoped=true&");
+/* harmony import */ var _filtrosRecomendador_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./filtrosRecomendador.vue?vue&type=script&lang=js& */ "./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _filtrosRecomendador_vue_vue_type_style_index_0_id_5394a82d_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./filtrosRecomendador.vue?vue&type=style&index=0&id=5394a82d&scoped=true&lang=css& */ "./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=style&index=0&id=5394a82d&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _filtrosRecomendador_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _filtrosRecomendador_vue_vue_type_template_id_5394a82d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _filtrosRecomendador_vue_vue_type_template_id_5394a82d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "5394a82d",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/recomendador/filtrosRecomendador.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_filtrosRecomendador_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./filtrosRecomendador.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_filtrosRecomendador_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=style&index=0&id=5394a82d&scoped=true&lang=css&":
+/*!*******************************************************************************************************************************!*\
+  !*** ./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=style&index=0&id=5394a82d&scoped=true&lang=css& ***!
+  \*******************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_filtrosRecomendador_vue_vue_type_style_index_0_id_5394a82d_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./filtrosRecomendador.vue?vue&type=style&index=0&id=5394a82d&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=style&index=0&id=5394a82d&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_filtrosRecomendador_vue_vue_type_style_index_0_id_5394a82d_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_filtrosRecomendador_vue_vue_type_style_index_0_id_5394a82d_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_filtrosRecomendador_vue_vue_type_style_index_0_id_5394a82d_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_filtrosRecomendador_vue_vue_type_style_index_0_id_5394a82d_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_filtrosRecomendador_vue_vue_type_style_index_0_id_5394a82d_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=template&id=5394a82d&scoped=true&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=template&id=5394a82d&scoped=true& ***!
+  \*****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_filtrosRecomendador_vue_vue_type_template_id_5394a82d_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./filtrosRecomendador.vue?vue&type=template&id=5394a82d&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/recomendador/filtrosRecomendador.vue?vue&type=template&id=5394a82d&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_filtrosRecomendador_vue_vue_type_template_id_5394a82d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_filtrosRecomendador_vue_vue_type_template_id_5394a82d_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -57310,8 +59707,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

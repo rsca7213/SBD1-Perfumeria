@@ -59,6 +59,10 @@ Vue.component(
     "realizar-pedido",
     require("./components/compras/realizarPedido.vue").default
 );
+Vue.component(
+    "filtros-recomendador",
+    require("./components/recomendador/filtrosRecomendador.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

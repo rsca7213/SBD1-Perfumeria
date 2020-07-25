@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+body {
+    background-color: #ffffff;
+    background-image: url("../../img/fondo-rec.svg");
+    background-attachment: fixed;
+    background-size: cover;
+    color: #707070;
+    overflow-x: hidden;
+}
+
+.banner {
+    color: #707070;
+}
+
+.banner:hover {
+    text-decoration: none;
+    color: #707070;
+}

@@ -62,7 +62,7 @@
         <hr>
         <div class="row d-flex justify-content-center"> 
             <div class="col text-center">
-                <a href="#">
+                <a href="{{ route('inicioRecomendador') }}">
                     <img src="{{ asset('img/icono-app.svg') }}" alt="Recomendador de Perfumes" width="70">
                     <h2> Recomendador de Perfumes </h2> 
                 </a>

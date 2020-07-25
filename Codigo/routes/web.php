@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/* Rutas referentes al recomendador de perfumes */
+Route::get('/recomendador', 'RecomendadorController@inicio')->name('inicioRecomendador');
+Route::get('/recomendador/iniciar', 'RecomendadorController@iniciar')->name('iniciarRecomendador');
+
 /* Rutas para acceder a los menus principales de las empresas */
 Route::get('/productor/{id_prod}', 'MenuController@menuProductor')->name('menuProductor');
 Route::get('/proveedor/{id_prov}', 'MenuController@menuProveedor')->name('menuProveedor');
@@ -54,7 +58,7 @@ Route::post('/productor/{id_prod}/evaluaciones/anual', 'EvaluacionesController@g
 Route::get('/productor/{id_prod}/evaluaciones/confirmar', 'EvaluacionesController@confirmacionContrato');
 
 /* Rutas referentes a los contratos*/
-/*Porductor*/
+/*Productor*/
 Route::get('/productor/{id_prod}/contratos', 'ContratosController@verContratos')->name('verContratos');
 Route::get('/productor/{id_prod}/contratos/generar/{id_prov}', 'ContratosController@generarContrato')->name('generarContrato');
 Route::post('/productor/{id_prod}/contratos/generar/{id_prov}', 'ContratosController@insertContrato');
