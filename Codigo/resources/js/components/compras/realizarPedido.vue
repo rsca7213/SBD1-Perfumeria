@@ -35,13 +35,6 @@
         </button>
       </div>
 
-      <!--<table class="align-self-center col-2" v-if="extrasSeleccionados.length!=0">
-        <tr v-for="(extraSeleccionado,index) in extrasSeleccionados" :key="index">
-          <th class="text-right">Nombre</th>
-          <th class="text-right">Precio</th>
-          <th class="text-right">Duracion</th>
-        </tr>
-      </table>-->
       <div class="col-10 p-0">
         <table
           class="table table-striped border border-info align-self-start col-12 pl-5 mt-2"
@@ -49,16 +42,16 @@
         >
           <thead class="bg-primary text-white">
             <tr class="text-center">
-              <th class="text-left" scope="col">Nombre</th>
+              <th class="text-left" scope="col">Nombre de Extra de Envío</th>
               <th class="text-right" scope="col">Precio</th>
               <th class="text-right" scope="col">Duración</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(extraSeleccionado,index) in extrasSeleccionados" :key="index">
-              <th class="text-left">Nombre</th>
-              <th class="text-right">Precio</th>
-              <th class="text-right">Duracion</th>
+              <th class="text-left">{{extraSeleccionado.nombre}}</th>
+              <th class="text-right">{{extraSeleccionado.precio + " $"}}</th>
+              <th class="text-right">{{duracion(extraSeleccionado.duracion)}}</th>
             </tr>
           </tbody>
         </table>
@@ -102,8 +95,8 @@
                     <td class="text-right">{{duracion(extra.duracion)}}</td>
                     <td class="text-center">
                       <input
-                        :checked="estaSeleccionado(extra.id)"
-                        @change="agregarQuitarExtra(extra.id)"
+                        :checked="estaSeleccionado(extra.id,extra.nombre,extra.precio,extra.duracion)"
+                        @change="agregarQuitarExtra(extra.id,extra.nombre,extra.precio,extra.duracion)"
                         type="checkbox"
                         id
                         value
@@ -118,7 +111,9 @@
                 style="width:110px;"
                 data-dismiss="modal"
                 aria-label="Close"
-              >Aceptar</button>
+              >
+                <img src="/img/iconos/check_white.svg" width="24" class="mb-1" /> Aceptar
+              </button>
             </div>
           </div>
         </div>
@@ -152,7 +147,7 @@
           <td class="text-center">
             <input
               style="width: 80px;"
-              type="number"
+              type="text"
               min="0"
               max="9999"
               id
@@ -177,10 +172,84 @@
     </table>
 
     <div class="row d-flex justify-content-center col-6">
-      <a class="btn btn-primary mx-4 btn-lg col-8" href="#">
+      <button
+        class="btn btn-primary mx-4 btn-lg col-8"
+        data-toggle="modal"
+        data-target="#realizarPedido"
+        @click="verProductosSeleccionados()"
+      >
         <img src="/img/iconos/evaluation.svg" alt="inicial" width="24" class />
         <span class="ml-2">Realizar Pedido</span>
-      </a>
+      </button>
+    </div>
+
+    <div
+      v-if="cantidad.length>0 && envioAusar>0"
+      class="modal fade"
+      id="realizarPedido"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="background-color: #F5F5F5">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Generar Pedido</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body h5 text-center">
+            <span class="font-weight-bold">¿Desea realizar el pedido?</span>
+            <br />
+            <br />
+            <span>{{"Precio total del pedido: " + precioTotal+ " $"}}</span>
+            <br />
+            <span>{{"Duración total del pedido: " + duracion(duracionTotal)}}</span>
+          </div>
+          <div class="d-flex modal-footer justify-content-center mt-2">
+            <button class="btn btn-danger mx-4" data-dismiss="modal" aria-label="Close">
+              <img src="/img/iconos/cancel_white.svg" width="24" class="mb-1" /> Cancelar
+            </button>
+            <button class="btn btn-primary mx-4" data-dismiss="modal" aria-label="Close">
+              <img src="/img/iconos/check_white.svg" width="24" class="mb-1" /> Aceptar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      v-else
+      class="modal fade"
+      id="realizarPedido"
+      tabindex="-1"
+      role="dialog"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="background-color: #F5F5F5">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Generar Pedido</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body h5 text-center">
+            <span class="font-weight-bold text-danger">Error al Generar Pedido</span>
+            <br />
+            <br />
+            <span v-if="cantidad.length==0">Debes solicitar al menos un producto</span>
+            <br />
+            <span v-if="envioAusar==0">Debes seleccionar un método de envío</span>
+          </div>
+          <div class="d-flex modal-footer justify-content-center mt-2">
+            <button class="btn btn-primary btn-lg mx-4" data-dismiss="modal" aria-label="Close">
+              <img src="/img/iconos/check_white.svg" width="24" class="mb-1" /> Aceptar
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -197,7 +266,11 @@ export default {
       cantidad: [] /* Cantidad de cada producto*/,
       extrasAusar: [] /* Extras de envio a usar en el pedido*/,
       envioAusar: 0 /* Id del envio a usar*/,
+      pagoAusar: 0 /* Id del metodo de pago a usar*/,
       extrasSeleccionados: [],
+      productosSeleccionados: [],
+      precioTotal: 0 /*Precio total del envio*/,
+      duracionTotal: 0 /*Duracion total del envio*/,
     };
   },
 
@@ -231,7 +304,7 @@ export default {
         paisEnvio +
         " (" +
         precioEnvio +
-        "$ - " +
+        " $ - " +
         this.duracion(duracionEnvio) +
         ")"
       );
@@ -282,7 +355,7 @@ export default {
       if (dias == 1) {
         return "1 día";
       } else {
-        return dias + " dias";
+        return dias + " días";
       }
     },
     extrasEnvios() {
@@ -294,27 +367,100 @@ export default {
         }
       });
     },
-    agregarQuitarExtra(idExtra) {
+    agregarQuitarExtra(idExtra, nombreExtra, precioExtra, duracionExtra) {
+      var params = {
+        id: 0,
+        nombre: "",
+        duracion: 0,
+        precio: 0,
+      };
       if (this.extrasSeleccionados.length == 0) {
-        this.extrasSeleccionados.push(idExtra);
+        params.id = idExtra;
+        params.nombre = nombreExtra;
+        params.duracion = duracionExtra;
+        params.precio = precioExtra;
+        this.extrasSeleccionados.push(params);
       } else {
         for (let index = 0; index < this.extrasSeleccionados.length; index++) {
-          if (this.extrasSeleccionados[index] == idExtra) {
+          if (this.extrasSeleccionados[index].id == idExtra) {
             this.extrasSeleccionados.splice(index, 1);
             return;
           }
         }
-        this.extrasSeleccionados.push(idExtra);
+        params.id = idExtra;
+        params.nombre = nombreExtra;
+        params.duracion = duracionExtra;
+        params.precio = precioExtra;
+        this.extrasSeleccionados.push(params);
+        //this.extrasSeleccionados.push(idExtra);
       }
     },
     /*Verifica si el extra esta seleccionado para marcarlo como check en el model de extras*/
     estaSeleccionado(idExtra) {
       for (let index = 0; index < this.extrasSeleccionados.length; index++) {
-        if (this.extrasSeleccionados[index] == idExtra) {
+        if (this.extrasSeleccionados[index].id == idExtra) {
           return true;
         }
       }
       return false;
+    },
+    /*Muestra los productos cuya cantidad es >0*/
+    verProductosSeleccionados() {
+      this.productosSeleccionados = [];
+
+      for (let index = 0; index < this.cantidad.length; index++) {
+        var params = {
+          cantidad: 0,
+          idPresentacion: 0,
+          idProducto: 0,
+          precio: 0,
+        };
+        if (this.cantidad[index] > 0) {
+          params.cantidad = parseFloat(this.cantidad[index]);
+          params.idPresentacion = this.productos[index].presentacionid;
+          params.idProducto = this.productos[index].cas_prod;
+          params.precio = parseFloat(
+            this.cantidad[index] * this.productos[index].precioing -
+              (this.productos[index].descuento_producto / 100) *
+                this.cantidad[index] *
+                this.productos[index].precioing
+          );
+          this.productosSeleccionados.push(params);
+        }
+      }
+      this.precioTotalPedido();
+      this.duracionTotalPedido();
+    },
+    precioTotalPedido() {
+      this.precioTotal = 0;
+      for (let index = 0; index < this.productosSeleccionados.length; index++) {
+        this.precioTotal += parseFloat(
+          this.productosSeleccionados[index].precio
+        );
+      }
+      for (let index = 0; index < this.extrasSeleccionados.length; index++) {
+        this.precioTotal += parseFloat(this.extrasSeleccionados[index].precio);
+      }
+      for (let index = 0; index < this.envios.length; index++) {
+        if (this.envios[index].idenvio == this.envioAusar) {
+          this.precioTotal += parseFloat(this.envios[index].precioenvio);
+          break;
+        }
+      }
+    },
+    duracionTotalPedido() {
+      this.duracionTotal = 0;
+      for (let index = 0; index < this.extrasSeleccionados.length; index++) {
+        this.duracionTotal += parseFloat(
+          this.extrasSeleccionados[index].duracion
+        );
+      }
+      for (let index = 0; index < this.envios.length; index++) {
+        if (this.envios[index].idenvio == this.envioAusar) {
+          this.duracionTotal += parseFloat(this.envios[index].duracionenvio);
+          break;
+        }
+      }
     },
   },
 

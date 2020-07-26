@@ -372,6 +372,7 @@ CREATE TABLE rdj_detalles_pedidos (
     id NUMERIC(8,0) NOT NULL,
     num_pedido NUMERIC(8,0) NOT NULL,
     cantidad NUMERIC(4,0) NOT NULL,
+precio NUMERIC(20,2) NOT NULL,
     id_pres_esencia NUMERIC(5,0),
     cas_esencia NUMERIC(10,0),
     id_pres_otro NUMERIC(5,0),

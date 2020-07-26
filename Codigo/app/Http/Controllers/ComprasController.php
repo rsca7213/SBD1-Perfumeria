@@ -132,4 +132,9 @@ class ComprasController extends Controller
         return response([$enviosContratados,$pagosContratados,$extrasEnvio,$productos],200);
     }
 
+    //Funcion para crear un pedido
+    public function crearPedido(){
+        
+    }
+
 }

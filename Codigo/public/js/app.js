@@ -2128,6 +2128,75 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["csrf"],
   data: function data() {
@@ -2153,7 +2222,17 @@ __webpack_require__.r(__webpack_exports__);
       envioAusar: 0
       /* Id del envio a usar*/
       ,
-      extrasSeleccionados: []
+      pagoAusar: 0
+      /* Id del metodo de pago a usar*/
+      ,
+      extrasSeleccionados: [],
+      productosSeleccionados: [],
+      precioTotal: 0
+      /*Precio total del envio*/
+      ,
+      duracionTotal: 0
+      /*Duracion total del envio*/
+
     };
   },
   created: function created() {
@@ -2172,7 +2251,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     /* Funcion para obtener el nombre del envio*/
     nombreEnvio: function nombreEnvio(tipoEnvio, paisEnvio, precioEnvio, duracionEnvio) {
-      return this.tipoEnvio(tipoEnvio) + " - " + paisEnvio + " (" + precioEnvio + "$ - " + this.duracion(duracionEnvio) + ")";
+      return this.tipoEnvio(tipoEnvio) + " - " + paisEnvio + " (" + precioEnvio + " $ - " + this.duracion(duracionEnvio) + ")";
     },
 
     /* Funcion para colocar el nombre del envio en el modal extra envio*/
@@ -2211,7 +2290,7 @@ __webpack_require__.r(__webpack_exports__);
       if (dias == 1) {
         return "1 día";
       } else {
-        return dias + " dias";
+        return dias + " días";
       }
     },
     extrasEnvios: function extrasEnvios() {
@@ -2225,30 +2304,102 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    agregarQuitarExtra: function agregarQuitarExtra(idExtra) {
+    agregarQuitarExtra: function agregarQuitarExtra(idExtra, nombreExtra, precioExtra, duracionExtra) {
+      var params = {
+        id: 0,
+        nombre: "",
+        duracion: 0,
+        precio: 0
+      };
+
       if (this.extrasSeleccionados.length == 0) {
-        this.extrasSeleccionados.push(idExtra);
+        params.id = idExtra;
+        params.nombre = nombreExtra;
+        params.duracion = duracionExtra;
+        params.precio = precioExtra;
+        this.extrasSeleccionados.push(params);
       } else {
         for (var index = 0; index < this.extrasSeleccionados.length; index++) {
-          if (this.extrasSeleccionados[index] == idExtra) {
+          if (this.extrasSeleccionados[index].id == idExtra) {
             this.extrasSeleccionados.splice(index, 1);
             return;
           }
         }
 
-        this.extrasSeleccionados.push(idExtra);
+        params.id = idExtra;
+        params.nombre = nombreExtra;
+        params.duracion = duracionExtra;
+        params.precio = precioExtra;
+        this.extrasSeleccionados.push(params); //this.extrasSeleccionados.push(idExtra);
       }
     },
 
     /*Verifica si el extra esta seleccionado para marcarlo como check en el model de extras*/
     estaSeleccionado: function estaSeleccionado(idExtra) {
       for (var index = 0; index < this.extrasSeleccionados.length; index++) {
-        if (this.extrasSeleccionados[index] == idExtra) {
+        if (this.extrasSeleccionados[index].id == idExtra) {
           return true;
         }
       }
 
       return false;
+    },
+
+    /*Muestra los productos cuya cantidad es >0*/
+    verProductosSeleccionados: function verProductosSeleccionados() {
+      this.productosSeleccionados = [];
+
+      for (var index = 0; index < this.cantidad.length; index++) {
+        var params = {
+          cantidad: 0,
+          idPresentacion: 0,
+          idProducto: 0,
+          precio: 0
+        };
+
+        if (this.cantidad[index] > 0) {
+          params.cantidad = parseFloat(this.cantidad[index]);
+          params.idPresentacion = this.productos[index].presentacionid;
+          params.idProducto = this.productos[index].cas_prod;
+          params.precio = parseFloat(this.cantidad[index] * this.productos[index].precioing - this.productos[index].descuento_producto / 100 * this.cantidad[index] * this.productos[index].precioing);
+          this.productosSeleccionados.push(params);
+        }
+      }
+
+      this.precioTotalPedido();
+      this.duracionTotalPedido();
+    },
+    precioTotalPedido: function precioTotalPedido() {
+      this.precioTotal = 0;
+
+      for (var index = 0; index < this.productosSeleccionados.length; index++) {
+        this.precioTotal += parseFloat(this.productosSeleccionados[index].precio);
+      }
+
+      for (var _index = 0; _index < this.extrasSeleccionados.length; _index++) {
+        this.precioTotal += parseFloat(this.extrasSeleccionados[_index].precio);
+      }
+
+      for (var _index2 = 0; _index2 < this.envios.length; _index2++) {
+        if (this.envios[_index2].idenvio == this.envioAusar) {
+          this.precioTotal += parseFloat(this.envios[_index2].precioenvio);
+          break;
+        }
+      }
+    },
+    duracionTotalPedido: function duracionTotalPedido() {
+      this.duracionTotal = 0;
+
+      for (var index = 0; index < this.extrasSeleccionados.length; index++) {
+        this.duracionTotal += parseFloat(this.extrasSeleccionados[index].duracion);
+      }
+
+      for (var _index3 = 0; _index3 < this.envios.length; _index3++) {
+        if (this.envios[_index3].idenvio == this.envioAusar) {
+          this.duracionTotal += parseFloat(this.envios[_index3].duracionenvio);
+          break;
+        }
+      }
     }
   },
   computed: {}
@@ -41080,15 +41231,17 @@ var render = function() {
                       ) {
                         return _c("tr", { key: index }, [
                           _c("th", { staticClass: "text-left" }, [
-                            _vm._v("Nombre")
+                            _vm._v(_vm._s(extraSeleccionado.nombre))
                           ]),
                           _vm._v(" "),
                           _c("th", { staticClass: "text-right" }, [
-                            _vm._v("Precio")
+                            _vm._v(_vm._s(extraSeleccionado.precio + " $"))
                           ]),
                           _vm._v(" "),
                           _c("th", { staticClass: "text-right" }, [
-                            _vm._v("Duracion")
+                            _vm._v(
+                              _vm._s(_vm.duracion(extraSeleccionado.duracion))
+                            )
                           ])
                         ])
                       }),
@@ -41202,12 +41355,20 @@ var render = function() {
                                         value: ""
                                       },
                                       domProps: {
-                                        checked: _vm.estaSeleccionado(extra.id)
+                                        checked: _vm.estaSeleccionado(
+                                          extra.id,
+                                          extra.nombre,
+                                          extra.precio,
+                                          extra.duracion
+                                        )
                                       },
                                       on: {
                                         change: function($event) {
                                           return _vm.agregarQuitarExtra(
-                                            extra.id
+                                            extra.id,
+                                            extra.nombre,
+                                            extra.precio,
+                                            extra.duracion
                                           )
                                         }
                                       }
@@ -41222,18 +41383,7 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary",
-                            staticStyle: { width: "110px" },
-                            attrs: {
-                              "data-dismiss": "modal",
-                              "aria-label": "Close"
-                            }
-                          },
-                          [_vm._v("Aceptar")]
-                        )
+                        _vm._m(2)
                       ])
                     ]
                   )
@@ -41271,13 +41421,13 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _vm._m(2),
+      _vm._m(3),
       _vm._v(" "),
       _c(
         "table",
         { staticClass: "table table-striped border border-info col-12" },
         [
-          _vm._m(3),
+          _vm._m(4),
           _vm._v(" "),
           _c(
             "tbody",
@@ -41320,7 +41470,7 @@ var render = function() {
                     staticClass: "text-right",
                     staticStyle: { width: "80px" },
                     attrs: {
-                      type: "number",
+                      type: "text",
                       min: "0",
                       max: "9999",
                       id: "",
@@ -41387,7 +41537,160 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _vm._m(4)
+      _c("div", { staticClass: "row d-flex justify-content-center col-6" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary mx-4 btn-lg col-8",
+            attrs: { "data-toggle": "modal", "data-target": "#realizarPedido" },
+            on: {
+              click: function($event) {
+                return _vm.verProductosSeleccionados()
+              }
+            }
+          },
+          [
+            _c("img", {
+              attrs: {
+                src: "/img/iconos/evaluation.svg",
+                alt: "inicial",
+                width: "24"
+              }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "ml-2" }, [_vm._v("Realizar Pedido")])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _vm.cantidad.length > 0 && _vm.envioAusar > 0
+        ? _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              attrs: {
+                id: "realizarPedido",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-hidden": "true"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-dialog modal-dialog-centered",
+                  attrs: { role: "document" }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "modal-content",
+                      staticStyle: { "background-color": "#F5F5F5" }
+                    },
+                    [
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-body h5 text-center" }, [
+                        _c("span", { staticClass: "font-weight-bold" }, [
+                          _vm._v("¿Desea realizar el pedido?")
+                        ]),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("span", [
+                          _vm._v(
+                            _vm._s(
+                              "Precio total del pedido: " +
+                                _vm.precioTotal +
+                                " $"
+                            )
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("span", [
+                          _vm._v(
+                            _vm._s(
+                              "Duración total del pedido: " +
+                                _vm.duracion(_vm.duracionTotal)
+                            )
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(6)
+                    ]
+                  )
+                ]
+              )
+            ]
+          )
+        : _c(
+            "div",
+            {
+              staticClass: "modal fade",
+              attrs: {
+                id: "realizarPedido",
+                tabindex: "-1",
+                role: "dialog",
+                "aria-hidden": "true"
+              }
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-dialog modal-dialog-centered",
+                  attrs: { role: "document" }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "modal-content",
+                      staticStyle: { "background-color": "#F5F5F5" }
+                    },
+                    [
+                      _vm._m(7),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "modal-body h5 text-center" }, [
+                        _c(
+                          "span",
+                          { staticClass: "font-weight-bold text-danger" },
+                          [_vm._v("Error al Generar Pedido")]
+                        ),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _vm.cantidad.length == 0
+                          ? _c("span", [
+                              _vm._v("Debes solicitar al menos un producto")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _vm.envioAusar == 0
+                          ? _c("span", [
+                              _vm._v("Debes seleccionar un método de envío")
+                            ])
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(8)
+                    ]
+                  )
+                ]
+              )
+            ]
+          )
     ]
   )
 }
@@ -41399,7 +41702,7 @@ var staticRenderFns = [
     return _c("thead", { staticClass: "bg-primary text-white" }, [
       _c("tr", { staticClass: "text-center" }, [
         _c("th", { staticClass: "text-left", attrs: { scope: "col" } }, [
-          _vm._v("Nombre")
+          _vm._v("Nombre de Extra de Envío")
         ]),
         _vm._v(" "),
         _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
@@ -41435,6 +41738,26 @@ var staticRenderFns = [
         ])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-primary",
+        staticStyle: { width: "110px" },
+        attrs: { "data-dismiss": "modal", "aria-label": "Close" }
+      },
+      [
+        _c("img", {
+          staticClass: "mb-1",
+          attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+        }),
+        _vm._v(" Aceptar\n            ")
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -41484,26 +41807,112 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Generar Pedido")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "row d-flex justify-content-center col-6" },
+      { staticClass: "d-flex modal-footer justify-content-center mt-2" },
       [
         _c(
-          "a",
+          "button",
           {
-            staticClass: "btn btn-primary mx-4 btn-lg col-8",
-            attrs: { href: "#" }
+            staticClass: "btn btn-danger mx-4",
+            attrs: { "data-dismiss": "modal", "aria-label": "Close" }
           },
           [
             _c("img", {
-              attrs: {
-                src: "/img/iconos/evaluation.svg",
-                alt: "inicial",
-                width: "24"
-              }
+              staticClass: "mb-1",
+              attrs: { src: "/img/iconos/cancel_white.svg", width: "24" }
             }),
-            _vm._v(" "),
-            _c("span", { staticClass: "ml-2" }, [_vm._v("Realizar Pedido")])
+            _vm._v(" Cancelar\n          ")
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary mx-4",
+            attrs: { "data-dismiss": "modal", "aria-label": "Close" }
+          },
+          [
+            _c("img", {
+              staticClass: "mb-1",
+              attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+            }),
+            _vm._v(" Aceptar\n          ")
+          ]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Generar Pedido")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "d-flex modal-footer justify-content-center mt-2" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary btn-lg mx-4",
+            attrs: { "data-dismiss": "modal", "aria-label": "Close" }
+          },
+          [
+            _c("img", {
+              staticClass: "mb-1",
+              attrs: { src: "/img/iconos/check_white.svg", width: "24" }
+            }),
+            _vm._v(" Aceptar\n          ")
           ]
         )
       ]
