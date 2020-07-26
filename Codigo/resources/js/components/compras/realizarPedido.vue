@@ -15,7 +15,7 @@
         <option
           v-for="(envio,index) in envios"
           :key="index"
-          :value="envio.metodo_envio"
+          :value="envio.idenvio"
           class="combo"
         >{{nombreEnvio(envio.tipoenvio,envio.paisenvio,envio.precioenvio,envio.duracionenvio)}}</option>
       </select>
@@ -171,7 +171,7 @@
             style="width:120px;"
             v-if="cantidad[index]!=null"
             class="text-right"
-          >{{(producto.precioing*cantidad[index] - (producto.descuento_producto/100) *cantidad[index]* producto.precioing ) + " $"}}</td>
+          >{{((producto.precioing*cantidad[index] - (producto.descuento_producto/100) *cantidad[index]* producto.precioing )).toFixed(2) + " $"}}</td>
           <td style="width:120px;" class="text-right" v-else>0 $</td>
         </tr>
       </tbody>
@@ -289,6 +289,7 @@ export default {
       id_proveedor: 0,
       id_productor: 0,
       fecha_contrato: "",
+      metodo_envio: 0,
     };
   },
 
@@ -333,7 +334,7 @@ export default {
     /* Funcion para colocar el nombre del envio en el modal extra envio*/
     nombreEnvioDetalle() {
       for (let index = 0; index < this.envios.length; index++) {
-        if (this.envios[index].metodo_envio == this.envioAusar) {
+        if (this.envios[index].idenvio == this.envioAusar) {
           return this.nombreEnvio(
             this.envios[index].tipoenvio,
             this.envios[index].paisenvio,
@@ -383,7 +384,7 @@ export default {
       //this.extrasSeleccionados = [];
       this.extrasAusar = [];
       this.extras.forEach((extra) => {
-        if (extra.metodo_envio === this.envioAusar) {
+        if (extra.idenvio === this.envioAusar) {
           this.extrasAusar.push(extra);
         }
       });
@@ -465,7 +466,7 @@ export default {
         this.precioTotal += parseFloat(this.extrasSeleccionados[index].precio);
       }
       for (let index = 0; index < this.envios.length; index++) {
-        if (this.envios[index].metodo_envio == this.envioAusar) {
+        if (this.envios[index].idenvio == this.envioAusar) {
           this.precioTotal += parseFloat(this.envios[index].precioenvio);
           break;
         }
@@ -479,7 +480,7 @@ export default {
         );
       }
       for (let index = 0; index < this.envios.length; index++) {
-        if (this.envios[index].metodo_envio == this.envioAusar) {
+        if (this.envios[index].idenvio == this.envioAusar) {
           this.duracionTotal += parseFloat(this.envios[index].duracionenvio);
           break;
         }
@@ -496,10 +497,16 @@ export default {
     },
     crearPedido() {
       console.log("%cAxios: Enviando respuestas!", "color: lightblue");
+      for (let index = 0; index < this.envios.length; index++) {
+        if (this.envios[index].idenvio == this.envioAusar) {
+          this.metodo_envio = this.envios[index].metodo_envio;
+          break;
+        }
+      }
       axios
         .post("crear", {
           productos: this.productosSeleccionados,
-          envio: this.envioAusar,
+          envio: this.metodo_envio,
           pago: this.pagoAusar,
           productor: this.id_productor,
           proveedor: this.id_proveedor,

@@ -2250,7 +2250,8 @@ __webpack_require__.r(__webpack_exports__);
       ,
       id_proveedor: 0,
       id_productor: 0,
-      fecha_contrato: ""
+      fecha_contrato: "",
+      metodo_envio: 0
     };
   },
   created: function created() {
@@ -2278,7 +2279,7 @@ __webpack_require__.r(__webpack_exports__);
     /* Funcion para colocar el nombre del envio en el modal extra envio*/
     nombreEnvioDetalle: function nombreEnvioDetalle() {
       for (var index = 0; index < this.envios.length; index++) {
-        if (this.envios[index].metodo_envio == this.envioAusar) {
+        if (this.envios[index].idenvio == this.envioAusar) {
           return this.nombreEnvio(this.envios[index].tipoenvio, this.envios[index].paisenvio, this.envios[index].precioenvio, this.envios[index].duracionenvio);
         }
       }
@@ -2320,7 +2321,7 @@ __webpack_require__.r(__webpack_exports__);
       //this.extrasSeleccionados = [];
       this.extrasAusar = [];
       this.extras.forEach(function (extra) {
-        if (extra.metodo_envio === _this2.envioAusar) {
+        if (extra.idenvio === _this2.envioAusar) {
           _this2.extrasAusar.push(extra);
         }
       });
@@ -2404,7 +2405,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       for (var _index2 = 0; _index2 < this.envios.length; _index2++) {
-        if (this.envios[_index2].metodo_envio == this.envioAusar) {
+        if (this.envios[_index2].idenvio == this.envioAusar) {
           this.precioTotal += parseFloat(this.envios[_index2].precioenvio);
           break;
         }
@@ -2418,7 +2419,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       for (var _index3 = 0; _index3 < this.envios.length; _index3++) {
-        if (this.envios[_index3].metodo_envio == this.envioAusar) {
+        if (this.envios[_index3].idenvio == this.envioAusar) {
           this.duracionTotal += parseFloat(this.envios[_index3].duracionenvio);
           break;
         }
@@ -2436,9 +2437,17 @@ __webpack_require__.r(__webpack_exports__);
     },
     crearPedido: function crearPedido() {
       console.log("%cAxios: Enviando respuestas!", "color: lightblue");
+
+      for (var index = 0; index < this.envios.length; index++) {
+        if (this.envios[index].idenvio == this.envioAusar) {
+          this.metodo_envio = this.envios[index].metodo_envio;
+          break;
+        }
+      }
+
       axios.post("crear", {
         productos: this.productosSeleccionados,
-        envio: this.envioAusar,
+        envio: this.metodo_envio,
         pago: this.pagoAusar,
         productor: this.id_productor,
         proveedor: this.id_proveedor,
@@ -41442,7 +41451,7 @@ var render = function() {
                   {
                     key: index,
                     staticClass: "combo",
-                    domProps: { value: envio.metodo_envio }
+                    domProps: { value: envio.idenvio }
                   },
                   [
                     _vm._v(
@@ -41854,11 +41863,12 @@ var render = function() {
                       [
                         _vm._v(
                           _vm._s(
-                            producto.precioing * _vm.cantidad[index] -
+                            (
+                              producto.precioing * _vm.cantidad[index] -
                               (producto.descuento_producto / 100) *
                                 _vm.cantidad[index] *
-                                producto.precioing +
-                              " $"
+                                producto.precioing
+                            ).toFixed(2) + " $"
                           )
                         )
                       ]
@@ -44950,7 +44960,6 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
-              class: _vm.cumplimInputErr,
               attrs: {
                 type: "number",
                 step: "0.01",
@@ -63017,8 +63026,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
