@@ -140,7 +140,7 @@ class ComprasController extends Controller
         DB::INSERT(DB::RAW(
             "INSERT INTO rdj_pedidos (num_pedido,fecha_pedido,estatus,id_proveedor,id_productor,monto,
             id_envio,fecha_ap_envio,id_prod_envio,id_prov_envio,id_pago,fecha_ap_pago,id_prod_pago,id_prov_pago) 
-            VALUES (?,NOW()::DATE,'e',?,?,?,?,?,?,?,?,?,?,?)"
+            VALUES (?,NOW()::DATE,'p',?,?,?,?,?,?,?,?,?,?,?)"
         ),[$numeroPedido[0]->nextval,$request["proveedor"],$request["productor"],$request["montoTotal"],$request["envio"],
         $request["fecha"],$request["productor"],$request["proveedor"],$request["pago"],
         $request["fecha"],$request["productor"],$request["proveedor"]]);
