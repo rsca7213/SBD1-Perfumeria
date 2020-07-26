@@ -79,9 +79,11 @@ Route::get('/proveedor/{id_prov}/contratos/no_renovar/{fecha}', 'ContratosContro
 
 /* Rutas referentes a las compras,pedidos,facturas */
 /* Productor */
+Route::post('/productor/{id_prod}/compras/pedido/{id_proveedor}/crear','ComprasController@crearPedido');
 Route::get('/productor/{id_prod}/compras', 'ComprasController@verContratosVigentes')->name('verContratosCompras');
 Route::get('/productor/{id_prod}/compras/pedido/{id_proveedor}/{fecha}','ComprasController@mostrarDetallesPedido');
 Route::get('/productor/{id_prod}/compras/pedido/{id_proveedor}/{fecha}/enviosPagos','ComprasController@enviosPagosPedido');
+
 
 
 /* Ruta de pagina de inicio */

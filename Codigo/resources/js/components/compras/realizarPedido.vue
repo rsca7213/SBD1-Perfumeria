@@ -121,8 +121,14 @@
     </div>
     <div class="d-flex justify-content-around col-9 my-2 pl-3">
       <label style="font-weight:bold;" for="pagos">Método de pago</label>
-      <select class="combo" name="pagos" id="pagos" style="outline:none;">
-        <option class="combo" v-for="(pago,index) in pagos" :key="index">{{detallePago(pago)}}</option>
+      <select class="combo" name="pagos" id="pagos" style="outline:none;" v-model="pagoAusar">
+        <option selected="selected" value="0" class="combo">Selecciona un Metodo de Pago</option>
+        <option
+          class="combo"
+          :value="pago.idpago"
+          v-for="(pago,index) in pagos"
+          :key="index"
+        >{{detallePago(pago)}}</option>
       </select>
     </div>
     <div class="align-items-center h5 text-center mt-3">
@@ -184,7 +190,7 @@
     </div>
 
     <div
-      v-if="cantidad.length>0 && envioAusar>0"
+      v-if="cantidad.length>0 && envioAusar>0 &&productosNegativos()==false && pagoAusar>0"
       class="modal fade"
       id="realizarPedido"
       tabindex="-1"
@@ -211,7 +217,12 @@
             <button class="btn btn-danger mx-4" data-dismiss="modal" aria-label="Close">
               <img src="/img/iconos/cancel_white.svg" width="24" class="mb-1" /> Cancelar
             </button>
-            <button class="btn btn-primary mx-4" data-dismiss="modal" aria-label="Close">
+            <button
+              class="btn btn-primary mx-4"
+              data-dismiss="modal"
+              aria-label="Close"
+              @click="crearPedido()"
+            >
               <img src="/img/iconos/check_white.svg" width="24" class="mb-1" /> Aceptar
             </button>
           </div>
@@ -242,6 +253,10 @@
             <span v-if="cantidad.length==0">Debes solicitar al menos un producto</span>
             <br />
             <span v-if="envioAusar==0">Debes seleccionar un método de envío</span>
+            <br />
+            <span v-if="pagoAusar==0">Debes seleccionar un método de pago</span>
+            <br />
+            <span v-if="productosNegativos()">La cantidad de productos debe ser mayor a cero</span>
           </div>
           <div class="d-flex modal-footer justify-content-center mt-2">
             <button class="btn btn-primary btn-lg mx-4" data-dismiss="modal" aria-label="Close">
@@ -271,6 +286,9 @@ export default {
       productosSeleccionados: [],
       precioTotal: 0 /*Precio total del envio*/,
       duracionTotal: 0 /*Duracion total del envio*/,
+      id_proveedor: 0,
+      id_productor: 0,
+      fecha_contrato: "",
     };
   },
 
@@ -286,6 +304,9 @@ export default {
         this.pagos = response.data[1];
         this.extras = response.data[2];
         this.productos = response.data[3];
+        this.id_productor = response.data[4];
+        this.id_proveedor = response.data[5];
+        this.fecha_contrato = response.data[6];
       })
       .catch((errors) => {
         console.log(
@@ -414,6 +435,7 @@ export default {
           idPresentacion: 0,
           idProducto: 0,
           precio: 0,
+          tipo: "",
         };
         if (this.cantidad[index] > 0) {
           params.cantidad = parseFloat(this.cantidad[index]);
@@ -425,6 +447,7 @@ export default {
                 this.cantidad[index] *
                 this.productos[index].precioing
           );
+          params.tipo = this.productos[index].tipo;
           this.productosSeleccionados.push(params);
         }
       }
@@ -461,6 +484,38 @@ export default {
           break;
         }
       }
+    },
+    // Para verificar si hay productos con cantidades negativas
+    productosNegativos() {
+      for (let index = 0; index < this.cantidad.length; index++) {
+        if (this.cantidad[index] < 0 && this.cantidad[index] != null) {
+          return true;
+        }
+      }
+      return false;
+    },
+    crearPedido() {
+      console.log("%cAxios: Enviando respuestas!", "color: lightblue");
+      axios
+        .post("crear", {
+          productos: this.productosSeleccionados,
+          envio: this.envioAusar,
+          pago: this.pagoAusar,
+          productor: this.id_productor,
+          proveedor: this.id_proveedor,
+          fecha: this.fecha_contrato,
+          montoTotal: this.precioTotal,
+          duracionTotal: this.duracionTotal,
+        })
+        .then((response) => {
+          console.log("%cAxios: Resultados recibidos!", "color: lightgreen");
+          console.log(response.data[0]);
+          //console.log(response.data[0]);
+        })
+        .catch((errors) => {
+          console.log("%cAxios: Error!", "color: #FFCCCB");
+          console.log(errors);
+        });
     },
   },
 

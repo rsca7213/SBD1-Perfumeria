@@ -94,7 +94,7 @@ class ComprasController extends Controller
 
         /* Se buscan los metodos de pago del contrato respectivo*/
         $pagosContratados= DB::SELECT(DB::RAW(
-            "SELECT pagos.id idPago,pagos.tipo AS tipoPago, pagos.num_cuotas AS cuotas, pagos.porcentaje AS porcentaje, pagos.meses AS meses
+            "SELECT pagos.id as idPago,pagos.tipo AS tipoPago, pagos.num_cuotas AS cuotas, pagos.porcentaje AS porcentaje, pagos.meses AS meses
             FROM rdj_metodos_pagos AS pagos, rdj_metodos_contratos AS met
             WHERE met.fecha_cont=? AND met.id_productor=? AND met.id_prov_pago=? AND pagos.id = met.id_pago"
         ),[$fecha,$id_prod,$id_proveedor]);
@@ -129,12 +129,43 @@ class ComprasController extends Controller
             WHERE det.id_productor=? AND otro.id_proveedor=det.id_proveedor AND otro.cas_otro_ing=presOtro.cas_otro_ing AND det.fecha_apertura=? AND det.cas_otro_ing = otro.cas_otro_ing GROUP BY det.fecha_apertura,nombre,ncas,precioIng,tipo,presentacion"
         ),[$id_prod,$fecha]);*/
 
-        return response([$enviosContratados,$pagosContratados,$extrasEnvio,$productos],200);
+        return response([$enviosContratados,$pagosContratados,$extrasEnvio,$productos,$id_prod,$id_proveedor,$fecha],200);
     }
 
     //Funcion para crear un pedido
-    public function crearPedido(){
+    public function crearPedido(Request $request){
+
+        $numeroPedido= DB::SELECT(DB::RAW("SELECT nextval('rdj_pedido_sec')"));
+
+        DB::INSERT(DB::RAW(
+            "INSERT INTO rdj_pedidos (num_pedido,fecha_pedido,estatus,id_proveedor,id_productor,monto,
+            id_envio,fecha_ap_envio,id_prod_envio,id_prov_envio,id_pago,fecha_ap_pago,id_prod_pago,id_prov_pago) 
+            VALUES (?,NOW()::DATE,'e',?,?,?,?,?,?,?,?,?,?,?)"
+        ),[$numeroPedido[0]->nextval,$request["proveedor"],$request["productor"],$request["montoTotal"],$request["envio"],
+        $request["fecha"],$request["productor"],$request["proveedor"],$request["pago"],
+        $request["fecha"],$request["productor"],$request["proveedor"]]);
+
+        foreach ($request["productos"] as $producto) {
+             
+            if($producto["tipo"]=="Componente"){
+                DB::INSERT(DB::RAW("INSERT INTO rdj_detalles_pedidos(id,num_pedido,cantidad,id_pres_otro,
+                cas_otro,precio)
+                VALUES (nextval('rdj_det_pedido_sec'),?,?,?,?,?)"),[$numeroPedido[0]->nextval,$producto["cantidad"],
+                $producto["idPresentacion"],$producto["idProducto"],$producto["precio"]]);
+            }
+            else{
+                DB::INSERT(DB::RAW("INSERT INTO rdj_detalles_pedidos(id,num_pedido,cantidad,id_pres_esencia,
+                cas_esencia,precio)
+                VALUES (nextval('rdj_det_pedido_sec'),?,?,?,?,?)"),[$numeroPedido[0]->nextval,$producto["cantidad"],
+                $producto["idPresentacion"],$producto["idProducto"],$producto["precio"]]);
+            }
+        }
+
         
+
+
+
+        return response(["Producto Creado con Éxito"],200);
     }
 
 }

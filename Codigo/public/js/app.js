@@ -2197,6 +2197,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["csrf"],
   data: function data() {
@@ -2232,7 +2247,10 @@ __webpack_require__.r(__webpack_exports__);
       ,
       duracionTotal: 0
       /*Duracion total del envio*/
-
+      ,
+      id_proveedor: 0,
+      id_productor: 0,
+      fecha_contrato: ""
     };
   },
   created: function created() {
@@ -2244,6 +2262,9 @@ __webpack_require__.r(__webpack_exports__);
       _this.pagos = response.data[1];
       _this.extras = response.data[2];
       _this.productos = response.data[3];
+      _this.id_productor = response.data[4];
+      _this.id_proveedor = response.data[5];
+      _this.fecha_contrato = response.data[6];
     })["catch"](function (errors) {
       console.log("%cAxios: Error buscando metodos de envio y metodos de pago", "color: #FFCCCB");
     });
@@ -2354,7 +2375,8 @@ __webpack_require__.r(__webpack_exports__);
           cantidad: 0,
           idPresentacion: 0,
           idProducto: 0,
-          precio: 0
+          precio: 0,
+          tipo: ""
         };
 
         if (this.cantidad[index] > 0) {
@@ -2362,6 +2384,7 @@ __webpack_require__.r(__webpack_exports__);
           params.idPresentacion = this.productos[index].presentacionid;
           params.idProducto = this.productos[index].cas_prod;
           params.precio = parseFloat(this.cantidad[index] * this.productos[index].precioing - this.productos[index].descuento_producto / 100 * this.cantidad[index] * this.productos[index].precioing);
+          params.tipo = this.productos[index].tipo;
           this.productosSeleccionados.push(params);
         }
       }
@@ -2400,6 +2423,35 @@ __webpack_require__.r(__webpack_exports__);
           break;
         }
       }
+    },
+    // Para verificar si hay productos con cantidades negativas
+    productosNegativos: function productosNegativos() {
+      for (var index = 0; index < this.cantidad.length; index++) {
+        if (this.cantidad[index] < 0 && this.cantidad[index] != null) {
+          return true;
+        }
+      }
+
+      return false;
+    },
+    crearPedido: function crearPedido() {
+      console.log("%cAxios: Enviando respuestas!", "color: lightblue");
+      axios.post("crear", {
+        productos: this.productosSeleccionados,
+        envio: this.envioAusar,
+        pago: this.pagoAusar,
+        productor: this.id_productor,
+        proveedor: this.id_proveedor,
+        fecha: this.fecha_contrato,
+        montoTotal: this.precioTotal,
+        duracionTotal: this.duracionTotal
+      }).then(function (response) {
+        console.log("%cAxios: Resultados recibidos!", "color: lightgreen");
+        console.log(response.data[0]); //console.log(response.data[0]);
+      })["catch"](function (errors) {
+        console.log("%cAxios: Error!", "color: #FFCCCB");
+        console.log(errors);
+      });
     }
   },
   computed: {}
@@ -41656,16 +41708,56 @@ var render = function() {
           _c(
             "select",
             {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.pagoAusar,
+                  expression: "pagoAusar"
+                }
+              ],
               staticClass: "combo",
               staticStyle: { outline: "none" },
-              attrs: { name: "pagos", id: "pagos" }
+              attrs: { name: "pagos", id: "pagos" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.pagoAusar = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
             },
-            _vm._l(_vm.pagos, function(pago, index) {
-              return _c("option", { key: index, staticClass: "combo" }, [
-                _vm._v(_vm._s(_vm.detallePago(pago)))
-              ])
-            }),
-            0
+            [
+              _c(
+                "option",
+                {
+                  staticClass: "combo",
+                  attrs: { selected: "selected", value: "0" }
+                },
+                [_vm._v("Selecciona un Metodo de Pago")]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.pagos, function(pago, index) {
+                return _c(
+                  "option",
+                  {
+                    key: index,
+                    staticClass: "combo",
+                    domProps: { value: pago.idpago }
+                  },
+                  [_vm._v(_vm._s(_vm.detallePago(pago)))]
+                )
+              })
+            ],
+            2
           )
         ]
       ),
@@ -41812,7 +41904,10 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm.cantidad.length > 0 && _vm.envioAusar > 0
+      _vm.cantidad.length > 0 &&
+      _vm.envioAusar > 0 &&
+      _vm.productosNegativos() == false &&
+      _vm.pagoAusar > 0
         ? _c(
             "div",
             {
@@ -41872,7 +41967,42 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm._m(6)
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "d-flex modal-footer justify-content-center mt-2"
+                        },
+                        [
+                          _vm._m(6),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary mx-4",
+                              attrs: {
+                                "data-dismiss": "modal",
+                                "aria-label": "Close"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.crearPedido()
+                                }
+                              }
+                            },
+                            [
+                              _c("img", {
+                                staticClass: "mb-1",
+                                attrs: {
+                                  src: "/img/iconos/check_white.svg",
+                                  width: "24"
+                                }
+                              }),
+                              _vm._v(" Aceptar\n          ")
+                            ]
+                          )
+                        ]
+                      )
                     ]
                   )
                 ]
@@ -41929,6 +42059,24 @@ var render = function() {
                         _vm.envioAusar == 0
                           ? _c("span", [
                               _vm._v("Debes seleccionar un método de envío")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _vm.pagoAusar == 0
+                          ? _c("span", [
+                              _vm._v("Debes seleccionar un método de pago")
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _vm.productosNegativos()
+                          ? _c("span", [
+                              _vm._v(
+                                "La cantidad de productos debe ser mayor a cero"
+                              )
                             ])
                           : _vm._e()
                       ]),
@@ -42082,38 +42230,17 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c(
-      "div",
-      { staticClass: "d-flex modal-footer justify-content-center mt-2" },
+      "button",
+      {
+        staticClass: "btn btn-danger mx-4",
+        attrs: { "data-dismiss": "modal", "aria-label": "Close" }
+      },
       [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-danger mx-4",
-            attrs: { "data-dismiss": "modal", "aria-label": "Close" }
-          },
-          [
-            _c("img", {
-              staticClass: "mb-1",
-              attrs: { src: "/img/iconos/cancel_white.svg", width: "24" }
-            }),
-            _vm._v(" Cancelar\n          ")
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary mx-4",
-            attrs: { "data-dismiss": "modal", "aria-label": "Close" }
-          },
-          [
-            _c("img", {
-              staticClass: "mb-1",
-              attrs: { src: "/img/iconos/check_white.svg", width: "24" }
-            }),
-            _vm._v(" Aceptar\n          ")
-          ]
-        )
+        _c("img", {
+          staticClass: "mb-1",
+          attrs: { src: "/img/iconos/cancel_white.svg", width: "24" }
+        }),
+        _vm._v(" Cancelar\n          ")
       ]
     )
   },
@@ -62890,8 +63017,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
