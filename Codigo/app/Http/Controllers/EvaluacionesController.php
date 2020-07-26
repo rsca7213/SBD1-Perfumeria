@@ -408,8 +408,30 @@ class EvaluacionesController extends Controller
     
 
         $prov["fecha_ap_ts"] = $fecha_ap_ts;
-        $prov["pedidosCump"] = 0;
-        $prov["pedidosRec"] = 0;
+
+        $prov["pedidosCump"] = DB::select(DB::raw("SELECT COUNT(*) FROM rdj_pedidos WHERE
+        id_prod_envio=? AND id_prov_envio=? AND fecha_ap_envio=? AND estatus='e'
+        GROUP BY estatus,fecha_ap_envio,id_prov_envio,id_prod_envio"),[$id_prod,$id_prov,$fecha_ap_ts]);
+
+        if(sizeof($prov["pedidosCump"]) == 0) {
+            $prov["pedidosCump"] = 0;
+        }
+        else {
+            $prov["pedidosCump"] = $prov["pedidosCump"][0]->count;
+        }
+        
+        $prov["pedidosRec"] = DB::select(DB::raw("SELECT COUNT(*) FROM rdj_pedidos WHERE
+        id_prod_envio=? AND id_prov_envio=? AND fecha_ap_envio=? AND estatus='cprov'
+        GROUP BY estatus,fecha_ap_envio,id_prov_envio,id_prod_envio"),[$id_prod,$id_prov,$fecha_ap_ts]);
+
+        if(sizeof($prov["pedidosRec"]) == 0) {
+            $prov["pedidosRec"] = 0;
+        }
+        else {
+            $prov["pedidosRec"] = $prov["pedidosRec"][0]->count;
+        }
+
+        
     
         //Devolvemos a la interfaz la data necesaria para continuar
         return response([$prov],200);
