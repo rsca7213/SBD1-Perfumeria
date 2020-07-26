@@ -15,7 +15,7 @@
         <option
           v-for="(envio,index) in envios"
           :key="index"
-          :value="envio.idenvio"
+          :value="envio.metodo_envio"
           class="combo"
         >{{nombreEnvio(envio.tipoenvio,envio.paisenvio,envio.precioenvio,envio.duracionenvio)}}</option>
       </select>
@@ -125,7 +125,7 @@
         <option selected="selected" value="0" class="combo">Selecciona un Metodo de Pago</option>
         <option
           class="combo"
-          :value="pago.idpago"
+          :value="pago.metodo_pago"
           v-for="(pago,index) in pagos"
           :key="index"
         >{{detallePago(pago)}}</option>
@@ -333,7 +333,7 @@ export default {
     /* Funcion para colocar el nombre del envio en el modal extra envio*/
     nombreEnvioDetalle() {
       for (let index = 0; index < this.envios.length; index++) {
-        if (this.envios[index].idenvio == this.envioAusar) {
+        if (this.envios[index].metodo_envio == this.envioAusar) {
           return this.nombreEnvio(
             this.envios[index].tipoenvio,
             this.envios[index].paisenvio,
@@ -383,7 +383,7 @@ export default {
       //this.extrasSeleccionados = [];
       this.extrasAusar = [];
       this.extras.forEach((extra) => {
-        if (extra.idenvio === this.envioAusar) {
+        if (extra.metodo_envio === this.envioAusar) {
           this.extrasAusar.push(extra);
         }
       });
@@ -465,7 +465,7 @@ export default {
         this.precioTotal += parseFloat(this.extrasSeleccionados[index].precio);
       }
       for (let index = 0; index < this.envios.length; index++) {
-        if (this.envios[index].idenvio == this.envioAusar) {
+        if (this.envios[index].metodo_envio == this.envioAusar) {
           this.precioTotal += parseFloat(this.envios[index].precioenvio);
           break;
         }
@@ -479,7 +479,7 @@ export default {
         );
       }
       for (let index = 0; index < this.envios.length; index++) {
-        if (this.envios[index].idenvio == this.envioAusar) {
+        if (this.envios[index].metodo_envio == this.envioAusar) {
           this.duracionTotal += parseFloat(this.envios[index].duracionenvio);
           break;
         }

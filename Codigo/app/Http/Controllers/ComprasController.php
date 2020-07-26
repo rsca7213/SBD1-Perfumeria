@@ -86,7 +86,7 @@ class ComprasController extends Controller
     public function enviosPagosPedido($id_prod,$id_proveedor,$fecha){
         /* Se buscan los metodos de envio del contrato respectivo*/
         $enviosContratados= DB::SELECT(DB::RAW(
-            "SELECT envios.id as idEnvio, envios.duracion AS duracionEnvio, envios.precio AS precioEnvio, envios.tipo AS tipoEnvio, p.nombre as paisEnvio
+            "SELECT met.id AS metodo_envio,envios.id as idEnvio, envios.duracion AS duracionEnvio, envios.precio AS precioEnvio, envios.tipo AS tipoEnvio, p.nombre as paisEnvio
             FROM rdj_metodos_envios AS envios, rdj_metodos_contratos as met, rdj_paises as p
             WHERE met.fecha_cont=? and met.id_productor=? and met.id_prov_envio=? and envios.id = met.id_envio and
             p.id=envios.id_pais"
@@ -94,7 +94,7 @@ class ComprasController extends Controller
 
         /* Se buscan los metodos de pago del contrato respectivo*/
         $pagosContratados= DB::SELECT(DB::RAW(
-            "SELECT pagos.id as idPago,pagos.tipo AS tipoPago, pagos.num_cuotas AS cuotas, pagos.porcentaje AS porcentaje, pagos.meses AS meses
+            "SELECT met.id AS metodo_pago,pagos.id as idPago,pagos.tipo AS tipoPago, pagos.num_cuotas AS cuotas, pagos.porcentaje AS porcentaje, pagos.meses AS meses
             FROM rdj_metodos_pagos AS pagos, rdj_metodos_contratos AS met
             WHERE met.fecha_cont=? AND met.id_productor=? AND met.id_prov_pago=? AND pagos.id = met.id_pago"
         ),[$fecha,$id_prod,$id_proveedor]);

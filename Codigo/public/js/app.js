@@ -2278,7 +2278,7 @@ __webpack_require__.r(__webpack_exports__);
     /* Funcion para colocar el nombre del envio en el modal extra envio*/
     nombreEnvioDetalle: function nombreEnvioDetalle() {
       for (var index = 0; index < this.envios.length; index++) {
-        if (this.envios[index].idenvio == this.envioAusar) {
+        if (this.envios[index].metodo_envio == this.envioAusar) {
           return this.nombreEnvio(this.envios[index].tipoenvio, this.envios[index].paisenvio, this.envios[index].precioenvio, this.envios[index].duracionenvio);
         }
       }
@@ -2320,7 +2320,7 @@ __webpack_require__.r(__webpack_exports__);
       //this.extrasSeleccionados = [];
       this.extrasAusar = [];
       this.extras.forEach(function (extra) {
-        if (extra.idenvio === _this2.envioAusar) {
+        if (extra.metodo_envio === _this2.envioAusar) {
           _this2.extrasAusar.push(extra);
         }
       });
@@ -2404,7 +2404,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       for (var _index2 = 0; _index2 < this.envios.length; _index2++) {
-        if (this.envios[_index2].idenvio == this.envioAusar) {
+        if (this.envios[_index2].metodo_envio == this.envioAusar) {
           this.precioTotal += parseFloat(this.envios[_index2].precioenvio);
           break;
         }
@@ -2418,7 +2418,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       for (var _index3 = 0; _index3 < this.envios.length; _index3++) {
-        if (this.envios[_index3].idenvio == this.envioAusar) {
+        if (this.envios[_index3].metodo_envio == this.envioAusar) {
           this.duracionTotal += parseFloat(this.envios[_index3].duracionenvio);
           break;
         }
@@ -41442,7 +41442,7 @@ var render = function() {
                   {
                     key: index,
                     staticClass: "combo",
-                    domProps: { value: envio.idenvio }
+                    domProps: { value: envio.metodo_envio }
                   },
                   [
                     _vm._v(
@@ -41751,7 +41751,7 @@ var render = function() {
                   {
                     key: index,
                     staticClass: "combo",
-                    domProps: { value: pago.idpago }
+                    domProps: { value: pago.metodo_pago }
                   },
                   [_vm._v(_vm._s(_vm.detallePago(pago)))]
                 )
