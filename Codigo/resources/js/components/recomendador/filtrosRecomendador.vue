@@ -1,6 +1,6 @@
 <template>
     <div>
-        <span v-if="pregunta === 1">
+        <span v-if="pregunta === 1 && fase === 0">
             <div class="row d-flex justify-content-center h3">
                 <b class="text-primary mr-2"> Pregunta #1: </b> Género
             </div>
@@ -43,7 +43,7 @@
                 </button>
             </div>
         </span>
-        <span v-if="pregunta === 2">
+        <span v-if="pregunta === 2 && fase === 0">
             <div class="row d-flex justify-content-center h3">
                 <b class="text-primary mr-2"> Pregunta #2: </b> Edad
             </div>
@@ -92,7 +92,7 @@
                 </button>
             </div>
         </span>
-        <span v-if="pregunta === 3">
+        <span v-if="pregunta === 3 && fase === 0">
             <div class="row d-flex justify-content-center h3">
                 <b class="text-primary mr-2"> Pregunta #3: </b> Intensidad
             </div>
@@ -135,7 +135,7 @@
                 </button>
             </div>
         </span>
-        <span v-if="pregunta === 4">
+        <span v-if="pregunta === 4 && fase === 0">
             <div class="row d-flex justify-content-center h3">
                 <b class="text-primary mr-2"> Pregunta #4: </b> Carácter
             </div>
@@ -196,7 +196,7 @@
                 </button>
             </div>
         </span>
-        <span v-if="pregunta === 5">
+        <span v-if="pregunta === 5 && fase === 0">
              <div class="row d-flex justify-content-center h3">
                 <b class="text-primary mr-2"> Pregunta #5: </b> Familias Olfativas
             </div>
@@ -287,7 +287,7 @@
                 </button>
             </div>
         </span>
-        <span v-if="pregunta === 6">
+        <span v-if="pregunta === 6 && fase === 0">
             <div class="row d-flex justify-content-center h3">
                 <b class="text-primary mr-2"> Pregunta #6: </b> Aromas importantes
             </div>
@@ -366,7 +366,7 @@
                 </button>
             </div>
         </span>
-        <span v-if="pregunta === 7">
+        <span v-if="pregunta === 7 && fase === 0">
            <div class="row d-flex justify-content-center h3">
                 <b class="text-primary mr-2"> Pregunta #7: </b> Preferencias de Uso
             </div>
@@ -409,7 +409,7 @@
                 </button>
             </div>
         </span>
-        <span v-if="pregunta === 8">
+        <span v-if="pregunta === 8 && fase === 0">
             <div class="row d-flex justify-content-center h3">
                 <b class="text-primary mr-2"> Pregunta #8: </b> Aspectos de Personalidad
             </div>
@@ -512,6 +512,209 @@
                 </button>
             </div>
         </span>
+        <span v-if="fase === 1">
+            <div class="row d-flex justify-content-center h3">
+                <b class="text-primary mr-2"> Resultados </b>
+            </div>
+            <div class="progress my-2 border border-light" style="height: 20px">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-success" role="progressbar" style="width: 100%">
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center h4">
+                <b class="mr-2"> ¡Estos son los perfumes que más te recomendados! </b>
+            </div>
+            <hr>
+            <div class="row d-flex justify-content-center h4" v-if="perfumes.length === 0">
+                <b class="mr-2"> :(  No hemos conseguido coincidencias. </b>
+            </div>
+            <span v-for="(perfume,index) in perfumes" :key="perfume.id">
+                <span v-if="perfumeSel === index + 1"> 
+                    <div class="row ml-4 h4">
+                    <b class="text-primary mr-2"> • Perfume: </b> <span v-text="perfume.nombre"> </span>
+                    </div>
+                    <div class="row ml-4 h4">
+                        <b class="text-primary mr-2"> • Filtros cumplidos: </b> <span v-text="perfume.cantCump"> 
+                            </span> <span>/{{pregunta}}</span>
+                            <img src="/img/iconos/list.svg" width="26" class="ml-2 mb-1 iconobtn"
+                            data-toggle="modal" data-target="#modalCump">
+                    </div>
+                    <div class="row ml-4 h4">
+                        <b class="text-primary mr-2"> • Empresa productora: </b> <span v-text="perfume.productor"> </span>
+                    </div>
+                    <div class="row ml-4 h4">
+                        <b class="text-primary mr-2"> • Género: </b> <span v-text="perfume.genero"> </span>
+                    </div>
+                    <div class="row ml-4 h4">
+                        <b class="text-primary mr-2"> • Rango de edad: </b> <span v-text="perfume.edad"> </span>
+                    </div>
+                    <div class="row ml-4 h4">
+                        <b class="text-primary mr-2"> • Tipo de perfume: </b> <span v-text="perfume.tipo"> </span>
+                    </div>
+                    <div class="row ml-4 h4">
+                        <b class="text-primary mr-2"> • Intensidades y presentaciones: </b> <br> 
+                        <span v-for="(int,index) in perfume.intensidades" :key="index"> 
+                            {{ int.tipo }} (<span v-for="(p,index) in int.presentaciones" :key="index"> {{ p }} </span>)
+                            <span v-if="perfume.intensidades.length - 1 != index">,</span>
+                        </span>
+                    </div>
+                    <div class="row ml-4 h4">
+                        <b class="text-primary mr-2"> • Perfumistas: </b>
+                        <span v-for="(pm,index) in perfume.perfumistas" :key="index"> 
+                            <span> {{ mostrarPerfumista(pm.pn,pm.sn,pm.pa,pm.sa,pm.pais,index,perfume.perfumistas.length) }} </span>
+                            <span> </span>
+                        </span>
+                    </div>
+                    <table class="table table-striped border border-info">
+                        <tbody>
+                            <tr class="border-top border-info">
+                                <td class="bg-primary text-white" colspan="1"> <b> Familias Olfativas </b> </td>
+                                <td> 
+                                    <span v-for="(fa,index) in perfume.familias" :key="index">
+                                        <span v-text="fa"></span><span v-if="perfume.familias.length - 1 != index">, </span><span v-else>.</span>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg-primary text-white" colspan="1"> <b> Carácteres </b> </td>
+                                <td> 
+                                    <span v-for="(caracter,index) in perfume.cars" :key="index">
+                                        <span v-text="caracter"></span><span v-if="perfume.cars.length - 1 != index">, </span><span v-else>.</span>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg-primary text-white" colspan="1"> <b> Personalidades </b> </td>
+                                <td> 
+                                    <span v-for="(per,index) in perfume.pers" :key="index">
+                                        <span v-text="per"></span><span v-if="perfume.pers.length - 1 != index">, </span><span v-else>.</span>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="bg-primary text-white" colspan="1"> <b> Aromas </b> </td>
+                                <td> 
+                                    <span v-for="(ar,index) in perfume.aromas" :key="index">
+                                        <span v-text="ar"></span><span v-if="perfume.aromas.length - 1 != index">, </span><span v-else>.</span>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <div class="row d-flex justify-content-center">
+                        <button class="btn btn-primary mx-4" @click="perfumeSel--" :disabled="computedAnt"> 
+                            <img src="/img/iconos/back.svg" width="24" class="mr-2 mb-1">
+                            Anterior
+                        </button>
+                        <button class="btn btn-primary mx-4" @click="perfumeSel++" :disabled="computedSig"> 
+                            Siguiente
+                            <img src="/img/iconos/back.svg" width="24" class="ml-2 mb-1" style="transform: rotate(180deg);">
+                        </button>
+                    </div>
+                </span>
+            </span>
+        
+        </span>
+        <div class="modal fade" id="modalCump" tabindex="-1" role="dialog"
+        aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content" style="background-color: #F5F5F5">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            <b>Filtros Cumplidos por el Perfume</b>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body h5 text-center" v-if="perfumes.length != 0">
+                        <div class="row d-flex mx-4 h5" v-for="(preg,index) in perfumes[perfumeSel - 1].cumplim" 
+                        :key="index">
+                            <span v-if="index === 0 && preg != null"> <b class="text-primary"> • Filtro #1 (Género): </b> 
+                                <span v-if="preg === true"> 
+                                    Cumple
+                                    <img src="/img/iconos/check_green.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                                <span v-else>
+                                    No cumple
+                                    <img src="/img/iconos/cancel_red.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                            </span>
+                            <span v-if="index === 1 && preg != null"> <b class="text-primary"> • Filtro #2 (Rangos de edades): </b> 
+                                <span v-if="preg === true"> 
+                                    Cumple
+                                    <img src="/img/iconos/check_green.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                                <span v-else>
+                                    No cumple
+                                    <img src="/img/iconos/cancel_red.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                            </span>
+                            <span v-if="index === 2 && preg != null"> <b class="text-primary"> • Filtro #3 (Intensidades): </b> 
+                                <span v-if="preg === true"> 
+                                    Cumple
+                                    <img src="/img/iconos/check_green.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                                <span v-else>
+                                    No cumple
+                                    <img src="/img/iconos/cancel_red.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                            </span>
+                            <span v-if="index === 3 && preg != null"> <b class="text-primary"> • Filtro #4 (Carácter): </b> 
+                                <span v-if="preg === true"> 
+                                    Cumple
+                                    <img src="/img/iconos/check_green.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                                <span v-else>
+                                    No cumple
+                                    <img src="/img/iconos/cancel_red.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                            </span>
+                            <span v-if="index === 4 && preg != null"> <b class="text-primary"> • Filtro #5 (Familias Olfativas): </b> 
+                                <span v-if="preg === true"> 
+                                    Cumple
+                                    <img src="/img/iconos/check_green.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                                <span v-else>
+                                    No cumple
+                                    <img src="/img/iconos/cancel_red.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                            </span>
+                            <span v-if="index === 5 && preg != null"> <b class="text-primary"> • Filtro #6 (Aromas): </b> 
+                                <span v-if="preg === true"> 
+                                    Cumple
+                                    <img src="/img/iconos/check_green.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                                <span v-else>
+                                    No cumple
+                                    <img src="/img/iconos/cancel_red.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                            </span>
+                            <span v-if="index === 6 && preg != null"> <b class="text-primary"> • Filtro #7 (Preferencias de uso): </b> 
+                                <span v-if="preg === true"> 
+                                    Cumple
+                                    <img src="/img/iconos/check_green.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                                <span v-else>
+                                    No cumple
+                                    <img src="/img/iconos/cancel_red.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                            </span>
+                            <span v-if="index === 7 && preg != null"> <b class="text-primary"> • Filtro #8 (Personalidades): </b> 
+                                <span v-if="preg === true"> 
+                                    Cumple
+                                    <img src="/img/iconos/check_green.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                                <span v-else>
+                                    No cumple
+                                    <img src="/img/iconos/cancel_red.svg" width="24" class="ml-2 mb-1">
+                                </span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -520,8 +723,11 @@ export default {
     data() {
         return {
             pregunta: 1, /* Variable que determina por cual pregunta va el usuario */
+            fase: 0, /* 0=preguntaando, 1=mostrando perfumes */
+            perfumeSel: 1, /* determina que perfume de los resultados se esta viendo */
             respuestas: ["m","in","lig",[],[],[],"di",[]], /* Variable que va almacenando las respuestas del usuario */
-            textoErr: "" /* Variable que almacena texto para mostrar al realizar validacion front end */
+            textoErr: "", /* Variable que almacena texto para mostrar al realizar validacion front end */
+            perfumes: [] /* Variable que almacena todos los perfumes que devuelve laravel para mostrarlos en la interfaz */
         }
     },
 
@@ -537,7 +743,16 @@ export default {
             )
             .then((response) => {
                 console.log("%cAxios: Resultados recibidos!", "color: lightgreen");
-                console.log(response.data);
+                this.fase = 1;
+                this.perfumes = response.data[0];
+                if(this.perfumes.length > 5) {
+                    this.perfumes.splice(5);
+                }
+                for (let i = 0; i < this.perfumes.length; i++) {
+                    if(this.perfumes[i].cantCump === 0) {
+                        this.perfumes.splice(i);
+                    }
+                }
             })
             .catch((errors) => {
                 console.log("%cAxios: Error!", "color: #FFCCCB");
@@ -581,7 +796,41 @@ export default {
                 this.textoErr = "";
                 this.enviarRespuestas();
             }
+        },
+
+        mostrarPerfumista(pn,sn,pa,sa,pais,ind,len) {
+            let pm = "";
+
+            if(sn === null && sa === "") {
+                pm = pn + " " + pa + " (" + pais + ")";
+            }
+            else if(sn === null && sa != "") {
+                pm = pn + " " + pa + " " + sa + " (" + pais + ")";
+            }
+            else if(sn != null && sa === "") {
+                pm = pn + " " + sn + " " + pa + " (" + pais + ")";
+            }
+            else {
+                pm = pn + " " + sn + " " + pa + " " + sa + " (" + pais + ")";
+            }
+
+            if(ind != len - 1) pm += ","; 
+
+            return pm;
         }
+    },
+
+    computed: {
+
+        computedAnt() {
+            if(this.perfumeSel === 1) return "disabled";
+            else return null;
+        },
+
+        computedSig() {
+            if(this.perfumeSel === this.perfumes.length) return "disabled";
+            else return null;
+        },
     }
 }
 </script>
@@ -594,5 +843,8 @@ export default {
     input[type=checkbox] {
         width: 18px;
         height: 18px;
+    }
+    .iconobtn {
+        cursor: pointer;
     }
 </style>
