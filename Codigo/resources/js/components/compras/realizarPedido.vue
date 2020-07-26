@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column align-items-center col-12">
-    <div class="d-flex justify-content-around col-10 my-2">
+    <div class="d-flex justify-content-around col-9 my-2 pl-3">
       <label style="font-weight:bold;" for="envios">Método de envío</label>
       <select
         placeholder="Metodo de envio"
@@ -9,6 +9,7 @@
         name="envios"
         id="envios"
         style="outline:none;"
+        @change="extrasSeleccionados=[]"
       >
         <option selected="selected" value="0" class="combo">Selecciona un Metodo de Envio</option>
         <option
@@ -19,29 +20,70 @@
         >{{nombreEnvio(envio.tipoenvio,envio.paisenvio,envio.precioenvio,envio.duracionenvio)}}</option>
       </select>
     </div>
-    <div class="d-flex justify-content-around col-10 my-2">
-      <label class style="font-weight:bold;" for="detalleEnvio">Extras de envío</label>
-      <button
-        class="btn btn-primary"
-        :disabled="envioAusar==0"
-        style="width:340px;"
-        data-toggle="modal"
-        data-target="#extraEnvio"
-        @click="extrasEnvios()"
-      >
-        <img class="pr-2" src="/img/iconos/add_white.svg" alt="crear" width="24" /> Agregar Extra de Envío
-      </button>
+    <div class="d-flex flex-column col-9 my-2 align-items-center">
+      <div class="d-flex justify-content-around col-12 my-2">
+        <label class="mr-5" style="font-weight:bold;" for="detalleEnvio">Extras de envío</label>
+        <button
+          class="btn btn-primary"
+          :disabled="envioAusar==0"
+          style="width:340px;"
+          data-toggle="modal"
+          data-target="#extraEnvio"
+          @click="extrasEnvios()"
+        >
+          <img class="pr-2" src="/img/iconos/add_white.svg" alt="crear" width="24" /> Agregar Extra de Envío
+        </button>
+      </div>
+
+      <!--<table class="align-self-center col-2" v-if="extrasSeleccionados.length!=0">
+        <tr v-for="(extraSeleccionado,index) in extrasSeleccionados" :key="index">
+          <th class="text-right">Nombre</th>
+          <th class="text-right">Precio</th>
+          <th class="text-right">Duracion</th>
+        </tr>
+      </table>-->
+      <div class="col-10 p-0">
+        <table
+          class="table table-striped border border-info align-self-start col-12 pl-5 mt-2"
+          v-if="extrasSeleccionados.length!=0"
+        >
+          <thead class="bg-primary text-white">
+            <tr class="text-center">
+              <th class="text-left" scope="col">Nombre</th>
+              <th class="text-right" scope="col">Precio</th>
+              <th class="text-right" scope="col">Duración</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(extraSeleccionado,index) in extrasSeleccionados" :key="index">
+              <th class="text-left">Nombre</th>
+              <th class="text-right">Precio</th>
+              <th class="text-right">Duracion</th>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="modal fade" id="extraEnvio" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div class="modal-content" style="background-color: #F5F5F5">
             <div class="modal-header">
               <h5 class="modal-title" id="exampleModalLabel">Extras De Envío</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button
+                @click="extrasSeleccionados=[]"
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+              >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body h5 text-center">
-              <span v-if="envioAusar != null && envioAusar != 0">{{nombreEnvioDetalle()}}</span>
+              <span
+                class="font-weight-bold"
+                v-if="envioAusar != null && envioAusar != 0"
+              >{{nombreEnvioDetalle()}}</span>
               <br />
               <br />
               <table class="table table-striped border border-info">
@@ -59,7 +101,13 @@
                     <td class="text-right">{{extra.precio + " $"}}</td>
                     <td class="text-right">{{duracion(extra.duracion)}}</td>
                     <td class="text-center">
-                      <input type="checkbox" id name value />
+                      <input
+                        :checked="estaSeleccionado(extra.id)"
+                        @change="agregarQuitarExtra(extra.id)"
+                        type="checkbox"
+                        id
+                        value
+                      />
                       <br />
                     </td>
                   </tr>
@@ -76,7 +124,7 @@
         </div>
       </div>
     </div>
-    <div class="d-flex justify-content-around col-10 my-2">
+    <div class="d-flex justify-content-around col-9 my-2 pl-3">
       <label style="font-weight:bold;" for="pagos">Método de pago</label>
       <select class="combo" name="pagos" id="pagos" style="outline:none;">
         <option class="combo" v-for="(pago,index) in pagos" :key="index">{{detallePago(pago)}}</option>
@@ -93,7 +141,7 @@
         <th scope="col" class="text-right">Precio Unitario</th>
         <th class="text-center">Cantidad</th>
         <th class="text-right">Descuento</th>
-        <th class="text-right">Subtotal</th>
+        <th class="text-right" style="width:120px;">Subtotal</th>
       </thead>
       <tbody>
         <tr v-for="(producto,index) in productos" :key="index">
@@ -113,12 +161,17 @@
               v-model.number="cantidad[index]"
             />
           </td>
-          <td class="text-right">{{producto.descuento_producto + " %"}}</td>
           <td
+            v-if="producto.descuento_producto != null"
+            class="text-right"
+          >{{producto.descuento_producto + " %"}}</td>
+          <td v-else class="text-right">{{"0 %"}}</td>
+          <td
+            style="width:120px;"
             v-if="cantidad[index]!=null"
             class="text-right"
           >{{(producto.precioing*cantidad[index] - (producto.descuento_producto/100) *cantidad[index]* producto.precioing ) + " $"}}</td>
-          <td class="text-right" v-else>0 $</td>
+          <td style="width:120px;" class="text-right" v-else>0 $</td>
         </tr>
       </tbody>
     </table>
@@ -144,6 +197,7 @@ export default {
       cantidad: [] /* Cantidad de cada producto*/,
       extrasAusar: [] /* Extras de envio a usar en el pedido*/,
       envioAusar: 0 /* Id del envio a usar*/,
+      extrasSeleccionados: [],
     };
   },
 
@@ -232,12 +286,35 @@ export default {
       }
     },
     extrasEnvios() {
+      //this.extrasSeleccionados = [];
       this.extrasAusar = [];
       this.extras.forEach((extra) => {
         if (extra.idenvio === this.envioAusar) {
           this.extrasAusar.push(extra);
         }
       });
+    },
+    agregarQuitarExtra(idExtra) {
+      if (this.extrasSeleccionados.length == 0) {
+        this.extrasSeleccionados.push(idExtra);
+      } else {
+        for (let index = 0; index < this.extrasSeleccionados.length; index++) {
+          if (this.extrasSeleccionados[index] == idExtra) {
+            this.extrasSeleccionados.splice(index, 1);
+            return;
+          }
+        }
+        this.extrasSeleccionados.push(idExtra);
+      }
+    },
+    /*Verifica si el extra esta seleccionado para marcarlo como check en el model de extras*/
+    estaSeleccionado(idExtra) {
+      for (let index = 0; index < this.extrasSeleccionados.length; index++) {
+        if (this.extrasSeleccionados[index] == idExtra) {
+          return true;
+        }
+      }
+      return false;
     },
   },
 

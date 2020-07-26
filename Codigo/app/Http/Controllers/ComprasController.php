@@ -101,7 +101,7 @@ class ComprasController extends Controller
 
         /* Se buscan los extras de envio del contrato respectivo*/
         $extrasEnvio= DB::SELECT(DB::RAW(
-            "SELECT det.id_envio as idEnvio,det.nombre AS nombre,det.mod_precio AS precio,det.mod_duracion AS duracion
+            "SELECT det.id,det.id_envio as idEnvio,det.nombre AS nombre,det.mod_precio AS precio,det.mod_duracion AS duracion
             FROM rdj_detalles_metodos_envios AS det, rdj_metodos_contratos AS metCont
             WHERE det.id_proveedor=metCont.id_proveedor AND metCont.fecha_cont=? AND det.id_envio=metCont.id_envio;"
         ),[$fecha]);
