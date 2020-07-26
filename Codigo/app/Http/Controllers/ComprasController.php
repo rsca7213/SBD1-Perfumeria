@@ -168,4 +168,184 @@ class ComprasController extends Controller
         return response(["Producto Creado con Éxito"],200);
     }
 
+    /* Proveedor */
+
+    public function verPedidos($id_prov){
+
+        $pedidosPendientes=DB::SELECT(DB::raw(
+            "SELECT p.num_pedido AS num_pedido, p.fecha_pedido AS fecha, p.id_proveedor AS id_prov, pd.id AS id_prod, pd.nombre AS prod, p.factura AS id_factura   
+            FROM rdj_pedidos p, rdj_productores pd
+            WHERE p.id_proveedor=? AND p.estatus='p' AND p.id_productor=pd.id AND p.factura IS NULL
+            UNION
+            SELECT p.num_pedido AS num_pedido, p.fecha_pedido AS fecha, p.id_proveedor AS id_prov, pd.id AS id_prod, pd.nombre AS prod, p.factura AS id_factura   
+            FROM rdj_pedidos p, rdj_productores pd
+            WHERE p.id_proveedor=? AND p.estatus='p' AND p.id_productor=pd.id AND p.factura IS NOT NULL
+            ORDER BY fecha"
+        ),[$id_prov,$id_prov]);
+
+        $pedidosNoPendientes=DB::SELECT(DB::raw(
+            "SELECT p.num_pedido AS num_pedido, p.fecha_pedido AS fecha, p.id_proveedor AS id_prov, pd.id AS id_prod, pd.nombre AS prod, p.factura AS id_factura, p.estatus AS estatus   
+            FROM rdj_pedidos p, rdj_productores pd
+            WHERE p.id_proveedor=? AND p.estatus='e' AND p.id_productor=pd.id
+            UNION
+            SELECT p.num_pedido AS num_pedido, p.fecha_pedido AS fecha, p.id_proveedor AS id_prov, pd.id AS id_prod, pd.nombre AS prod, p.factura AS id_factura, p.estatus AS estatus   
+            FROM rdj_pedidos p, rdj_productores pd
+            WHERE p.id_proveedor=? AND p.estatus='cprod' AND p.id_productor=pd.id
+            UNION
+            SELECT p.num_pedido AS num_pedido, p.fecha_pedido AS fecha, p.id_proveedor AS id_prov, pd.id AS id_prod, pd.nombre AS prod, p.factura AS id_factura, p.estatus AS estatus   
+            FROM rdj_pedidos p, rdj_productores pd
+            WHERE p.id_proveedor=? AND p.estatus='cprov' AND p.id_productor=pd.id
+            ORDER BY fecha"
+        ),[$id_prov,$id_prov,$id_prov]);
+
+        return view('proveedores.pedidos.ver-pedidos',[
+            'id_prov' => $id_prov,
+            'pedidosPendientes' => $pedidosPendientes,
+            'pedidosNoPendientes' => $pedidosNoPendientes,
+        ]);
+    } 
+
+    public function detallePedido($id_prov,$id_prod,$num_pedido){
+
+        $pedido=DB::SELECT(DB::raw(
+            "SELECT p.fecha_pedido AS fecha, p.num_pedido As num_pedido, pd.nombre AS prod, pv.nombre AS prov, p.estatus AS estatus, p.factura AS id_factura, p.fecha_envio AS fecha_envio, p.monto AS monto       
+            FROM rdj_pedidos p, rdj_productores pd, rdj_proveedores pv
+            WHERE p.num_pedido=? AND p.id_proveedor=? AND p.id_productor=pd.id"
+        ),[$num_pedido,$id_prov]);
+        
+        $ingredientesPedido=DB::SELECT(DB::raw(
+            "SELECT i.cas_ing_esencia AS cas, i.nombre AS nombre, presentIng.volumen AS presentacion, dp.cantidad AS cantidad, dp.precio AS precio       
+            FROM rdj_pedidos p, rdj_detalles_pedidos dp, rdj_presents_ings_esencias presentIng, rdj_ingredientes_esencias i
+            WHERE dp.num_pedido=? AND p.id_proveedor=? AND dp.num_pedido=p.num_pedido AND i.cas_ing_esencia=dp.cas_esencia AND dp.id_pres_esencia=presentIng.id AND i.cas_ing_esencia=presentIng.cas_ing_esencia
+            UNION
+            SELECT o.cas_otro_ing AS cas, o.nombre AS nombre, presentOIng.volumen AS presentacion, dp.cantidad AS cantidad, dp.precio AS precio       
+            FROM rdj_pedidos p, rdj_detalles_pedidos dp, rdj_present_otros_ings presentOIng, rdj_otros_ingredientes o
+            WHERE dp.num_pedido=? AND p.id_proveedor=? AND dp.num_pedido=p.num_pedido AND o.cas_otro_ing=dp.cas_otro AND dp.id_pres_otro=presentOIng.id AND o.cas_otro_ing=presentOIng.cas_otro_ing
+            ORDER BY cas,presentacion"
+        ),[$num_pedido,$id_prov,$num_pedido,$id_prov]);
+
+        $enviosPedido=DB::SELECT(DB::raw(
+            "SELECT me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, pa.nombre AS pais       
+            FROM rdj_pedidos p, rdj_metodos_envios me, rdj_paises pa
+            WHERE p.num_pedido=? AND p.id_proveedor=? AND p.id_envio=me.id AND p.id_prov_envio=me.id_proveedor AND pa.id=me.id_pais"
+        ),[$num_pedido,$id_prov]);
+
+        $pagosPedido=DB::SELECT(DB::raw(
+            "SELECT pa.tipo AS tipo, pa.num_cuotas AS cuotas, pa.porcentaje AS porcentaje, pa.meses AS meses       
+            FROM rdj_pedidos p, rdj_metodos_pagos pa
+            WHERE p.num_pedido=? AND p.id_proveedor=? AND p.id_productor=? AND p.id_pago=pa.id AND p.id_prov_pago=pa.id_proveedor"
+        ),[$num_pedido,$id_prov,$id_prod]);
+
+        foreach($ingredientesPedido as $ing){
+            $ing->cas=Controller::stringifyCas($ing->cas);
+        }
+
+        $precioEnvio=$pedido[0]->monto;
+
+        foreach($ingredientesPedido as $ingrediente){
+            $precioEnvio=$precioEnvio-$ingrediente->precio;
+        }
+
+        $enviosPedido[0]->precio=$precioEnvio;
+
+        return view('proveedores.pedidos.detalle-pedido',[
+            'id_prov' => $id_prov,
+            'id_prod' => $id_prod,
+            'pedido' => $pedido,
+            'ingredientesPedido' => $ingredientesPedido,
+            'enviosPedido' => $enviosPedido,
+            'pagosPedido' => $pagosPedido,
+        ]);
+    
+    }
+
+    public function aceptarPedido($id_prov,$id_prod,$num_pedido){
+
+        $pedido=DB::SELECT(DB::raw(
+            "SELECT p.factura AS factura       
+            FROM rdj_pedidos p
+            WHERE p.id_proveedor=? AND p.factura IS NOT NULL
+            ORDER BY factura DESC"
+        ),[$id_prov]);
+
+        if($pedido!=[]){
+            $factura=$pedido[0]->factura;
+        }else{
+            $factura=0;
+        }
+
+        DB::update(DB::raw(
+            "UPDATE rdj_pedidos SET factura=? WHERE num_pedido=?"
+        ),[$num_pedido,$factura+1]);
+
+        return redirect('/proveedor/'.$id_prov.'/pedidos');
+
+    }
+
+    public function rechazarPedido($id_prov,$id_prod,$num_pedido){
+
+        DB::update(DB::raw(
+            "UPDATE rdj_pedidos SET estatus='cprov' WHERE num_pedido=?"
+        ),[$num_pedido]);
+
+        return redirect('/proveedor/'.$id_prov.'/pedidos');
+
+    }
+
+    public function enviarPedido($id_prov,$id_prod,$num_pedido){
+
+        $time=Carbon::now();
+
+        DB::update(DB::raw(
+            "UPDATE rdj_pedidos SET estatus='e', fecha_envio=? WHERE num_pedido=?"
+        ),[$time,$num_pedido]);
+
+        return redirect('/proveedor/'.$id_prov.'/pedidos');
+
+    }
+
+    public function verFacturas($id_prov){
+
+        $pagos=DB::SELECT(DB::raw(
+            "SELECT pa.id AS id_pago, pa.tipo AS tipo, pa.num_cuotas AS cuotas, pa.porcentaje AS porcentaje, p.num_pedido AS num_pedido      
+            FROM rdj_metodos_pagos pa, rdj_pedidos p
+            WHERE p.id_pago=pa.id AND p.factura IS NOT NULL
+            ORDER BY num_pedido"
+        ));
+
+        $pagados=DB::SELECT(DB::raw(
+            "SELECT pag.num_pago AS num_pago, pag.num_pedido AS num_pedido, pag.monto AS monto       
+            FROM rdj_pagos pag, rdj_pedidos p
+            WHERE pag.num_pedido=p.num_pedido AND p.factura IS NOT NULL
+            ORDER BY pag.num_pedido"
+        ));
+
+        $facturas=DB::SELECT(DB::raw(
+            "SELECT p.factura AS num_factura, p.num_pedido AS num_pedido, pd.nombre AS prod, p.monto AS monto, p.id_pago AS id_pago, p.monto AS por_pagar        
+            FROM rdj_pedidos p, rdj_productores pd
+            WHERE p.id_proveedor=? AND p.id_productor=pd.id AND p.factura IS NOT NULL
+            ORDER BY num_factura,num_pedido"
+        ),[$id_prov]);
+
+        foreach($facturas as $factura){
+            foreach($pagados as $pagado){
+                if($pagado->num_pedido==$factura->num_pedido){
+                    $factura->por_pagar=$factura->por_pagar-$pagado->monto;
+                    foreach($pagos as $pago){
+                        if($pago->num_pedido==$pagado->num_pedido && $pago->cuotas>0){
+                            $pago->cuotas=$pago->cuotas-1;
+                        }
+                    }
+                }
+            }
+        }
+
+        return view('proveedores.pedidos.ver-facturas',[
+            'id_prov' => $id_prov,
+            'facturas' => $facturas,
+            'pagos' => $pagos,
+            'pagados' => $pagados,
+        ]);
+    }
+
 }

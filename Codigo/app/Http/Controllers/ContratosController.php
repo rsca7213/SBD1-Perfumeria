@@ -56,34 +56,30 @@ class ContratosController extends Controller
             }
         }
 
-        $i=0;
-
-        foreach($contratosNoRenovados as $contrato){
-
-            if(Carbon::parse($contrato->fecha)->addYear(1) < Carbon::now() && $contrato->cancelacion==false){  
-
-                array_push($contratosNoVigentes,$contrato);
-                    
-                unset($contratosVigentes[$i]);
-
+        foreach($contratosNoRenovados as $noRenovado){
+            $i=0;
+            foreach($contratosVigentes as $contrato){
+                if($contrato->fecha == $noRenovado->fecha && Carbon::parse($contrato->fecha)->addYear(1) < Carbon::now()){
+                    array_push($contratosNoVigentes,$contrato);
+                    unset($contratosVigentes[$i]);
+                }
+                $i++;
             }
-            $i++;
-
+            
+            $contratosVigentes=array_values($contratosVigentes);
         }
 
-        $i=0;
-
-        foreach($contratosRenovados as $contrato){
-
-            if(Carbon::parse($contrato->renovacion)->addYear(1) < Carbon::now() && $contrato->cancelacion==false){
-                    
-                array_push($contratosNoVigentes,$contrato);
-
-                unset($contratosVigentes[$i]); 
-
+        foreach($contratosRenovados as $renovado){
+            $i=0;
+            foreach($contratosVigentes as $contrato){
+                if($contrato->fecha == $renovado->fecha && Carbon::parse($renovado->renovacion)->addYear(1) < Carbon::now()){
+                    array_push($contratosNoVigentes,$contrato);
+                    unset($contratosVigentes[$i]);
+                }
+                $i++;
             }
-            $i++;
-
+            
+            $contratosVigentes=array_values($contratosVigentes);
         }
 
         $contratosEspera=DB::select(DB::raw(
@@ -712,30 +708,28 @@ class ContratosController extends Controller
             }
         }
 
-        $i=0;
-
-        foreach($contratosNoRenovados as $contrato){
-
-            if(Carbon::parse($contrato->fecha)->addYear(1) < Carbon::now()){  
-                    
-                unset($contratosVigentes[$i]);
-
+        foreach($contratosNoRenovados as $noRenovado){
+            $i=0;
+            foreach($contratosVigentes as $contrato){
+                if($contrato->fecha == $noRenovado->fecha && Carbon::parse($contrato->fecha)->addYear(1) < Carbon::now()){
+                    unset($contratosVigentes[$i]);
+                }
+                $i++;
             }
-            $i++;
-
+            
+            $contratosVigentes=array_values($contratosVigentes);
         }
 
-        $i=0;
-
-        foreach($contratosRenovados as $contrato){
-
-            if(Carbon::parse($contrato->renovacion)->addYear(1) < Carbon::now()){
-
-                unset($contratosVigentes[$i]); 
-
+        foreach($contratosRenovados as $renovado){
+            $i=0;
+            foreach($contratosVigentes as $contrato){
+                if($contrato->fecha == $renovado->fecha && Carbon::parse($renovado->renovacion)->addYear(1) < Carbon::now()){
+                    unset($contratosVigentes[$i]);
+                }
+                $i++;
             }
-            $i++;
-
+            
+            $contratosVigentes=array_values($contratosVigentes);
         }
 
         $contratosSolicitud=DB::select(DB::raw(

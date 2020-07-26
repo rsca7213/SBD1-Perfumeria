@@ -14,11 +14,11 @@
     </li>
     <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 
-        <a href="#" class="nav-item"> Pedidos </a> 
+        <a href="{{ route('verPedidos', ['id_prov' => $id_prov]) }}" class="nav-item"> Pedidos </a> 
     </li>
     <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 
-        <a href="#" class="nav-item"> Facturas </a> 
+        <a href="{{ route('verFacturas', ['id_prov' => $id_prov]) }}" class="nav-item"> Facturas </a> 
     </li>
 @endsection
 

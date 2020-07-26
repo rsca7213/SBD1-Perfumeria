@@ -7,7 +7,7 @@
             <input type="hidden" name="_method" value="POST">
             <div class="form-group px-4 mx-4 justify-content-center col-7">
                 <label for="cumplim" class="mt-2 px-4"> Cumplimiento de pedidos </label>
-                <input type="number" class="form-control" step="0.01" id="cumplim" required :class="cumplimInputErr"
+                <input type="number" class="form-control" step="0.01" id="cumplim" required
                  v-model.number="cumplimInp" placeholder="Porcentaje..." name="cumplim" readonly> 
                 <small class="form-text text-danger"> <b v-text="smallCum"> </b> </small>
             </div>

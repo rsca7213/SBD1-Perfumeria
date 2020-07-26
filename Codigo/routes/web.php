@@ -83,8 +83,14 @@ Route::post('/productor/{id_prod}/compras/pedido/{id_proveedor}/crear','ComprasC
 Route::get('/productor/{id_prod}/compras', 'ComprasController@verContratosVigentes')->name('verContratosCompras');
 Route::get('/productor/{id_prod}/compras/pedido/{id_proveedor}/{fecha}','ComprasController@mostrarDetallesPedido');
 Route::get('/productor/{id_prod}/compras/pedido/{id_proveedor}/{fecha}/enviosPagos','ComprasController@enviosPagosPedido');
-
-
+/* Proveedor */
+Route::get('/proveedor/{id_prov}/pedidos', 'ComprasController@verPedidos')->name('verPedidos');
+Route::get('/proveedor/{id_prov}/pedidos/detalle/{id_prod}/{num_pedido}', 'ComprasController@detallePedido');
+Route::get('/proveedor/{id_prov}/pedidos/aceptar/{id_prod}/{num_pedido}', 'ComprasController@aceptarPedido');
+Route::get('/proveedor/{id_prov}/pedidos/rechazar/{id_prod}/{num_pedido}', 'ComprasController@rechazarPedido');
+Route::get('/proveedor/{id_prov}/pedidos/enviar/{id_prod}/{num_pedido}', 'ComprasController@enviarPedido');
+/* Facturas */
+Route::get('/proveedor/{id_prov}/facturas', 'ComprasController@verFacturas')->name('verFacturas');
 
 /* Ruta de pagina de inicio */
 Route::get('/', function () {
