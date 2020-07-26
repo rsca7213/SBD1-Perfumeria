@@ -23,4 +23,32 @@ class Controller extends BaseController
         $cas[strlen($cas)] = $checksum;
         return $cas;
     }
+
+    public function separarPalabrasClaves ($palabras) {
+        $car = [];
+        $ar = [];
+        $per = [];
+
+        $arrCar = ["Informal","Natural","Clasico","Seductor","Moderno"];
+        $arrAr = ["Floral","Frutal","Verde","Herbal","Citrico","Herbal aromatico","Amaderado","Otros"];  
+
+        foreach ($palabras as $pal) {
+            
+            if (in_array($pal->palabra,$arrCar)) {
+                array_push($car,$pal->palabra);
+            }
+            else if (in_array($pal->palabra,$arrAr)) {
+                array_push($ar,$pal->palabra);
+            }
+            else {
+                array_push($per,$pal->palabra);
+            }
+        }
+
+        sort($car);
+        sort($ar);
+        sort($per);
+
+        return [$car,$ar,$per];
+    }
 }
