@@ -21,6 +21,16 @@ class RecomendadorController extends Controller
             'pregunta' => 'required|numeric',
             'respuestas' => 'required'
         ]);
+            /*
+        $data["pregunta"] = 8;
+        $data["respuestas"][0] = 'm';
+        $data["respuestas"][1] = 'ad';
+        $data["respuestas"][2] = 'lig';
+        $data["respuestas"][3] = ["Informal","Natural"];
+        $data["respuestas"][4] = ["Verde","Citrica"];
+        $data["respuestas"][5] = ["Floral","Herbal"];
+        $data["respuestas"][6] = ["es"];
+        $data["respuestas"][7] = ["Libertad"];*/
 
         $perfumesFiltros = [];
         
@@ -237,12 +247,13 @@ class RecomendadorController extends Controller
             ,[$perfume->id]);
         }
 
-        /* Buscamos las intensidades de los perfumes junto con las presentaciones que tiene */
+        /* Buscamos los datos de los perfumes */
         foreach($dataPerfumes as $perfume) {
+            /* Intensidades */
             $perfume->intensidades = DB::select(DB::raw("SELECT CASE WHEN i.tipo='EdS' THEN 'Eau de Splash' WHEN i.tipo='EdC' THEN 'Eau de Cologne' 
             WHEN i.tipo='EdT' THEN 'Eau de Toilette' WHEN i.tipo='EdP' THEN 'Eau de Perfume' ELSE 'Perfume'END AS tipo, i.id AS id 
             FROM rdj_intensidades i WHERE i.id_perfume=?"),[$perfume->id]);
-
+            /* Presentaciones por intensidad */
             foreach($perfume->intensidades as $int) {
                 $int->presentaciones = DB::select(DB::raw("SELECT v.volumen || ' ml' AS vol FROM 
                 rdj_presentaciones_perfumes v WHERE v.id_intensidad=? AND v.id_perfume=? ORDER BY v.volumen"),[$int->id,$perfume->id]);
@@ -252,6 +263,7 @@ class RecomendadorController extends Controller
                 }
             }
 
+            /* Familias */
             $perfume->familias = DB::select(DB::raw("SELECT fa.nombre AS fam FROM rdj_familias_olfativas fa, rdj_perfumes_familias pf
             WHERE pf.id_familia=fa.id AND pf.id_perfume=? ORDER BY fa.nombre"), [$perfume->id]);
 
@@ -259,23 +271,27 @@ class RecomendadorController extends Controller
                 $perfume->familias[$i] = $perfume->familias[$i]->fam;
             }
 
+            /* Palabras claves */
             $palabrasPerfume = DB::select(DB::raw("SELECT DISTINCT pa.palabra AS palabra FROM rdj_familias_olfativas fa, 
             rdj_palabras_claves pa, rdj_perfumes pe, rdj_perfumes_familias pf,
             rdj_familias_palabras fp WHERE fp.id_familia=fa.id AND pe.id=? AND
             fp.id_palabra=pa.id AND pf.id_perfume=pe.id AND pf.id_familia=fa.id ORDER BY pa.palabra"),[$perfume->id]);
 
+                   // Separamos las palabras claves
             $perfume->cars = Controller::separarPalabrasClaves($palabrasPerfume)[0];
             $perfume->aromas = Controller::separarPalabrasClaves($palabrasPerfume)[1];
             $perfume->pers = Controller::separarPalabrasClaves($palabrasPerfume)[2];
 
+            /* Verificamos los filtros */
             $perfume->cumplim = [];
-
+            $perfume->cantCump = 0;
             for ($i = 0; $i < sizeof($perfumesFiltros); $i++) {
                 $cond = true;
                 foreach($perfumesFiltros[$i] as $filtro) {
                     if ($filtro->id == $perfume->id) {
                         array_push($perfume->cumplim,true);
                         $cond = false;
+                        $perfume->cantCump++;
                     }
                 }
                 if($cond == true) array_push($perfume->cumplim,false);
@@ -284,9 +300,10 @@ class RecomendadorController extends Controller
                 array_push($perfume->cumplim,null);
             }
 
-
-
         }
+
+        /* Ordenamos por cantidad de cumplimiento de filtros */
+        array_multisort( array_column($dataPerfumes, "cantCump"), SORT_DESC, $dataPerfumes );
 
         //dd($dataPerfumes);
         return response([$dataPerfumes],200);
