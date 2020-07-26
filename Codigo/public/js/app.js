@@ -4675,29 +4675,254 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       pregunta: 1,
 
       /* Variable que determina por cual pregunta va el usuario */
+      fase: 0,
+
+      /* 0=preguntaando, 1=mostrando perfumes */
+      perfumeSel: 1,
+
+      /* determina que perfume de los resultados se esta viendo */
       respuestas: ["m", "in", "lig", [], [], [], "di", []],
 
       /* Variable que va almacenando las respuestas del usuario */
-      textoErr: ""
+      textoErr: "",
+
       /* Variable que almacena texto para mostrar al realizar validacion front end */
+      perfumes: []
+      /* Variable que almacena todos los perfumes que devuelve laravel para mostrarlos en la interfaz */
 
     };
   },
   methods: {
     enviarRespuestas: function enviarRespuestas() {
+      var _this = this;
+
       console.log("%cAxios: Enviando respuestas!", "color: lightblue");
       axios.post("resultados", {
         'pregunta': this.pregunta,
         'respuestas': this.respuestas
       }).then(function (response) {
         console.log("%cAxios: Resultados recibidos!", "color: lightgreen");
-        console.log(response.data);
+        _this.fase = 1;
+        _this.perfumes = response.data[0];
+
+        if (_this.perfumes.length > 5) {
+          _this.perfumes.splice(5);
+        }
+
+        for (var i = 0; i < _this.perfumes.length; i++) {
+          if (_this.perfumes[i].cantCump === 0) {
+            _this.perfumes.splice(i);
+          }
+        }
       })["catch"](function (errors) {
         console.log("%cAxios: Error!", "color: #FFCCCB");
         console.log(errors);
@@ -4730,6 +4955,30 @@ __webpack_require__.r(__webpack_exports__);
         this.textoErr = "";
         this.enviarRespuestas();
       }
+    },
+    mostrarPerfumista: function mostrarPerfumista(pn, sn, pa, sa, pais, ind, len) {
+      var pm = "";
+
+      if (sn === null && sa === "") {
+        pm = pn + " " + pa + " (" + pais + ")";
+      } else if (sn === null && sa != "") {
+        pm = pn + " " + pa + " " + sa + " (" + pais + ")";
+      } else if (sn != null && sa === "") {
+        pm = pn + " " + sn + " " + pa + " (" + pais + ")";
+      } else {
+        pm = pn + " " + sn + " " + pa + " " + sa + " (" + pais + ")";
+      }
+
+      if (ind != len - 1) pm += ",";
+      return pm;
+    }
+  },
+  computed: {
+    computedAnt: function computedAnt() {
+      if (this.perfumeSel === 1) return "disabled";else return null;
+    },
+    computedSig: function computedSig() {
+      if (this.perfumeSel === this.perfumes.length) return "disabled";else return null;
     }
   }
 });
@@ -9197,7 +9446,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ninput[type=radio][data-v-5394a82d] {\n    width: 18px;\n    height: 18px;\n}\ninput[type=checkbox][data-v-5394a82d] {\n    width: 18px;\n    height: 18px;\n}\n", ""]);
+exports.push([module.i, "\ninput[type=radio][data-v-5394a82d] {\n    width: 18px;\n    height: 18px;\n}\ninput[type=checkbox][data-v-5394a82d] {\n    width: 18px;\n    height: 18px;\n}\n.iconobtn[data-v-5394a82d] {\n    cursor: pointer;\n}\n", ""]);
 
 // exports
 
@@ -45594,7 +45843,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm.pregunta === 1
+    _vm.pregunta === 1 && _vm.fase === 0
       ? _c("span", [
           _vm._m(0),
           _vm._v(" "),
@@ -45739,7 +45988,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.pregunta === 2
+    _vm.pregunta === 2 && _vm.fase === 0
       ? _c("span", [
           _vm._m(3),
           _vm._v(" "),
@@ -45890,7 +46139,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.pregunta === 3
+    _vm.pregunta === 3 && _vm.fase === 0
       ? _c("span", [
           _vm._m(10),
           _vm._v(" "),
@@ -46017,7 +46266,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.pregunta === 4
+    _vm.pregunta === 4 && _vm.fase === 0
       ? _c("span", [
           _vm._m(16),
           _vm._v(" "),
@@ -46354,7 +46603,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.pregunta === 5
+    _vm.pregunta === 5 && _vm.fase === 0
       ? _c("span", [
           _vm._m(20),
           _vm._v(" "),
@@ -46938,7 +47187,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.pregunta === 6
+    _vm.pregunta === 6 && _vm.fase === 0
       ? _c("span", [
           _vm._m(24),
           _vm._v(" "),
@@ -47432,7 +47681,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.pregunta === 7
+    _vm.pregunta === 7 && _vm.fase === 0
       ? _c("span", [
           _vm._m(28),
           _vm._v(" "),
@@ -47579,7 +47828,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.pregunta === 8
+    _vm.pregunta === 8 && _vm.fase === 0
       ? _c("span", [
           _vm._m(31),
           _vm._v(" "),
@@ -48354,7 +48603,666 @@ var render = function() {
             )
           ])
         ])
-      : _vm._e()
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.fase === 1
+      ? _c(
+          "span",
+          [
+            _vm._m(35),
+            _vm._v(" "),
+            _vm._m(36),
+            _vm._v(" "),
+            _vm._m(37),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _vm.perfumes.length === 0
+              ? _c(
+                  "div",
+                  { staticClass: "row d-flex justify-content-center h4" },
+                  [
+                    _c("b", { staticClass: "mr-2" }, [
+                      _vm._v(" :(  No hemos conseguido coincidencias. ")
+                    ])
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm._l(_vm.perfumes, function(perfume, index) {
+              return _c("span", { key: perfume.id }, [
+                _vm.perfumeSel === index + 1
+                  ? _c("span", [
+                      _c("div", { staticClass: "row ml-4 h4" }, [
+                        _c("b", { staticClass: "text-primary mr-2" }, [
+                          _vm._v(" • Perfume: ")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: { textContent: _vm._s(perfume.nombre) }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row ml-4 h4" }, [
+                        _c("b", { staticClass: "text-primary mr-2" }, [
+                          _vm._v(" • Filtros cumplidos: ")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: { textContent: _vm._s(perfume.cantCump) }
+                        }),
+                        _vm._v(" "),
+                        _c("span", [_vm._v("/" + _vm._s(_vm.pregunta))]),
+                        _vm._v(" "),
+                        _c("img", {
+                          staticClass: "ml-2 mb-1 iconobtn",
+                          attrs: {
+                            src: "/img/iconos/list.svg",
+                            width: "26",
+                            "data-toggle": "modal",
+                            "data-target": "#modalCump"
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row ml-4 h4" }, [
+                        _c("b", { staticClass: "text-primary mr-2" }, [
+                          _vm._v(" • Empresa productora: ")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: { textContent: _vm._s(perfume.productor) }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row ml-4 h4" }, [
+                        _c("b", { staticClass: "text-primary mr-2" }, [
+                          _vm._v(" • Género: ")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: { textContent: _vm._s(perfume.genero) }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row ml-4 h4" }, [
+                        _c("b", { staticClass: "text-primary mr-2" }, [
+                          _vm._v(" • Rango de edad: ")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: { textContent: _vm._s(perfume.edad) }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row ml-4 h4" }, [
+                        _c("b", { staticClass: "text-primary mr-2" }, [
+                          _vm._v(" • Tipo de perfume: ")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: { textContent: _vm._s(perfume.tipo) }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "row ml-4 h4" },
+                        [
+                          _c("b", { staticClass: "text-primary mr-2" }, [
+                            _vm._v(" • Intensidades y presentaciones: ")
+                          ]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _vm._l(perfume.intensidades, function(int, index) {
+                            return _c(
+                              "span",
+                              { key: index },
+                              [
+                                _vm._v(
+                                  " \n                        " +
+                                    _vm._s(int.tipo) +
+                                    " ("
+                                ),
+                                _vm._l(int.presentaciones, function(p, index) {
+                                  return _c("span", { key: index }, [
+                                    _vm._v(" " + _vm._s(p) + " ")
+                                  ])
+                                }),
+                                _vm._v(")\n                        "),
+                                perfume.intensidades.length - 1 != index
+                                  ? _c("span", [_vm._v(",")])
+                                  : _vm._e()
+                              ],
+                              2
+                            )
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "row ml-4 h4" },
+                        [
+                          _c("b", { staticClass: "text-primary mr-2" }, [
+                            _vm._v(" • Perfumistas: ")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(perfume.perfumistas, function(pm, index) {
+                            return _c("span", { key: index }, [
+                              _c("span", [
+                                _vm._v(
+                                  " " +
+                                    _vm._s(
+                                      _vm.mostrarPerfumista(
+                                        pm.pn,
+                                        pm.sn,
+                                        pm.pa,
+                                        pm.sa,
+                                        pm.pais,
+                                        index,
+                                        perfume.perfumistas.length
+                                      )
+                                    ) +
+                                    " "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("span")
+                            ])
+                          })
+                        ],
+                        2
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "table",
+                        {
+                          staticClass: "table table-striped border border-info"
+                        },
+                        [
+                          _c("tbody", [
+                            _c(
+                              "tr",
+                              { staticClass: "border-top border-info" },
+                              [
+                                _vm._m(38, true),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  _vm._l(perfume.familias, function(fa, index) {
+                                    return _c("span", { key: index }, [
+                                      _c("span", {
+                                        domProps: { textContent: _vm._s(fa) }
+                                      }),
+                                      perfume.familias.length - 1 != index
+                                        ? _c("span", [_vm._v(", ")])
+                                        : _c("span", [_vm._v(".")])
+                                    ])
+                                  }),
+                                  0
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("tr", [
+                              _vm._m(39, true),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                _vm._l(perfume.cars, function(caracter, index) {
+                                  return _c("span", { key: index }, [
+                                    _c("span", {
+                                      domProps: {
+                                        textContent: _vm._s(caracter)
+                                      }
+                                    }),
+                                    perfume.cars.length - 1 != index
+                                      ? _c("span", [_vm._v(", ")])
+                                      : _c("span", [_vm._v(".")])
+                                  ])
+                                }),
+                                0
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("tr", [
+                              _vm._m(40, true),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                _vm._l(perfume.pers, function(per, index) {
+                                  return _c("span", { key: index }, [
+                                    _c("span", {
+                                      domProps: { textContent: _vm._s(per) }
+                                    }),
+                                    perfume.pers.length - 1 != index
+                                      ? _c("span", [_vm._v(", ")])
+                                      : _c("span", [_vm._v(".")])
+                                  ])
+                                }),
+                                0
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("tr", [
+                              _vm._m(41, true),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                _vm._l(perfume.aromas, function(ar, index) {
+                                  return _c("span", { key: index }, [
+                                    _c("span", {
+                                      domProps: { textContent: _vm._s(ar) }
+                                    }),
+                                    perfume.aromas.length - 1 != index
+                                      ? _c("span", [_vm._v(", ")])
+                                      : _c("span", [_vm._v(".")])
+                                  ])
+                                }),
+                                0
+                              )
+                            ])
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("hr"),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "row d-flex justify-content-center" },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary mx-4",
+                              attrs: { disabled: _vm.computedAnt },
+                              on: {
+                                click: function($event) {
+                                  _vm.perfumeSel--
+                                }
+                              }
+                            },
+                            [
+                              _c("img", {
+                                staticClass: "mr-2 mb-1",
+                                attrs: {
+                                  src: "/img/iconos/back.svg",
+                                  width: "24"
+                                }
+                              }),
+                              _vm._v(
+                                "\n                        Anterior\n                    "
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary mx-4",
+                              attrs: { disabled: _vm.computedSig },
+                              on: {
+                                click: function($event) {
+                                  _vm.perfumeSel++
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                " \n                        Siguiente\n                        "
+                              ),
+                              _c("img", {
+                                staticClass: "ml-2 mb-1",
+                                staticStyle: { transform: "rotate(180deg)" },
+                                attrs: {
+                                  src: "/img/iconos/back.svg",
+                                  width: "24"
+                                }
+                              })
+                            ]
+                          )
+                        ]
+                      )
+                    ])
+                  : _vm._e()
+              ])
+            })
+          ],
+          2
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modalCump",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered",
+            attrs: { role: "document" }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "modal-content",
+                staticStyle: { "background-color": "#F5F5F5" }
+              },
+              [
+                _vm._m(42),
+                _vm._v(" "),
+                _vm.perfumes.length != 0
+                  ? _c(
+                      "div",
+                      { staticClass: "modal-body h5 text-center" },
+                      _vm._l(_vm.perfumes[_vm.perfumeSel - 1].cumplim, function(
+                        preg,
+                        index
+                      ) {
+                        return _c(
+                          "div",
+                          { key: index, staticClass: "row d-flex mx-4 h5" },
+                          [
+                            index === 0 && preg != null
+                              ? _c("span", [
+                                  _c("b", { staticClass: "text-primary" }, [
+                                    _vm._v(" • Filtro #1 (Género): ")
+                                  ]),
+                                  _vm._v(" "),
+                                  preg === true
+                                    ? _c("span", [
+                                        _vm._v(
+                                          " \n                                Cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/check_green.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                    : _c("span", [
+                                        _vm._v(
+                                          "\n                                No cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/cancel_red.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            index === 1 && preg != null
+                              ? _c("span", [
+                                  _c("b", { staticClass: "text-primary" }, [
+                                    _vm._v(" • Filtro #2 (Rangos de edades): ")
+                                  ]),
+                                  _vm._v(" "),
+                                  preg === true
+                                    ? _c("span", [
+                                        _vm._v(
+                                          " \n                                Cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/check_green.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                    : _c("span", [
+                                        _vm._v(
+                                          "\n                                No cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/cancel_red.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            index === 2 && preg != null
+                              ? _c("span", [
+                                  _c("b", { staticClass: "text-primary" }, [
+                                    _vm._v(" • Filtro #3 (Intensidades): ")
+                                  ]),
+                                  _vm._v(" "),
+                                  preg === true
+                                    ? _c("span", [
+                                        _vm._v(
+                                          " \n                                Cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/check_green.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                    : _c("span", [
+                                        _vm._v(
+                                          "\n                                No cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/cancel_red.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            index === 3 && preg != null
+                              ? _c("span", [
+                                  _c("b", { staticClass: "text-primary" }, [
+                                    _vm._v(" • Filtro #4 (Carácter): ")
+                                  ]),
+                                  _vm._v(" "),
+                                  preg === true
+                                    ? _c("span", [
+                                        _vm._v(
+                                          " \n                                Cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/check_green.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                    : _c("span", [
+                                        _vm._v(
+                                          "\n                                No cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/cancel_red.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            index === 4 && preg != null
+                              ? _c("span", [
+                                  _c("b", { staticClass: "text-primary" }, [
+                                    _vm._v(
+                                      " • Filtro #5 (Familias Olfativas): "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  preg === true
+                                    ? _c("span", [
+                                        _vm._v(
+                                          " \n                                Cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/check_green.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                    : _c("span", [
+                                        _vm._v(
+                                          "\n                                No cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/cancel_red.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            index === 5 && preg != null
+                              ? _c("span", [
+                                  _c("b", { staticClass: "text-primary" }, [
+                                    _vm._v(" • Filtro #6 (Aromas): ")
+                                  ]),
+                                  _vm._v(" "),
+                                  preg === true
+                                    ? _c("span", [
+                                        _vm._v(
+                                          " \n                                Cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/check_green.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                    : _c("span", [
+                                        _vm._v(
+                                          "\n                                No cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/cancel_red.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            index === 6 && preg != null
+                              ? _c("span", [
+                                  _c("b", { staticClass: "text-primary" }, [
+                                    _vm._v(
+                                      " • Filtro #7 (Preferencias de uso): "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  preg === true
+                                    ? _c("span", [
+                                        _vm._v(
+                                          " \n                                Cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/check_green.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                    : _c("span", [
+                                        _vm._v(
+                                          "\n                                No cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/cancel_red.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            index === 7 && preg != null
+                              ? _c("span", [
+                                  _c("b", { staticClass: "text-primary" }, [
+                                    _vm._v(" • Filtro #8 (Personalidades): ")
+                                  ]),
+                                  _vm._v(" "),
+                                  preg === true
+                                    ? _c("span", [
+                                        _vm._v(
+                                          " \n                                Cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/check_green.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                    : _c("span", [
+                                        _vm._v(
+                                          "\n                                No cumple\n                                "
+                                        ),
+                                        _c("img", {
+                                          staticClass: "ml-2 mb-1",
+                                          attrs: {
+                                            src: "/img/iconos/cancel_red.svg",
+                                            width: "24"
+                                          }
+                                        })
+                                      ])
+                                ])
+                              : _vm._e()
+                          ]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ]
+            )
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -48802,6 +49710,109 @@ var staticRenderFns = [
       _c("b", { staticClass: "mr-2" }, [
         _vm._v(" Nota: Puedes seleccionar varios aspectos de personalidad. ")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h3" }, [
+      _c("b", { staticClass: "text-primary mr-2" }, [_vm._v(" Resultados ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "progress my-2 border border-light",
+        staticStyle: { height: "20px" }
+      },
+      [
+        _c("div", {
+          staticClass:
+            "progress-bar progress-bar-striped progress-bar-animated bg-success",
+          staticStyle: { width: "100%" },
+          attrs: { role: "progressbar" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row d-flex justify-content-center h4" }, [
+      _c("b", { staticClass: "mr-2" }, [
+        _vm._v(" ¡Estos son los perfumes que más te recomendados! ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "td",
+      { staticClass: "bg-primary text-white", attrs: { colspan: "1" } },
+      [_c("b", [_vm._v(" Familias Olfativas ")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "td",
+      { staticClass: "bg-primary text-white", attrs: { colspan: "1" } },
+      [_c("b", [_vm._v(" Carácteres ")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "td",
+      { staticClass: "bg-primary text-white", attrs: { colspan: "1" } },
+      [_c("b", [_vm._v(" Personalidades ")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "td",
+      { staticClass: "bg-primary text-white", attrs: { colspan: "1" } },
+      [_c("b", [_vm._v(" Aromas ")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_c("b", [_vm._v("Filtros Cumplidos por el Perfume")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
     ])
   }
 ]
@@ -61879,8 +62890,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

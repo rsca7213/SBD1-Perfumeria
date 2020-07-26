@@ -255,7 +255,7 @@ class RecomendadorController extends Controller
             FROM rdj_intensidades i WHERE i.id_perfume=?"),[$perfume->id]);
             /* Presentaciones por intensidad */
             foreach($perfume->intensidades as $int) {
-                $int->presentaciones = DB::select(DB::raw("SELECT v.volumen || ' ml' AS vol FROM 
+                $int->presentaciones = DB::select(DB::raw("SELECT v.volumen || 'ml' AS vol FROM 
                 rdj_presentaciones_perfumes v WHERE v.id_intensidad=? AND v.id_perfume=? ORDER BY v.volumen"),[$int->id,$perfume->id]);
 
                 for ($i = 0; $i < sizeof($int->presentaciones); $i++) {
