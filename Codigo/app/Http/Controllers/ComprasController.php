@@ -225,14 +225,14 @@ class ComprasController extends Controller
         $enviosPedido=DB::SELECT(DB::raw(
             "SELECT me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, pa.nombre AS pais       
             FROM rdj_pedidos p, rdj_metodos_envios me, rdj_paises pa
-            WHERE p.num_pedido=? AND p.id_proveedor=? AND p.id_envio=me.id AND p.id_prov_envio=me.id_proveedor AND pa.id=me.id_pais"
-        ),[$num_pedido,$id_prov]);
+            WHERE p.num_pedido=? AND mc.id=p.id_envio AND mc.id_envio=me.id AND pa.id=me.id_pais"
+        ),[$num_pedido]);
 
         $pagosPedido=DB::SELECT(DB::raw(
             "SELECT pa.tipo AS tipo, pa.num_cuotas AS cuotas, pa.porcentaje AS porcentaje, pa.meses AS meses       
             FROM rdj_pedidos p, rdj_metodos_pagos pa
-            WHERE p.num_pedido=? AND p.id_proveedor=? AND p.id_productor=? AND p.id_pago=pa.id AND p.id_prov_pago=pa.id_proveedor"
-        ),[$num_pedido,$id_prov,$id_prod]);
+            WHERE p.num_pedido=? AND p.id_pago=mc.id AND mc.id_pago=pa.id"
+        ),[$num_pedido]);
 
         foreach($ingredientesPedido as $ing){
             $ing->cas=Controller::stringifyCas($ing->cas);
@@ -327,14 +327,14 @@ class ComprasController extends Controller
         $enviosPedido=DB::SELECT(DB::raw(
             "SELECT me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, pa.nombre AS pais       
             FROM rdj_pedidos p, rdj_metodos_envios me, rdj_paises pa
-            WHERE p.num_pedido=? AND p.id_proveedor=? AND p.id_envio=me.id AND p.id_prov_envio=me.id_proveedor AND pa.id=me.id_pais"
-        ),[$num_pedido,$id_prov]);
+            WHERE p.num_pedido=? AND mc.id=p.id_envio AND mc.id_envio=me.id AND pa.id=me.id_pais"
+        ),[$num_pedido]);
 
         $pagosPedido=DB::SELECT(DB::raw(
             "SELECT pa.tipo AS tipo, pa.num_cuotas AS cuotas, pa.porcentaje AS porcentaje, pa.meses AS meses       
             FROM rdj_pedidos p, rdj_metodos_pagos pa
-            WHERE p.num_pedido=? AND p.id_proveedor=? AND p.id_productor=? AND p.id_pago=pa.id AND p.id_prov_pago=pa.id_proveedor"
-        ),[$num_pedido,$id_prov,$id_prod]);
+            WHERE p.num_pedido=? AND p.id_pago=mc.id AND mc.id_pago=pa.id"
+        ),[$num_pedido]);
 
         foreach($ingredientesPedido as $ing){
             $ing->cas=Controller::stringifyCas($ing->cas);

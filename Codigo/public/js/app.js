@@ -2457,6 +2457,8 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log("%cAxios: Resultados recibidos!", "color: lightgreen");
         console.log(response.data[0]); //console.log(response.data[0]);
+
+        window.location.href = "productor/" + 1 + "pedidos";
       })["catch"](function (errors) {
         console.log("%cAxios: Error!", "color: #FFCCCB");
         console.log(errors);
