@@ -168,33 +168,33 @@ class ComprasController extends Controller
         return response(["Producto Creado con Éxito"],200);
     }
 
-    public function verPedidosProductor($id_prod){
+    public function verPedidosProductor($id_prod,$id_prov,$fecha){
 
         $pedidosPendientes=DB::SELECT(DB::raw(
             "SELECT p.num_pedido AS num_pedido, p.fecha_pedido AS fecha, p.id_productor AS id_prod, pd.id AS id_prov, pd.nombre AS prov, p.factura AS id_factura   
             FROM rdj_pedidos p, rdj_proveedores pd
-            WHERE p.id_productor=? AND p.estatus='p' AND p.id_proveedor=pd.id AND p.factura IS NULL
+            WHERE p.id_productor=? AND p.estatus='p' AND p.id_proveedor=pd.id AND p.fecha_ap_envio=? AND p.factura IS NULL
             UNION
             SELECT p.num_pedido AS num_pedido, p.fecha_pedido AS fecha, p.id_productor AS id_prod, pd.id AS id_prov, pd.nombre AS prov, p.factura AS id_factura   
             FROM rdj_pedidos p, rdj_proveedores pd
-            WHERE p.id_productor=? AND p.estatus='p' AND p.id_proveedor=pd.id AND p.factura IS NOT NULL
+            WHERE p.id_productor=? AND p.estatus='p' AND p.id_proveedor=pd.id AND p.fecha_ap_envio=? AND p.factura IS NOT NULL
             ORDER BY fecha"
-        ),[$id_prod,$id_prod]);
+        ),[$id_prod,$fecha,$id_prod,$fecha]);
 
         $pedidosNoPendientes=DB::SELECT(DB::raw(
             "SELECT p.num_pedido AS num_pedido, p.fecha_pedido AS fecha, p.id_productor AS id_prod, pd.id AS id_prov, pd.nombre AS prov, p.factura AS id_factura, p.estatus AS estatus   
             FROM rdj_pedidos p, rdj_proveedores pd
-            WHERE p.id_productor=? AND p.estatus='e' AND p.id_proveedor=pd.id
+            WHERE p.id_productor=? AND p.estatus='e' AND p.fecha_ap_envio=? AND p.id_proveedor=pd.id
             UNION
             SELECT p.num_pedido AS num_pedido, p.fecha_pedido AS fecha, p.id_productor AS id_prod, pd.id AS id_prov, pd.nombre AS prov, p.factura AS id_factura, p.estatus AS estatus   
             FROM rdj_pedidos p, rdj_proveedores pd
-            WHERE p.id_productor=? AND p.estatus='cprod' AND p.id_proveedor=pd.id
+            WHERE p.id_productor=? AND p.estatus='cprod' AND p.fecha_ap_envio=? AND p.id_proveedor=pd.id
             UNION
             SELECT p.num_pedido AS num_pedido, p.fecha_pedido AS fecha, p.id_productor AS id_prod, pd.id AS id_prov, pd.nombre AS prov, p.factura AS id_factura, p.estatus AS estatus   
             FROM rdj_pedidos p, rdj_proveedores pd
-            WHERE p.id_productor=? AND p.estatus='cprov' AND p.id_proveedor=pd.id
+            WHERE p.id_productor=? AND p.estatus='cprov' AND p.fecha_ap_envio=? AND p.id_proveedor=pd.id
             ORDER BY fecha"
-        ),[$id_prod,$id_prod,$id_prod]);
+        ),[$id_prod,$fecha,$id_prod,$fecha,$id_prod,$fecha]);
 
         return view('productores.compras.ver-pedidos-productor',[
             'id_prod' => $id_prod,
@@ -223,14 +223,14 @@ class ComprasController extends Controller
         ),[$num_pedido,$id_prov,$num_pedido,$id_prov]);
 
         $enviosPedido=DB::SELECT(DB::raw(
-            "SELECT me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, pa.nombre AS pais       
-            FROM rdj_pedidos p, rdj_metodos_envios me, rdj_paises pa
+            "SELECT mc.fecha_cont AS fecha_cont,me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, pa.nombre AS pais       
+            FROM rdj_pedidos p, rdj_metodos_envios me, rdj_paises pa, rdj_metodos_contratos mc
             WHERE p.num_pedido=? AND mc.id=p.id_envio AND mc.id_envio=me.id AND pa.id=me.id_pais"
         ),[$num_pedido]);
 
         $pagosPedido=DB::SELECT(DB::raw(
             "SELECT pa.tipo AS tipo, pa.num_cuotas AS cuotas, pa.porcentaje AS porcentaje, pa.meses AS meses       
-            FROM rdj_pedidos p, rdj_metodos_pagos pa
+            FROM rdj_pedidos p, rdj_metodos_pagos pa, rdj_metodos_contratos mc
             WHERE p.num_pedido=? AND p.id_pago=mc.id AND mc.id_pago=pa.id"
         ),[$num_pedido]);
 
@@ -259,11 +259,13 @@ class ComprasController extends Controller
 
     public function rechazarPedidoProductor($id_prod,$id_prov,$num_pedido){
 
+        $fecha=DB::SELECT(DB::RAW("SELECT fecha_ap_envio AS fecha FROM rdj_pedidos WHERE num_pedido=?"),[$num_pedido]);
+
         DB::update(DB::raw(
             "UPDATE rdj_pedidos SET estatus='cprod' WHERE num_pedido=?"
         ),[$num_pedido]);
 
-        return redirect('/productor/'.$id_prod.'/pedidos');
+        return redirect('/productor/'.$id_prod.'/pedidos/'.$id_prov.'/'.$fecha[0]->fecha);
 
     }
 
@@ -326,13 +328,13 @@ class ComprasController extends Controller
 
         $enviosPedido=DB::SELECT(DB::raw(
             "SELECT me.tipo AS tipo, me.duracion AS duracion, me.precio AS precio, pa.nombre AS pais       
-            FROM rdj_pedidos p, rdj_metodos_envios me, rdj_paises pa
+            FROM rdj_pedidos p, rdj_metodos_envios me, rdj_paises pa, rdj_metodos_contratos mc
             WHERE p.num_pedido=? AND mc.id=p.id_envio AND mc.id_envio=me.id AND pa.id=me.id_pais"
         ),[$num_pedido]);
 
         $pagosPedido=DB::SELECT(DB::raw(
             "SELECT pa.tipo AS tipo, pa.num_cuotas AS cuotas, pa.porcentaje AS porcentaje, pa.meses AS meses       
-            FROM rdj_pedidos p, rdj_metodos_pagos pa
+            FROM rdj_pedidos p, rdj_metodos_pagos pa, rdj_metodos_contratos mc
             WHERE p.num_pedido=? AND p.id_pago=mc.id AND mc.id_pago=pa.id"
         ),[$num_pedido]);
 

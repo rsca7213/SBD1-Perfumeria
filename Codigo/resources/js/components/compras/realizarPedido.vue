@@ -518,7 +518,14 @@ export default {
           console.log("%cAxios: Resultados recibidos!", "color: lightgreen");
           console.log(response.data[0]);
           //console.log(response.data[0]);
-          window.location.href = "productor/" + 1 + "pedidos";
+          window.location.replace(
+            "/productor/" +
+              this.id_productor +
+              "/pedidos/" +
+              this.id_proveedor +
+              "/" +
+              this.fecha_contrato
+          );
         })
         .catch((errors) => {
           console.log("%cAxios: Error!", "color: #FFCCCB");

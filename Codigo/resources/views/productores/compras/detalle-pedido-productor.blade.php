@@ -230,7 +230,7 @@
                 </div>
             </div>
             <div class="card-footer bg-primary text-white">
-                <a href="{{ route('verPedidosProductor', ['id_prod' => $id_prod]) }}">
+                <a href="{{ route('verPedidosProductor', ['id_prod' => $id_prod,'id_prov'=>$id_prov,'fecha'=>$enviosPedido[0]->fecha_cont]) }}">
                     <img src="{{ asset('img/iconos/back.svg') }}" alt="atras" width="24">
                     <span class="text-white h6 ml-2 mt-1"> Volver al Menú de Pedidos </span>
                 </a>

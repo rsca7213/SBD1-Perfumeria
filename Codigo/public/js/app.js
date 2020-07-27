@@ -2436,6 +2436,8 @@ __webpack_require__.r(__webpack_exports__);
       return false;
     },
     crearPedido: function crearPedido() {
+      var _this3 = this;
+
       console.log("%cAxios: Enviando respuestas!", "color: lightblue");
 
       for (var index = 0; index < this.envios.length; index++) {
@@ -2458,7 +2460,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log("%cAxios: Resultados recibidos!", "color: lightgreen");
         console.log(response.data[0]); //console.log(response.data[0]);
 
-        window.location.href = "productor/" + 1 + "pedidos";
+        window.location.replace("/productor/" + _this3.id_productor + "/pedidos/" + _this3.id_proveedor + "/" + _this3.fecha_contrato);
       })["catch"](function (errors) {
         console.log("%cAxios: Error!", "color: #FFCCCB");
         console.log(errors);
