@@ -67,7 +67,7 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="/productor/{{$id_prod}}/contratos/detalle/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="">
+                                                <a href="/productor/{{$id_prod}}/facturas/{{$contrato->fecha}}" class="">
                                                     <img data-toggle="tooltip" title="Consultar Facturas" src="{{ asset('/img/iconos/list.svg') }}" width="24" class="mb-1">
                                                 </a>
                                             </td>

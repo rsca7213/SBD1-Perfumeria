@@ -1,7 +1,7 @@
 @extends('productores.layout-productor')
 
 @section('head')
-    <title> Perfumes | Generar Contrato </title>
+    <title> Perfumes | Generar Pedido </title>
 @endsection
 
 @section('nav')

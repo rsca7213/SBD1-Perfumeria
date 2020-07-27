@@ -269,6 +269,62 @@ class ComprasController extends Controller
 
     }
 
+    //Ver facturas de un productor filtradas por proveedor
+    public function verFacturasProductor($id_prod,$fecha){
+
+        $pagos=DB::SELECT(DB::raw(
+            "SELECT p.fecha_pedido AS fecha_inicial,pa.id AS id_pago, pa.tipo AS tipo, pa.num_cuotas AS cuotas, pa.porcentaje AS porcentaje,pa.meses AS meses, p.num_pedido AS num_pedido      
+            FROM rdj_metodos_pagos pa, rdj_pedidos p
+            WHERE p.id_pago=pa.id AND p.fecha_ap_envio=? AND p.factura IS NOT NULL
+            ORDER BY num_pedido"
+        ),[$fecha]);
+
+        
+        $cuotasDesde=[];
+        foreach ($pagos as $pago) {
+            for ($i=1; $i <=$pago->cuotas ; $i++) { 
+                $cuotasDesde[$i]=date("d/m/Y", strtotime((Carbon::createFromDate($pago->fecha_inicial))->
+                addMonths($i*$pago->meses)));
+            }
+        }
+
+        $pagados=DB::SELECT(DB::raw(
+            "SELECT pag.num_pago AS num_pago, pag.num_pedido AS num_pedido, pag.monto AS monto       
+            FROM rdj_pagos pag, rdj_pedidos p
+            WHERE pag.num_pedido=p.num_pedido AND p.fecha_ap_envio=? AND p.factura IS NOT NULL
+            ORDER BY pag.num_pedido"
+        ),[$fecha]);
+
+        $facturas=DB::SELECT(DB::raw(
+            "SELECT p.factura AS num_factura, p.num_pedido AS num_pedido, pv.nombre AS prov, p.monto AS monto, p.id_pago AS id_pago, p.monto AS por_pagar        
+            FROM rdj_pedidos p, rdj_productores pv
+            WHERE p.id_productor=? AND p.id_proveedor=pv.id AND p.fecha_ap_envio=? AND p.factura IS NOT NULL
+            ORDER BY num_factura,num_pedido"
+        ),[$id_prod,$fecha]);
+
+        foreach($facturas as $factura){
+            foreach($pagados as $pagado){
+                if($pagado->num_pedido==$factura->num_pedido){
+                    $factura->por_pagar=$factura->por_pagar-$pagado->monto;
+                    foreach($pagos as $pago){
+                        if($pago->num_pedido==$pagado->num_pedido && $pago->cuotas>0){
+                            $pago->cuotas=$pago->cuotas-1;
+                        }
+                    }
+                }
+            }
+        }
+
+        return view('productores.compras.ver-facturas-productor',[
+            'id_prod' => $id_prod,
+            'facturas' => $facturas,
+            'pagos' => $pagos,
+            'pagados' => $pagados,
+            'cuotas_desde'=>$cuotasDesde
+    
+        ]);
+    }
+
 
     /* Proveedor */
 
