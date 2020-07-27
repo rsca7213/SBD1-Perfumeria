@@ -274,9 +274,11 @@ class ComprasController extends Controller
             $factura=0;
         }
 
+        $time=Carbon::now();
+
         DB::update(DB::raw(
-            "UPDATE rdj_pedidos SET factura=? WHERE num_pedido=?"
-        ),[$num_pedido,$factura+1]);
+            "UPDATE rdj_pedidos SET factura=?, estatus='e', fecha_envio=? WHERE num_pedido=?"
+        ),[$factura+1,$time,$num_pedido]);
 
         return redirect('/proveedor/'.$id_prov.'/pedidos');
 

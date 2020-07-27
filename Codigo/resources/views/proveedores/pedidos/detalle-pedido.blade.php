@@ -140,7 +140,7 @@
                                             <td>{{$envio->duracion}} días</td>
                                         @endif
                                         <td>{{$envio->pais}}</td>
-                                        <td>{{$envio->precio}}</td>
+                                        <td>{{$envio->precio}} $</td>
                                     </tr> 
                                 @endforeach
                             </tbody>
@@ -226,14 +226,14 @@
                                 </a>
                             </div>
                         @endif
-                        @if ($pedido[0]->estatus=='p    ' && $pedido[0]->id_factura!=NULL)
+                        {{-- @if ($pedido[0]->estatus=='p    ' && $pedido[0]->id_factura!=NULL)
                             <div class="row d-flex justify-content-center mt-4"> 
                                 <a href="/proveedor/{{$id_prov}}/pedidos/enviar/{{$id_prod}}/{{$pedido[0]->num_pedido}}" class="btn btn-primary mb-4"> 
                                     <img src="{{ asset('img/iconos/edit_white.svg') }}" alt="rechazar" width="24">
                                     <span class="ml-2"> Enviar Pedido </span> 
                                 </a>
                             </div>
-                        @endif
+                        @endif --}}
                         <br>
                     </div>
                 </div>
