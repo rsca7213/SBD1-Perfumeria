@@ -62,7 +62,7 @@
                                                 <a href="/productor/{{$id_prod}}/compras/pedido/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="mr-2">
                                                     <img data-toggle="tooltip" title="Realizar Pedidos" src="{{ asset('/img/iconos/add.svg') }}" width="24" class="mb-1">
                                                 </a>
-                                                <a href="/productor/{{$id_prod}}/contratos/detalle/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="ml-2">
+                                                <a href="/productor/{{$id_prod}}/pedidos" class="ml-2">
                                                     <img data-toggle="tooltip" title="Consultar Pedidos" src="{{ asset('/img/iconos/list.svg') }}" width="24" class="mb-1">
                                                 </a>
                                             </td>
