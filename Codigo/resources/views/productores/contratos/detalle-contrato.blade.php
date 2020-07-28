@@ -5,10 +5,6 @@
 @endsection
 
 @section('nav')
-    <li class="nav-item mx-2">
-       <a href="{{ route('menuProductor', ['id_prod' => $id_prod]) }}" class="nav-item"> Menú Principal </a>
-    </li>
-    <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 
         <a href="{{ route('verContratos', ['id_prod' => $id_prod]) }}" class="nav-item-active"> Contratos </a> 
     </li>
@@ -27,7 +23,7 @@
 @endsection
 
 @section('content')
-<div class="row d-flex justify-content-center mt-4 rounded">
+<div class="row d-flex justify-content-center my-4 rounded">
     <div class="col-10">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center h4">
@@ -372,7 +368,7 @@
                     </div>
                     <div class="row d-flex justify-content-center">
                         <a href="#" data-toggle="modal" data-target="#Cancelar" class="btn btn-danger">
-                            <img src="{{ asset('img/iconos/trash_white.svg') }}" alt="cancelar" width="24">
+                            <img src="{{ asset('img/iconos/cancel_white.svg') }}" alt="cancelar" width="24">
                             <span> Cancelar </span> 
                         </a>
                     </div>
@@ -410,7 +406,7 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-danger">
-                        <img src="{{ asset('img/iconos/trash_white.svg') }}" alt="borrar" width="24" class="mb-1">
+                        <img src="{{ asset('img/iconos/cancel_white.svg') }}" alt="borrar" width="24" class="mb-1">
                         <span class="ml-2"> Cancelar Contrato </span>
                     </button>
                 </div>

@@ -21,24 +21,24 @@
             </div>
             <div class="row mt-1"> 
                 <div class="col-4 justify-content-center text-center mt-4 pt-2">
-                    <a href="{{ route('menuProveedor', ['id_prov' => 5]) }}"><img src=" {{ asset('img/empresas/emerald.png') }}" width="350" alt="Emerald Performance Materials" ></a>
+                    <a href="{{ route('verPedidos', ['id_prov' => 5]) }}"><img src=" {{ asset('img/empresas/emerald.png') }}" width="350" alt="Emerald Performance Materials" ></a>
                 </div>
                 <div class="col-4 justify-content-center text-center">
-                    <a href="{{ route('menuProveedor', ['id_prov' => 1]) }}"><img src=" {{ asset('img/empresas/firmenich.png') }}" width="275" alt="Firmenich"></a>
+                    <a href="{{ route('verPedidos', ['id_prov' => 1]) }}"><img src=" {{ asset('img/empresas/firmenich.png') }}" width="275" alt="Firmenich"></a>
                 </div>
                 <div class="col-4 justify-content-center text-center pt-4">
-                    <a href="{{ route('menuProveedor', ['id_prov' => 4]) }}"><img src=" {{ asset('img/empresas/indesso.png') }}" width="275" alt="Indesso"></a>
+                    <a href="{{ route('verPedidos', ['id_prov' => 4]) }}"><img src=" {{ asset('img/empresas/indesso.png') }}" width="275" alt="Indesso"></a>
                 </div>
             </div>
             <div class="row mt-1"> 
                 <div class="col-4 justify-content-center text-center">
-                    <a href="{{ route('menuProveedor', ['id_prov' => 3]) }}"><img src=" {{ asset('img/empresas/privi.png') }}" width="220" alt="Privi Organics" ></a>
+                    <a href="{{ route('verPedidos', ['id_prov' => 3]) }}"><img src=" {{ asset('img/empresas/privi.png') }}" width="220" alt="Privi Organics" ></a>
                 </div>
                 <div class="col-4 justify-content-center text-center">
-                    <a href="{{ route('menuProveedor', ['id_prov' => 2]) }}"><img src=" {{ asset('img/empresas/keva.png') }}" width="150" alt="Kelhar & Co"></a>
+                    <a href="{{ route('verPedidos', ['id_prov' => 2]) }}"><img src=" {{ asset('img/empresas/keva.png') }}" width="150" alt="Kelhar & Co"></a>
                 </div>
                 <div class="col-4 justify-content-center text-center mt-4">
-                    <a href="{{ route('menuProveedor', ['id_prov' => 6]) }}"><img src=" {{ asset('img/empresas/prinova.png') }}" width="245" alt="Prinova Group"></a>
+                    <a href="{{ route('verPedidos', ['id_prov' => 6]) }}"><img src=" {{ asset('img/empresas/prinova.png') }}" width="245" alt="Prinova Group"></a>
                 </div>
             </div>
         </div>
@@ -50,13 +50,13 @@
         </div>
         <div class="row mt-1"> 
             <div class="col-4 justify-content-center text-center mt-4 pt-2">
-                <a href="{{ route('menuProductor', ['id_prod' => 1]) }}"> <img src=" {{ asset('img/empresas/givaudan.png') }}" width="220" alt="Givaudan" > </a>
+                <a href="{{ route('verContratosCompras', ['id_prod' => 1]) }}"> <img src=" {{ asset('img/empresas/givaudan.png') }}" width="220" alt="Givaudan" > </a>
             </div>
             <div class="col-4 justify-content-center text-center">
-                <a href="{{ route('menuProductor', ['id_prod' => 2]) }}"><img src=" {{ asset('img/empresas/memphis.png') }}" width="160" alt="Memphis"></a>
+                <a href="{{ route('verContratosCompras', ['id_prod' => 2]) }}"><img src=" {{ asset('img/empresas/memphis.png') }}" width="160" alt="Memphis"></a>
             </div>
             <div class="col-4 justify-content-center text-center">
-                <a href="{{ route('menuProductor', ['id_prod' => 3]) }}"><img src=" {{ asset('img/empresas/chanel.png') }}" width="200" alt="Chanel"></a>
+                <a href="{{ route('verContratosCompras', ['id_prod' => 3]) }}"><img src=" {{ asset('img/empresas/chanel.png') }}" width="200" alt="Chanel"></a>
             </div>
         </div>
         <hr>

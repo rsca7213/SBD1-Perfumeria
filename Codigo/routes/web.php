@@ -18,10 +18,6 @@ Route::get('/recomendador', 'RecomendadorController@inicio')->name('inicioRecome
 Route::get('/recomendador/iniciar', 'RecomendadorController@iniciar')->name('iniciarRecomendador');
 Route::post('/recomendador/resultados', 'RecomendadorController@resultados');
 
-/* Rutas para acceder a los menus principales de las empresas */
-Route::get('/productor/{id_prod}', 'MenuController@menuProductor')->name('menuProductor');
-Route::get('/proveedor/{id_prov}', 'MenuController@menuProveedor')->name('menuProveedor');
-
 /* Rutas referentes a las formulas de evaluacion */
 Route::get('/productor/{id_prod}/formulas', 'FormulasController@verFormulas')->name('verFormulas');
 Route::get('/productor/{id_prod}/formulas/crear/inicial', 'FormulasController@crearFormulaInicial')->name('crearFormulaInicial');

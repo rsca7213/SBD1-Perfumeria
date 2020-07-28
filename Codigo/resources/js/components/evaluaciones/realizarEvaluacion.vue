@@ -430,6 +430,13 @@
         </div>
         <hr class="py-0 my-2" />
         <div class="col-12 justify-content-center d-flex flex-row align-items-center h5 mt-4">
+          <img src="/img/iconos/pending.svg" width="24" />
+          <span class="ml-2">
+            <b>Pedidos pendientes:</b>
+            {{ provAnualData['pedidosPend'] }}
+          </span>
+        </div>
+        <div class="col-12 justify-content-center d-flex flex-row align-items-center h5">
           <img src="/img/iconos/check_green.svg" width="24" />
           <span class="ml-2">
             <b>Pedidos cumplidos:</b>

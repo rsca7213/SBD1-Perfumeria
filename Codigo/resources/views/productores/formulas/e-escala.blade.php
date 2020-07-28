@@ -5,10 +5,6 @@
 @endsection
 
 @section('nav')
-    <li class="nav-item mx-2">
-       <a href="{{ route('menuProductor', ['id_prod' => $id_prod]) }}" class="nav-item"> Menú Principal </a>
-    </li>
-    <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 
         <a href="{{ route('verContratos', ['id_prod' => $id_prod]) }}" class="nav-item"> Contratos </a> 
     </li>
@@ -27,7 +23,7 @@
 @endsection
 
 @section('content')
-<div class="row d-flex justify-content-center mt-4 rounded">
+<div class="row d-flex justify-content-center my-4 rounded">
     <div class="col-7">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center h4">

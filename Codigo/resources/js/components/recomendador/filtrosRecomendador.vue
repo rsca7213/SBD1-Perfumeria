@@ -512,6 +512,12 @@
                 </button>
             </div>
         </span>
+        <span v-if="fase === -1">
+            <div class="d-flex row justify-content-center">
+                <div class="spinner-border text-success" role="status" style="width: 6rem; height: 6rem;">
+                </div>
+            </div>
+        </span>
         <span v-if="fase === 1">
             <div class="row d-flex justify-content-center h3">
                 <b class="text-primary mr-2"> Resultados </b>
@@ -733,7 +739,9 @@ export default {
 
     methods: {
 
-        enviarRespuestas() {
+        async enviarRespuestas() {
+            this.fase = -1;
+            await new Promise(r => setTimeout(r, 1000));
             console.log("%cAxios: Enviando respuestas!", "color: lightblue");
             axios.post("resultados", 
                 {
@@ -846,5 +854,5 @@ export default {
     }
     .iconobtn {
         cursor: pointer;
-    }
+    }   
 </style>

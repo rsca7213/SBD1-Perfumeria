@@ -5,10 +5,6 @@
 @endsection
 
 @section('nav')
-    <li class="nav-item mx-2">
-       <a href="{{ route('menuProveedor', ['id_prov' => $id_prov]) }}" class="nav-item"> Menú Principal </a>
-    </li>
-    <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 
         <a href="{{ route('verContratosPv', ['id_prov' => $id_prov]) }}" class="nav-item-active"> Contratos </a> 
     </li>
@@ -23,8 +19,8 @@
 @endsection
 
 @section('content')
-<div class="row d-flex justify-content-center mt-4 rounded">
-    <div class="col-10">
+<div class="row d-flex justify-content-center my-4 mx-4 rounded">
+    <div class="col-12">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center h4">
                 Contratos
@@ -119,9 +115,9 @@
                 </div>
             </div>
             <div class="card-footer bg-primary text-white">
-                <a href="{{ route('menuProveedor', ['id_prov' => $id_prov]) }}">
+                <a href="/">
                     <img src="{{ asset('img/iconos/back.svg') }}" alt="atras" width="24">
-                    <span class="text-white h6 ml-2 mt-1"> Volver al Menú Principal </span>
+                    <span class="text-white h6 ml-2 mt-1"> Volver a la Página de Inicio </span>
                 </a>
             </div>
         </div>

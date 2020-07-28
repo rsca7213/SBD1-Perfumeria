@@ -36,7 +36,8 @@ class EvaluacionesController extends Controller
                AND f.id_productor=? AND f.tipo='i' AND f.fecha_inicio < ? AND COALESCE(f.fecha_fin,?) > ?"),
                [$id_prod,$res->fecha,$time,$res->fecha]); 
 
-               $res->exito = $exito[0]->peso;
+               if($exito != null)
+                   $res->exito = $exito[0]->peso;
             }
             else {
                 /* Buscamos la formula de evaluacion inicial, en especifico el criterio de exito de la formula */
@@ -431,7 +432,16 @@ class EvaluacionesController extends Controller
             $prov["pedidosRec"] = $prov["pedidosRec"][0]->count;
         }
 
-        
+        $prov["pedidosPend"] = DB::select(DB::raw("SELECT COUNT(*) FROM rdj_pedidos WHERE
+        id_prod_envio=? AND id_prov_envio=? AND fecha_ap_envio=? AND estatus='p'
+        GROUP BY estatus,fecha_ap_envio,id_prov_envio,id_prod_envio"),[$id_prod,$id_prov,$fecha_ap_ts]);
+
+        if(sizeof($prov["pedidosPend"]) == 0) {
+            $prov["pedidosPend"] = 0;
+        }
+        else {
+            $prov["pedidosPend"] = $prov["pedidosPend"][0]->count;
+        }
     
         //Devolvemos a la interfaz la data necesaria para continuar
         return response([$prov],200);

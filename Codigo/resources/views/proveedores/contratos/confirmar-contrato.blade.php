@@ -5,10 +5,6 @@
 @endsection
 
 @section('nav')
-    <li class="nav-item mx-2">
-       <a href="{{ route('menuProveedor', ['id_prov' => $id_prov]) }}" class="nav-item"> Menú Principal </a>
-    </li>
-    <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 
         <a href="{{ route('verContratosPv', ['id_prov' => $id_prov]) }}" class="nav-item-active"> Contratos </a> 
     </li>
@@ -23,7 +19,7 @@
 @endsection
 
 @section('content')
-<div class="row d-flex justify-content-center mt-4 rounded">
+<div class="row d-flex justify-content-center my-4 rounded">
     <div class="col-7">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center h4">
@@ -277,7 +273,7 @@
                 @if ($flag==false)
                     <div class="row d-flex justify-content-center mt-4"> 
                         <a href="/proveedor/{{$id_prov}}/contratos/rechazar/{{$fecha}}" class="btn btn-danger mb-4"> 
-                            <img src="{{ asset('img/iconos/trash_white.svg') }}" alt="rechazar" width="24">
+                            <img src="{{ asset('img/iconos/cancel_white.svg') }}" alt="rechazar" width="24">
                             <span class="ml-2"> Rechazar Contrato </span> 
                         </a>
                     </div>
@@ -290,7 +286,7 @@
                     </div>
                     <div class="row d-flex justify-content-center"> 
                         <a href="/proveedor/{{$id_prov}}/contratos/no_renovar/{{$fecha}}" class="btn btn-danger mb-4"> 
-                            <img src="{{ asset('img/iconos/trash_white.svg') }}" alt="rechazar" width="24">
+                            <img src="{{ asset('img/iconos/cancel_white.svg') }}" alt="rechazar" width="24">
                             <span class="ml-2"> Rechazar Renovación </span> 
                         </a>
                     </div>
@@ -299,7 +295,7 @@
             <div class="card-footer bg-primary text-white">
                 <a href="{{ route('verContratosPv', ['id_prov' => $id_prov]) }}">
                     <img src="{{ asset('img/iconos/back.svg') }}" alt="atras" width="24">
-                    <span class="text-white h6 ml-2 mt-1"> Volver al Menú Principal </span>
+                    <span class="text-white h6 ml-2 mt-1"> Volver a la Lista de Contratos </span>
                 </a>
             </div>
         </div>
