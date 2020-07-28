@@ -305,6 +305,7 @@ class ComprasController extends Controller
         ),[$id_prod,$fecha]);
 
         $numeroCuotas=[];
+        $tienePagos=[]; // para saber si la factura tiene pagos
 
         foreach ($pagados as $pagado) {
             $pagado->fecha = date("d/m/Y", strtotime((Carbon::createFromDate($pagado->fecha))));
@@ -359,8 +360,9 @@ class ComprasController extends Controller
                         array_push($numeroCuotas,$pago->cuotas);  
                     }
                     else{
-                        array_push($numeroCuotas,1);
+                        array_push($numeroCuotas,-1);
                         $pago->cuotas=-1;
+                        $factura->cuotas=-1;
                     }
                     foreach ($pagados as $pagado) {
                         if($pagado->num_pedido==$factura->num_pedido && $pago->cuotas>0 && $pago->cuotas !=null){
@@ -370,9 +372,16 @@ class ComprasController extends Controller
                             
                         }
                         else if($pagado->num_pedido==$factura->num_pedido && $pago->cuotas==-1){
+                            $acumuladorPagos++;
                             $pago->cuotas=-2;
                             $factura->por_pagar=0;
                         }
+                    }
+                    if($acumuladorPagos!=0){
+                        array_push($tienePagos,true);
+                    }
+                    else{
+                        array_push($tienePagos,false);
                     }
                 }
                 
@@ -414,7 +423,7 @@ class ComprasController extends Controller
               
         }*/
         //dd($facturas);
-    
+    //dd($tienePagos);
 
         return view('productores.compras.ver-facturas-productor',[
             'id_prod' => $id_prod,
@@ -422,6 +431,7 @@ class ComprasController extends Controller
             'pagos' => $pagos,
             'pagados' => $pagados,
             'numero_cuotas' =>$numeroCuotas,
+            'tiene_pagos' => $tienePagos,
             //'cuotas_desde'=>$cuotasDesde
     
         ]);

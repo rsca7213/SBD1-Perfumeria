@@ -73,8 +73,8 @@
                                                             </button>
                                                         </div>
                                                     <div class="modal-body h5 text-center">
-                                                        
-                                                            @if($pagados!=[])
+                                                            
+                                                        @if($pagados!=[] && $tiene_pagos[$i]==true)
                                                             <div class="row mx-4 d-flex justify-content-center">
                                                                 <p>Pagos Realizados</p>
                                                             </div>
@@ -85,8 +85,8 @@
                                                                 <table class="table table-striped border border-info">
                                                                     <thead class="bg-primary text-white"> 
                                                                         <tr  class="text-center">
-                                                                            <th scope="col">Pagado En</th>  
-                                                                            <th scope="col">Monto Pagado</th> 
+                                                                            <th class="p-1" scope="col">Pagado En</th>  
+                                                                            <th class="p-1" scope="col">Monto Pagado</th> 
                                                                         </tr>
                                                                     </thead> 
                                                                     <tbody>
@@ -94,8 +94,8 @@
                                                                     @foreach($pagados as $pagado)
                                                                         @if($pagado->num_pedido==$factura->num_pedido)
                                                                             <tr>
-                                                                                <td> {{$pagado->fecha}} </td>
-                                                                                <td> {{$pagado->monto. " $"}} </td>
+                                                                                <td class="p-1"> {{$pagado->fecha}} </td>
+                                                                                <td class="p-1"> {{$pagado->monto. " $"}} </td>
                                                                             </tr>
                                                                         @endif
                                                                     @endforeach
@@ -105,7 +105,7 @@
                                                             
                                                         @endif
                                                         
-                                                            @if ($factura->por_pagar>0)
+                                                        @if ($factura->por_pagar>0)
                                                             <div class="row mx-4 d-flex justify-content-center">
                                                                 <p>Método de Pago</p>
                                                             </div>
@@ -115,30 +115,30 @@
                                                                     <thead class="bg-primary text-white">
                                                                         @if($factura->cuotas>0 && $factura->cuotas!=null)
                                                                         <tr  class="text-center">
-                                                                            <th scope="col">Cuotas Por Pagar</th>
-                                                                            <th scope="col">Porcentaje por cuota</th>
-                                                                            <th scope="col">Monto por cuota</th> 
+                                                                            <th class="p-1" scope="col">Cuotas Por Pagar</th>
+                                                                            <th class="p-1" scope="col">Porcentaje por cuota</th>
+                                                                            <th class="p-1" scope="col">Monto por cuota</th> 
                                                                         </tr>
                                                                         @else
                                                                             <tr  class="text-center">
-                                                                                <th scope="col">Monto a Pagar</th>
+                                                                                <th class="p-1" scope="col">Monto a Pagar</th>
                                                                             </tr>
                                                                         @endif
                                                                     </thead>
                                                                     <tbody>
-                                                                        
                                                                         @foreach ($pagos as $pago)
                                                                         @if($pago->cuotas>0 && $pago->num_pedido==$factura->num_pedido)
                                                                             <tr class="text-center">
                                                                                 @if ($pago->num_pedido==$factura->num_pedido)
-                                                                                    <td> {{$pago->cuotas}} </td>
-                                                                                    <td> {{$pago->porcentaje}} % </td>
-                                                                                    <td>{{round($factura->monto/$factura->cuotas,2) . " $"}}</td>
+                                                                                    <td class="p-1"> {{$pago->cuotas}} </td>
+                                                                                    <td class="p-1"> {{$pago->porcentaje}} % </td>
+                                                                                    <td class="p-1">{{round($factura->monto/$factura->cuotas,2) . " $"}}</td>
                                                                                 @endif 
                                                                             </tr>
                                                                         @elseif($pago->cuotas==-1 && $pago->num_pedido==$factura->num_pedido)
+                                                                                @php $factura->cuotas=1 @endphp
                                                                                 @if ($pago->num_pedido==$factura->num_pedido)
-                                                                                    <td>{{round($factura->monto,2) . " $"}}</td>
+                                                                                    <td class="p-1">{{round($factura->monto,2) . " $"}}</td>
                                                                                 @endif
                                                                         @endif 
                                                                         @endforeach       
@@ -146,14 +146,14 @@
                                                                 </table>
                                                             </div>
                                                             
-                                                        <div class="row mx-4 d-flex justifiy-content-center">
-                                                            <a href="/productor/pagar/{{$factura->num_pedido}}/{{round($factura->monto/$numero_cuotas[$i],1,PHP_ROUND_HALF_EVEN)}}/" class="btn btn-primary btn-lg">Pagar</a>
+                                                        <div class="row mx-4 d-flex justify-content-center">
+                                                            <a href="/productor/pagar/{{$factura->num_pedido}}/{{round($factura->monto/$factura->cuotas,1,PHP_ROUND_HALF_EVEN)}}/" class="btn btn-primary btn-lg">Pagar</a>
                                                         </div>    
                                                     
                                                         
                                                         @php $cuota=0 @endphp
                                                         
-                                                    @php $i++@endphp
+                                                    
                                                     @php $cuota=$i @endphp
                                                     @else
                                                     <div>La factura fue pagada en su totalidad</div>         
@@ -168,6 +168,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    @php $i++@endphp
                                     @endforeach
                                 </tbody>
                             </table>
