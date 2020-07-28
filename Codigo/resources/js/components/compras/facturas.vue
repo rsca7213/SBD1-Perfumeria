@@ -72,15 +72,22 @@
                             </tr>
                           </thead>
                           <tbody>
-                            <tr v-for>
-                              <td>hola</td>
-                              <td>hola</td>
-                              <td>hola</td>
-                              <td>hola</td>
-                              <td>hola</td>
-                              <td>hola</td>
-                              <td>hola</td>
-                              <td>hola</td>
+                            <tr v-for="(det,index) in detallesPagos" :key="index">
+                              <td>{{index+1}}</td>
+                              <td>{{porcentaje + " %"}}</td>
+                              <td>{{factura.monto + " $"}}</td>
+                              <td>{{cuotas_desde[index+1][0]}}</td>
+                              <td>{{meses }}</td>
+
+                              <td v-if>N/A</td>
+                              <td v-else></td>
+                              <td>{{cuotas_desde[index+1][2]}}</td>
+                              <td v-if="cuotas_desde[index+1][1]">
+                                <button class="btn btn-primary" disabled href>Pagar</button>
+                              </td>
+                              <td v-else>
+                                <button class="btn btn-primary" href></button>
+                              </td>
                             </tr>
                           </tbody>
                         </table>
@@ -112,6 +119,13 @@ export default {
       cuotas_desde: [],
       i: 0,
       detallesPagos: [],
+      fecha_inicial: "",
+      id_pago: 0,
+      cuotas: [],
+      porcentaje: 0,
+      meses: 0,
+      longitud: 0,
+      detallesPagos2: [],
     };
   },
   created() {
@@ -138,27 +152,32 @@ export default {
       for (let index = 1; index < parametro; index++) {}
     },
     buscarPagosFactura(n_pedido) {
-      this.detallesPagos = [];
+      //this.detallesPagos = [];
       const params = {
         fecha_inicial: "",
         id_pago: 0,
         tipo: "",
-        cuotas: 0,
+        cuotas: [],
         porcentaje: 0,
         meses: 0,
       };
       this.pagos.forEach((pago) => {
-        if (pago.num_pedido == n_pedido) {
+        if (pago.num_pedido === n_pedido) {
           params.fecha_inicial = pago.fecha_inicial;
           params.id_pago = pago.id_pago;
           params.tipo = pago.tipo;
-          params.cuotas = pago.cuotas;
-          params.porcentaje = pago.porcentaje;
-          params.meses = pago.meses;
-          this.detallesPagos.push(params);
+          for (let index = 0; index < pago.cuotas; index++) {
+            this.detallesPagos.push(index + 1);
+          }
+          this.porcentaje = pago.porcentaje;
+          this.meses = pago.meses;
+          //this.detallesPagos.push(params);
         }
         //break;
       });
+    },
+    ayuda() {
+      return 3;
     },
   },
 };

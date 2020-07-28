@@ -289,7 +289,7 @@ class ComprasController extends Controller
 
         //Todas las facturas de un contrato para un proveedor en especifico
         $facturas=DB::SELECT(DB::raw(
-            "SELECT p.factura AS num_factura, p.num_pedido AS num_pedido, pv.nombre AS prov, p.monto AS monto, p.id_pago AS id_pago, p.monto AS por_pagar        
+            "SELECT p.factura AS num_factura, p.num_pedido AS num_pedido,pv.id AS id_prod, pv.nombre AS prov, p.monto AS monto, p.id_pago AS id_pago, p.monto AS por_pagar        
             FROM rdj_pedidos p, rdj_productores pv
             WHERE p.id_productor=? AND p.id_proveedor=pv.id AND p.fecha_ap_envio=? AND p.factura IS NOT NULL
             ORDER BY num_factura,num_pedido"
@@ -300,44 +300,44 @@ class ComprasController extends Controller
         y tambien guarda true si la fecha del dia es mayor a la del pago
         o false si la fecha del dia es menor a la del pago
         */
-        $cuotasDesde["a"]=[];
+        //$cuotasDesde["a"]=[];
         //cantidad de pagos realizados en un pedido
-        $cantidadPagados=sizeof($pagados);
+        //$cantidadPagados=sizeof($pagados);
         //dd($cantidadPagados);
 
-        if ($pagos[0]->cuotas!=null) {
-            foreach ($pagos as $pago) {
-                for ($i=1; $i <=$pago->cuotas ; $i++) { 
-                    if($cantidadPagados>= $i){
-                        $cuotasDesde[$i][2]="Pagado";
-                    }
-                    else{
-                        $cuotasDesde[$i][0]=date("d/m/Y", strtotime((Carbon::createFromDate($pago->fecha_inicial))->
-                    addMonths($i*$pago->meses))); 
-                        if(date("d/m/Y", strtotime(Carbon::now())<$cuotasDesde[$i][0])){
-                            $cuotasDesde[$i][1]=true;
+        //BORRAR
+            /*foreach ($pagos as $pago) {
+                if($pago->cuotas!=null){
+                    for ($i=1; $i <=$pago->cuotas ; $i++) { 
+                        if($cantidadPagados>= $i){
+                            $cuotasDesde[$i][2]="Pagado";
                         }
                         else{
-                            $cuotasDesde[$i][1]=false;
-                        }
-                        $cuotasDesde[$i][2]="Por Pagar";
-                    }             
-                }
-            }
-        }
-        else{
-            foreach ($pagos as $pago) {
-                if($cantidadPagados>=1){
-                    $cuotasDesde[0][2]="Pagado";
-                }
-                else{
-                    $cuotasDesde[0][2]="Por Pagar";
-                } 
-            } 
-        }
+                            $cuotasDesde[$i][0]=date("d/m/Y", strtotime((Carbon::createFromDate($pago->fecha_inicial))->
+                        addMonths($i*$pago->meses))); 
+                            if(date("d/m/Y", strtotime(Carbon::now())<$cuotasDesde[$i][0])){
+                                $cuotasDesde[$i][1]=true;
+                            }
+                            else{
+                                $cuotasDesde[$i][1]=false;
+                            }
+                            $cuotasDesde[$i][2]="Por Pagar";
+                        } 
+                        $cuotasDesde[$i][3]=$pago->num_pedido;            
+                    }
+                }else{
+                    if($cantidadPagados>=1){
+                        $cuotasDesde[0][2]="Pagado";
+                    }
+                    else{
+                        $cuotasDesde[0][2]="Por Pagar";
+                    } 
+                    $cuotasDesde[$i][3]=$pago->num_pedido; 
+            }*/
+        
         
 
-        /*foreach($facturas as $factura){
+        foreach($facturas as $factura){
             foreach($pagados as $pagado){
                 if($pagado->num_pedido==$factura->num_pedido){
                     $factura->por_pagar=$factura->por_pagar-$pagado->monto;
@@ -348,30 +348,57 @@ class ComprasController extends Controller
                     }
                 }
             }
-        }*/
+        }
 
-        /*return view('productores.compras.ver-facturas-productor',[
+        return view('productores.compras.ver-facturas-productor',[
             'id_prod' => $id_prod,
             'facturas' => $facturas,
             'pagos' => $pagos,
             'pagados' => $pagados,
-            'cuotas_desde'=>$cuotasDesde
+            //'cuotas_desde'=>$cuotasDesde
     
-        ]);*/
-        return response([$id_prod,$facturas,$pagos,$pagados,$cuotasDesde],200);
+        ]);
+       // return response([$id_prod,$facturas,$pagos,$pagados,$cuotasDesde],200);
     }
 
-    public function vistaFacturas($id_prod){
+
+    /*public function vistaFacturas($id_prod){
         return view('productores.compras.ver-facturas-productor',['id_prod'=>$id_prod]);
-    }
+    }*/
 
     //Realizar pago
-    public function realizarPagoProductor(){
+    public function realizarPagoProductor($num_pedido,$monto){
 
         DB::INSERT(DB::RAW("
         INSERT INTO rdj_pagos (num_pago,num_pedido,fecha_pago,monto)
-        VALUES(,?,NOW::DATE,?)
-        "));
+        VALUES(nextval('rdj_pago_sec'),?,NOW()::DATE,?)
+        "),[$num_pedido,$monto]);
+
+        $id_prod=DB::SELECT(DB::RAW("SELECT id_productor AS id_prod FROM rdj_pedidos WHERE num_pedido=?"),[$num_pedido]);
+       //dd(intval($id_prod[0]->id_prod));
+       $id_prod=$id_prod[0]->id_prod;
+        //verContratosVigentes($id_prod->id_prod);
+        $contratosVigentes=DB::SELECT(DB::RAW(
+            "SELECT cont.fecha_apertura as fechaContrato,prod.nombre AS productor,prov.nombre AS prov,cont.id_proveedor AS id_prov, 'Inicial' AS tipo_contrato,cont.fecha_apertura AS fecha , to_char(cont.fecha_apertura::DATE + INTERVAL '1 year','dd/mm/yyyy') AS fecha_final 
+            FROM rdj_proveedores AS prov, rdj_productores AS prod, rdj_contratos AS cont 
+            WHERE prod.id=? AND prov.id=cont.id_proveedor AND cont.cancelacion=false AND prod.id = cont.id_productor AND ((NOW() - cont.fecha_apertura) < '1 YEAR')
+            UNION
+            SELECT reno.fecha_apertura as fechaContrato,prod.nombre AS productor,prov.nombre AS prov,reno.id_proveedor AS id_prov, 'Renovación' AS tipo_contrato, reno.fecha_renovacion AS fecha , to_char(reno.fecha_renovacion::DATE + INTERVAL '1 year','dd/mm/yyyy') AS fecha_final
+            FROM rdj_proveedores AS prov, rdj_productores AS prod, rdj_renovaciones AS reno 
+            WHERE prod.id=? AND prov.id=reno.id_proveedor AND prod.id = reno.id_productor AND ((NOW() - reno.fecha_renovacion) < '1 YEAR') ORDER BY fechaContrato ASC"
+        ),[$id_prod,$id_prod]);
+
+        $proveedores=DB::select(DB::raw(
+            "SELECT pv.id AS id_prov, pv.nombre AS prov 
+            FROM rdj_proveedores pv
+            ORDER BY pv.id"
+        ));
+
+        return view('productores.compras.contratos-compras',[
+            'id_prod' => $id_prod,
+            'contratosVigentes' => $contratosVigentes,
+            'proveedores' => $proveedores,
+        ]);
     }
 
 
