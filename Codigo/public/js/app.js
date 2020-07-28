@@ -5169,6 +5169,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -9757,7 +9758,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ninput[type=radio][data-v-5394a82d] {\n    width: 18px;\n    height: 18px;\n}\ninput[type=checkbox][data-v-5394a82d] {\n    width: 18px;\n    height: 18px;\n}\n.iconobtn[data-v-5394a82d] {\n    cursor: pointer;\n}   \n", ""]);
+exports.push([module.i, "\ninput[type=radio][data-v-5394a82d] {\n    width: 18px;\n    height: 18px;\n}\ninput[type=checkbox][data-v-5394a82d] {\n    width: 18px;\n    height: 18px;\n}\n.iconobtn[data-v-5394a82d] {\n    cursor: pointer;\n}\n.load[data-v-5394a82d]{position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);\n    /*change these sizes to fit into your project*/\n    width:100px;\n    height:100px;\n}\n.load hr[data-v-5394a82d]{border:0;margin:0;width:40%;height:40%;position:absolute;border-radius:50%;-webkit-animation:spin-data-v-5394a82d 2s ease infinite;animation:spin-data-v-5394a82d 2s ease infinite}\n.load[data-v-5394a82d] :first-child{\n    background:#3490DC;\n    -webkit-animation-delay:-1.5s;\n            animation-delay:-1.5s\n}\n.load[data-v-5394a82d] :nth-child(2){\n    background: #9561e2;\n    -webkit-animation-delay:-1s;\n            animation-delay:-1s\n}\n.load[data-v-5394a82d] :nth-child(3){\n    background:#38C172;\n    -webkit-animation-delay:-0.5s;\n            animation-delay:-0.5s\n}\n.load[data-v-5394a82d] :last-child{\n    background:#f66d9b\n}\n@-webkit-keyframes spin-data-v-5394a82d{\n0%,100%{transform:translate(0)}\n25%{transform:translate(160%)}\n50%{transform:translate(160%, 160%)}\n75%{transform:translate(0, 160%   )}\n}\n@keyframes spin-data-v-5394a82d{\n0%,100%{transform:translate(0)}\n25%{transform:translate(160%)}\n50%{transform:translate(160%, 160%)}\n75%{transform:translate(0, 160%   )}\n}\n", ""]);
 
 // exports
 
@@ -50884,13 +50885,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "d-flex row justify-content-center" }, [
-      _c("div", {
-        staticClass: "spinner-border text-success",
-        staticStyle: { width: "6rem", height: "6rem" },
-        attrs: { role: "status" }
-      })
-    ])
+    return _c(
+      "div",
+      { staticClass: "d-flex row justify-content-center my-4 py-4" },
+      [
+        _c("div", { staticClass: "load" }, [
+          _c("hr"),
+          _c("hr"),
+          _c("hr"),
+          _c("hr")
+        ])
+      ]
+    )
   },
   function() {
     var _vm = this
