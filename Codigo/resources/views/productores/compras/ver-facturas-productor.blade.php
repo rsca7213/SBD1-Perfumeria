@@ -5,6 +5,8 @@
 @endsection
 
 @section('nav')
+    
+    <span class="nav-item"> | </span>
     <li class="nav-item mx-2"> 
         <a href="{{ route('verContratos', ['id_prod' => $id_prod]) }}" class="nav-item"> Contratos </a> 
     </li>
@@ -23,7 +25,7 @@
 @endsection
 
 @section('content')
-<div class="row d-flex justify-content-center my-4 rounded">
+<div class="row d-flex justify-content-center mt-4 rounded">
     <div class="col-10">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white text-center h4">
@@ -52,7 +54,7 @@
                                         <td>{{$factura->num_pedido}}</td>
                                         <td>{{$factura->prov}}</td>
                                         <td>{{$factura->monto . " $"}}</td>
-                                        @if ($factura->por_pagar==0)
+                                        @if ($factura->por_pagar<=0)
                                             <td><span class="ml-2"> Pagado </span></td>
                                         @else
                                             <td><span class="ml-2"> Por pagar </span></td>
@@ -71,7 +73,8 @@
                                                         </div>
                                                     <div class="modal-body h5 text-center">
                                                         <br>
-                                                        
+                                                        @php $cuota=0 @endphp
+                                                        @if ($factura->por_pagar>0)
                                                         <table class="table table-striped border border-info">
                                                             <thead class="bg-primary text-white">
                                                                 <tr  class="text-center">
@@ -81,15 +84,18 @@
                                                                     
                                                                 </tr>
                                                             </thead>
+                                                            
                                                             <tbody>
+
                                                                 @foreach ($pagos as $pago)
+                                                                @php $i=0 @endphp
                                                                   @if($pago->cuotas>0)
                                                                     <tr class="text-center">
                                                                         @if ($pago->num_pedido==$factura->num_pedido)
                                                                             @if ($factura->por_pagar!=0)
                                                                                 <td> {{$pago->cuotas}} </td>
                                                                                 <td> {{$pago->porcentaje}} % </td>
-                                                                                <td>{{round($factura->monto/$pago->cuotas,2) . " $"}}</td>
+                                                                                <td>{{round($factura->monto/$numero_cuotas[$i],2) . " $"}}</td>
                                                                             @else
                                                                                 <td><span class="ml-2"> N/A </span></td>
                                                                                 <td><span class="ml-2"> N/A  </span></td>
@@ -98,15 +104,24 @@
                                                                         @endif
                                                                         
                                                                     </tr>
-                                                                    @else
-                                                    <div>La factura fue pagada en su totalidad</div>
-                                                    @endif
+                                                                    
+                                                                @endif
+                                                                @php $i++@endphp
+                                                                @php $cuota=$i @endphp
                                                                 @endforeach
                                                                 
                                                             </tbody>
                                                         </table>
-                                                    <a href="/productor/pagar/{{$factura->num_pedido}}/{{$factura->monto}}/" class="btn btn-primary">Pagar</a>
-                                                    
+                                                        
+                                                    <a href="/productor/pagar/{{$factura->num_pedido}}/{{round($factura->monto/$numero_cuotas[$cuota],2)}}/" class="btn btn-primary">Pagar</a>
+                                                    @else
+                                                    <div>La factura fue pagada en su totalidad</div>         
+                                                    <div class="d-flex modal-footer justify-content-center mt-2">
+                                                        <button class="btn btn-primary btn-lg mx-4" data-dismiss="modal" aria-label="Close">
+                                                            <img src="/img/iconos/check_white.svg" width="24" class="mb-1" /> Aceptar
+                                                         </button>
+                                                    </div>
+                                                    @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -123,9 +138,9 @@
                 </div>
             </div>
             <div class="card-footer bg-primary text-white">
-                <a href="{{ route('verContratosCompras', ['id_prod' => $id_prod ])}}">
+                <a href="{{ route('verContratosCompras', ['id_prod' => $id_prod]) }}">
                     <img src="{{ asset('img/iconos/back.svg') }}" alt="atras" width="24">
-                    <span class="text-white h6 ml-2 mt-1"> Volver a la Lista de Compras </span>
+                    <span class="text-white h6 ml-2 mt-1"> Volver al Menú Principal </span>
                 </a>
             </div>
         </div>

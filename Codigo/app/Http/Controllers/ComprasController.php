@@ -295,7 +295,7 @@ class ComprasController extends Controller
             ORDER BY num_factura,num_pedido"
         ),[$id_prod,$fecha]);
 
-
+        $numeroCuotas=[];
         /*Arreglo donde se guardan las fechas desde la cual el pago se puede realizar
         y tambien guarda true si la fecha del dia es mayor a la del pago
         o false si la fecha del dia es menor a la del pago
@@ -342,6 +342,7 @@ class ComprasController extends Controller
                 if($pagado->num_pedido==$factura->num_pedido){
                     $factura->por_pagar=$factura->por_pagar-$pagado->monto;
                     foreach($pagos as $pago){
+                        array_push($numeroCuotas,$pago->cuotas);
                         if($pago->num_pedido==$pagado->num_pedido && $pago->cuotas>0){
                             $pago->cuotas=$pago->cuotas-1;
                         }
@@ -355,6 +356,7 @@ class ComprasController extends Controller
             'facturas' => $facturas,
             'pagos' => $pagos,
             'pagados' => $pagados,
+            'numero_cuotas' =>$numeroCuotas,
             //'cuotas_desde'=>$cuotasDesde
     
         ]);
