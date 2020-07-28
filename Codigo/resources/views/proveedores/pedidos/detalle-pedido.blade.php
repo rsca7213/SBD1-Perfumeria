@@ -204,7 +204,7 @@
                         <br>
                         <div class="text-center">
                             <span class="h4"> 
-                                <b class="mr-2"> Monto Total del Pedido = {{$pedido[0]->monto}} $ </b> 
+                                <b class="mr-2"> Monto Total del Pedido = {{round($pedido[0]->monto,2)}} $ </b> 
                             </span>
                         </div>
                         <br>

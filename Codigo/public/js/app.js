@@ -42757,7 +42757,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               "Precio total del pedido: " +
-                                _vm.precioTotal +
+                                _vm.precioTotal.tofixed(2) +
                                 " $"
                             )
                           )

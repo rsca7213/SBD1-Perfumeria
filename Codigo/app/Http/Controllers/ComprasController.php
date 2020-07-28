@@ -283,7 +283,7 @@ class ComprasController extends Controller
 
         //Todos los pagos realizados para un pedido
         $pagados=DB::SELECT(DB::raw(
-            "SELECT pag.num_pago AS num_pago, pag.num_pedido AS num_pedido, pag.monto AS monto       
+            "SELECT pag.num_pago AS num_pago,pag.fecha_pago as fecha, pag.num_pedido AS num_pedido, pag.monto AS monto       
             FROM rdj_pagos pag, rdj_pedidos p
             WHERE pag.num_pedido=p.num_pedido AND p.fecha_ap_envio=? AND p.factura IS NOT NULL
             ORDER BY pag.num_pedido"
@@ -299,12 +299,16 @@ class ComprasController extends Controller
 
         $facturas=DB::SELECT(DB::RAW(
             "SELECT p.factura AS num_factura,pa.num_cuotas AS cuotas, p.num_pedido AS num_pedido,pv.id AS id_prod, pv.nombre AS prov, p.monto AS monto, p.id_pago AS id_pago, p.monto AS por_pagar        
-            FROM rdj_pedidos p, rdj_productores pv,rdj_metodos_pagos pa,rdj_metodos_contratos AS met
+            FROM rdj_pedidos p, rdj_proveedores pv,rdj_metodos_pagos pa,rdj_metodos_contratos AS met
             WHERE p.id_productor=? AND p.id_proveedor=pv.id AND p.fecha_ap_envio=? AND p.factura IS NOT NULL AND p.id_pago=met.id AND pa.id=met.id_pago
             ORDER BY num_factura,num_pedido"
         ),[$id_prod,$fecha]);
 
         $numeroCuotas=[];
+
+        foreach ($pagados as $pagado) {
+            $pagado->fecha = date("d/m/Y", strtotime((Carbon::createFromDate($pagado->fecha))));
+        }
         /*Arreglo donde se guardan las fechas desde la cual el pago se puede realizar
         y tambien guarda true si la fecha del dia es mayor a la del pago
         o false si la fecha del dia es menor a la del pago
@@ -355,7 +359,7 @@ class ComprasController extends Controller
                         array_push($numeroCuotas,$pago->cuotas);  
                     }
                     else{
-                        array_push($numeroCuotas,-1);
+                        array_push($numeroCuotas,1);
                         $pago->cuotas=-1;
                     }
                     foreach ($pagados as $pagado) {
