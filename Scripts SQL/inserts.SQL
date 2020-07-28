@@ -34,7 +34,7 @@ INSERT INTO rdj_paises (id,nombre,nacionalidad,id_asociacion) VALUES
 (nextval('rdj_pais_sec'),'Suiza','Suizo',5),
 (nextval('rdj_pais_sec'),'Francia','Frances',6),
 (nextval('rdj_pais_sec'),'Rusia','Ruso',NULL),
-(nextval('rdj_pais_sec'),'España','Español',7),
+(nextval('rdj_pais_sec'),'Portugal','Portuges',7),
 (nextval('rdj_pais_sec'),'Colombia','Colombiano',8),
 (nextval('rdj_pais_sec'),'Argentina','Argentino',9), 
 (nextval('rdj_pais_sec'),'Sudafrica','Sudafricano',NULL),
