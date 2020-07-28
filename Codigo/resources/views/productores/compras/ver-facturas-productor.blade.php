@@ -147,7 +147,7 @@
                                                             </div>
                                                             
                                                         <div class="row mx-4 d-flex justify-content-center">
-                                                            <a href="/productor/pagar/{{$factura->num_pedido}}/{{round($factura->monto/$factura->cuotas,1,PHP_ROUND_HALF_EVEN)}}/" class="btn btn-primary btn-lg">Pagar</a>
+                                                            <button data-toggle="modal" data-target="#Pagos{{$factura->num_pedido}}" class="btn btn-primary btn-lg" data-dismiss="modal" aria-label="Close">Pagar</button>
                                                         </div>    
                                                     
                                                         
@@ -163,6 +163,33 @@
                                                          </button>
                                                     </div>
                                                     @endif
+                                                    </div>
+                                                </div>
+                                                <div class="modal fade" id="Pagos{{$factura->num_pedido}}" tabindex="-1" role="dialog" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                                        <div class="modal-content" style="background-color: #F5F5F5">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel"> Pagos </h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                        <div class="modal-body h5 text-center">
+                                                            <span class="font-weight-bold">¿Desea realizar el pago?</span>
+                                                            <br>
+                                                            <br>
+                                                            <span>Monto a Pagar: {{$factura->monto/$factura->cuotas}}</span>     
+                                                        </div>        
+                                                        <div class="d-flex modal-footer justify-content-center mt-2">
+                                                            <button class="btn btn-danger mx-4" data-dismiss="modal" aria-label="Close">
+                                                                <img src="/img/iconos/cancel_white.svg" width="24" class="mb-1" /> Cancelar
+                                                            </button>
+                                                            <a href="/productor/pagar/{{$factura->num_pedido}}/{{round($factura->monto/$factura->cuotas,1,PHP_ROUND_HALF_EVEN)}}/" class="btn btn-primary btn-lg">
+                                                                <img src="/img/iconos/check_white.svg" width="24" class="mb-1" /> Aceptar
+                                                            </a>
+                                                        </div>
+                                                        
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
