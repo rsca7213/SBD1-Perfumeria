@@ -147,7 +147,7 @@
                                                             </div>
                                                             
                                                         <div class="row mx-4 d-flex justify-content-center">
-                                                            <button data-toggle="modal" data-target="#Pagos{{$factura->num_pedido}}" class="btn btn-primary btn-lg" data-dismiss="modal" aria-label="Close">Pagar</button>
+                                                            <button data-toggle="modal" data-target="#Pagos{{$factura->num_pedido}}" class="btn btn-primary btn-lg">Pagar</button>
                                                         </div>    
                                                     
                                                         

@@ -338,6 +338,7 @@ class ComprasController extends Controller
                 
             }
         }
+        
 
         return view('productores.compras.ver-facturas-productor',[
             'id_prod' => $id_prod,
@@ -535,8 +536,8 @@ class ComprasController extends Controller
 
         $pagos=DB::SELECT(DB::raw(
             "SELECT pa.id AS id_pago, pa.tipo AS tipo, pa.num_cuotas AS cuotas, pa.porcentaje AS porcentaje, p.num_pedido AS num_pedido      
-            FROM rdj_metodos_pagos pa, rdj_pedidos p
-            WHERE p.id_pago=pa.id AND p.factura IS NOT NULL
+            FROM rdj_metodos_pagos pa, rdj_pedidos p,rdj_metodos_contratos AS met
+            WHERE p.id_pago=met.id AND pa.id=met.id_pago AND p.factura IS NOT NULL
             ORDER BY num_pedido"
         ));
 

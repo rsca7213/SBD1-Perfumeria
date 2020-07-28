@@ -640,6 +640,7 @@ class ContratosController extends Controller
             'metodo_envio' => $metodo_envio,
             'extrasMEnvio' => $extrasMEnvio,
             'metodo_pago' => $metodo_pago,
+            'fecha_contrato' => $fecha
         ]);
 
     }

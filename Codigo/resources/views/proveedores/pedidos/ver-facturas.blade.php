@@ -72,8 +72,7 @@
                                                                 <tr  class="text-center">
                                                                     <th scope="col">Cuotas</th>
                                                                     <th scope="col">Porcentaje por cuota</th>
-                                                                    <th scope="col">Monto por cuota</th>
-                                                                </tr>
+                                                                    </tr>
                                                             </thead>
                                                             <tbody>
                                                                 @foreach ($pagos as $pago)
@@ -82,7 +81,7 @@
                                                                             @if ($factura->por_pagar!=0)
                                                                                 <td> {{$pago->cuotas}} </td>
                                                                                 <td> {{$pago->porcentaje}} % </td>
-                                                                                <td>{{round($factura->monto/$pago->cuotas,2) . " $"}}</td>
+                                                                                
                                                                             @else
                                                                                 <td><span class="ml-2"> N/A </span></td>
                                                                                 <td><span class="ml-2"> N/A  </span></td>

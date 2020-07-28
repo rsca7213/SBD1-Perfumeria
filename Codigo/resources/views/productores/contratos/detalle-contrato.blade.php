@@ -361,7 +361,7 @@
                 </div>
                 @if ($i!=true &&  $detalles[0]->cancel!=true && $k!=true)
                     <div class="row d-flex justify-content-center mt-4"> 
-                        <a href="#" class="btn btn-primary mb-4"> 
+                        <a href="/productor/{{$id_prod}}/compras/pedido/{{$id_prov}}/{{$fecha_contrato}}" class="btn btn-primary mb-4"> 
                             <img src="{{ asset('img/iconos/add_white.svg') }}" alt="agregar" width="24">
                             <span> Solicitar pedido </span>
                         </a>
