@@ -51,10 +51,10 @@ Vue.component(
     "realizar-evaluacion",
     require("./components/evaluaciones/realizarEvaluacion.vue").default
 );
-Vue.component(
+/*Vue.component(
     "ver-facturas",
     require("./components/compras/facturas.vue").default
-);
+);*/
 Vue.component(
     "ver-evaluaciones",
     require("./components/evaluaciones/verEvaluaciones.vue").default

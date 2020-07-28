@@ -137,34 +137,34 @@ class ComprasController extends Controller
 
         $numeroPedido= DB::SELECT(DB::RAW("SELECT nextval('rdj_pedido_sec')"));
 
-        DB::INSERT(DB::RAW(
-            "INSERT INTO rdj_pedidos (num_pedido,fecha_pedido,estatus,id_proveedor,id_productor,monto,
-            id_envio,fecha_ap_envio,id_prod_envio,id_prov_envio,id_pago,fecha_ap_pago,id_prod_pago,id_prov_pago) 
-            VALUES (?,NOW()::DATE,'p',?,?,?,?,?,?,?,?,?,?,?)"
-        ),[$numeroPedido[0]->nextval,$request["proveedor"],$request["productor"],$request["montoTotal"],$request["envio"],
-        $request["fecha"],$request["productor"],$request["proveedor"],$request["pago"],
-        $request["fecha"],$request["productor"],$request["proveedor"]]);
-
-        foreach ($request["productos"] as $producto) {
-             
-            if($producto["tipo"]=="Componente"){
-                DB::INSERT(DB::RAW("INSERT INTO rdj_detalles_pedidos(id,num_pedido,cantidad,id_pres_otro,
-                cas_otro,precio)
-                VALUES (nextval('rdj_det_pedido_sec'),?,?,?,?,?)"),[$numeroPedido[0]->nextval,$producto["cantidad"],
-                $producto["idPresentacion"],$producto["idProducto"],$producto["precio"]]);
+        try {
+            DB::INSERT(DB::RAW(
+                "INSERT INTO rdj_pedidos (num_pedido,fecha_pedido,estatus,id_proveedor,id_productor,monto,
+                id_envio,fecha_ap_envio,id_prod_envio,id_prov_envio,id_pago,fecha_ap_pago,id_prod_pago,id_prov_pago) 
+                VALUES (?,NOW()::DATE,'p',?,?,?,?,?,?,?,?,?,?,?)"
+            ),[$numeroPedido[0]->nextval,$request["proveedor"],$request["productor"],$request["montoTotal"],$request["envio"],
+            $request["fecha"],$request["productor"],$request["proveedor"],$request["pago"],
+            $request["fecha"],$request["productor"],$request["proveedor"]]);
+    
+            foreach ($request["productos"] as $producto) {
+                 
+                if($producto["tipo"]=="Componente"){
+                    DB::INSERT(DB::RAW("INSERT INTO rdj_detalles_pedidos(id,num_pedido,cantidad,id_pres_otro,
+                    cas_otro,precio)
+                    VALUES (nextval('rdj_det_pedido_sec'),?,?,?,?,?)"),[$numeroPedido[0]->nextval,$producto["cantidad"],
+                    $producto["idPresentacion"],$producto["idProducto"],$producto["precio"]]);
+                }
+                else{
+                    DB::INSERT(DB::RAW("INSERT INTO rdj_detalles_pedidos(id,num_pedido,cantidad,id_pres_esencia,
+                    cas_esencia,precio)
+                    VALUES (nextval('rdj_det_pedido_sec'),?,?,?,?,?)"),[$numeroPedido[0]->nextval,$producto["cantidad"],
+                    $producto["idPresentacion"],$producto["idProducto"],$producto["precio"]]);
+                }
             }
-            else{
-                DB::INSERT(DB::RAW("INSERT INTO rdj_detalles_pedidos(id,num_pedido,cantidad,id_pres_esencia,
-                cas_esencia,precio)
-                VALUES (nextval('rdj_det_pedido_sec'),?,?,?,?,?)"),[$numeroPedido[0]->nextval,$producto["cantidad"],
-                $producto["idPresentacion"],$producto["idProducto"],$producto["precio"]]);
-            }
+        } catch (\Throwable $th) {
+            return ($th);
         }
-
         
-
-
-
         return response(["Producto Creado con Éxito"],200);
     }
 
@@ -274,9 +274,11 @@ class ComprasController extends Controller
 
         //Metodos de pago de un pedido
         $pagos=DB::SELECT(DB::raw(
-            "SELECT p.fecha_pedido AS fecha_inicial,pa.id AS id_pago, pa.tipo AS tipo, pa.num_cuotas AS cuotas, pa.porcentaje AS porcentaje,pa.meses AS meses, p.num_pedido AS num_pedido      
-            FROM rdj_metodos_pagos pa, rdj_pedidos p
-            WHERE p.id_pago=pa.id AND p.fecha_ap_envio=? AND p.factura IS NOT NULL"
+            "SELECT p.fecha_pedido AS fecha_inicial,pa.id AS id_pago, pa.tipo AS tipo,
+             pa.num_cuotas AS cuotas, pa.porcentaje AS porcentaje,pa.meses AS meses,
+              p.num_pedido AS num_pedido      
+            FROM rdj_metodos_pagos pa, rdj_pedidos p, rdj_metodos_contratos AS met
+            WHERE p.id_pago=met.id AND pa.id=met.id_pago AND p.fecha_ap_envio=? AND p.factura IS NOT NULL"
         ),[$fecha]);
 
         //Todos los pagos realizados para un pedido
@@ -288,10 +290,17 @@ class ComprasController extends Controller
         ),[$fecha]);
 
         //Todas las facturas de un contrato para un proveedor en especifico
-        $facturas=DB::SELECT(DB::raw(
+        /*$facturas=DB::SELECT(DB::raw(
             "SELECT p.factura AS num_factura, p.num_pedido AS num_pedido,pv.id AS id_prod, pv.nombre AS prov, p.monto AS monto, p.id_pago AS id_pago, p.monto AS por_pagar        
             FROM rdj_pedidos p, rdj_productores pv
             WHERE p.id_productor=? AND p.id_proveedor=pv.id AND p.fecha_ap_envio=? AND p.factura IS NOT NULL
+            ORDER BY num_factura,num_pedido"
+        ),[$id_prod,$fecha]);*/
+
+        $facturas=DB::SELECT(DB::RAW(
+            "SELECT p.factura AS num_factura,pa.num_cuotas AS cuotas, p.num_pedido AS num_pedido,pv.id AS id_prod, pv.nombre AS prov, p.monto AS monto, p.id_pago AS id_pago, p.monto AS por_pagar        
+            FROM rdj_pedidos p, rdj_productores pv,rdj_metodos_pagos pa,rdj_metodos_contratos AS met
+            WHERE p.id_productor=? AND p.id_proveedor=pv.id AND p.fecha_ap_envio=? AND p.factura IS NOT NULL AND p.id_pago=met.id AND pa.id=met.id_pago
             ORDER BY num_factura,num_pedido"
         ),[$id_prod,$fecha]);
 
@@ -335,21 +344,73 @@ class ComprasController extends Controller
                     $cuotasDesde[$i][3]=$pago->num_pedido; 
             }*/
         
-        
-
-        foreach($facturas as $factura){
-            foreach($pagados as $pagado){
-                if($pagado->num_pedido==$factura->num_pedido){
-                    $factura->por_pagar=$factura->por_pagar-$pagado->monto;
-                    foreach($pagos as $pago){
-                        array_push($numeroCuotas,$pago->cuotas);
-                        if($pago->num_pedido==$pagado->num_pedido && $pago->cuotas>0){
+        //dd($pagados);
+        //dd($pagos);
+        $acumuladoresPagos=0;
+        foreach ($facturas as $factura) {
+            $acumuladorPagos=0;
+            foreach ($pagos as $pago) {
+                if($pago->num_pedido==$factura->num_pedido){
+                    if($pago->cuotas>0 && $pago->cuotas!= null){
+                        array_push($numeroCuotas,$pago->cuotas);  
+                    }
+                    else{
+                        array_push($numeroCuotas,-1);
+                        $pago->cuotas=-1;
+                    }
+                    foreach ($pagados as $pagado) {
+                        if($pagado->num_pedido==$factura->num_pedido && $pago->cuotas>0 && $pago->cuotas !=null){
+                            $acumuladorPagos++;
                             $pago->cuotas=$pago->cuotas-1;
+                            $factura->por_pagar=($factura->monto)-($pagado->monto*$acumuladorPagos);
+                            
+                        }
+                        else if($pagado->num_pedido==$factura->num_pedido && $pago->cuotas==-1){
+                            $pago->cuotas=-2;
+                            $factura->por_pagar=0;
+                        }
+                    }
+                }
+                
+            }
+        }
+        
+        //dd($pagos);
+        //dd($pagos);
+
+        /*foreach($facturas as $factura){
+            if(sizeof($pagados)>0){   
+                foreach($pagados as $pagado){
+                    if($pagado->num_pedido==$factura->num_pedido){
+                        $factura->por_pagar=($factura->por_pagar)-($pagado->monto);
+                        foreach($pagos as $pago){
+                            array_push($numeroCuotas,$pago->cuotas);  
+                            if($pago->num_pedido==$pagado->num_pedido && $pago->cuotas>0 && $pago->cuotas!=null){      
+                                $pago->cuotas=$pago->cuotas-1;     
+                            }
+                            else{
+                               //$pago->cuotas=-1;          
+                            }
                         }
                     }
                 }
             }
-        }
+            else{  
+                foreach($pagos as $pago){
+                    if($pago->cuotas>0)
+                    {
+                        array_push($numeroCuotas,$pago->cuotas); 
+                    }
+                    else{
+                        array_push($numeroCuotas,-1); 
+                    }
+                    
+                }
+            }
+              
+        }*/
+        //dd($facturas);
+    
 
         return view('productores.compras.ver-facturas-productor',[
             'id_prod' => $id_prod,
@@ -360,8 +421,8 @@ class ComprasController extends Controller
             //'cuotas_desde'=>$cuotasDesde
     
         ]);
-       // return response([$id_prod,$facturas,$pagos,$pagados,$cuotasDesde],200);
     }
+
 
 
     /*public function vistaFacturas($id_prod){

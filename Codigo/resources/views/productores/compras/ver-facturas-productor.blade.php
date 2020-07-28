@@ -48,6 +48,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php $i=0 @endphp
                                     @foreach ($facturas as $factura)
                                     <tr  class="text-center">
                                         <td>{{$factura->num_factura}}</td>
@@ -75,45 +76,50 @@
                                                         <br>
                                                         @php $cuota=0 @endphp
                                                         @if ($factura->por_pagar>0)
+                                                        
                                                         <table class="table table-striped border border-info">
                                                             <thead class="bg-primary text-white">
+                                                                @if($factura->cuotas>0 && $factura->cuotas!=null)
                                                                 <tr  class="text-center">
                                                                     <th scope="col">Cuotas</th>
                                                                     <th scope="col">Porcentaje por cuota</th>
-                                                                    <th scope="col">Monto por cuota</th>
-                                                                    
+                                                                    <th scope="col">Monto por cuota</th> 
                                                                 </tr>
+                                                                @else
+                                                                <tr  class="text-center">
+                                                                    <th scope="col">Monto a Pagar</th>
+                                                                </tr>
+                                                                @endif
                                                             </thead>
-                                                            
                                                             <tbody>
-
+                                                                
                                                                 @foreach ($pagos as $pago)
-                                                                @php $i=0 @endphp
-                                                                  @if($pago->cuotas>0)
+                                                                
+                                                                
+                                                                  @if($pago->cuotas>0 && $pago->num_pedido==$factura->num_pedido)
                                                                     <tr class="text-center">
                                                                         @if ($pago->num_pedido==$factura->num_pedido)
-                                                                            @if ($factura->por_pagar!=0)
-                                                                                <td> {{$pago->cuotas}} </td>
-                                                                                <td> {{$pago->porcentaje}} % </td>
-                                                                                <td>{{round($factura->monto/$numero_cuotas[$i],2) . " $"}}</td>
-                                                                            @else
-                                                                                <td><span class="ml-2"> N/A </span></td>
-                                                                                <td><span class="ml-2"> N/A  </span></td>
-                                                                            @endif
-                                                                            
+                                                                            <td> {{$numero_cuotas[$i]}} </td>
+                                                                            <td> {{$pago->porcentaje}} % </td>
+                                                                            <td>{{round($factura->monto/$numero_cuotas[$i],2) . " $"}}</td>
                                                                         @endif
                                                                         
                                                                     </tr>
-                                                                    
-                                                                @endif
-                                                                @php $i++@endphp
-                                                                @php $cuota=$i @endphp
+                                                                   @elseif($pago->cuotas==-1 && $pago->num_pedido==$factura->num_pedido)
+                                                                        @if ($pago->num_pedido==$factura->num_pedido)
+                                                                            <td>{{round($factura->monto,2) . " $"}}</td>
+                                                                        @endif
+                                                                   @endif 
+                                                                
                                                                 @endforeach
+                                                                
                                                                 
                                                             </tbody>
                                                         </table>
                                                         
-                                                    <a href="/productor/pagar/{{$factura->num_pedido}}/{{round($factura->monto/$numero_cuotas[$cuota],2)}}/" class="btn btn-primary">Pagar</a>
+                                                    <a href="/productor/pagar/{{$factura->num_pedido}}/{{round($factura->monto/$numero_cuotas[$i],1,PHP_ROUND_HALF_EVEN)}}/" class="btn btn-primary">Pagar</a>
+                                                    @php $i++@endphp
+                                                    @php $cuota=$i @endphp
                                                     @else
                                                     <div>La factura fue pagada en su totalidad</div>         
                                                     <div class="d-flex modal-footer justify-content-center mt-2">
