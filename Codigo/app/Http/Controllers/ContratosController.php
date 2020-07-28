@@ -520,6 +520,20 @@ class ContratosController extends Controller
             GROUP BY dc.fecha_apertura, pv.nombre, dc.id_proveedor, c.exclusivo, c.cancelacion, c.razon_cierre, r.fecha_renovacion ORDER BY r.fecha_renovacion"
         ),[$fecha,$id_prod]);  
 
+        foreach($detallesRenovado as $renovado){
+            $i=0;
+            foreach($detallesRenovado as $contrato){
+                if($contrato->fecha == $renovado->fecha && $renovado->renovacion > $contrato->renovacion){
+                    unset($detallesRenovado[$i]);
+                }
+                $i++;
+            }
+            
+            $detallesRenovado=array_values($detallesRenovado);
+        }
+
+        // dd($detallesRenovado);
+
         $i=0;
         foreach($detallesRenovado as $contrato){
             
@@ -721,6 +735,20 @@ class ContratosController extends Controller
                     array_push($contratosNoRenovados,$noRenovado);
             }
         }
+
+        foreach($contratosRenovados as $renovado){
+            $i=0;
+            foreach($contratosRenovados as $contrato){
+                if($contrato->fecha == $renovado->fecha && $renovado->renovacion > $contrato->renovacion){
+                    unset($contratosRenovados[$i]);
+                }
+                $i++;
+            }
+            
+            $contratosRenovados=array_values($contratosRenovados);
+        }
+
+        // dd($detallesRenovado);
 
         foreach($contratosNoRenovados as $noRenovado){
             $i=0;
@@ -998,17 +1026,19 @@ class ContratosController extends Controller
             "
         ),[$fecha,$id_prov]);
 
-        $i=0;
-        foreach($detallesRenovados as $contrato){
-            
-            foreach($detallesRenovados as $renovado){
-                if($contrato->fecha==$renovado->fecha && $contrato->renovacion<$renovado->renovacion){
+        foreach($detallesRenovados as $renovado){
+            $i=0;
+            foreach($detallesRenovados as $contrato){
+                if($contrato->fecha == $renovado->fecha && $renovado->renovacion > $contrato->renovacion){
                     unset($detallesRenovados[$i]);
                 }
+                $i++;
             }
-            $i++;
+            
             $detallesRenovados=array_values($detallesRenovados);
         }
+
+        // dd($detallesRenovado);
 
         if($detallesRenovados==[]){
             $flag=false;
