@@ -38,6 +38,20 @@ class ContratosController extends Controller
 
         $contratosNoRenovados=[];
 
+        foreach($contratosRenovados as $renovado){
+            $i=0;
+            foreach($contratosRenovados as $contrato){
+                if($contrato->fecha == $renovado->fecha && $renovado->renovacion > $contrato->renovacion){
+                    unset($contratosRenovados[$i]);
+                }
+                $i++;
+            }
+            
+            $contratosRenovados=array_values($contratosRenovados);
+        }
+
+        // dd($contratosRenovados);
+
         if($contratosRenovados==[]){
             $contratosNoRenovados=$contratosVigentes;
         }else{
