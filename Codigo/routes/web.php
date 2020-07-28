@@ -84,7 +84,8 @@ Route::get('/productor/{id_prod}/pedidos/{id_prov}/{fecha}', 'ComprasController@
 Route::get('/productor/{id_prod}/pedidos/detalle/{id_prov}/{num_pedido}', 'ComprasController@detallePedidoProductor');
 Route::get('/productor/{id_prod}/pedidos/cancelar/{id_prov}/{num_pedido}', 'ComprasController@rechazarPedidoProductor');
 //FACTURAS
-Route::get('/productor/{id_prod}/facturas/{fecha}', 'ComprasController@verFacturasProductor')->name('verFacturasProductor');
+Route::get('/productor/{id_prod}/facturas/{fecha}', 'ComprasController@vistaFacturas');
+Route::get('/productor/{id_prod}/facturas/{fecha}/facturas', 'ComprasController@verFacturasProductor')->name('verFacturasProductor');
 //CREACION DE PEDIDOS
 Route::post('/productor/{id_prod}/compras/pedido/{id_proveedor}/crear','ComprasController@crearPedido');
 Route::get('/productor/{id_prod}/compras', 'ComprasController@verContratosVigentes')->name('verContratosCompras');

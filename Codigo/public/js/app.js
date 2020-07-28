@@ -1932,6 +1932,180 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/facturas.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/compras/facturas.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["csrf"],
+  data: function data() {
+    return {
+      facturas: [],
+      pagos: [],
+      pagados: [],
+      id_productor: 0,
+      cuotas_desde: [],
+      i: 0,
+      detallesPagos: []
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    console.log("%cAxios: Buscando data factura.", "color: lightblue");
+    axios.get(window.location.pathname + "/facturas").then(function (response) {
+      console.log("estoy en resposne");
+      _this.id_productor = response.data[0];
+      _this.facturas = response.data[1];
+      _this.pagos = response.data[2];
+      _this.pagados = response.data[3];
+      _this.cuotas_desde = response.data[4];
+    })["catch"](function (errors) {
+      console.log("%cAxios: Error buscando metodos de envio y metodos de pago", "color: #FFCCCB");
+    });
+  },
+  methods: {
+    cuotasPorPago: function cuotasPorPago(parametro) {
+      for (var index = 1; index < parametro; index++) {}
+    },
+    buscarPagosFactura: function buscarPagosFactura(n_pedido) {
+      var _this2 = this;
+
+      this.detallesPagos = [];
+      var params = {
+        fecha_inicial: "",
+        id_pago: 0,
+        tipo: "",
+        cuotas: 0,
+        porcentaje: 0,
+        meses: 0
+      };
+      this.pagos.forEach(function (pago) {
+        if (pago.num_pedido == n_pedido) {
+          params.fecha_inicial = pago.fecha_inicial;
+          params.id_pago = pago.id_pago;
+          params.tipo = pago.tipo;
+          params.cuotas = pago.cuotas;
+          params.porcentaje = pago.porcentaje;
+          params.meses = pago.meses;
+
+          _this2.detallesPagos.push(params);
+        } //break;
+
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/realizarPedido.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/compras/realizarPedido.vue?vue&type=script&lang=js& ***!
@@ -41368,6 +41542,258 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/facturas.vue?vue&type=template&id=ed71d440&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/compras/facturas.vue?vue&type=template&id=ed71d440& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container col-12" }, [
+    _c("br"),
+    _vm._v(" "),
+    _vm.facturas.length != 0
+      ? _c("span", [
+          _c(
+            "table",
+            { staticClass: "table table-striped border border-info" },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                [
+                  _vm._l(_vm.facturas, function(factura, index) {
+                    return [
+                      _c(
+                        "tr",
+                        { staticClass: "text-center" },
+                        [
+                          _c("td", [_vm._v(_vm._s(factura.num_factura))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(factura.num_pedido))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(factura.prov))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(factura.monto + " $"))]),
+                          _vm._v(" "),
+                          factura.por_pagar == 0
+                            ? [_vm._m(1, true)]
+                            : [_vm._m(2, true)],
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("img", {
+                              staticClass: "iconobtn",
+                              attrs: {
+                                src: "/img/iconos/list.svg",
+                                alt: "ver",
+                                width: "24",
+                                "data-toggle": "modal",
+                                "data-target": "#pagosPorHacer"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.buscarPagosFactura(
+                                    factura.num_pedido
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm._m(3, true)
+                          ])
+                        ],
+                        2
+                      )
+                    ]
+                  })
+                ],
+                2
+              )
+            ]
+          )
+        ])
+      : _c("span", [_c("h5", [_vm._v("No tienes facturas en este momento.")])])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-primary text-white" }, [
+      _c("tr", { staticClass: "text-center" }, [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#Factura")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#Pedido")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Proveedor")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Monto Total")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Estatus")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Pagos")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("span", { staticClass: "ml-2" }, [_vm._v("Pagado")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("span", { staticClass: "ml-2" }, [_vm._v("Por pagar")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "pagosPorHacer",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered modal-xl",
+            attrs: { role: "document" }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "modal-content",
+                staticStyle: { "background-color": "#F5F5F5" }
+              },
+              [
+                _c("div", { staticClass: "modal-header" }, [
+                  _c(
+                    "h5",
+                    {
+                      staticClass: "modal-title",
+                      attrs: { id: "exampleModalLabel" }
+                    },
+                    [_vm._v("Generar Pedido")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "close",
+                      attrs: {
+                        type: "button",
+                        "data-dismiss": "modal",
+                        "aria-label": "Close"
+                      }
+                    },
+                    [
+                      _c("span", { attrs: { "aria-hidden": "true" } }, [
+                        _vm._v("×")
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body h5 text-center" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-striped border border-info" },
+                    [
+                      _c("thead", { staticClass: "bg-primary text-white" }, [
+                        _c("tr", { staticClass: "text-center" }, [
+                          _c("th", { attrs: { scope: "col" } }, [
+                            _vm._v("Cuota")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { attrs: { scope: "col" } }, [
+                            _vm._v("Porcentaje por cuota")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { attrs: { scope: "col" } }, [
+                            _vm._v("Monto a pagar")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { attrs: { scope: "col" } }, [
+                            _vm._v("Disponible en")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { attrs: { scope: "col" } }, [
+                            _vm._v("Meses")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { attrs: { scope: "col" } }, [
+                            _vm._v("Nº de Pago")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { attrs: { scope: "col" } }, [
+                            _vm._v("Estatus")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { attrs: { scope: "col" } }, [
+                            _vm._v("Pagar")
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tbody", [
+                        _c("tr", [
+                          _c("td", [_vm._v("hola")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("hola")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("hola")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("hola")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("hola")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("hola")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("hola")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("hola")])
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ]
+            )
+          ]
+        )
+      ]
+    )
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/realizarPedido.vue?vue&type=template&id=67534b6c&":
 /*!*************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/compras/realizarPedido.vue?vue&type=template&id=67534b6c& ***!
@@ -62157,6 +62583,7 @@ Vue.component("editar-formula-anual", __webpack_require__(/*! ./components/formu
 Vue.component("crear-escala", __webpack_require__(/*! ./components/formulas/crearEscala.vue */ "./resources/js/components/formulas/crearEscala.vue")["default"]);
 Vue.component("editar-escala", __webpack_require__(/*! ./components/formulas/editarEscala.vue */ "./resources/js/components/formulas/editarEscala.vue")["default"]);
 Vue.component("realizar-evaluacion", __webpack_require__(/*! ./components/evaluaciones/realizarEvaluacion.vue */ "./resources/js/components/evaluaciones/realizarEvaluacion.vue")["default"]);
+Vue.component("ver-facturas", __webpack_require__(/*! ./components/compras/facturas.vue */ "./resources/js/components/compras/facturas.vue")["default"]);
 Vue.component("ver-evaluaciones", __webpack_require__(/*! ./components/evaluaciones/verEvaluaciones.vue */ "./resources/js/components/evaluaciones/verEvaluaciones.vue")["default"]);
 Vue.component("realizar-pedido", __webpack_require__(/*! ./components/compras/realizarPedido.vue */ "./resources/js/components/compras/realizarPedido.vue")["default"]);
 Vue.component("filtros-recomendador", __webpack_require__(/*! ./components/recomendador/filtrosRecomendador.vue */ "./resources/js/components/recomendador/filtrosRecomendador.vue")["default"]);
@@ -62281,6 +62708,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/compras/facturas.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/compras/facturas.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _facturas_vue_vue_type_template_id_ed71d440___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./facturas.vue?vue&type=template&id=ed71d440& */ "./resources/js/components/compras/facturas.vue?vue&type=template&id=ed71d440&");
+/* harmony import */ var _facturas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./facturas.vue?vue&type=script&lang=js& */ "./resources/js/components/compras/facturas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _facturas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _facturas_vue_vue_type_template_id_ed71d440___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _facturas_vue_vue_type_template_id_ed71d440___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/compras/facturas.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/compras/facturas.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/compras/facturas.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_facturas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./facturas.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/facturas.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_facturas_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/compras/facturas.vue?vue&type=template&id=ed71d440&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/compras/facturas.vue?vue&type=template&id=ed71d440& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_facturas_vue_vue_type_template_id_ed71d440___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./facturas.vue?vue&type=template&id=ed71d440& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/compras/facturas.vue?vue&type=template&id=ed71d440&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_facturas_vue_vue_type_template_id_ed71d440___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_facturas_vue_vue_type_template_id_ed71d440___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

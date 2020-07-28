@@ -272,22 +272,14 @@ class ComprasController extends Controller
     //Ver facturas de un productor filtradas por proveedor
     public function verFacturasProductor($id_prod,$fecha){
 
+        //Metodos de pago de un pedido
         $pagos=DB::SELECT(DB::raw(
             "SELECT p.fecha_pedido AS fecha_inicial,pa.id AS id_pago, pa.tipo AS tipo, pa.num_cuotas AS cuotas, pa.porcentaje AS porcentaje,pa.meses AS meses, p.num_pedido AS num_pedido      
             FROM rdj_metodos_pagos pa, rdj_pedidos p
-            WHERE p.id_pago=pa.id AND p.fecha_ap_envio=? AND p.factura IS NOT NULL
-            ORDER BY num_pedido"
+            WHERE p.id_pago=pa.id AND p.fecha_ap_envio=? AND p.factura IS NOT NULL"
         ),[$fecha]);
 
-        
-        $cuotasDesde=[];
-        foreach ($pagos as $pago) {
-            for ($i=1; $i <=$pago->cuotas ; $i++) { 
-                $cuotasDesde[$i]=date("d/m/Y", strtotime((Carbon::createFromDate($pago->fecha_inicial))->
-                addMonths($i*$pago->meses)));
-            }
-        }
-
+        //Todos los pagos realizados para un pedido
         $pagados=DB::SELECT(DB::raw(
             "SELECT pag.num_pago AS num_pago, pag.num_pedido AS num_pedido, pag.monto AS monto       
             FROM rdj_pagos pag, rdj_pedidos p
@@ -295,6 +287,7 @@ class ComprasController extends Controller
             ORDER BY pag.num_pedido"
         ),[$fecha]);
 
+        //Todas las facturas de un contrato para un proveedor en especifico
         $facturas=DB::SELECT(DB::raw(
             "SELECT p.factura AS num_factura, p.num_pedido AS num_pedido, pv.nombre AS prov, p.monto AS monto, p.id_pago AS id_pago, p.monto AS por_pagar        
             FROM rdj_pedidos p, rdj_productores pv
@@ -302,7 +295,49 @@ class ComprasController extends Controller
             ORDER BY num_factura,num_pedido"
         ),[$id_prod,$fecha]);
 
-        foreach($facturas as $factura){
+
+        /*Arreglo donde se guardan las fechas desde la cual el pago se puede realizar
+        y tambien guarda true si la fecha del dia es mayor a la del pago
+        o false si la fecha del dia es menor a la del pago
+        */
+        $cuotasDesde["a"]=[];
+        //cantidad de pagos realizados en un pedido
+        $cantidadPagados=sizeof($pagados);
+        //dd($cantidadPagados);
+
+        if ($pagos[0]->cuotas!=null) {
+            foreach ($pagos as $pago) {
+                for ($i=1; $i <=$pago->cuotas ; $i++) { 
+                    if($cantidadPagados>= $i){
+                        $cuotasDesde[$i][2]="Pagado";
+                    }
+                    else{
+                        $cuotasDesde[$i][0]=date("d/m/Y", strtotime((Carbon::createFromDate($pago->fecha_inicial))->
+                    addMonths($i*$pago->meses))); 
+                        if(date("d/m/Y", strtotime(Carbon::now())<$cuotasDesde[$i][0])){
+                            $cuotasDesde[$i][1]=true;
+                        }
+                        else{
+                            $cuotasDesde[$i][1]=false;
+                        }
+                        $cuotasDesde[$i][2]="Por Pagar";
+                    }             
+                }
+            }
+        }
+        else{
+            foreach ($pagos as $pago) {
+                if($cantidadPagados>=1){
+                    $cuotasDesde[0][2]="Pagado";
+                }
+                else{
+                    $cuotasDesde[0][2]="Por Pagar";
+                } 
+            } 
+        }
+        
+
+        /*foreach($facturas as $factura){
             foreach($pagados as $pagado){
                 if($pagado->num_pedido==$factura->num_pedido){
                     $factura->por_pagar=$factura->por_pagar-$pagado->monto;
@@ -313,16 +348,30 @@ class ComprasController extends Controller
                     }
                 }
             }
-        }
+        }*/
 
-        return view('productores.compras.ver-facturas-productor',[
+        /*return view('productores.compras.ver-facturas-productor',[
             'id_prod' => $id_prod,
             'facturas' => $facturas,
             'pagos' => $pagos,
             'pagados' => $pagados,
             'cuotas_desde'=>$cuotasDesde
     
-        ]);
+        ]);*/
+        return response([$id_prod,$facturas,$pagos,$pagados,$cuotasDesde],200);
+    }
+
+    public function vistaFacturas($id_prod){
+        return view('productores.compras.ver-facturas-productor',['id_prod'=>$id_prod]);
+    }
+
+    //Realizar pago
+    public function realizarPagoProductor(){
+
+        DB::INSERT(DB::RAW("
+        INSERT INTO rdj_pagos (num_pago,num_pedido,fecha_pago,monto)
+        VALUES(,?,NOW::DATE,?)
+        "));
     }
 
 

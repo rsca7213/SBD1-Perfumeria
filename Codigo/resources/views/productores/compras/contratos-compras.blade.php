@@ -59,15 +59,15 @@
                                             <td>{{$contrato->tipo_contrato}}</td>
                                             <td>{{$contrato->prov}}</td>
                                             <td>
-                                                <a href="/productor/{{$id_prod}}/compras/pedido/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="mr-2">
+                                                <a href="/productor/{{$id_prod}}/compras/pedido/{{$contrato->id_prov}}/{{$contrato->fechacontrato}}" class="mr-2">
                                                     <img data-toggle="tooltip" title="Realizar Pedidos" src="{{ asset('/img/iconos/add.svg') }}" width="24" class="mb-1">
                                                 </a>
-                                            <a href="/productor/{{$id_prod}}/pedidos/{{$contrato->id_prov}}/{{$contrato->fecha}}" class="ml-2">
+                                            <a href="/productor/{{$id_prod}}/pedidos/{{$contrato->id_prov}}/{{$contrato->fechacontrato}}" class="ml-2">
                                                     <img data-toggle="tooltip" title="Consultar Pedidos" src="{{ asset('/img/iconos/list.svg') }}" width="24" class="mb-1">
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="/productor/{{$id_prod}}/facturas/{{$contrato->fecha}}" class="">
+                                                <a href="/productor/{{$id_prod}}/facturas/{{$contrato->fechacontrato}}" class="">
                                                     <img data-toggle="tooltip" title="Consultar Facturas" src="{{ asset('/img/iconos/list.svg') }}" width="24" class="mb-1">
                                                 </a>
                                             </td>
