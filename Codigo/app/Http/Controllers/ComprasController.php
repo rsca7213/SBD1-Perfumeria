@@ -386,11 +386,19 @@ class ComprasController extends Controller
             ORDER BY pv.id"
         ));
 
-        return view('productores.compras.contratos-compras',[
+        $vistaFactura=DB::SELECT(DB::RAW(
+            "SELECT id_productor AS id_prod, fecha_ap_envio AS fecha_contrato
+            FROM rdj_pedidos
+            WHERE num_pedido=?"
+        ),[$num_pedido]);
+
+        /*return view('productores.compras.contratos-compras',[
             'id_prod' => $id_prod,
             'contratosVigentes' => $contratosVigentes,
             'proveedores' => $proveedores,
-        ]);
+        ]);*/
+
+        return redirect('/productor/'.$vistaFactura[0]->id_prod.'/facturas/'.$vistaFactura[0]->fecha_contrato);
     }
 
 
