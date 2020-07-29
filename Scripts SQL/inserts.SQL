@@ -1162,11 +1162,11 @@ INSERT INTO rdj_pagos (num_pago,num_pedido,fecha_pago,monto) VALUES
 (nextval('rdj_pago_sec'),7,'2020-05-07',4658.33),
 (nextval('rdj_pago_sec'),7,'2020-06-07',4658.33),
 (nextval('rdj_pago_sec'),7,'2020-07-07',4658.33),
-(nextval('rdj_pago_sec'),8,'2020-01-04',3626.35),
-(nextval('rdj_pago_sec'),8,'2020-03-04',3626.35),
-(nextval('rdj_pago_sec'),10,'2020-07-29',542.09),
-(nextval('rdj_pago_sec'),12,'2017-12-25',3289.90),
-(nextval('rdj_pago_sec'),12,'2017-12-25',3289.90),
+(nextval('rdj_pago_sec'),8,'2020-01-04',3262.35),
+(nextval('rdj_pago_sec'),8,'2020-03-04',3262.35),
+(nextval('rdj_pago_sec'),10,'2020-07-29',542.04),
+(nextval('rdj_pago_sec'),12,'2017-12-25',1644.95),
+(nextval('rdj_pago_sec'),12,'2017-12-25',1644.95),
 (nextval('rdj_pago_sec'),14,'2015-08-06',142310.75),
 (nextval('rdj_pago_sec'),15,'2015-09-11',22120.75),
 (nextval('rdj_pago_sec'),17,'2015-09-29',71938.99),
@@ -1174,4 +1174,4 @@ INSERT INTO rdj_pagos (num_pago,num_pedido,fecha_pago,monto) VALUES
 (nextval('rdj_pago_sec'),19,'2015-10-05',50280.99),
 (nextval('rdj_pago_sec'),23,'2018-08-01',9177.58),
 (nextval('rdj_pago_sec'),23,'2018-09-01',9177.58),
-(nextval('rdj_pago_sec'),24,'2020-06-28',1735.48);
+(nextval('rdj_pago_sec'),24,'2020-06-28',1735.44);
