@@ -178,13 +178,13 @@
                                                             <span class="font-weight-bold">¿Desea realizar el pago?</span>
                                                             <br>
                                                             <br>
-                                                            <span>Monto a Pagar: {{$factura->monto/$factura->cuotas}}</span>     
+                                                            <span>Monto a Pagar: {{round($factura->monto/$factura->cuotas,2,PHP_ROUND_HALF_EVEN)}}</span>     
                                                         </div>        
                                                         <div class="d-flex modal-footer justify-content-center mt-2">
                                                             <button class="btn btn-danger mx-4" data-dismiss="modal" aria-label="Close">
                                                                 <img src="/img/iconos/cancel_white.svg" width="24" class="mb-1" /> Cancelar
                                                             </button>
-                                                            <a href="/productor/pagar/{{$factura->num_pedido}}/{{round($factura->monto/$factura->cuotas,1,PHP_ROUND_HALF_EVEN)}}/" class="btn btn-primary btn-lg">
+                                                            <a href="/productor/pagar/{{$factura->num_pedido}}/{{round($factura->monto/$factura->cuotas,2,PHP_ROUND_HALF_EVEN)}}/" class="btn btn-primary btn-lg">
                                                                 <img src="/img/iconos/check_white.svg" width="24" class="mb-1" /> Aceptar
                                                             </a>
                                                         </div>
