@@ -26,8 +26,21 @@ class ComprasController extends Controller
             UNION
             SELECT reno.fecha_apertura as fechaContrato,prod.nombre AS productor,prov.nombre AS prov,reno.id_proveedor AS id_prov, 'Renovación' AS tipo_contrato, reno.fecha_renovacion AS fecha , to_char(reno.fecha_renovacion::DATE + INTERVAL '1 year','dd/mm/yyyy') AS fecha_final
             FROM rdj_proveedores AS prov, rdj_productores AS prod, rdj_renovaciones AS reno 
-            WHERE prod.id=? AND prov.id=reno.id_proveedor AND prod.id = reno.id_productor AND ((NOW() - reno.fecha_renovacion) < '1 YEAR') ORDER BY fechaContrato ASC"
+            WHERE prod.id=? AND prov.id=reno.id_proveedor AND prod.id = reno.id_productor ORDER BY fechaContrato ASC"
         ),[$id_prod,$id_prod]);
+
+        foreach($contratosVigentes as $contrato){
+            $i=0;
+            foreach($contratosVigentes as $cont){
+                if(($cont->fechacontrato == $contrato->fechacontrato && $cont->fecha < $contrato->fecha) || Carbon::parse($cont->fecha)->addYear(1) < Carbon::now()){
+                    unset($contratosVigentes[$i]);
+                }
+                $i++;
+            }
+            $contratosVigentes=array_values($contratosVigentes);
+        }
+
+        // dd($contratosVigentes);
 
         $proveedores=DB::select(DB::raw(
             "SELECT pv.id AS id_prov, pv.nombre AS prov 
