@@ -3779,6 +3779,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["id_prod", "csrf"],
   data: function data() {
@@ -42757,7 +42778,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               "Precio total del pedido: " +
-                                _vm.precioTotal.tofixed(2) +
+                                parseFloat(_vm.precioTotal).toFixed(2) +
                                 " $"
                             )
                           )
@@ -45739,7 +45760,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("span", [
-    _c("h5", [_vm._v(" Asignación de porcentajes a cada criterio: ")]),
+    _c("h5", [_vm._v("Asignación de porcentajes a cada criterio:")]),
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
@@ -45766,7 +45787,7 @@ var render = function() {
             _c(
               "label",
               { staticClass: "mt-2 px-4", attrs: { for: "cumplim" } },
-              [_vm._v(" Cumplimiento de pedidos ")]
+              [_vm._v("Cumplimiento de pedidos")]
             ),
             _vm._v(" "),
             _c("input", {
@@ -45801,11 +45822,7 @@ var render = function() {
                   return _vm.$forceUpdate()
                 }
               }
-            }),
-            _vm._v(" "),
-            _c("small", { staticClass: "form-text text-danger" }, [
-              _c("b", { domProps: { textContent: _vm._s(_vm.smallCum) } })
-            ])
+            })
           ]
         ),
         _vm._v(" "),
@@ -45814,7 +45831,7 @@ var render = function() {
           { staticClass: "form-group px-4 mx-4 justify-content-center col-7" },
           [
             _c("label", { staticClass: "mt-2 px-4", attrs: { for: "exito" } }, [
-              _vm._v(" Criterio de éxito ")
+              _vm._v("Criterio de éxito")
             ]),
             _vm._v(" "),
             _c("input", {
@@ -45875,7 +45892,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _c("span", { staticClass: "ml-2" }, [_vm._v(" Crear Formula ")])
+              _c("span", { staticClass: "ml-2" }, [_vm._v("Crear Formula")])
             ]
           ),
           _vm._v(" "),

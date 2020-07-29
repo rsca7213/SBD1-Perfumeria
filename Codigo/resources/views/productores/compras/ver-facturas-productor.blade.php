@@ -209,7 +209,7 @@
             <div class="card-footer bg-primary text-white">
                 <a href="{{ route('verContratosCompras', ['id_prod' => $id_prod]) }}">
                     <img src="{{ asset('img/iconos/back.svg') }}" alt="atras" width="24">
-                    <span class="text-white h6 ml-2 mt-1"> Volver al Menú Principal </span>
+                    <span class="text-white h6 ml-2 mt-1"> Volver a lista de contratos </span>
                 </a>
             </div>
         </div>

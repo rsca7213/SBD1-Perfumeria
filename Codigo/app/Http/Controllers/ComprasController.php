@@ -542,20 +542,21 @@ class ComprasController extends Controller
         ));
 
         $pagados=DB::SELECT(DB::raw(
-            "SELECT pag.num_pago AS num_pago, pag.num_pedido AS num_pedido, pag.monto AS monto       
+            "SELECT pag.num_pago AS num_pago,pag.fecha_pago as fecha, pag.num_pedido AS num_pedido, pag.monto AS monto       
             FROM rdj_pagos pag, rdj_pedidos p
             WHERE pag.num_pedido=p.num_pedido AND p.factura IS NOT NULL
             ORDER BY pag.num_pedido"
         ));
 
         $facturas=DB::SELECT(DB::raw(
-            "SELECT p.factura AS num_factura, p.num_pedido AS num_pedido, pd.nombre AS prod, p.monto AS monto, p.id_pago AS id_pago, p.monto AS por_pagar        
-            FROM rdj_pedidos p, rdj_productores pd
-            WHERE p.id_proveedor=? AND p.id_productor=pd.id AND p.factura IS NOT NULL
+            "SELECT p.factura AS num_factura,pa.num_cuotas AS cuotas, p.num_pedido AS num_pedido, pd.nombre AS prod, p.monto AS monto, p.id_pago AS id_pago, p.monto AS por_pagar        
+            FROM rdj_pedidos p, rdj_productores pd, rdj_metodos_pagos pa,rdj_metodos_contratos AS met
+            WHERE p.id_proveedor=? AND p.id_productor=pd.id AND p.factura IS NOT NULL AND p.id_pago=met.id AND pa.id=met.id_pago
             ORDER BY num_factura,num_pedido"
         ),[$id_prov]);
 
-        foreach($facturas as $factura){
+        //CICLO DAVID
+        /*foreach($facturas as $factura){
             foreach($pagados as $pagado){
                 if($pagado->num_pedido==$factura->num_pedido){
                     $factura->por_pagar=$factura->por_pagar-$pagado->monto;
@@ -566,6 +567,48 @@ class ComprasController extends Controller
                     }
                 }
             }
+        }*/
+        $numeroCuotas=[];
+        $tienePagos=[]; // para saber si la factura tiene pagos
+
+        foreach ($pagados as $pagado) {
+            $pagado->fecha = date("d/m/Y", strtotime((Carbon::createFromDate($pagado->fecha))));
+        }
+        $acumuladoresPagos=0;
+        foreach ($facturas as $factura) {
+            $acumuladorPagos=0;
+            foreach ($pagos as $pago) {
+                if($pago->num_pedido==$factura->num_pedido){
+                    if($pago->cuotas>0 && $pago->cuotas!= null){
+                        array_push($numeroCuotas,$pago->cuotas);  
+                    }
+                    else{
+                        array_push($numeroCuotas,-1);
+                        $pago->cuotas=-1;
+                        $factura->cuotas=-1;
+                    }
+                    foreach ($pagados as $pagado) {
+                        if($pagado->num_pedido==$factura->num_pedido && $pago->cuotas>0 && $pago->cuotas !=null){
+                            $acumuladorPagos++;
+                            $pago->cuotas=$pago->cuotas-1;
+                            $factura->por_pagar=($factura->monto)-($pagado->monto*$acumuladorPagos);
+                            
+                        }
+                        else if($pagado->num_pedido==$factura->num_pedido && $pago->cuotas==-1){
+                            $acumuladorPagos++;
+                            $pago->cuotas=-2;
+                            $factura->por_pagar=0;
+                        }
+                    }
+                    if($acumuladorPagos!=0){
+                        array_push($tienePagos,true);
+                    }
+                    else{
+                        array_push($tienePagos,false);
+                    }
+                }
+                
+            }
         }
 
         return view('proveedores.pedidos.ver-facturas',[
@@ -573,6 +616,8 @@ class ComprasController extends Controller
             'facturas' => $facturas,
             'pagos' => $pagos,
             'pagados' => $pagados,
+            'numero_cuotas' =>$numeroCuotas,
+            'tiene_pagos' => $tienePagos,
         ]);
     }
 

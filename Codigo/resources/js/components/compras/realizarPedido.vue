@@ -209,7 +209,7 @@
             <span class="font-weight-bold">¿Desea realizar el pedido?</span>
             <br />
             <br />
-            <span>{{"Precio total del pedido: " + (precioTotal).tofixed(2)+ " $"}}</span>
+            <span>{{"Precio total del pedido: " + parseFloat((precioTotal)).toFixed(2)+ " $"}}</span>
             <br />
             <span>{{"Duración total del pedido: " + duracion(duracionTotal)}}</span>
           </div>
