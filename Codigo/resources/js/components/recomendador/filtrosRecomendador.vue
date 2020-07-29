@@ -742,7 +742,6 @@ export default {
 
         async enviarRespuestas() {
             this.fase = -1;
-            await new Promise(r => setTimeout(r, 1000));
             console.log("%cAxios: Enviando respuestas!", "color: lightblue");
             axios.post("resultados", 
                 {
