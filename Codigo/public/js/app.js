@@ -5031,12 +5031,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _this.fase = -1;
-                _context.next = 3;
-                return new Promise(function (r) {
-                  return setTimeout(r, 1000);
-                });
-
-              case 3:
                 console.log("%cAxios: Enviando respuestas!", "color: lightblue");
                 axios.post("resultados", {
                   'pregunta': _this.pregunta,
@@ -5060,7 +5054,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.log(errors);
                 });
 
-              case 5:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -63887,8 +63881,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Windows\Desktop\github proyecto laravel\SBD1-Perfumeria\Codigo\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\codigo\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Ricardo\Documents\GitHub\SBD1-Perfumeria\codigo\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

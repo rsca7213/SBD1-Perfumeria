@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreporte_tablaEvaluacionesProductorjrxml" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4ec36412-a01d-45d2-b46e-362769196bb8">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Perfumes pgSQL"/>
+	<style name="Style1">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($V{REPORT_COUNT}%2) == 0]]></conditionExpression>
+			<style mode="Opaque" forecolor="#606060" backcolor="#E3E3E3"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="tabla_resultados" uuid="4b2f6139-a549-46c3-8d94-9fb6483fc554">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Perfumes pgSQL"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="id_prov_tabla" class="java.lang.Integer"/>
+		<parameter name="id_prod_tabla" class="java.lang.Integer"/>
+		<parameter name="fecha_inicial_tabla" class="java.sql.Timestamp"/>
+		<parameter name="fecha_final_tabla" class="java.sql.Timestamp"/>
+		<queryString language="plsql">
+			<![CDATA[SELECT r.fecha AS fecha, CASE WHEN r.tipo = 'i' THEN 'Inicial' ELSE 'Anual' END AS tipo, r.resultado || ' %' AS resultado, f.peso || ' %' AS exito, 
+CASE WHEN r.resultado >= f.peso THEN 'Aprobado' ELSE 'Reprobado' END AS casito
+FROM rdj_resultados r, rdj_hist_formulas f, rdj_productores prod 
+WHERE prod.id = r.id_productor AND f.id_productor = r.id_productor 
+AND f.id_criterio=5 AND f.fecha_inicio <= r.fecha 
+AND COALESCE(f.fecha_fin,NOW()) >= r.fecha 
+AND r.tipo=f.tipo AND r.id_proveedor = $P{id_prov_tabla} AND r.fecha 
+BETWEEN $P{fecha_inicial_tabla} AND $P{fecha_final_tabla} 
+AND r.id_productor = $P{id_prod_tabla} ORDER BY r.fecha ASC;]]>
+		</queryString>
+		<field name="fecha" class="java.sql.Date"/>
+		<field name="tipo" class="java.lang.String"/>
+		<field name="resultado" class="java.lang.String"/>
+		<field name="exito" class="java.lang.String"/>
+		<field name="casito" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="id_prov_sub" class="java.lang.Integer"/>
+	<parameter name="fecha_inicial_sub" class="java.sql.Timestamp"/>
+	<parameter name="fecha_final_sub" class="java.sql.Timestamp"/>
+	<queryString language="plsql">
+		<![CDATA[SELECT DISTINCT t.id_productor AS idp, t.nombre AS np FROM
+(SELECT r.id_productor, prod.nombre, r.fecha, r.tipo, r.resultado || ' %' AS resultado, f.peso || ' %' AS exito, CASE WHEN r.resultado >= f.peso THEN 'Aprobado' ELSE 'Reprobado' END FROM rdj_resultados r, rdj_hist_formulas f, 
+rdj_productores prod WHERE prod.id = r.id_productor AND f.id_productor = r.id_productor  AND f.id_criterio=5 AND f.fecha_inicio <= r.fecha AND COALESCE(f.fecha_fin,NOW()) >= r.fecha  AND r.tipo=f.tipo 
+AND r.id_proveedor = $P{id_prov_sub} AND r.fecha 
+BETWEEN $P{fecha_inicial_sub} AND $P{fecha_final_sub} 
+ORDER BY prod.nombre,r.fecha ASC) t ORDER BY nombre;]]>
+	</queryString>
+	<field name="np" class="java.lang.String"/>
+	<field name="idp" class="java.lang.Integer"/>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<textField>
+				<reportElement x="-10" y="-10" width="460" height="19" forecolor="#6492FD" uuid="7ac0f13c-31de-4df6-8ec8-06cd689b0ef7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e4009d71-9c5c-4cf9-a54e-6da51ce9f774"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font fontName="roboto" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{np}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="-11" y="15" width="571" height="90" uuid="470fdf27-4c68-4040-9da5-80e42bb0d798">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="tabla_resultados" uuid="eabc85c0-1d6e-4589-ad81-0101bd293aa1">
+						<datasetParameter name="id_prov_tabla">
+							<datasetParameterExpression><![CDATA[$P{id_prov_sub}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="id_prod_tabla">
+							<datasetParameterExpression><![CDATA[$F{idp}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fecha_inicial_tabla">
+							<datasetParameterExpression><![CDATA[$P{fecha_inicial_sub}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="fecha_final_tabla">
+							<datasetParameterExpression><![CDATA[$P{fecha_final_sub}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="100" uuid="2ed80292-aaaf-4676-987d-0988aa96d3ab">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:tableHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="100" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="d7dc68c5-e510-48a9-9f5a-6a19b6766115"/>
+								<box>
+									<pen lineWidth="0.5" lineColor="#606060"/>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="roboto&#xD;&#xA;" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Fecha]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="100" height="30" uuid="7f0fe9e7-bb0d-46e9-8d61-dc38a5142780"/>
+								<box>
+									<pen lineWidth="0.5" lineColor="#606060"/>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<text><![CDATA[]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell height="30">
+							<textField>
+								<reportElement style="Style1" x="0" y="0" width="100" height="30" forecolor="#606060" uuid="478e7e77-b4a1-4a10-8ec0-5d4ac836a3bf"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{fecha})]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="90" uuid="9161d594-59b3-4b08-b8d9-dcf1fb4ed4e6">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:tableHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="90" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="ed3df058-2fce-4ba7-bb80-8939f8c8448c"/>
+								<box>
+									<pen lineWidth="0.5" lineColor="#606060"/>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="roboto&#xD;&#xA;" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Tipo]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="90" height="30" uuid="23d3b3f1-9f1e-4d51-99b0-63cd72debc63"/>
+								<box>
+									<pen lineWidth="0.5" lineColor="#606060"/>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<text><![CDATA[]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell height="30">
+							<textField>
+								<reportElement style="Style1" x="0" y="0" width="90" height="30" forecolor="#606060" uuid="af7d42c7-3598-4d00-87c6-04b7fa13f7a1"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{tipo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="b3cdd010-c9ba-475b-9ff1-f52dbb7150be">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:tableHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="80" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="abb6dd7f-462b-49e3-9115-48ca820d8d35"/>
+								<box>
+									<pen lineWidth="0.5" lineColor="#606060"/>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="roboto&#xD;&#xA;" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Resultado]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="d9f94efe-9d21-4a6c-bcdb-99e60fcfc5b7"/>
+								<box>
+									<pen lineWidth="0.5" lineColor="#606060"/>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<text><![CDATA[]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell height="30">
+							<textField>
+								<reportElement style="Style1" x="0" y="0" width="80" height="30" forecolor="#606060" uuid="c3895ca2-646a-443d-a25d-b4b3cf7b1f01"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{resultado}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="4c9e3ebd-3c29-402e-bdd6-c50114a9039c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:tableHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="80" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="8ae846bd-54c0-40f7-8342-1d177d0221e1"/>
+								<box>
+									<pen lineWidth="0.5" lineColor="#606060"/>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="roboto&#xD;&#xA;" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Éxito]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="80" height="30" uuid="1210e67d-5438-4de8-a40c-428f8e6cd911"/>
+								<box>
+									<pen lineWidth="0.5" lineColor="#606060"/>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<text><![CDATA[]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell height="30">
+							<textField>
+								<reportElement style="Style1" x="0" y="0" width="80" height="30" forecolor="#606060" uuid="583e87cf-2f03-4203-b7b4-3872b83538e9"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{exito}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="110" uuid="dc48019e-91c1-4de8-a987-d88e43a15faf">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
+						<jr:tableHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="110" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="780ebeac-e166-44fc-a83b-9b985f214543"/>
+								<box>
+									<pen lineWidth="0.5" lineColor="#606060"/>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="roboto&#xD;&#xA;" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Aprobación]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:columnFooter height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="110" height="30" uuid="5be89127-3d2b-4bd8-9740-56431cfe1c08"/>
+								<box>
+									<pen lineWidth="0.5" lineColor="#606060"/>
+									<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<text><![CDATA[]]></text>
+							</staticText>
+						</jr:columnFooter>
+						<jr:detailCell height="30">
+							<textField>
+								<reportElement style="Style1" x="0" y="0" width="110" height="30" forecolor="#606060" uuid="c288cca0-800d-41db-8038-45d8db00cb28"/>
+								<box>
+									<pen lineWidth="0.5"/>
+									<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+									<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{casito}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

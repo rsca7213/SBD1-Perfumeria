@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteOriginalEvaluaciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="81a17b47-7b3c-4e3d-b73d-468dae2a2422">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Perfumes pgSQL"/>
+	<property name="ireport.jasperserver.url" value="http://localhost:8081/jasperserver/"/>
+	<property name="ireport.jasperserver.user" value="jasperadmin"/>
+	<property name="ireport.jasperserver.report.resource" value="/reports/reporteOriginalEvaluaciones_files/main_jrxml"/>
+	<property name="ireport.jasperserver.reportUnit" value="/reports/reporteOriginalEvaluaciones"/>
+	<parameter name="Proveedor" class="java.lang.Integer"/>
+	<parameter name="Fecha_inicial" class="java.sql.Timestamp"/>
+	<parameter name="Fecha_final" class="java.sql.Timestamp"/>
+	<queryString language="plsql">
+		<![CDATA[SELECT prov.nombre AS nombre_prov FROM rdj_proveedores prov WHERE prov.id=$P{Proveedor};]]>
+	</queryString>
+	<field name="nombre_prov" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="129" splitType="Stretch">
+			<rectangle>
+				<reportElement x="-20" y="-25" width="595" height="50" forecolor="#FFFFFF" backcolor="#6492FD" uuid="9e51b9e7-440a-4141-b424-ac618e5d5b7b"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="-20" y="-18" width="595" height="40" forecolor="#FFFFFF" uuid="c9a5fd0b-d241-40f0-b340-b7b05c08e7e3">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineColor="rgba(255, 255, 255, 0.0)"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Roboto&#xD;&#xA;&#xD;&#xA;" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Lista de Evaluaciones]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="50" width="80" height="25" forecolor="#6492FD" uuid="15fa9a79-0e9d-4003-bceb-47b73540b0c1"/>
+				<textElement>
+					<font fontName="Roboto&#xD;&#xA;" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Proveedor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="75" width="160" height="25" forecolor="#6492FD" uuid="2df59d36-4e08-4478-9f2a-fac46b1b07b5"/>
+				<textElement>
+					<font fontName="Roboto&#xD;&#xA;" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Inicial Reporte:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="100" width="150" height="25" forecolor="#6492FD" uuid="429a4ece-f56e-481b-9875-038104377372"/>
+				<textElement>
+					<font fontName="Roboto&#xD;&#xA;" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha Final Reporte:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="50" width="270" height="20" forecolor="#606060" uuid="bbf8bd03-9bd4-43c7-9791-767618b8d202"/>
+				<textElement>
+					<font fontName="roboto&#xD;&#xA;" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_prov}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="75" width="200" height="20" forecolor="#606060" uuid="9aa8ec08-a659-40de-a25c-dc0dec35a547"/>
+				<textElement>
+					<font fontName="roboto&#xD;&#xA;" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{Fecha_inicial})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="100" width="210" height="20" forecolor="#606060" uuid="a3f8386d-ff13-4e39-a844-1be885b586e3"/>
+				<textElement>
+					<font fontName="roboto&#xD;&#xA;" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($P{Fecha_final})]]></textFieldExpression>
+			</textField>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="360" y="40" width="168" height="80" uuid="ba7c149b-044b-4382-93ac-0c70d92af19f">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[($P{Proveedor}.equals(1))? "Firmenich.png": ($P{Proveedor}==2)? "keva.png":($P{Proveedor}==3)? "privi.png":($P{Proveedor}==4)? "indesso.png":($P{Proveedor}==5)? "emerald.png":"prinova.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="80" splitType="Stretch">
+			<subreport>
+				<reportElement x="30" y="10" width="470" height="60" uuid="cedb0f84-851a-4959-9f34-15a3dc98bdac"/>
+				<subreportParameter name="id_prov_sub">
+					<subreportParameterExpression><![CDATA[$P{Proveedor}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fecha_inicial_sub">
+					<subreportParameterExpression><![CDATA[$P{Fecha_inicial}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="fecha_final_sub">
+					<subreportParameterExpression><![CDATA[$P{Fecha_final}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["subreporte_tablaEvaluacionesProductor.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>
