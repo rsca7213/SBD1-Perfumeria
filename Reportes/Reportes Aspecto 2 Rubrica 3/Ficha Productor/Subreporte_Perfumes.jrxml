@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Subreporte_Perfumes" pageWidth="595" pageHeight="842" columnWidth="591" leftMargin="2" rightMargin="2" topMargin="5" bottomMargin="5" uuid="cf98305a-af2f-4234-8ced-b81fd70dc510">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ProyectoBasesAdapter"/>
+	<style name="Perfumes">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[($V{REPORT_COUNT}%2)==0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#E3E3E3"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="TodosPerfumesProductor" uuid="393a91e7-9969-4593-ad26-253202449dd3">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ProyectoBasesAdapter"/>
+		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+		<parameter name="IdPerfume" class="java.lang.Integer"/>
+		<queryString language="plsql">
+			<![CDATA[SELECT CASE WHEN p.monolitico=true THEN 'Monolítico' ElSE 'Por Fases' END AS fases,CASE WHEN p.genero='m' THEN 'Masculino' WHEN p.genero='f' THEN 'Femenino' ELSE 'Unisex' END AS genero,
+CASE WHEN p.edad='in' THEN 'Infantil' WHEN p.edad='jo' THEN 'Joven' WHEN p.edad='ad' THEN 'Adulto' ELSE 'Atemporal' END AS edad,pres.volumen || ' ml' as presentacion, 
+CASE WHEN inte.tipo='EdS' THEN 'Eau du Splash' WHEN inte.tipo='EdT' THEN 'Eau du Toilette' WHEN inte.tipo='EdC' THEN 'Eau du Cologne'
+WHEN inte.tipo='EdP' THEN 'Eau du Perfume' ELSE 'Perfume' END AS intensidad, inte.porcentaje || '%' as porcentaje
+FROM rdj_perfumes AS p, rdj_presentaciones_perfumes AS pres, rdj_intensidades AS inte, rdj_productores AS prod 
+WHERE p.id=$P{IdPerfume} AND p.id=pres.id_perfume AND p.id_productor=prod.id AND p.id=inte.id_perfume AND inte.id=pres.id_intensidad;]]>
+		</queryString>
+		<field name="fases" class="java.lang.String"/>
+		<field name="genero" class="java.lang.String"/>
+		<field name="edad" class="java.lang.String"/>
+		<field name="presentacion" class="java.lang.String"/>
+		<field name="intensidad" class="java.lang.String"/>
+		<field name="porcentaje" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="PerfumesProductor" class="java.lang.Integer"/>
+	<queryString language="plsql">
+		<![CDATA[SELECT p.nombre as nombrePerfume,p.id as idPerfume, CASE WHEN p.monolitico=true THEN 'Monolítico' ElSE 'Por Fases' END AS fases,CASE WHEN p.genero='m' THEN 'Masculino' WHEN p.genero='f' THEN 'Femenino' ELSE 'Unisex' END AS genero,
+CASE WHEN p.edad='in' THEN 'Infantil' WHEN p.edad='jo' THEN 'Joven' WHEN p.edad='ad' THEN 'Adulto' ELSE 'Atemporal' END AS edad
+FROM rdj_perfumes AS p
+WHERE p.id_productor=$P{PerfumesProductor};]]>
+	</queryString>
+	<field name="nombrePerfume" class="java.lang.String"/>
+	<field name="idPerfume" class="java.lang.Integer"/>
+	<field name="fases" class="java.lang.String"/>
+	<field name="genero" class="java.lang.String"/>
+	<field name="edad" class="java.lang.String"/>
+	<detail>
+		<band height="149" splitType="Stretch">
+			<componentElement>
+				<reportElement x="120" y="71" width="350" height="70" uuid="6998b5c5-d9ee-4e49-9e9b-027edf9a61ef">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="TodosPerfumesProductor" uuid="a87eeee4-2d85-4ee2-8539-e510a28a8160">
+						<datasetParameter name="IdPerfume">
+							<datasetParameterExpression><![CDATA[$F{idPerfume}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="130" uuid="4c730726-3794-4e8e-a2e2-2a59ea317ffc">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="130" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="c04ee2ee-8c12-4456-9021-60a4fb5d01fe"/>
+								<box>
+									<topPen lineWidth="1.0" lineColor="#707070"/>
+									<leftPen lineWidth="1.0" lineColor="#707070"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Presentación]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="2" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<box>
+								<leftPen lineWidth="1.0" lineColor="#707070"/>
+								<bottomPen lineWidth="1.0" lineColor="#707070"/>
+							</box>
+						</jr:columnFooter>
+						<jr:detailCell height="30">
+							<textField>
+								<reportElement style="Perfumes" x="0" y="0" width="130" height="30" forecolor="#707070" uuid="dcca87af-d250-4a59-91ba-030c8590473e"/>
+								<box>
+									<leftPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Roboto" size="12" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{presentacion}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="140" uuid="8994b4ee-48c8-4a36-b778-2a134a90038c">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="140" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="3673e747-4e26-4291-a81f-2e01544d7c71"/>
+								<box>
+									<topPen lineWidth="1.0" lineColor="#707070"/>
+									<leftPen lineWidth="0.0" lineColor="#707070"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[Intensidad]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="2" rowSpan="1">
+							<box>
+								<bottomPen lineWidth="1.0" lineColor="#707070"/>
+							</box>
+						</jr:columnFooter>
+						<jr:detailCell height="30">
+							<textField>
+								<reportElement style="Perfumes" x="0" y="0" width="140" height="30" forecolor="#707070" uuid="ee654baa-3aaf-41da-92b3-7a092c48aabc"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Roboto" size="12" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{intensidad}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="80" uuid="4f8c07f6-b4b4-41de-8edf-5a72370e16ef">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader height="30" rowSpan="1">
+							<staticText>
+								<reportElement mode="Opaque" x="0" y="0" width="80" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="056d6f85-159d-4f4b-9f8a-5baa92958f3a"/>
+								<box>
+									<topPen lineWidth="1.0" lineColor="#707070"/>
+									<leftPen lineWidth="0.0" lineColor="#707070"/>
+									<rightPen lineWidth="1.0" lineColor="#707070"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true"/>
+								</textElement>
+								<text><![CDATA[%]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:columnFooter height="2" rowSpan="1">
+							<box>
+								<pen lineColor="#707070"/>
+								<bottomPen lineWidth="1.0" lineColor="#707070"/>
+								<rightPen lineWidth="1.0" lineColor="#707070"/>
+							</box>
+						</jr:columnFooter>
+						<jr:detailCell height="30">
+							<textField>
+								<reportElement style="Perfumes" x="0" y="0" width="80" height="30" forecolor="#707070" uuid="e754d845-430e-4524-b835-9586689c37d9"/>
+								<box>
+									<rightPen lineWidth="1.0"/>
+								</box>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Roboto" size="12" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{porcentaje}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<textField>
+				<reportElement x="30" y="0" width="192" height="30" forecolor="#6492FD" uuid="89238cb2-ad89-493a-9630-f9df739abdae"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Roboto" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombrePerfume}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="31" width="80" height="30" forecolor="#707070" uuid="447a1d87-3f5c-4a3b-85e8-54fc9cf6976b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Roboto" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fases}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="30" y="31" width="40" height="30" forecolor="#707070" uuid="7ef636ca-ce53-4dee-a062-71a6ce614b2b"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[• Tipo]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="283" y="31" width="76" height="30" forecolor="#707070" uuid="5a3a5114-5ed4-47e1-a4e8-e135e0af2b83"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Roboto" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{genero}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="222" y="31" width="61" height="30" forecolor="#707070" uuid="9854c474-bc27-4588-ac57-338a231a1a46"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[• Género:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="460" y="31" width="100" height="30" forecolor="#707070" uuid="634a6756-9b72-42e9-8d0d-006932001c55"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Roboto" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{edad}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="410" y="31" width="50" height="30" forecolor="#707070" uuid="e38cf404-f5d5-4317-a6da-0cf308e1d258"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Roboto&#xD;&#xA;" size="12" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[• Edad:]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>
