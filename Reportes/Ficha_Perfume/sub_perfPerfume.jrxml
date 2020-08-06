@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sub_intPerfume" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3ab469cc-0bd6-4608-8359-6fc4089c303d">
+	<parameter name="id_perf_perfumista" class="java.lang.Integer"/>
+	<queryString language="plsql">
+		<![CDATA[SELECT pm.pri_nombre || CASE WHEN pm.seg_nombre IS NOT NULL THEN concat(' ',pm.seg_nombre) ELSE '' END || concat(' ',pm.pri_apellido) ||
+CASE WHEN pm.seg_apellido IS NOT NULL THEN concat(' ',pm.seg_apellido, ' ') ELSE '' END || concat('(',pa.nombre,')') AS perfumista
+FROM rdj_perfumistas pm, rdj_paises pa, rdj_perfumes_perfumistas pp 
+WHERE pa.id = pm.id_pais AND pp.id_perfume = $P{id_perf_perfumista} AND pp.id_perfumista = pm.id ORDER BY pm.pri_nombre;]]>
+	</queryString>
+	<field name="perfumista" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="0" width="14" height="26" uuid="fc57284e-6ac3-47bc-b267-dcf2f5047e2f"/>
+				<textElement>
+					<font fontName="roboto&#xD;&#xA;" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[•]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="34" y="0" width="396" height="26" forecolor="#505050" uuid="d7b2325e-5f1e-4681-8849-797992d56279"/>
+				<textElement>
+					<font fontName="roboto&#xD;&#xA;" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{perfumista}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
