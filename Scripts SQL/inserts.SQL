@@ -743,24 +743,24 @@ INSERT INTO rdj_otros_componentes (id_perfume,cas_otro_ing) VALUES
 (9,84082791); 
 
 INSERT INTO rdj_ingredientes_esencias (cas_ing_esencia,nombre,naturaleza,id_proveedor,nombre_quim,pto_inf,solubilidad,proc_creac,parte_proc,vida_util,num_einecs,rendimiento)VALUES
-(1005171,'Ambranum','n',1,NULL,84,55,'Asociacion equilibrada de ingredientes (extractos naturales y moleculas sinteticas), se mezclan para crear una especialidad inspiradora.',NULL,180,NULL,NULL),
-(68650464,'Buchu Eo Aged','s',1,NULL,67,43,'Obtenido por destilacion de la biomasa con agua, o vapor. El aceite esencial esta fisicamente separado de la fase acuosa por decantacion.',NULL,260,NULL,NULL),
-(71735790,'Cedroxyde','s',1,'4,8,12-Trimethyl-13-oxabicyclo[10.1.0]trideca-4,8-diene',100,68,NULL,NULL,170,2759677,NULL),
-(52424609,'Ozaflor','s',2,NULL,100,95,NULL,NULL,180,NULL,NULL),
-(4736452,'Iriswood','n',2,NULL,100,95,NULL,NULL,180,28068919,NULL),
-(8050155,'Floralyn','n',2,NULL,100,95,NULL,NULL,365,2324762,NULL),
-(28219616,'Sandal Fleur','n',3,'2-Ethyl-4-(2,2,3-Trimethyl-3-Cyclopenten-1-yl)2-Buten-1-ol',100,70,NULL,NULL,730,2489088,NULL),
-(127424,'Methyl Ionone','s',3,'4-penten-3-one,5-(2, 6,6-Trimethyl-2-Cyclohexen-1-yl)',100,70,NULL,NULL,730,2048421,NULL),
-(586629,'Pine-Oil-70','s',3,'terpene alcohols',77,89,NULL,NULL,NULL,2026806,NULL),
-(89883,'Vetiverol','n',4,'(5R,6R)-6,10-dimethyl-3-propan-2-ylidenespiro[4.5]dec-9-en-8-ol',100,70,NULL,NULL,560,2685789,NULL),
-(106241,'Geraniol','n',4,'(2E)-3,7-dimethylocta-2,6-dien-1-ol',108,95,NULL,NULL,360,2033771,NULL),
-(120116,'Benzyl Isoeugenol','s',4,'2-methoxy-1-phenylmethoxy-4-prop-1-enylbenzene',200,80,NULL,NULL,480,2043706,NULL),
-(66251,'C-6 Aldehyde','n',5,NULL,29,90,NULL,NULL,360,2006245,NULL),
-(41890920,'Osyrol','s',5,'7-Dimethyl-7-Methoxyoctan-2-ol',110,89,NULL,NULL,580,2555747,NULL),
-(21112378,'Vetimoss','s',5,'2-tert-butyl-1,4-dimethoxybenzene',93,78,NULL,NULL,360,2442165,NULL),
-(106729,'Melonal','s',6,'2,6-dimethylhept-5-enal',60,75,NULL,NULL,365,2034272 ,NULL),
-(5392405,'Citral','n',6,'3,7-dimethylocta-2,6-dienal',195,70,NULL,NULL,365,2263946,NULL),
-(4180238,'Anethole','n',6,'1-methoxy-4-[(E)-prop-1-enyl]benzene',195,80,NULL,NULL,260,2240520,NULL);
+(1005171,'Ambranum','n',1,NULL,84,55,'Asociacion equilibrada de ingredientes (extractos naturales y moleculas sinteticas), se mezclan para crear una especialidad inspiradora.',NULL,180,NULL,10),
+(68650464,'Buchu Eo Aged','s',1,NULL,67,43,'Obtenido por destilacion de la biomasa con agua, o vapor. El aceite esencial esta fisicamente separado de la fase acuosa por decantacion.',NULL,260,NULL,18),
+(71735790,'Cedroxyde','s',1,'4,8,12-Trimethyl-13-oxabicyclo[10.1.0]trideca-4,8-diene',100,68,NULL,NULL,170,2759677,20),
+(52424609,'Ozaflor','s',2,NULL,100,95,NULL,NULL,180,NULL,12),
+(4736452,'Iriswood','n',2,NULL,100,95,NULL,NULL,180,28068919,38),
+(8050155,'Floralyn','n',2,NULL,100,95,NULL,NULL,365,2324762,25),
+(28219616,'Sandal Fleur','n',3,'2-Ethyl-4-(2,2,3-Trimethyl-3-Cyclopenten-1-yl)2-Buten-1-ol',100,70,NULL,NULL,730,2489088,11),
+(127424,'Methyl Ionone','s',3,'4-penten-3-one,5-(2, 6,6-Trimethyl-2-Cyclohexen-1-yl)',100,70,NULL,NULL,730,2048421,25),
+(586629,'Pine-Oil-70','s',3,'terpene alcohols',77,89,NULL,NULL,NULL,2026806,16),
+(89883,'Vetiverol','n',4,'(5R,6R)-6,10-dimethyl-3-propan-2-ylidenespiro[4.5]dec-9-en-8-ol',100,70,NULL,NULL,560,2685789,30),
+(106241,'Geraniol','n',4,'(2E)-3,7-dimethylocta-2,6-dien-1-ol',108,95,NULL,NULL,360,2033771,15),
+(120116,'Benzyl Isoeugenol','s',4,'2-methoxy-1-phenylmethoxy-4-prop-1-enylbenzene',200,80,NULL,NULL,480,2043706,10),
+(66251,'C-6 Aldehyde','n',5,NULL,29,90,NULL,NULL,360,2006245,12),
+(41890920,'Osyrol','s',5,'7-Dimethyl-7-Methoxyoctan-2-ol',110,89,NULL,NULL,580,2555747,23),
+(21112378,'Vetimoss','s',5,'2-tert-butyl-1,4-dimethoxybenzene',93,78,NULL,NULL,360,2442165,18),
+(106729,'Melonal','s',6,'2,6-dimethylhept-5-enal',60,75,NULL,NULL,365,2034272 ,30),
+(5392405,'Citral','n',6,'3,7-dimethylocta-2,6-dienal',195,70,NULL,NULL,365,2263946,22),
+(4180238,'Anethole','n',6,'1-methoxy-4-[(E)-prop-1-enyl]benzene',195,80,NULL,NULL,260,2240520,15);
 
 INSERT INTO rdj_ings_esencias_paises (id_pais,cas_ing_esencia)VALUES
 (9,1005171),
