@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte_Evaluaciones" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d28921b0-7d0d-46e6-96aa-9a44a696435c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ProyectoBases1"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Perfumes pgSQL"/>
 	<property name="ireport.jasperserver.url" value="http://localhost:8081/jasperserver/"/>
 	<property name="ireport.jasperserver.user" value="jasperadmin"/>
 	<property name="ireport.jasperserver.report.resource" value="/reports/Reporte_Evaluaciones_files/main_jrxml"/>
@@ -98,13 +98,13 @@ WHERE pv.id=r.id_proveedor AND $P{fecha}=to_date(to_char(r.fecha,'dd/mm/yyyy'),'
 	</subDataset>
 	<parameter name="fecha" class="java.sql.Date"/>
 	<queryString language="plsql">
-		<![CDATA[SELECT pd.nombre AS productor, to_char(r.fecha::DATE,'dd/mm/yyyy') AS fecha_ejecucion, 
+		<![CDATA[SELECT pd.nombre AS productor, to_char(r.fecha::DATE,'dd/mm/yyyy') AS fecha_ejecucion, pd.id AS idp,
 CASE WHEN r.tipo='i' THEN 'Evaluacion Inicial' ELSE 'Evaluacion Anual' END AS tipo_evaluacion, 
 (e.rango_inicio || ' a ' || e.rango_fin) AS escala, e.fecha_inicio AS fecha_inicio
 FROM rdj_productores pd, rdj_resultados r, rdj_escalas e
 WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_date(to_char(r.fecha,'dd/mm/yyyy'),'dd/mm/yyyy') AND ((r.fecha BETWEEN e.fecha_inicio AND e.fecha_fin) OR e.fecha_fin IS NULL) AND r.fecha>e.fecha_inicio
 UNION
-SELECT pd.nombre AS productor, to_char(r.fecha::DATE,'dd/mm/yyyy') AS fecha_ejecucion, 
+SELECT pd.nombre AS productor, to_char(r.fecha::DATE,'dd/mm/yyyy') AS fecha_ejecucion, pd.id AS idp,
 CASE WHEN r.tipo='i' THEN 'Evaluacion Inicial' ELSE 'Evaluacion Anual' END AS tipo_evaluacion, 
 (e.rango_inicio || ' a ' || e.rango_fin) AS escala, e.fecha_inicio AS fecha_inicio
 FROM rdj_productores pd, rdj_resultados r, rdj_escalas e
@@ -114,6 +114,7 @@ WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_da
 	<field name="fecha_ejecucion" class="java.lang.String"/>
 	<field name="tipo_evaluacion" class="java.lang.String"/>
 	<field name="escala" class="java.lang.String"/>
+	<field name="idp" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -132,9 +133,9 @@ WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_da
 		</band>
 	</title>
 	<detail>
-		<band height="265" splitType="Stretch">
+		<band height="262" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="35" width="80" height="20" forecolor="#6492FD" backcolor="#FFFFFF" uuid="1e654659-22cf-494c-9fb1-2d99d534dc17">
+				<reportElement mode="Opaque" x="0" y="110" width="80" height="20" forecolor="#6492FD" backcolor="#FFFFFF" uuid="1e654659-22cf-494c-9fb1-2d99d534dc17">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b506ecaa-f1c4-4cf6-a05c-bbe097fc3310"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -145,7 +146,7 @@ WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_da
 				<text><![CDATA[Productor:]]></text>
 			</staticText>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="80" y="35" width="140" height="20" forecolor="#707070" uuid="74b0f267-5e2d-4fd0-b3f4-15bac25c8f03">
+				<reportElement x="80" y="110" width="170" height="20" forecolor="#707070" uuid="74b0f267-5e2d-4fd0-b3f4-15bac25c8f03">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f5eee1ab-a190-4716-94f8-997a692eaef0"/>
 				</reportElement>
 				<textElement>
@@ -154,7 +155,7 @@ WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_da
 				<textFieldExpression><![CDATA[$F{productor}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="70" width="151" height="20" forecolor="#6492FD" backcolor="#FFFFFF" uuid="d83f932a-e62b-44a0-a51e-265017b179ef">
+				<reportElement mode="Opaque" x="0" y="145" width="151" height="20" forecolor="#6492FD" backcolor="#FFFFFF" uuid="d83f932a-e62b-44a0-a51e-265017b179ef">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b506ecaa-f1c4-4cf6-a05c-bbe097fc3310"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -165,7 +166,7 @@ WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_da
 				<text><![CDATA[Datos Evaluación]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="100" width="151" height="20" forecolor="#707070" backcolor="#FFFFFF" uuid="91538955-c758-46bd-b48f-207a0bc085a7">
+				<reportElement mode="Opaque" x="0" y="175" width="151" height="20" forecolor="#707070" backcolor="#FFFFFF" uuid="91538955-c758-46bd-b48f-207a0bc085a7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b506ecaa-f1c4-4cf6-a05c-bbe097fc3310"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -176,7 +177,7 @@ WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_da
 				<text><![CDATA[• Fecha de Ejecución:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="120" width="151" height="20" forecolor="#707070" backcolor="#FFFFFF" uuid="96094fce-6db4-4ae2-96ee-7936a2dccc72">
+				<reportElement mode="Opaque" x="0" y="195" width="151" height="20" forecolor="#707070" backcolor="#FFFFFF" uuid="96094fce-6db4-4ae2-96ee-7936a2dccc72">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b506ecaa-f1c4-4cf6-a05c-bbe097fc3310"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -204,7 +205,7 @@ WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_da
 				</graphicElement>
 			</line>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="150" y="100" width="130" height="20" forecolor="#707070" uuid="d80970d6-b068-4781-81a6-fc4186e3ff3b">
+				<reportElement x="150" y="175" width="130" height="20" forecolor="#707070" uuid="d80970d6-b068-4781-81a6-fc4186e3ff3b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f5eee1ab-a190-4716-94f8-997a692eaef0"/>
 				</reportElement>
 				<textElement>
@@ -213,7 +214,7 @@ WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_da
 				<textFieldExpression><![CDATA[$F{fecha_ejecucion}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="152" y="120" width="130" height="20" forecolor="#707070" uuid="026d09a7-d907-477f-b227-74e0a581bd19">
+				<reportElement x="152" y="195" width="130" height="20" forecolor="#707070" uuid="026d09a7-d907-477f-b227-74e0a581bd19">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f5eee1ab-a190-4716-94f8-997a692eaef0"/>
 				</reportElement>
 				<textElement>
@@ -322,8 +323,15 @@ WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_da
 					</jr:column>
 				</jr:table>
 			</componentElement>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="20" width="168" height="80" uuid="0fe3fd6b-f150-4abd-b794-49f58cae8732">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$F{idp}==1? "Givaudan.png": $F{idp}==2? "memphis.png": "chanel.png"]]></imageExpression>
+			</image>
 		</band>
-		<band height="145">
+		<band height="133">
 			<componentElement>
 				<reportElement x="90" y="70" width="390" height="63" uuid="112166e8-3dae-47f2-b656-f90bba1af725">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>

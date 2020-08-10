@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte_Contrato" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="669286a1-f79c-48ce-b262-00933a3719dd">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ProyectoBases1"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Perfumes pgSQL"/>
 	<style name="Table_TH" mode="Opaque" backcolor="#6492FD">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
@@ -163,6 +163,8 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 	<field name="correoPD" class="java.lang.String"/>
 	<field name="url_webPV" class="java.lang.String"/>
 	<field name="url_webPD" class="java.lang.String"/>
+	<field name="id_prov" class="java.lang.Integer"/>
+	<field name="id_prod" class="java.lang.Integer"/>
 	<background>
 		<band/>
 	</background>
@@ -181,7 +183,8 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 		</band>
 	</title>
 	<detail>
-		<band height="367">
+		<band height="437">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField textAdjust="StretchHeight">
 				<reportElement x="110" y="10" width="196" height="20" forecolor="#707070" uuid="404eb84b-09d3-4eaa-8784-b6ed504fd77e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f5eee1ab-a190-4716-94f8-997a692eaef0"/>
@@ -262,7 +265,7 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 				<text><![CDATA[Empresa Productora]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="133" width="220" height="20" forecolor="#707070" uuid="762630a5-f6d7-46d0-8fd7-0fad96a4c886">
+				<reportElement x="0" y="220" width="220" height="20" forecolor="#707070" uuid="762630a5-f6d7-46d0-8fd7-0fad96a4c886">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -284,7 +287,7 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 				<text><![CDATA[Empresa Proveedora]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="0" y="153" width="219" height="20" forecolor="#707070" uuid="eb3b4905-5b39-47c4-96ca-b593a83f6f45">
+				<reportElement x="0" y="240" width="219" height="20" forecolor="#707070" uuid="eb3b4905-5b39-47c4-96ca-b593a83f6f45">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -294,7 +297,7 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 				<textFieldExpression><![CDATA[$F{correoPD}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="173" width="219" height="20" forecolor="#707070" uuid="e703c5a4-1162-4286-9375-8c9dbe8625cc">
+				<reportElement x="0" y="260" width="219" height="20" forecolor="#707070" uuid="e703c5a4-1162-4286-9375-8c9dbe8625cc">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -306,7 +309,7 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 				<textFieldExpression><![CDATA[$F{telefonoPD}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="0" y="193" width="219" height="20" forecolor="#707070" uuid="08775446-ee90-494e-a30a-718b553af7be">
+				<reportElement x="0" y="280" width="219" height="20" forecolor="#707070" uuid="08775446-ee90-494e-a30a-718b553af7be">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -317,7 +320,7 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 				<textFieldExpression><![CDATA[$F{url_webPD}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="351" y="153" width="196" height="20" forecolor="#707070" uuid="86b4cfbf-1707-4c36-ab49-d39583f03c37">
+				<reportElement x="351" y="240" width="196" height="20" forecolor="#707070" uuid="86b4cfbf-1707-4c36-ab49-d39583f03c37">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
@@ -327,7 +330,7 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 				<textFieldExpression><![CDATA[$F{correoPV}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="351" y="173" width="196" height="20" forecolor="#707070" uuid="067ffd25-89a5-41aa-b488-29d9da0827a1">
+				<reportElement x="351" y="260" width="196" height="20" forecolor="#707070" uuid="067ffd25-89a5-41aa-b488-29d9da0827a1">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -339,7 +342,7 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 				<textFieldExpression><![CDATA[$F{telefonoPV}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="351" y="193" width="196" height="20" forecolor="#707070" uuid="ca8078d4-01f1-4ee1-b81e-c04efd0adf0a">
+				<reportElement x="351" y="280" width="196" height="20" forecolor="#707070" uuid="ca8078d4-01f1-4ee1-b81e-c04efd0adf0a">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -350,7 +353,7 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 				<textFieldExpression><![CDATA[$F{url_webPV}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="351" y="133" width="196" height="20" forecolor="#707070" uuid="36dd4018-3131-46d6-9afa-eb487873912c">
+				<reportElement x="351" y="220" width="196" height="20" forecolor="#707070" uuid="36dd4018-3131-46d6-9afa-eb487873912c">
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
@@ -361,7 +364,7 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 				<textFieldExpression><![CDATA[$F{nombrePV}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="-20" y="230" width="595" height="2" forecolor="#6492FD" uuid="e0a2e46d-c438-4d68-824b-313139189e27">
+				<reportElement x="-20" y="317" width="595" height="2" forecolor="#6492FD" uuid="e0a2e46d-c438-4d68-824b-313139189e27">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<graphicElement>
@@ -369,7 +372,7 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement positionType="Float" mode="Opaque" x="199" y="250" width="180" height="20" isRemoveLineWhenBlank="true" forecolor="#6492FD" backcolor="#FFFFFF" uuid="c78cb8a6-29fe-42d3-b3ee-67e4af701b30">
+				<reportElement positionType="Float" mode="Opaque" x="199" y="337" width="180" height="20" isRemoveLineWhenBlank="true" forecolor="#6492FD" backcolor="#FFFFFF" uuid="c78cb8a6-29fe-42d3-b3ee-67e4af701b30">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b506ecaa-f1c4-4cf6-a05c-bbe097fc3310"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -380,7 +383,7 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 				<text><![CDATA[Ingredientes Contratados]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement x="79" y="290" width="401" height="60" uuid="20f4cbb0-6e33-4b40-925e-34c3b1d66663">
+				<reportElement x="79" y="377" width="401" height="60" uuid="20f4cbb0-6e33-4b40-925e-34c3b1d66663">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -448,6 +451,20 @@ GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV
 					</jr:column>
 				</jr:table>
 			</componentElement>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="140" width="168" height="80" uuid="9a32945c-cc7f-4b23-97f3-992ef965422e">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$F{id_prod}==1? "Givaudan.png": $F{id_prod}==2? "memphis.png": "chanel.png"]]></imageExpression>
+			</image>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="350" y="140" width="168" height="80" uuid="4d8e38f5-76a4-4e5b-b456-f3818997e30c">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$F{id_prov}==1? "Firmenich.png": $F{id_prov}==2? "keva.png": $F{id_prov}==3? "privi.png":$F{id_prov}==4? "indesso.png":$F{id_prov}==5? "emerald.png":"prinova.png"]]></imageExpression>
+			</image>
 		</band>
 		<band height="125">
 			<componentElement>
