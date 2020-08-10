@@ -87,62 +87,64 @@
 	<subDataset name="tabla_ingredientes" uuid="17d82b62-68ba-4195-85bb-c0cc4b26956f">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ProyectoBases1"/>
 		<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-		<parameter name="fecha_apertura" class="java.sql.Date"/>
+		<parameter name="fecha_apertura" class="java.lang.String"/>
 		<queryString language="plsql">
 			<![CDATA[SELECT i.nombre AS ingrediente, 
 CASE WHEN (dc.descuento IS NULL OR dc.descuento=0) THEN 'N/A' ELSE (dc.descuento || ' %') END AS descuento  
 FROM rdj_detalles_contratos dc, rdj_ingredientes_esencias i
-WHERE i.cas_ing_esencia=dc.cas_ing_esencia AND dc.fecha_apertura=$P{fecha_apertura}
+WHERE i.cas_ing_esencia=dc.cas_ing_esencia AND to_char(dc.fecha_apertura,'dd/mm/yyyy HH:MI:SS')=$P{fecha_apertura}
 UNION
 SELECT o.nombre AS ingrediente, 
 CASE WHEN (dc.descuento IS NULL OR dc.descuento=0) THEN 'N/A' ELSE (dc.descuento || ' %') END AS descuento    
 FROM rdj_detalles_contratos dc, rdj_otros_ingredientes o
-WHERE o.cas_otro_ing=dc.cas_otro_ing AND dc.fecha_apertura=$P{fecha_apertura};]]>
+WHERE o.cas_otro_ing=dc.cas_otro_ing AND to_char(dc.fecha_apertura,'dd/mm/yyyy HH:MI:SS')=$P{fecha_apertura};]]>
 		</queryString>
 		<field name="ingrediente" class="java.lang.String"/>
 		<field name="descuento" class="java.lang.String"/>
 	</subDataset>
 	<subDataset name="tabla_envio" uuid="62ba57f0-fc23-4640-95b4-10ac235fb056">
-		<parameter name="fecha_apertura" class="java.sql.Date"/>
+		<parameter name="fecha_apertura" class="java.lang.String"/>
 		<queryString language="plsql">
 			<![CDATA[SELECT
 CASE WHEN m.tipo = 't' THEN 'Terrestre' WHEN m.tipo = 'm' THEN 'Maritimo' ELSE 'Aereo' END AS tipo, pa.nombre AS pais, m.precio || ' $' AS precio 
 FROM rdj_paises pa, rdj_metodos_envios m, rdj_metodos_contratos mc 
-WHERE pa.id=m.id_pais AND mc.id_envio=m.id AND mc.fecha_cont=$P{fecha_apertura};]]>
+WHERE pa.id=m.id_pais AND mc.id_envio=m.id AND to_char(mc.fecha_cont,'dd/mm/yyyy HH:MI:SS')=$P{fecha_apertura};]]>
 		</queryString>
 		<field name="tipo" class="java.lang.String"/>
 		<field name="pais" class="java.lang.String"/>
 		<field name="precio" class="java.lang.String"/>
 	</subDataset>
 	<subDataset name="tabla_pago" uuid="7badd1d4-9a20-45b9-9cfb-b21bf644decd">
-		<parameter name="fecha_apertura" class="java.sql.Date"/>
+		<parameter name="fecha_apertura" class="java.lang.String"/>
 		<queryString language="plsql">
 			<![CDATA[SELECT CASE WHEN m.tipo = 'c' THEN 'Completo' ELSE 'Parcial' END AS tipo,
 COALESCE(to_char(m.num_cuotas,'99'),'N/A') AS cuotas, COALESCE(to_char(m.porcentaje,'999'),'N/A') AS porcentaje, COALESCE(to_char(m.meses,'99'),'N/A') AS meses 
 FROM rdj_metodos_pagos m, rdj_metodos_contratos mc 
-WHERE mc.id_pago=m.id AND mc.fecha_cont=$P{fecha_apertura};]]>
+WHERE mc.id_pago=m.id AND to_char(mc.fecha_cont,'dd/mm/yyyy HH:MI:SS')=$P{fecha_apertura};]]>
 		</queryString>
 		<field name="tipo" class="java.lang.String"/>
 		<field name="cuotas" class="java.lang.String"/>
 		<field name="porcentaje" class="java.lang.String"/>
 		<field name="meses" class="java.lang.String"/>
 	</subDataset>
-	<parameter name="fecha_apertura" class="java.sql.Date"/>
+	<parameter name="fecha_apertura" class="java.lang.String"/>
 	<queryString language="plsql">
 		<![CDATA[SELECT to_char(c.fecha_apertura::DATE,'dd/mm/yyyy') AS fecha_apertura, to_char(c.fecha_apertura::DATE + INTERVAL '1 year','dd/mm/yyyy') AS fecha_fin, 
 CASE WHEN c.exclusivo=true THEN 'Exclusivo' ELSE 'No Exclusivo' END AS exclusivo,
 pv.nombre AS nombrePV, pv.telefono AS telefonoPV, pv.correo AS correoPV, pv.url_web AS url_webPV,
-pd.nombre AS nombrePD, pd.telefono AS telefonoPD, pd.correo AS correoPD, pd.url_web AS url_webPD
+pd.nombre AS nombrePD, pd.telefono AS telefonoPD, pd.correo AS correoPD, pd.url_web AS url_webPD,
+c.id_productor AS id_prod, c.id_proveedor AS id_prov
 FROM rdj_contratos c, rdj_proveedores pv, rdj_productores pd 
-WHERE c.fecha_apertura<>ALL(SELECT r.fecha_apertura FROM rdj_renovaciones r) AND c.fecha_apertura=$P{fecha_apertura}  AND pv.id=c.id_proveedor AND pd.id=c.id_productor 
+WHERE c.fecha_apertura<>ALL(SELECT r.fecha_apertura FROM rdj_renovaciones r) AND to_char(c.fecha_apertura,'dd/mm/yyyy HH:MI:SS')=$P{fecha_apertura}  AND pv.id=c.id_proveedor AND pd.id=c.id_productor 
 UNION
 SELECT to_char(c.fecha_apertura::DATE,'dd/mm/yyyy') AS fecha_apertura, to_char(MAX(r.fecha_renovacion)::DATE + INTERVAL '1 year','dd/mm/yyyy') AS fecha_fin,
 CASE WHEN c.exclusivo=true THEN 'Exclusivo' ELSE 'No Exclusivo' END AS exclusivo,
 pv.nombre AS nombrePV, pv.telefono AS telefonoPV, pv.correo AS correoPV, pv.url_web AS url_webPV,
-pd.nombre AS nombrePD, pd.telefono AS telefonoPD, pd.correo AS correoPD, pd.url_web AS url_webPD
+pd.nombre AS nombrePD, pd.telefono AS telefonoPD, pd.correo AS correoPD, pd.url_web AS url_webPD,
+c.id_productor AS id_prod, c.id_proveedor AS id_prov
 FROM rdj_contratos c, rdj_renovaciones r, rdj_proveedores pv, rdj_productores pd 
-WHERE r.fecha_apertura=c.fecha_apertura AND c.fecha_apertura=$P{fecha_apertura}  AND pv.id=c.id_proveedor AND pd.id=c.id_productor
-GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV, nombrePD, telefonoPD, correoPD, url_webPD;]]>
+WHERE r.fecha_apertura=c.fecha_apertura AND to_char(c.fecha_apertura,'dd/mm/yyyy HH:MI:SS')=$P{fecha_apertura}  AND pv.id=c.id_proveedor AND pd.id=c.id_productor
+GROUP BY c.fecha_apertura,c.exclusivo, nombrePV, telefonoPV, correoPV, url_webPV, nombrePD, telefonoPD, correoPD, url_webPD, id_prod, id_prov;]]>
 	</queryString>
 	<field name="fecha_apertura" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="fecha_apertura"/>

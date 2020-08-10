@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte_Evaluaciones" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d28921b0-7d0d-46e6-96aa-9a44a696435c">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte_Evaluaciones" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d28921b0-7d0d-46e6-96aa-9a44a696435c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ProyectoBases1"/>
 	<property name="ireport.jasperserver.url" value="http://localhost:8081/jasperserver/"/>
@@ -266,11 +266,11 @@ WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_da
 						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="130" uuid="fc462a09-5a65-4d5b-b64e-210527cd4eb3">
+					<jr:column width="170" uuid="fc462a09-5a65-4d5b-b64e-210527cd4eb3">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
 						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="130" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="1ea6425c-ef98-458c-9cb9-70615776355d"/>
+								<reportElement mode="Opaque" x="0" y="0" width="170" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="1ea6425c-ef98-458c-9cb9-70615776355d"/>
 								<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 									<pen lineColor="#707070"/>
 									<topPen lineWidth="1.0" lineColor="#707070"/>
@@ -285,7 +285,7 @@ WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_da
 						</jr:tableHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="130" height="30" forecolor="#707070" uuid="52627f01-babe-4a62-b909-2ca7f96f20b1"/>
+								<reportElement x="0" y="0" width="170" height="30" forecolor="#707070" uuid="52627f01-babe-4a62-b909-2ca7f96f20b1"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="12"/>
 								</textElement>
@@ -293,11 +293,11 @@ WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_da
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="131" uuid="67468839-b8ba-4274-bf0d-c4df898112bc">
+					<jr:column width="91" uuid="67468839-b8ba-4274-bf0d-c4df898112bc">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
 						<jr:tableHeader style="Table_TH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement mode="Opaque" x="0" y="0" width="131" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="7bc5ba1d-8207-46da-b7f5-3796cbc5b691"/>
+								<reportElement mode="Opaque" x="0" y="0" width="91" height="30" forecolor="#FFFFFF" backcolor="#6492FD" uuid="7bc5ba1d-8207-46da-b7f5-3796cbc5b691"/>
 								<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
 									<pen lineColor="#707070"/>
 									<topPen lineWidth="1.0" lineColor="#707070"/>
@@ -312,7 +312,7 @@ WHERE pd.id=e.id_productor AND r.id_productor=e.id_productor AND $P{fecha}=to_da
 						</jr:tableHeader>
 						<jr:detailCell style="Table_TD" height="30">
 							<textField>
-								<reportElement x="0" y="0" width="131" height="30" forecolor="#707070" uuid="0a6d64f0-d555-4e95-ab7f-94b0be4c5e83"/>
+								<reportElement x="0" y="0" width="91" height="30" forecolor="#707070" uuid="0a6d64f0-d555-4e95-ab7f-94b0be4c5e83"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle">
 									<font size="12"/>
 								</textElement>
