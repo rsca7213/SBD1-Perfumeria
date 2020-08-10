@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte_Ingredientes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="a142f0de-710e-4b60-bb37-20ac4336a327">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ProyectoBases1"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Perfumes pgSQL"/>
 	<property name="ireport.jasperserver.url" value="http://localhost:8081/jasperserver/"/>
 	<property name="ireport.jasperserver.user" value="jasperadmin"/>
 	<property name="ireport.jasperserver.report.resource" value="/reports/Reporte_Ingredientes_files/main_jrxml"/>
@@ -127,9 +127,9 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 		</band>
 	</title>
 	<detail>
-		<band height="645" splitType="Stretch">
+		<band height="715" splitType="Stretch">
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="80" width="50" height="40" forecolor="#707070" backcolor="#FFFFFF" uuid="d47b8f51-7ff9-4832-bde1-25ba68114b0f">
+				<reportElement mode="Opaque" x="0" y="150" width="50" height="40" forecolor="#707070" backcolor="#FFFFFF" uuid="d47b8f51-7ff9-4832-bde1-25ba68114b0f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b506ecaa-f1c4-4cf6-a05c-bbe097fc3310"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -140,7 +140,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				<text><![CDATA[#CAS:]]></text>
 			</staticText>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="50" y="80" width="196" height="40" forecolor="#707070" uuid="5638f167-ec12-4aae-ac81-99bf0e20dbe7">
+				<reportElement x="50" y="150" width="196" height="40" forecolor="#707070" uuid="5638f167-ec12-4aae-ac81-99bf0e20dbe7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f5eee1ab-a190-4716-94f8-997a692eaef0"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -149,7 +149,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				<textFieldExpression><![CDATA[$F{cas}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="120" width="70" height="40" forecolor="#707070" backcolor="#FFFFFF" uuid="db863dfc-df05-4e87-9df3-cfd02e1c78e9">
+				<reportElement mode="Opaque" x="0" y="190" width="70" height="40" forecolor="#707070" backcolor="#FFFFFF" uuid="db863dfc-df05-4e87-9df3-cfd02e1c78e9">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b506ecaa-f1c4-4cf6-a05c-bbe097fc3310"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -160,7 +160,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				<text><![CDATA[#Einecs:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="160" width="120" height="40" forecolor="#707070" backcolor="#FFFFFF" uuid="566bff77-c958-424e-8c3a-f640487e4b3d">
+				<reportElement mode="Opaque" x="0" y="230" width="120" height="40" forecolor="#707070" backcolor="#FFFFFF" uuid="566bff77-c958-424e-8c3a-f640487e4b3d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b506ecaa-f1c4-4cf6-a05c-bbe097fc3310"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -171,7 +171,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				<text><![CDATA[País de Origen:]]></text>
 			</staticText>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="70" y="120" width="196" height="40" forecolor="#707070" uuid="fe88a69f-662c-462b-8e67-4a240781972b">
+				<reportElement x="70" y="190" width="196" height="40" forecolor="#707070" uuid="fe88a69f-662c-462b-8e67-4a240781972b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f5eee1ab-a190-4716-94f8-997a692eaef0"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -180,7 +180,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				<textFieldExpression><![CDATA[$F{einecs}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="120" y="160" width="196" height="40" forecolor="#707070" uuid="825dd77c-9fb4-45ed-9400-f285d80c04b9">
+				<reportElement x="120" y="230" width="196" height="40" forecolor="#707070" uuid="825dd77c-9fb4-45ed-9400-f285d80c04b9">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f5eee1ab-a190-4716-94f8-997a692eaef0"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -189,16 +189,16 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				<textFieldExpression><![CDATA[$F{pais}]]></textFieldExpression>
 			</textField>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="0" y="10" width="550" height="60" forecolor="#6492FD" uuid="f4d86d43-9f12-4059-9d58-df0655c4ba43">
+				<reportElement x="160" y="40" width="394" height="60" forecolor="#6492FD" uuid="f4d86d43-9f12-4059-9d58-df0655c4ba43">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f5eee1ab-a190-4716-94f8-997a692eaef0"/>
 				</reportElement>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="31" isBold="true"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement mode="Opaque" x="0" y="290" width="120" height="30" backcolor="#6492FD" uuid="eacfa9eb-c840-494a-8d62-9e8f124b5dbd"/>
+				<reportElement mode="Opaque" x="0" y="360" width="120" height="30" backcolor="#6492FD" uuid="eacfa9eb-c840-494a-8d62-9e8f124b5dbd"/>
 				<staticText>
 					<reportElement x="20" y="5" width="80" height="20" forecolor="#FFFFFF" uuid="a0209764-6211-415d-bc98-d0769e5fe9e3"/>
 					<textElement textAlignment="Center">
@@ -208,7 +208,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="0" y="330" width="120" height="30" backcolor="#6492FD" uuid="46e0e3cc-7e8b-45ed-9902-0bf24c49906a"/>
+				<reportElement mode="Opaque" x="0" y="400" width="120" height="30" backcolor="#6492FD" uuid="46e0e3cc-7e8b-45ed-9902-0bf24c49906a"/>
 				<staticText>
 					<reportElement x="20" y="5" width="80" height="20" forecolor="#FFFFFF" uuid="492ac064-da19-4c96-a020-1da06e25f7a3"/>
 					<textElement textAlignment="Center">
@@ -218,7 +218,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="0" y="370" width="170" height="30" backcolor="#6492FD" uuid="56a4b8fc-4d1c-452b-b059-871f00c3432c"/>
+				<reportElement mode="Opaque" x="0" y="440" width="170" height="30" backcolor="#6492FD" uuid="56a4b8fc-4d1c-452b-b059-871f00c3432c"/>
 				<staticText>
 					<reportElement x="0" y="5" width="165" height="20" forecolor="#FFFFFF" uuid="298f5260-8456-43eb-9bfe-e09499079dbd"/>
 					<textElement textAlignment="Center">
@@ -228,7 +228,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="0" y="410" width="150" height="70" backcolor="#6492FD" uuid="f38a9130-c4e3-450b-8068-8333ed09a641"/>
+				<reportElement mode="Opaque" x="0" y="480" width="150" height="70" backcolor="#6492FD" uuid="f38a9130-c4e3-450b-8068-8333ed09a641"/>
 				<staticText>
 					<reportElement x="0" y="25" width="150" height="20" forecolor="#FFFFFF" uuid="53a26c35-830e-4960-9f6b-4ee7d18a683c"/>
 					<textElement textAlignment="Center">
@@ -238,7 +238,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="0" y="489" width="120" height="30" backcolor="#6492FD" uuid="43ffe4d6-5d28-499c-bc17-dca2ead13781"/>
+				<reportElement mode="Opaque" x="0" y="559" width="120" height="30" backcolor="#6492FD" uuid="43ffe4d6-5d28-499c-bc17-dca2ead13781"/>
 				<staticText>
 					<reportElement x="20" y="5" width="80" height="20" forecolor="#FFFFFF" uuid="71da5c37-360d-4cb3-819a-ccd06da84f73"/>
 					<textElement textAlignment="Center">
@@ -248,7 +248,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="120" y="290" width="430" height="31" backcolor="#EBECEC" uuid="84dc911d-d4aa-4e73-888b-d81b3931816a"/>
+				<reportElement mode="Opaque" x="120" y="360" width="430" height="31" backcolor="#EBECEC" uuid="84dc911d-d4aa-4e73-888b-d81b3931816a"/>
 				<box>
 					<pen lineWidth="0.0"/>
 				</box>
@@ -265,7 +265,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</textField>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="120" y="330" width="430" height="31" backcolor="#EBECEC" uuid="9688c94d-ad7d-4479-8f70-e89d29441ada"/>
+				<reportElement mode="Opaque" x="120" y="400" width="430" height="31" backcolor="#EBECEC" uuid="9688c94d-ad7d-4479-8f70-e89d29441ada"/>
 				<box>
 					<pen lineWidth="0.0"/>
 				</box>
@@ -282,7 +282,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</textField>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="120" y="489" width="430" height="31" backcolor="#EBECEC" uuid="5242df9f-51d7-40de-bf7d-98f102c6be81"/>
+				<reportElement mode="Opaque" x="120" y="559" width="430" height="31" backcolor="#EBECEC" uuid="5242df9f-51d7-40de-bf7d-98f102c6be81"/>
 				<box>
 					<pen lineWidth="0.0"/>
 				</box>
@@ -299,7 +299,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</textField>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="170" y="370" width="380" height="31" backcolor="#EBECEC" uuid="a7b4e127-8651-43d7-80ba-bc84130b2eda"/>
+				<reportElement mode="Opaque" x="170" y="440" width="380" height="31" backcolor="#EBECEC" uuid="a7b4e127-8651-43d7-80ba-bc84130b2eda"/>
 				<box>
 					<pen lineWidth="0.0"/>
 				</box>
@@ -316,7 +316,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</textField>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="150" y="410" width="400" height="70" backcolor="#EBECEC" uuid="5201d643-9a82-4558-94bf-0cb69cc786e3"/>
+				<reportElement mode="Opaque" x="150" y="480" width="400" height="70" backcolor="#EBECEC" uuid="5201d643-9a82-4558-94bf-0cb69cc786e3"/>
 				<box>
 					<pen lineWidth="0.0"/>
 				</box>
@@ -333,7 +333,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</textField>
 			</frame>
 			<componentElement>
-				<reportElement x="0" y="580" width="211" height="60" uuid="9f054ae3-029d-42e5-a39c-74f8607e15b1">
+				<reportElement x="0" y="650" width="211" height="60" uuid="9f054ae3-029d-42e5-a39c-74f8607e15b1">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -376,7 +376,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</jr:table>
 			</componentElement>
 			<frame>
-				<reportElement mode="Opaque" x="0" y="529" width="120" height="30" backcolor="#6492FD" uuid="7beb6c44-c65a-4816-8258-672f9faa95f5"/>
+				<reportElement mode="Opaque" x="0" y="599" width="120" height="30" backcolor="#6492FD" uuid="7beb6c44-c65a-4816-8258-672f9faa95f5"/>
 				<staticText>
 					<reportElement x="15" y="5" width="85" height="20" forecolor="#FFFFFF" uuid="b0ff019e-ced7-4750-8c56-8e33b1dbe53e"/>
 					<textElement textAlignment="Center">
@@ -386,7 +386,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="120" y="529" width="430" height="31" backcolor="#EBECEC" uuid="98dde227-fb12-44e5-9ba1-8aee8bf7d54d"/>
+				<reportElement mode="Opaque" x="120" y="599" width="430" height="31" backcolor="#EBECEC" uuid="98dde227-fb12-44e5-9ba1-8aee8bf7d54d"/>
 				<box>
 					<pen lineWidth="0.0"/>
 				</box>
@@ -403,7 +403,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</textField>
 			</frame>
 			<componentElement>
-				<reportElement x="280" y="576" width="274" height="69" uuid="6014e88c-a2a5-4035-9879-7e21f6627aa7">
+				<reportElement x="280" y="646" width="274" height="69" uuid="6014e88c-a2a5-4035-9879-7e21f6627aa7">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table 1_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table 1_CH"/>
@@ -473,7 +473,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</jr:table>
 			</componentElement>
 			<staticText>
-				<reportElement mode="Opaque" x="0" y="200" width="90" height="40" forecolor="#707070" backcolor="#FFFFFF" uuid="174997c0-a9f5-46c1-8302-a561ccb0469f">
+				<reportElement mode="Opaque" x="0" y="270" width="90" height="40" forecolor="#707070" backcolor="#FFFFFF" uuid="174997c0-a9f5-46c1-8302-a561ccb0469f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b506ecaa-f1c4-4cf6-a05c-bbe097fc3310"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -484,7 +484,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				<text><![CDATA[Proveedor:]]></text>
 			</staticText>
 			<textField textAdjust="StretchHeight">
-				<reportElement x="90" y="200" width="196" height="40" forecolor="#707070" uuid="f58e4e02-cc39-4790-a41b-ae16e408ad80">
+				<reportElement x="90" y="270" width="196" height="40" forecolor="#707070" uuid="f58e4e02-cc39-4790-a41b-ae16e408ad80">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f5eee1ab-a190-4716-94f8-997a692eaef0"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -493,7 +493,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				<textFieldExpression><![CDATA[$F{proveedor}]]></textFieldExpression>
 			</textField>
 			<frame>
-				<reportElement mode="Opaque" x="150" y="250" width="399" height="31" backcolor="#EBECEC" uuid="bb9c4a7d-c4f3-4468-8fdf-92e585d45c3d"/>
+				<reportElement mode="Opaque" x="150" y="320" width="399" height="31" backcolor="#EBECEC" uuid="bb9c4a7d-c4f3-4468-8fdf-92e585d45c3d"/>
 				<box>
 					<pen lineWidth="0.0"/>
 				</box>
@@ -510,7 +510,7 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 				</textField>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="0" y="250" width="150" height="30" backcolor="#6492FD" uuid="03750fec-adab-4408-bcbd-609a6d885e9a"/>
+				<reportElement mode="Opaque" x="0" y="320" width="150" height="30" backcolor="#6492FD" uuid="03750fec-adab-4408-bcbd-609a6d885e9a"/>
 				<staticText>
 					<reportElement x="10" y="5" width="130" height="20" forecolor="#FFFFFF" uuid="62e463cd-010d-429f-9dd5-057a3f4502a1"/>
 					<textElement textAlignment="Center">
@@ -519,6 +519,18 @@ WHERE i.cas_ing_esencia=ip.cas_ing_esencia AND ip.id_pais=p.id AND i.id_proveedo
 					<text><![CDATA[Nombre Químico]]></text>
 				</staticText>
 			</frame>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="22" y="20" width="120" height="120" uuid="9a020edc-7eed-4f65-9251-cfe8c501a634"/>
+				<imageExpression><![CDATA[$P{cas}==1005171? "ambranum.png": $P{cas}==68650464? "buchu.png":
+$P{cas}==71735790? "cedroxyde.png": $P{cas}==52424609? "ozaflor.png":
+$P{cas}==4736452? "iriswood.png": $P{cas}==8050155? "floralyn.png": 
+$P{cas}==28219616? "sandal.png": $P{cas}==127424? "methyl.png": 
+$P{cas}==586629? "pineoil.png": $P{cas}==89883? "vetiverol.png": 
+$P{cas}==106241? "geraniol.png": $P{cas}==120116? "benzyl.png": 
+$P{cas}==66251? "aldehyde.png": $P{cas}==41890920? "osyrol.png": 
+$P{cas}==21112378? "vetimoss.png": $P{cas}==106729? "melonal.png": 
+$P{cas}==5392405? "citral.png": "anethole.png"]]></imageExpression>
+			</image>
 		</band>
 	</detail>
 </jasperReport>
