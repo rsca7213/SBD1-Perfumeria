@@ -368,7 +368,7 @@ INSERT INTO rdj_intensidades (id,id_perfume,tipo,porcentaje,descripcion)VALUES
 (nextval('rdj_intensidad_sec'),6,'EdT',10,NULL),
 (nextval('rdj_intensidad_sec'),7,'EdT',10,NULL),
 (nextval('rdj_intensidad_sec'),7,'EdP',15,NULL),
-(nextval('rdj_intensidad_sec'),8,'P',NULL,NULL),
+(nextval('rdj_intensidad_sec'),8,'P',15,NULL),
 (nextval('rdj_intensidad_sec'),9,'EdT',10,NULL);
 
 INSERT INTO rdj_presentaciones_perfumes (id,id_intensidad,id_perfume,volumen)VALUES
