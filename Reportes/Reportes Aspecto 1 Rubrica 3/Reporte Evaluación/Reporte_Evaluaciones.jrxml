@@ -2,7 +2,7 @@
 <!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Reporte_Evaluaciones" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d28921b0-7d0d-46e6-96aa-9a44a696435c">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Perfumes pgSQL"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ProyectoBases1"/>
 	<property name="ireport.jasperserver.url" value="http://localhost:8081/jasperserver/"/>
 	<property name="ireport.jasperserver.user" value="jasperadmin"/>
 	<property name="ireport.jasperserver.report.resource" value="/reports/Reporte_Evaluaciones_files/main_jrxml"/>
@@ -90,7 +90,7 @@ ORDER BY id;]]>
 			<![CDATA[SELECT pv.nombre AS proveedor, (r.resultado || ' %') AS puntaje, 
 CASE WHEN  r.resultado>hf.peso THEN 'Aprobado' ELSE 'Reprobado' END AS resultado
 FROM rdj_proveedores pv, rdj_resultados r, rdj_hist_formulas hf
-WHERE pv.id=r.id_proveedor AND $P{fecha}=to_date(to_char(r.fecha,'dd/mm/yyyy'),'dd/mm/yyyy') AND r.id_productor=hf.id_productor AND hf.tipo=r.tipo AND hf.id_criterio=5;]]>
+WHERE pv.id=r.id_proveedor AND $P{fecha}=to_date(to_char(r.fecha,'dd/mm/yyyy'),'dd/mm/yyyy') AND r.id_productor=hf.id_productor AND hf.tipo=r.tipo AND hf.id_criterio=5 AND ((r.fecha BETWEEN hf.fecha_inicio AND hf.fecha_fin) OR hf.fecha_fin IS NULL) AND r.fecha>hf.fecha_inicio;]]>
 		</queryString>
 		<field name="proveedor" class="java.lang.String"/>
 		<field name="puntaje" class="java.lang.String"/>
