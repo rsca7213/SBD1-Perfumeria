@@ -80,7 +80,7 @@ AND m.cas_esencia = es.num_cas ORDER BY tipo,nota;]]>
 	<queryString language="plsql">
 		<![CDATA[SELECT pe.nombre AS nombre, CASE WHEN pe.genero = 'f' THEN 'Femenino' WHEN pe.genero = 'm' THEN 'Masculino' ELSE 'Unisex' END AS genero, CASE WHEN pe.edad = 'in' THEN 'Infantil' 
 WHEN pe.edad = 'jo' THEN 'Joven' WHEN pe.edad = 'ad' THEN 'Adulto' ELSE 'Atemporal' 
-END AS edad, CASE WHEN pe.monolitico = 'f' THEN 'Monolítico' ELSE 'Por fases' END AS tipo, pr.nombre AS productor FROM rdj_perfumes pe, rdj_productores pr 
+END AS edad, CASE WHEN pe.monolitico = 't' THEN 'Monolítico' ELSE 'Por fases' END AS tipo, pr.nombre AS productor FROM rdj_perfumes pe, rdj_productores pr 
 WHERE pe.id = $P{id_perfume} AND pe.id_productor = pr.id;]]>
 	</queryString>
 	<field name="nombre" class="java.lang.String"/>
@@ -112,7 +112,7 @@ WHERE pe.id = $P{id_perfume} AND pe.id_productor = pr.id;]]>
 		</band>
 	</title>
 	<detail>
-		<band height="666" splitType="Stretch">
+		<band height="665" splitType="Stretch">
 			<textField>
 				<reportElement x="160" y="20" width="400" height="30" forecolor="#6492FD" uuid="6707f092-ae87-4d74-a479-c04039bc4cd5"/>
 				<textElement>
@@ -142,7 +142,7 @@ WHERE pe.id = $P{id_perfume} AND pe.id_productor = pr.id;]]>
 				<textFieldExpression><![CDATA[$F{edad}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="160" width="560" height="23" uuid="11b97333-12e3-460b-aed3-fbe79e984ab5"/>
+				<reportElement positionType="Float" x="0" y="191" width="560" height="23" uuid="11b97333-12e3-460b-aed3-fbe79e984ab5"/>
 				<subreportParameter name="id_perf_perfumista">
 					<subreportParameterExpression><![CDATA[$P{id_perfume}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -150,21 +150,21 @@ WHERE pe.id = $P{id_perfume} AND pe.id_productor = pr.id;]]>
 				<subreportExpression><![CDATA["sub_perfPerfume.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement positionType="Float" x="20" y="153" width="136" height="23" forecolor="#6492FD" uuid="3f041f8e-97cd-4d20-8b7c-ff17341e410b"/>
+				<reportElement positionType="Float" x="20" y="184" width="136" height="23" forecolor="#6492FD" uuid="3f041f8e-97cd-4d20-8b7c-ff17341e410b"/>
 				<textElement>
 					<font fontName="roboto&#xD;&#xA;" size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Elaborado por:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement positionType="Float" x="20" y="183" width="240" height="23" forecolor="#6492FD" uuid="02c9a157-f740-4a22-ae57-954c6b3e19cd"/>
+				<reportElement positionType="Float" x="20" y="214" width="240" height="23" forecolor="#6492FD" uuid="02c9a157-f740-4a22-ae57-954c6b3e19cd"/>
 				<textElement>
 					<font fontName="roboto&#xD;&#xA;" size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Intensidades y Presentaciones:]]></text>
 			</staticText>
 			<subreport>
-				<reportElement positionType="Float" x="0" y="193" width="560" height="23" uuid="6a0556bc-82b1-4a55-a7d6-9abf051e5647"/>
+				<reportElement positionType="Float" x="0" y="224" width="560" height="23" uuid="6a0556bc-82b1-4a55-a7d6-9abf051e5647"/>
 				<subreportParameter name="id_perf_pres">
 					<subreportParameterExpression><![CDATA[$P{id_perfume}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -172,14 +172,14 @@ WHERE pe.id = $P{id_perfume} AND pe.id_productor = pr.id;]]>
 				<subreportExpression><![CDATA["sub_presPerfume.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
-				<reportElement positionType="Float" x="-11" y="220" width="180" height="23" forecolor="#6492FD" uuid="7809eae9-41ec-4653-8e05-c55f32b0be42"/>
+				<reportElement positionType="Float" x="-11" y="251" width="180" height="23" forecolor="#6492FD" uuid="7809eae9-41ec-4653-8e05-c55f32b0be42"/>
 				<textElement>
 					<font fontName="roboto&#xD;&#xA;" size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Familias Olfativas:]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement positionType="Float" x="-11" y="243" width="180" height="90" uuid="4fcb8f4f-bdb0-4579-95fe-e73b8f56ac17">
+				<reportElement positionType="Float" x="-11" y="274" width="180" height="90" uuid="4fcb8f4f-bdb0-4579-95fe-e73b8f56ac17">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -238,14 +238,14 @@ WHERE pe.id = $P{id_perfume} AND pe.id_productor = pr.id;]]>
 				</jr:table>
 			</componentElement>
 			<staticText>
-				<reportElement positionType="Float" x="180" y="220" width="180" height="23" forecolor="#6492FD" uuid="18b300a9-08ee-4ad0-81c4-42c9919e44e5"/>
+				<reportElement positionType="Float" x="180" y="251" width="180" height="23" forecolor="#6492FD" uuid="18b300a9-08ee-4ad0-81c4-42c9919e44e5"/>
 				<textElement>
 					<font fontName="roboto&#xD;&#xA;" size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Carácteres:]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement positionType="Float" x="180" y="243" width="180" height="90" uuid="36e5c885-9885-4878-9ea8-60ece51ff28c">
+				<reportElement positionType="Float" x="180" y="274" width="180" height="90" uuid="36e5c885-9885-4878-9ea8-60ece51ff28c">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -304,14 +304,14 @@ WHERE pe.id = $P{id_perfume} AND pe.id_productor = pr.id;]]>
 				</jr:table>
 			</componentElement>
 			<staticText>
-				<reportElement positionType="Float" x="370" y="220" width="180" height="23" forecolor="#6492FD" uuid="7da02945-c5d3-4fc6-a7ff-49aee8e8905a"/>
+				<reportElement positionType="Float" x="370" y="251" width="180" height="23" forecolor="#6492FD" uuid="7da02945-c5d3-4fc6-a7ff-49aee8e8905a"/>
 				<textElement>
 					<font fontName="roboto&#xD;&#xA;" size="15" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Personalidades:]]></text>
 			</staticText>
 			<componentElement>
-				<reportElement positionType="Float" x="370" y="243" width="180" height="90" uuid="487e5cca-76e9-4cd1-a9d6-f11c00379b64">
+				<reportElement positionType="Float" x="370" y="274" width="180" height="90" uuid="487e5cca-76e9-4cd1-a9d6-f11c00379b64">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -370,7 +370,7 @@ WHERE pe.id = $P{id_perfume} AND pe.id_productor = pr.id;]]>
 				</jr:table>
 			</componentElement>
 			<frame>
-				<reportElement positionType="Float" x="3" y="341" width="549" height="139" uuid="c3469d62-4915-47fd-95d6-6e2392d19ee5"/>
+				<reportElement positionType="Float" x="3" y="372" width="549" height="139" uuid="c3469d62-4915-47fd-95d6-6e2392d19ee5"/>
 				<staticText>
 					<reportElement positionType="Float" x="146" y="10" width="220" height="23" forecolor="#6492FD" uuid="f7e43974-f951-4776-b35d-33a2a06ab346"/>
 					<textElement textAlignment="Center">
@@ -532,7 +532,7 @@ WHERE pe.id = $P{id_perfume} AND pe.id_productor = pr.id;]]>
 ($P{id_perfume}==7)? "allure.png":($P{id_perfume}==8)? "rouge.png":"antaeus.png"]]></imageExpression>
 			</image>
 			<frame>
-				<reportElement positionType="Float" x="110" y="484" width="310" height="150" uuid="c78ccf99-7aa8-4f6d-b16e-c31c8121a206"/>
+				<reportElement positionType="Float" x="110" y="515" width="310" height="144" uuid="c78ccf99-7aa8-4f6d-b16e-c31c8121a206"/>
 				<staticText>
 					<reportElement positionType="Float" x="62" y="10" width="180" height="23" forecolor="#6492FD" uuid="efc4f367-4dd2-4f93-ba66-1ec01adb13fb"/>
 					<textElement textAlignment="Center">
@@ -652,6 +652,13 @@ WHERE pe.id = $P{id_perfume} AND pe.id_productor = pr.id;]]>
 					</jr:table>
 				</componentElement>
 			</frame>
+			<textField>
+				<reportElement x="160" y="140" width="400" height="30" forecolor="#505050" uuid="aa28a7da-6ae3-46ff-bd35-56b5f48af002"/>
+				<textElement>
+					<font fontName="roboto&#xD;&#xA;" size="15" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{productor}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 </jasperReport>
